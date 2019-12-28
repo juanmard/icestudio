@@ -6,6 +6,7 @@ module.exports = function (grunt) {
   var platforms = [];
   var distCommands = [];
   var options = {scope: ['devDependencies']};
+  var nwjsVersion = '0.35.5';
 
   function targetLin(bits) {
     platforms.push('linux' + bits);
@@ -16,6 +17,7 @@ module.exports = function (grunt) {
     distCommands.push('compress:win' + bits);
   }
   function targetOSX() {
+    nwjsVersion = '0.21.6';
     platforms.push('osx64');
     options.scope.push('darwinDependencies');
     distCommands.push('compress:osx64');
@@ -114,7 +116,7 @@ module.exports = function (grunt) {
 
   gruntCfg.nwjs = {
     options: {
-      version: '0.35.5',
+      version: nwjsVersion,
       flavor: 'sdk', // 'normal' (stable) | 'sdk' (development)
       zip: false,
       buildDir: 'dist/',
