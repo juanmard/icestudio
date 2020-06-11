@@ -1,6 +1,60 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## Unreleased (nightly pre-releases)
+
+- Support using multiple collections at the same time.
+- Remove forceBack (when exiting edit mode).
+- Do not use apio `develop`. [[FPGAwars/icestudio#367](https://github.com/FPGAwars/icestudio/issues/367)]
+- Allow to build Icestudio in a Docker container (with user root, by default).
+- Rework gruntfile to support generating artifacts for a single platform/target, through envvar `DIST_TARGET`. [[FPGAwars/icestudio#309](https://github.com/FPGAwars/icestudio/issues/309)]
+  - Do not generate installers, but zipfiles only.
+- Use `yarn` instead of `npm` as the default package manager. [[FPGAwars/icestudio#369](https://github.com/FPGAwars/icestudio/issues/369)]
+- Update and add dependencies:
+  - use grunt-contrib-uglify-es instead of grunt-contrib-uglify
+  - bump alertify-js to v1.13.1 (WIP)
+  - prettier (prettify the codebase)
+  - font-awesome
+  - use eslint instead of jshint
+- Use nw version 0.21.6 [[nwjs/grunt-nw-builder#161](https://github.com/nwjs/grunt-nw-builder/issues/161)]
+- Docs:
+  - Fix broken makefile.
+  - Fix broken paths.
+  - Add `requirements.txt`.
+  - Clean conf script.
+  - Update content.
+- Add GitHub Actions workflow to test and generate artifacts for all platforms.
+  - Provide automatic and auditable nightly builds of Icestudio. [[FPGAwars/icestudio#417](https://github.com/FPGAwars/icestudio/issues/417)]
+- Update README and 'About' window of the app.
+- Move list of supported boards to separate file. Fix HX4K boards incorrectly grouped in HX8K. [[FPGAwars/icestudio#392](https://github.com/FPGAwars/icestudio/issues/392), [FPGAwars/icestudio#394](https://github.com/FPGAwars/icestudio/issues/394)]
+- Views:
+  - Fix unmatched HTML labels.
+  - Rework menu: make slimmer, reorganize, add menu buttons on the bottom, etc.
+  - Rework submodule edit buttons/menu.
+  - Merge design into main.
+  - Remove 'Version' modal (move into docs, WIP).
+  - Show breadcrumbs in Window title.
+  - Move 'Plugins' menu into main menu.
+  - Disable 'Pinout' if not available.
+  - Fix markdown viewer.
+  - Add font-awesome icons and replace spinner.
+  - Remove show/hide timeouts.
+  - Include docs in the app.
+  - Add tooltips.
+  - Show warning icon and tooltip when project changed.
+  - Create a 'Preferences' modal.
+  - Add 'alerts' service.
+  - Create a custom dialog/window for 'Board options'.
+- Remove multiple timeouts.
+- Boards:
+  - Add `regenerate_pinouts.py`.
+  - Merge `input.json` into `info.json`.
+  - Remove `menu.json`.
+
+## [0.5.1-n200523]
+
+## [0.5.1-n200403]
+
+- Thanks to [Tim Rudy](https://github.com/TimRudy) for language corrections at version info page.
 
 ## [0.5.0] - 2019-10-31
 
