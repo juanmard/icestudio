@@ -1,0 +1,182 @@
+<a href uib-dropdown-toggle
+  >{{ 'File' | translate }}<span class="caret"></span
+></a>
+<ul uib-dropdown-menu style="min-width: 230px;">
+  <li>
+    <a href ng-click="newProject()"
+      ><i class="fa fa-fw fa-file-o" aria-hidden="true"></i> {{ 'New' |
+      translate }}<span class="shortcut">{{ 'newProject' | shortcut }}</span></a
+    >
+  </li>
+  <li>
+    <a href ng-click="openProjectDialog()"
+      ><i class="fa fa-fw fa-folder-open-o" aria-hidden="true"></i> {{ 'Open' |
+      translate }}...<span class="shortcut"
+        >{{ 'openProject' | shortcut }}</span
+      ></a
+    >
+  </li>
+  <li>
+    <a href ng-click="addAsBlock()"
+      ><i class="fa fa-fw fa-sticky-note-o" aria-hidden="true"></i> {{ 'Add as
+      block' | translate }}...</a
+    >
+  </li>
+  <li class="dropdown-submenu" uib-dropdown>
+    <a href uib-dropdown-toggle
+      ><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> {{ 'Collections' |
+      translate }}</a
+    >
+    <ul uib-dropdown-menu>
+      <li
+        ng-repeat="collection in [common.defaultCollection].concat(common.internalCollections).concat(common.externalCollections)"
+        class="dropdown-submenu"
+        uib-dropdown
+      >
+        <a
+          href
+          ng-click="collection.disabled = !collection.disabled && collection.name!='Basic'"
+          ><i
+            class="fa fa-fw"
+            ng-class="collection.name!='Basic'?('fa-'+(collection.disabled?'':'check-')+'square-o'):'fa-square'"
+            aria-hidden="true"
+          ></i>
+          {{ collection.name }}</a
+        >
+        <ul uib-dropdown-menu>
+          <li class="is-disabled" style="text-align: center;">
+            <a href
+              ><i class="fa fa-fw fa-map" aria-hidden="true"></i> {{ 'Examples'
+              | translate }}</a
+            >
+          </li>
+          <child
+            ng-repeat="item in collection.content.examples"
+            cdata="item"
+            callback="openProject(path)"
+          ></child>
+          <li class="divider"></li>
+          <li class="dropdown-submenu" uib-dropdown>
+            <a href uib-dropdown-toggle
+              ><i class="fa fa-fw fa-cube" aria-hidden="true"></i> {{ 'Blocks' |
+              translate }}</a
+            >
+            <menutree
+              data="collection.content.blocks"
+              callback="openProject(path)"
+            ></menutree>
+          </li>
+          <li>
+            <a href ng-click="showCollectionData(collection)"
+              ><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i> {{
+              'Collection info' | translate }}</a
+            >
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+
+  <li class="dropdown-submenu" uib-dropdown>
+    <a href uib-dropdown-toggle
+      ><i class="fa fa-fw fa-exchange" aria-hidden="true"></i> {{ 'Plugins' |
+      translate }}</a
+    >
+    <ul uib-dropdown-menu>
+      <li>
+        <a
+          ng-repeat="(key, val) in plugins"
+          ng-href="resources/plugins/{{ val.manifest.id }}/index.html"
+          target="_blank"
+          ><img
+            width="18px"
+            ng-src="resources/plugins/{{ val.manifest.id }}/{{ val.manifest.icon }}"
+          />
+          {{ val.manifest.name }}</a
+        >
+      </li>
+    </ul>
+  </li>
+
+  <li class="divider"></li>
+
+  <li>
+    <a href ng-click="saveProject()"
+      ><i class="fa fa-fw fa-save" aria-hidden="true"></i> {{ 'Save' | translate
+      }}<span class="shortcut">{{ 'saveProject' | shortcut }}</span></a
+    >
+  </li>
+  <li>
+    <a href ng-click="saveProjectAs()"
+      ><i class="fa fa-fw fa-hdd-o" aria-hidden="true"></i> {{ 'Save as' |
+      translate }}...<span class="shortcut"
+        >{{ 'saveProjectAs' | shortcut }}</span
+      ></a
+    >
+  </li>
+  <li class="dropdown-submenu" uib-dropdown>
+    <a href uib-dropdown-toggle
+      ><i class="fa fa-fw fa-file-archive-o" aria-hidden="true"></i> {{ 'Export'
+      | translate }}...</a
+    >
+    <ul uib-dropdown-menu>
+      <li><a href ng-click="export('v')">{{ 'Verilog' }}</a></li>
+      <li><a href ng-click="export('pcf')">{{ 'PCF' }}</a></li>
+      <li>
+        <a href ng-click="export('tb')">{{ 'Testbench' | translate }}</a>
+      </li>
+      <li><a href ng-click="export('gtkw')">{{ 'GTKWave' }}</a></li>
+      <li class="divider"></li>
+      <li><a href ng-click="export('blif')">{{ 'BLIF' }}</a></li>
+      <li><a href ng-click="export('asc')">{{ 'ASC' }}</a></li>
+      <li>
+        <a href ng-click="export('bin')">{{ 'Bitstream' }}</a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="divider"></li>
+
+  <li>
+    <a href ng-click="verifyCode()"
+      ><i class="fa fa-fw fa-check" aria-hidden="true"></i> {{ 'Verify' |
+      translate }}<span class="shortcut">{{ 'verifyCode' | shortcut }}</span></a
+    >
+  </li>
+  <li>
+    <a href ng-click="buildCode()"
+      ><i class="fa fa-fw fa-gear" aria-hidden="true"></i> {{ 'Build' |
+      translate }}<span class="shortcut">{{ 'buildCode' | shortcut }}</span></a
+    >
+  </li>
+  <li>
+    <a href ng-click="uploadCode()"
+      ><i class="fa fa-fw fa-rocket" aria-hidden="true"></i> {{ 'Upload' |
+      translate }}<span class="shortcut">{{ 'uploadCode' | shortcut }}</span></a
+    >
+  </li>
+  <li>
+    <a href ng-click="showCommandOutput()"
+      ><i class="fa fa-fw fa-align-left" aria-hidden="true"></i> {{ 'View
+      output' | translate }}</a
+    >
+  </li>
+
+  <li class="divider"></li>
+
+  <li>
+    <a href ng-click="about()"
+      ><i class="fa fa-fw fa-heart-o" aria-hidden="true"></i> {{ 'About' |
+      translate }}</a
+    >
+  </li>
+
+  <li class="divider"></li>
+
+  <li>
+    <a href ng-click="quit()"
+      ><i class="fa fa-fw fa-power-off" aria-hidden="true"></i> {{ 'Quit' |
+      translate }}<span class="shortcut">{{ 'quit' | shortcut }}</span></a
+    >
+  </li>
+</ul>

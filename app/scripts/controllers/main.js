@@ -15,6 +15,7 @@ angular
     alertify.defaults.closable = false;
     alertify.defaults.transition = 'fade';
     alertify.defaults.notifier.delay = 3;
+    alertify.defaults.notifier.position = 'bottom-center';
 
     for (const item of ['alert', 'prompt', 'confirm']) {
       alertify.set(item, 'labels', {

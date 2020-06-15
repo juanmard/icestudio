@@ -16,7 +16,6 @@ angular
     $scope.common = common;
     $scope.profile = profile;
     $scope.information = {};
-    $scope.topModule = true;
     $scope.backup = {};
 
     $rootScope.navigateProject = _navigateProject;
@@ -46,7 +45,7 @@ angular
       graph.resetView();
       !update ? _loadDesign() : project.update({deps: false}, _loadDesign);
 
-      $scope.topModule = false;
+      common.topModule = false;
       $scope.information = prj.package;
     }
 
@@ -90,7 +89,7 @@ angular
       if (n === 0) {
         var dsgn = project.get('design');
         _resetViewAndLoadDesign(dsgn, {disabled: false});
-        $scope.topModule = true;
+        common.topModule = true;
       } else {
         var type = graph.breadcrumbs[n].type;
         var dependency = common.allDependencies[type];

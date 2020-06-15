@@ -149,7 +149,6 @@ angular
 
     var local = false;
     for (var arg of argv) {
-      console.log(arg);
       if (nodeFs.existsSync(arg)) {
         project.open(arg);
       } else {
@@ -158,7 +157,6 @@ angular
             local = true;
             break;
           default:
-            console.log('DEFAULT', arg);
             // Move window
             var data = arg.split('x');
             win.moveTo(parseInt(data[0], 10), parseInt(data[1], 10));
@@ -1198,13 +1196,16 @@ angular
       if (
         !mousedown &&
         !graph.addingDraggableBlock &&
-        !$scope.status[newMenu]
+        (!$scope.status || !$scope.status[newMenu])
       ) {
         _fixMenu(newMenu);
       }
     };
 
     $scope.hideMenu = function () {
+      if (!$scope.status) {
+        $scope.status = {};
+      }
       $scope.status[menu] = false;
     };
 
@@ -1212,6 +1213,9 @@ angular
 
     function _fixMenu(newMenu) {
       menu = newMenu;
+      if (!$scope.status) {
+        $scope.status = {};
+      }
       $scope.status[menu] = true;
     }
 

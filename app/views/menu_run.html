@@ -1,0 +1,116 @@
+<ul class="nav navbar-nav navbar-right" ng-show="common.selectedBoard">
+  <li>
+    <div class="btn-group" role="group" aria-label="...">
+      <button
+        ng-click="verifyCode()"
+        type="button"
+        class="btn btn-sm btn-default"
+        title="{{ 'Verify' | translate }}"
+      >
+        <i class="fa fa-fw fa-check" aria-hidden="true"></i>
+      </button>
+      <button
+        ng-click="buildCode()"
+        type="button"
+        class="btn btn-sm btn-default"
+        title="{{ 'Build' | translate }}"
+      >
+        <i class="fa fa-fw fa-gear" aria-hidden="true"></i>
+      </button>
+      <button
+        ng-click="uploadCode()"
+        type="button"
+        class="btn btn-sm btn-default"
+        title="{{ 'Upload' | translate }}"
+      >
+        <i class="fa fa-fw fa-rocket" aria-hidden="true"></i>
+      </button>
+      <button
+        ng-click="showCommandOutput()"
+        type="button"
+        class="btn btn-sm btn-default"
+        title="{{ 'View command output' | translate }}"
+      >
+        <i class="fa fa-fw fa-align-left" aria-hidden="true"></i>
+      </button>
+    </div>
+  </li>
+  <li>
+    <div class="btn-group dropup">
+      <button
+        title="FPGA resource usage"
+        type="button"
+        class="btn btn-sm btn-default dropdown-toggle"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="fa fa-fw fa-bar-chart" aria-hidden="true"></i
+        ><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" style="pointer-events: none;">
+        <li>
+          <a
+            >LC:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '- / -' :
+            (common.FPGAResources.nextpnr.LC.used+' /
+            '+common.FPGAResources.nextpnr.LC.total+'
+            ('+common.FPGAResources.nextpnr.LC.percentage+'%)') }}</a
+          >
+        </li>
+        <li>
+          <a
+            >RAM:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '- / -' :
+            (common.FPGAResources.nextpnr.RAM.used+' /
+            '+common.FPGAResources.nextpnr.RAM.total+'
+            ('+common.FPGAResources.nextpnr.RAM.percentage+'%)') }}</a
+          >
+        </li>
+        <li>
+          <a
+            >IO:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '- / -' :
+            (common.FPGAResources.nextpnr.IO.used+' /
+            '+common.FPGAResources.nextpnr.IO.total+'
+            ('+common.FPGAResources.nextpnr.IO.percentage+'%)') }}</a
+          >
+        </li>
+        <li>
+          <a
+            >GB:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '- / -' :
+            (common.FPGAResources.nextpnr.GB.used+' /
+            '+common.FPGAResources.nextpnr.GB.total+'
+            ('+common.FPGAResources.nextpnr.GB.percentage+'%)') }}</a
+          >
+        </li>
+        <li>
+          <a
+            >PLL:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '- / -' :
+            (common.FPGAResources.nextpnr.PLL.used+' /
+            '+common.FPGAResources.nextpnr.PLL.total+'
+            ('+common.FPGAResources.nextpnr.PLL.percentage+'%)') }}</a
+          >
+        </li>
+        <li>
+          <a
+            >WB:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '- / -' :
+            (common.FPGAResources.nextpnr.WB.used+' /
+            '+common.FPGAResources.nextpnr.WB.total+'
+            ('+common.FPGAResources.nextpnr.WB.percentage+'%)') }}</a
+          >
+        </li>
+        <li>
+          <a
+            >MaxFreq.:&nbsp;&nbsp;{{ (common.hasChangesSinceBuild ||
+            !common.FPGAResources.nextpnr) ? '-' :
+            (common.FPGAResources.nextpnr.MF.value+'MHz') }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>

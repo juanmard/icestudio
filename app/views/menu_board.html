@@ -1,0 +1,51 @@
+<a href uib-dropdown-toggle
+  ><i class="fa fa-fw fa-microchip" aria-hidden="true"></i>
+  <span class="caret"></span
+></a>
+<ul uib-dropdown-menu>
+  <li
+    ng-class="pinoutAvailable() ? '' : 'is-disabled'"
+    style="text-align: center;"
+  >
+    <a href ng-click="showPinout()"
+      ><i>{{ common.selectedBoard.info.label }}</i></a
+    >
+  </li>
+  <li>
+    <a href ng-click="showPCF()"
+      ><i class="fa fa-fw fa-wrench" aria-hidden="true"></i> {{ 'Constraints' |
+      translate }}</a
+    >
+  </li>
+  <li>
+    <a href ng-click="showDatasheet()"
+      ><i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> {{ 'Datasheet'
+      | translate }}</a
+    >
+  </li>
+  <li>
+    <a href ng-click="toggleBoardRules()"
+      ><i
+        class="fa fa-fw"
+        ng-class="'fa-toggle-'+(profile.data.boardRules?'on':'off')"
+        aria-hidden="true"
+      ></i>
+      {{ 'Toggle board rules' | translate }}</a
+    >
+  </li>
+  <li>
+    <a href ng-click="showBoardRules()"
+      ><i class="fa fa-fw fa-eye" aria-hidden="true"></i> {{ 'View board rules'
+      | translate }}</a
+    >
+  </li>
+  <li class="divider"></li>
+  <li class="dropdown-submenu-right" uib-dropdown right="true">
+    <a href uib-dropdown-toggle>{{ 'Change board' | translate }}</a>
+    <menutree
+      data="common.boardMenu"
+      callback="selectBoard(path)"
+      right="true"
+    ></menutree>
+  </li>
+</ul>

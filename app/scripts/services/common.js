@@ -9,6 +9,7 @@ angular
     this.VERSION = '1.2';
 
     // Project status
+    this.topModule = true;
     this.hasChangesSinceBuild = false;
 
     // All project dependencies

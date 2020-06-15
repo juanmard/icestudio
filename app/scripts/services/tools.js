@@ -348,17 +348,15 @@ angular
         resultAlert.dismiss(false);
       }
       resultAlert = alertify.warning(
-        message +
-          '.<br>' +
+        `${message}.<br>` +
           gettextCatalog.getString('Click here to install it'),
-        100000
-      );
-      resultAlert.callback = function (isClicked) {
-        if (isClicked) {
-          // Install the new toolchain
-          $rootScope.$broadcast('installToolchain');
+        100000,
+        function (isClicked) {
+          if (isClicked) {
+            $rootScope.$broadcast('installToolchain');
+          }
         }
-      };
+      );
     }
 
     function executeRemote(commands, hostname) {

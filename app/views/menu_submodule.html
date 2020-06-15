@@ -1,0 +1,82 @@
+<div
+  ng-show="!common.topModule"
+  style="position: absolute; bottom: 5px; left: 5px; z-index: 1750;"
+  class="dropup"
+>
+  <div class="btn-group" uib-dropdown ng-show="graph.breadcrumbs.length > 2">
+    <button
+      type="button"
+      class="btn btn-sm btn-info"
+      ng-click="breadcrumbsJump(graph.breadcrumbs[0])"
+      ng-disabled="common.isEditingSubmodule"
+    >
+      <i class="fa fa-fw fa-home"></i>
+    </button>
+    <button
+      id="split-button"
+      type="button"
+      class="btn btn-sm btn-info"
+      ng-click="breadcrumbsBack()"
+      ng-disabled="common.isEditingSubmodule"
+    >
+      <i class="fa fa-fw fa-level-up" aria-hidden="true"></i> {{ 'Up' |
+      translate }}
+    </button>
+    <button type="button" class="btn btn-sm btn-info" uib-dropdown-toggle>
+      <span class="caret"></span>
+      <span class="sr-only"
+        ><i class="fa fa-fw fa-level-up" aria-hidden="true"></i> {{ 'Up' |
+        translate }}</span
+      >
+    </button>
+    <ul
+      class="dropdown-menu"
+      uib-dropdown-menu
+      role="menu"
+      aria-labelledby="split-button"
+    >
+      <li
+        role="menuitem"
+        ng-repeat="item in graph.breadcrumbs.slice(0, -1)"
+        ng-class="common.isEditingSubmodule?'is-disabled':''"
+      >
+        <a href ng-click="breadcrumbsJump(item)">{{item.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="btn-group" role="group" ng-show="graph.breadcrumbs.length <= 2">
+    <button
+      type="button"
+      class="btn btn-sm btn-info"
+      ng-click="breadcrumbsBack()"
+      ng-disabled="common.isEditingSubmodule"
+    >
+      <i class="fa fa-fw fa-level-up" aria-hidden="true"></i> {{ 'Up' |
+      translate }}
+    </button>
+  </div>
+  <div class="btn-group" role="group">
+    <button
+      type="button"
+      class="btn btn-sm btn-primary"
+      style="pointer-events: none;"
+    >
+      {{ information.version ? 'v' + information.version : 'unversioned' }}
+    </button>
+  </div>
+  <div class="btn-group" role="group">
+    <button
+      type="button"
+      class="btn btn-sm"
+      ng-click="editModeToggle()"
+      ng-class="'btn-' + (common.isEditingSubmodule?'warning':'danger')"
+    >
+      <i
+        class="fa fa-fw"
+        ng-class="'fa-' + (common.isEditingSubmodule?'unlock':'lock')"
+        aria-hidden="true"
+      ></i>
+      {{ (common.isEditingSubmodule? 'Lock' : 'Read only') | translate }}
+    </button>
+  </div>
+</div>

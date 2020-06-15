@@ -2,17 +2,12 @@ html {
   background: #222;
 }
 
-.footer {
-  color: white;
-}
-
 .dropdown a {
   color: white !important;
 }
 
-.footer,
-.navbar-left,
-.navbar-right {
+.navbar-fixed-top .navbar-left,
+.navbar-fixed-top .navbar-right {
   background: #444;
   border: 1px solid #666;
 }
@@ -35,6 +30,7 @@ html {
 
 .dropdown-menu > li > a {
   background: #444;
+  color: #fff;
 }
 
 .dropdown-submenu {
