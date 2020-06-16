@@ -13,11 +13,12 @@
 *~
 app/icerok.capture.raw
 .tmp
-dist
-cache
-docs/_build
-node_modules
-bower_components
 .vscode
+app/docs
 app/resources/collection
 app/resources/locale/**/*.json
+bower_components
+cache
+dist
+docs/_build
+node_modules

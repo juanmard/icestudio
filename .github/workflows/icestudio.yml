@@ -11,55 +11,6 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
-  linwin:
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        task:
-          [
-            {os: ubuntu, arg: lin, larg: linux},
-            {os: windows, arg: win, larg: win},
-          ]
-    runs-on: ${{ matrix.task.os }}-latest
-    steps:
-      - run: git config --global core.autocrlf input
-        shell: bash
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '11.x'
-      - run: yarn
-      - run: yarn run check
-      - run: yarn dist -v
-        env:
-          DIST_TARGET: ${{ matrix.task.arg }}
-      - uses: actions/upload-artifact@master
-        with:
-          name: ${{ matrix.task.arg }}64
-          path: dist/*${{ matrix.task.larg }}64.zip
-      - uses: actions/upload-artifact@master
-        with:
-          name: ${{ matrix.task.arg }}32
-          path: dist/*${{ matrix.task.larg }}32.zip
-
-  mac:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '11.x'
-      - run: yarn
-      - run: yarn run check
-      - run: yarn dist -v
-        env:
-          DIST_TARGET: osx
-      - uses: actions/upload-artifact@master
-        with:
-          name: osx64
-          path: dist/*osx64.zip
-
   doc:
     runs-on: ubuntu-latest
     steps:
@@ -88,6 +39,65 @@ jobs:
           git commit -a -m "update ${{ github.sha }}"
           git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
           git push -u origin +HEAD:gh-pages
+
+  linwin:
+    needs: [doc]
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        task:
+          [
+            {os: ubuntu, arg: lin, larg: linux},
+            {os: windows, arg: win, larg: win},
+          ]
+    runs-on: ${{ matrix.task.os }}-latest
+    steps:
+      - run: git config --global core.autocrlf input
+        shell: bash
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '11.x'
+      - run: yarn
+      - run: yarn run check
+      - uses: actions/download-artifact@v2
+        with:
+          name: docs
+          path: docs/_build/html
+      - run: yarn dist -v
+        env:
+          DIST_TARGET: ${{ matrix.task.arg }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: ${{ matrix.task.arg }}64
+          path: dist/*${{ matrix.task.larg }}64.zip
+      - uses: actions/upload-artifact@master
+        with:
+          name: ${{ matrix.task.arg }}32
+          path: dist/*${{ matrix.task.larg }}32.zip
+
+  mac:
+    needs: [doc]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '11.x'
+      - run: yarn
+      - run: yarn run check
+      - uses: actions/download-artifact@v2
+        with:
+          name: docs
+          path: docs/_build/html
+      - run: yarn dist -v
+        env:
+          DIST_TARGET: osx
+      - uses: actions/upload-artifact@master
+        with:
+          name: osx64
+          path: dist/*osx64.zip
 
   nightly:
     needs: [linwin, mac]

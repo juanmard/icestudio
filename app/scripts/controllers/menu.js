@@ -30,12 +30,18 @@ angular
     $scope.workingdir = '';
     $scope.snapshotdir = '';
 
+    $scope.openWindow = _openWindow;
+    $scope.selectBoard = _selectBoard;
     $scope.openProjectDialog = _openProjectDialog;
     $scope.openProject = _openProject;
+    $scope.addAsBlock = _addAsBlock;
     $scope.saveProject = _saveProject;
     $scope.saveProjectAs = _saveProjectAs;
     $scope.newProject = utils.newWindow;
     $scope.quit = _exit;
+    $scope.fitContent = () => {
+      graph.fitContent();
+    };
 
     // Convert the list of boards into a format suitable for 'menutree' directive
     function _getBoardsMenu(boards) {
@@ -210,6 +216,8 @@ angular
 
     //-- File
 
+    $scope.export = _export;
+
     shortcuts.method('newProject', utils.newWindow);
     shortcuts.method('openProject', _openProjectDialog);
     shortcuts.method('saveProject', _saveProject);
@@ -304,7 +312,7 @@ angular
       }
     }
 
-    $scope.addAsBlock = function () {
+    function _addAsBlock() {
       var notification = true;
       utils.openDialog('#input-add-as-block', '.ice', function (filepaths) {
         filepaths = filepaths.split(';');
@@ -312,9 +320,9 @@ angular
           project.addBlockFile(filepaths[i], notification);
         }
       });
-    };
+    }
 
-    $scope.export = function (etype) {
+    function _export(etype) {
       switch (etype) {
         case 'v':
           exportFromCompiler('verilog', 'Verilog', '.v');
@@ -340,7 +348,7 @@ angular
         default:
           console.error(`Unknown export type ${etype}!`);
       }
-    };
+    }
 
     function exportFromCompiler(id, name, ext) {
       checkGraph()
@@ -449,8 +457,11 @@ angular
     $scope.copySelected = () => {
       graph.copySelected();
     };
+    $scope.pasteSelected = _pasteSelected;
+    $scope.pasteAndCloneSelected = _pasteAndCloneSelected;
+    $scope.selectAll = _selectAll;
 
-    shortcuts.method('undoGraph', $scope.undo);
+    shortcuts.method('undoGraph', $scope.undoGraph);
     shortcuts.method('redoGraph', $scope.redoGraph);
     shortcuts.method('redoGraph2', $scope.redoGraph);
     shortcuts.method('cutSelected', $scope.cutSelected);
@@ -462,7 +473,7 @@ angular
 
     var paste = true;
 
-    $scope.pasteSelected = function () {
+    function _pasteSelected() {
       if (paste) {
         paste = false;
         graph.pasteSelected();
@@ -470,29 +481,21 @@ angular
           paste = true;
         }, 250);
       }
-    };
+    }
 
-    $scope.pasteAndCloneSelected = function () {
+    function _pasteAndCloneSelected() {
       if (paste) {
         graph.pasteAndCloneSelected();
       }
-    };
+    }
 
-    $scope.selectAll = function () {
+    function _selectAll() {
       checkGraph()
         .then(function () {
           graph.selectAll();
         })
         .catch(function () {});
-    };
-
-    function removeSelected() {
-      project.removeSelected();
     }
-
-    $scope.fitContent = function () {
-      graph.fitContent();
-    };
 
     $scope.setExternalCollections = function () {
       var externalCollections = profile.get('externalCollections');
@@ -830,7 +833,7 @@ angular
       return gui.Window.open(url, {
         title: title,
         focus: true,
-        // toolbar: false,
+        //toolbar: false,
         resizable: true,
         width: 700,
         height: 400,
@@ -898,8 +901,6 @@ angular
         profile.set('board', graph.selectBoard(board).name);
       }
     });
-
-    $scope.selectBoard = _selectBoard;
 
     function _selectBoard(name) {
       let board = undefined;
@@ -1234,10 +1235,10 @@ angular
     shortcuts.method('stepLeft', graph.stepLeft);
     shortcuts.method('stepRight', graph.stepRight);
 
-    shortcuts.method('removeSelected', removeSelected);
+    shortcuts.method('removeSelected', project.removeSelected);
     shortcuts.method('back', function () {
       if (graph.isEnabled()) {
-        removeSelected();
+        project.removeSelected();
       } else {
         $rootScope.breadcrumbsBack();
       }
