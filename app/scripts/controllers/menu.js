@@ -6,7 +6,6 @@ angular
     $log,
     $rootScope,
     $scope,
-    $timeout,
     profile,
     project,
     collections,

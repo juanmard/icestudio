@@ -472,17 +472,15 @@ angular
           var breadcrumbsLength = self.breadcrumbs.length;
 
           $('body').addClass('waiting');
-          setTimeout(function () {
-            $rootScope.navigateProject(
-              breadcrumbsLength === 1,
-              project,
-              type,
-              blockId,
-              true
-            );
-            self.pushTitle({name: project.package.name || '#', type: type});
-            utils.rootScopeSafeApply();
-          }, 100);
+          $rootScope.navigateProject(
+            breadcrumbsLength === 1,
+            project,
+            type,
+            blockId,
+            true
+          );
+          self.pushTitle({name: project.package.name || '#', type: type});
+          utils.rootScopeSafeApply();
         }
       });
 
@@ -1349,31 +1347,23 @@ angular
     this.loadDesign = function (design, opt, callback) {
       if (design && design.graph && design.graph.blocks && design.graph.wires) {
         opt = opt || {};
-
         $('body').addClass('waiting');
+        commandManager.stopListening();
+        self.clearAll();
+        var cells = graphToCells(design.graph, opt);
+        graph.addCells(cells);
+        self.setState(design.state);
+        self.appEnable(!opt.disabled);
+        if (!opt.disabled) {
+          commandManager.listen();
+        }
+        if (callback) {
+          callback();
+        }
         setTimeout(function () {
-          commandManager.stopListening();
-
-          self.clearAll();
-
-          var cells = graphToCells(design.graph, opt);
-
-          graph.addCells(cells);
-
-          self.setState(design.state);
-
-          self.appEnable(!opt.disabled);
-
-          if (!opt.disabled) {
-            commandManager.listen();
-          }
-
-          if (callback) {
-            callback();
-          }
-
+          updateWiresOnObstacles();
           $('body').removeClass('waiting');
-        }, 100);
+        }, 0);
 
         return true;
       }
