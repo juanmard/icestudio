@@ -3,22 +3,26 @@
 How to...
 =========
 
+Take a snapshot
+---------------
+
+Taking a **png** snapshot of the application is as easy as press **Ctrl+P**. A save dialog appears to set the name and the path of the captured image.
+
+
 Install the toolchain
 ---------------------
 
-1. **Install Python 2.7**
+1. **Install Python ``>=3.6``**
 
 2. **Launch the toolchain installation process**
 
-  Go to **Tools > Toolchain > Install**. Be patient for the toolchain installation.
+  Go to **Edit > Preferences > Manage toolchain > Install**. Be patient for the toolchain installation.
 
-  .. image:: ../resources/images/howto/installtoolchain.png
+  .. image:: img/howto_installtoolchain.png
+     :width: 400 px
+     :align: center
 
-|
-
-.. note::
-
-  When the toolchain is installed, the menu option changes to **Tools > Toolchain > Update**. Also, the toolchain can be restored to default in **Tools > Toolchain > Reset default**.
+.. note:: When the toolchain is installed, the menu option changes to *Edit > Preferences > Manage toolchain > Update**. Also, the toolchain can be restored to default in **Edit > Preferences > Manage toolchain > Reset default**.
 
 
 Update the toolchain
@@ -28,7 +32,7 @@ Update the toolchain
 
 2. **Launch the toolchain updating process**
 
-  Go to **Tools > Toolchain > Update**. Be patient for the toolchain update.
+  Go to **Edit > Preferences > Manage toolchain > Update**. Be patient for the toolchain update.
 
 
 Install the drivers
@@ -38,22 +42,21 @@ Install the drivers
 
 2. **Enable the FTDI drivers**
 
-  Go to **Tools > Drivers > Enable**. Each OS has a different process. This configuration requires administration privileges.
+  Go to **Edit > Preferences > Drivers > Enable**. Each OS has a different process. This configuration requires administration privileges.
 
 .. note::
 
-    In Windows, an external application (Zadig) is launched to replace the existing FTDI driver of the **Interface 0** by **libusbK**.
+    On Windows, an external application (`Zadig <https://zadig.akeo.ie/>`_) is used. It replaces the existing FTDI driver of the **Interface 0** with **libusbK**.
 
-    .. image:: ../resources/images/quickstart/zadig.png
+    .. image:: img/zadig.png
         :align: center
+        :width: 400 px
 
-    |
-
-    In MacOS this operation requires Internet connection to allow `Homebrew` to install `libffi` and `libftdi` packages.
+    On macOS, this operation requires internet connection to allow *Homebrew* to install ``libffi`` and ``libftdi`` packages.
 
 .. hint::
 
-  To revert the drivers configuration go to **Tools > Drivers > Disable**
+  For reverting the configuration, go to **Edit > Preferences > Drivers > Disable**.
 
 
 Create a project
@@ -63,15 +66,15 @@ Create a project
 
    Go to **Edit > New**. A new window will be opened.
 
-   .. image:: ../resources/images/howto/new.png
-
-|
+   .. image:: img/howto_new.png
+     :width: 400 px
+     :align: center
 
 2. **Add blocks**
 
-.. image:: ../resources/images/howto/demo.gif
-
-|
+.. image:: img/howto_demo.gif
+     :width: 400 px
+     :align: center
 
 There are different types of blocks:
 
@@ -81,13 +84,15 @@ There are different types of blocks:
 
     Also, it can be configured as **buses** using the ``[x:y]`` notation (``x`` is the most significant bit).
 
-    .. image:: ../resources/images/howto/io-fpga.png
+    .. image:: img/howto_io-fpga.png
+       :width: 400 px
+       :align: center
 
     If these blocks are used to build generic blocks, they should be configured as **virtual** (green). Then, the FPGA pin selector won't be shown.
 
-    .. image:: ../resources/images/howto/io-virtual.png
-
- |
+    .. image:: img/howto_io-virtual.png
+       :width: 400 px
+       :align: center
 
  2. *Constant blocks*
 
@@ -95,9 +100,9 @@ There are different types of blocks:
 
     These blocks can be configures as **local**. Then, this parameter won't be exported.
 
-    .. image:: ../resources/images/howto/constant.png
-
- |
+    .. image:: img/howto_constant.png
+       :width: 400 px
+       :align: center
 
  3. *Memory blocks*
 
@@ -105,23 +110,23 @@ There are different types of blocks:
 
     These blocks can be configures as **local**. Then, this parameter won't be exported. Also you can update the **address format** of the memory to be *binary*, *decimal* or *hexadecimal*.
 
-    .. image:: ../resources/images/howto/memory.png
-
- |
+    .. image:: img/howto_memory.png
+       :width: 400 px
+       :align: center
 
  4. *Code blocks*
 
     Click on **Basic > Code**, add the code ports. Port names are separated by a comma. E.g.: ``a, b``.
 
-    .. image:: ../resources/images/howto/code-prompt.png
-
-    |
+    .. image:: img/howto_code-prompt.png
+       :width: 400 px
+       :align: center
 
     This block contains a text editor to write your module in verilog code. Module header and footer are not required.
 
-    .. image:: ../resources/images/howto/code.png
-
- |
+    .. image:: img/howto_code.png
+       :width: 400 px
+       :align: center
 
  5. *Info blocks*
 
@@ -129,15 +134,15 @@ There are different types of blocks:
 
     This block contains a text editor to add comments about the project in **Markdown** or **HTML**.
 
-    .. image:: ../resources/images/howto/info.png
-
-    |
+    .. image:: img/howto_info.png
+       :width: 400 px
+       :align: center
 
     It can be rendered simply by double-clicking the block.
 
-    .. image:: ../resources/images/howto/info-render.png
-
- |
+    .. image:: img/howto_info-render.png
+       :width: 400 px
+       :align: center
 
  6. *Bit blocks*
 
@@ -145,17 +150,17 @@ There are different types of blocks:
 
     These blocks are low and high logic drivers.
 
-    .. image:: ../resources/images/howto/bit.png
-
- |
+    .. image:: img/howto_bit.png
+       :width: 400 px
+       :align: center
 
  7. *Logic blocks*
 
     Go to the **Logic** menu and select a block. This menu contains **Gates**, **Combinational blocks** and **Sequential blocks**.
 
-    .. image:: ../resources/images/howto/logic.png
-
- |
+    .. image:: img/howto_logic.png
+       :width: 400 px
+       :align: center
 
  8. *Setup blocks*
 
@@ -163,37 +168,37 @@ There are different types of blocks:
 
     The *Pull up* block must be connected to input ports in order to configure a pull up in the FPGA.
 
-    .. image:: ../resources/images/howto/setup.png
-
-|
+    .. image:: img/howto_setup.png
+       :width: 400 px
+       :align: center
 
 In this example we are going to implement an AND logic gate with its input/output pins connected to the FPGA I/O.
 
-.. image:: ../resources/images/howto/bwire.png
-
-|
+.. image:: img/howto_bwire.png
+   :width: 400 px
+   :align: center
 
 3. **Connect the blocks**
 
-.. image:: ../resources/images/howto/wire.png
-
-|
+.. image:: img/howto_wire.png
+   :width: 400 px
+   :align: center
 
 4. **Select your board**
 
    Go to **Select > Board** and select the board from the list.
 
-   .. image:: ../resources/images/howto/board.png
-
-|
+   .. image:: img/howto_board.png
+     :width: 400 px
+     :align: center
 
 5. **Set FPGA I/O pins**
 
    Select all Input/Output blocks' pins.
 
-   .. image:: ../resources/images/howto/fpgapin.png
-
-|
+   .. image:: img/howto_fpgapin.png
+     :width: 400 px
+     :align: center
 
 6. **Save the project**
 
@@ -201,20 +206,9 @@ In this example we are going to implement an AND logic gate with its input/outpu
 
    It will be saved as an **.ice** file.
 
-   .. image:: ../resources/images/howto/saveas.png
-
-|
-
-
-Show the FPGA resources
------------------------
-
-Go to **View > FPGA resources**
-
-.. image:: ../resources/images/howto/fpga-resources.png
-
-|
-
+   .. image:: img/howto_saveas.png
+     :width: 400 px
+     :align: center
 
 Upload a bitstream
 ------------------
@@ -223,17 +217,15 @@ Upload a bitstream
 
    Go to **Edit > Open...** and select an **.ice** file.
 
-   |
-
 2. **Verify the project**
 
    Go to **Tools > Verify**.
 
    This option checks the generated verilog code using ``apio verify``.
 
-   .. image:: ../resources/images/howto/verify.png
-
-   |
+   .. image:: img/howto_verify.png
+      :width: 400 px
+      :align: center
 
 3. **Build the project**
 
@@ -241,26 +233,23 @@ Upload a bitstream
 
    This option generates a bitstream using ``apio build``.
 
-   .. image:: ../resources/images/howto/build.png
-
-   |
+   .. image:: img/howto_build.png
+      :width: 400 px
+      :align: center
 
 4. **Upload the project**
 
    Connect your FPGA board and press **Tools > Upload**. This option uses ``apio upload``.
 
-   .. image:: ../resources/images/howto/upload.png
-
-   |
-
-Show the commands output
-------------------------
+   .. image:: img/howto_upload.png
+      :width: 400 px
+      :align: center
 
 After executing *Tools > Verify*, *Tools > Build* or *Tools > Upload* you can see the executed command and the output in a new windows opened from **View > Command output**.
 
-.. image:: ../resources/images/howto/toolchain-output.png
-
-|
+.. image:: img/howto_toolchain-output.png
+   :width: 400 px
+   :align: center
 
 Create a block
 --------------
@@ -269,85 +258,54 @@ Create a block
 
    Go to **Edit > Open project** and select an **.ice** file. It is recommended to set all the I/O ports non-FPGA ports (green) to create a block.
 
-|
-
-.. image:: ../resources/images/howto/project.png
+.. image:: img/howto_project.png
+   :width: 400 px
+   :align: center
 
 2. **Verify the project**
 
    Go to **Tools > Verify**.
 
-|
-
 2. **Add the project information**
 
    Go to **Edit > Preferences > Project information**.
 
-   .. image:: ../resources/images/howto/project-info.png
-
-   |
-
-|
+   .. image:: img/project-info.png
+      :width: 400 px
+      :align: center
 
 3. **Save the project**
 
    Go to **Edit > Save**.
 
-   .. image:: ../resources/images/howto/save.png
-
-   |
-
+   .. image:: img/howto_save.png
+      :width: 400 px
+      :align: center
 
 Add a project as block
 ----------------------
 
 1. **Open or create a new project**
 
-|
-
 2. **Import the custom block**
 
    Go to **Edit > Add as block...** and select an **.ice** file.
 
-   .. image:: ../resources/images/howto/addasblock.png
+   .. image:: img/howto_addasblock.png
+      :width: 400 px
+      :align: center
 
-   |
-
-   .. image:: ../resources/images/howto/customblock.png
-
-   |
+   .. image:: img/howto_customblock.png
+      :width: 400 px
+      :align: center
 
 3. **Examine the custom block**
 
    Complex blocks can be examined by double clicking the block.
 
-   .. image:: ../resources/images/howto/examine.png
-
-   |
-
-
-Add a collection
-----------------
-
-Go to **Tools > Collections > Add** and select a collection package (ZIP file).
-
-
-Select a collection
--------------------
-
-Go to **Select > Collections**. Select a collection. The first item is the "Default" collection that is the one stored in the application, then the installed internal collections and finally the external collections.
-
-
-View the selected collection info
----------------------------------
-
-Go to **View > Collection info**. A new window will appear with the README.md file content.
-
-Load external collections
--------------------------
-
-Go to **Edit > Preferences > External collection** and insert an absolute path of your system containing Icestudio collections.
-
+   .. image:: img/howto_examine.png
+      :width: 400 px
+      :align: center
 
 Create a collection package
 ---------------------------
@@ -381,7 +339,6 @@ You can use the `icm cli tool <https://github.com/FPGAwars/icm>`_ to create and 
    ├── package.json
    └── README.md
 
-
 2. **ZIP all your collections**
 
  Create a ZIP file with all your created collections at the main level.
@@ -399,7 +356,6 @@ You can use the `icm cli tool <https://github.com/FPGAwars/icm>`_ to create and 
 
    The file **package.json** must exists, and also the **blocks** directory and/or the **examples** directory. The **locale** directory is optional. More information in the `Default collection <https://github.com/FPGAwars/collection-default>`_.
 
-
 Include a list file
 -------------------
 
@@ -411,7 +367,7 @@ If your code block contains a list file(s), for example:
 
 1. **Save the ice project**
 
-2. **Copy the list file(s) in the project directory**
+2. **Copy the list file(s) to the project directory**
 
 3. **Build and upload the project**
 
@@ -420,7 +376,6 @@ Also you can include explicitly a list file in the header of a code block:
 .. code-block:: verilog
 
   // @include rom.list
-
 
 Include a verilog (header) file
 -------------------------------
@@ -436,39 +391,14 @@ If your code block includes a verilog (header) file(s), for example:
 
 1. **Save the ice project**
 
-2. **Copy the verilog (header) file(s) in the project's directory**
+2. **Copy the verilog (header) file(s) to the project's directory**
 
 3. **Build and upload the project**
-
-
-View the board rules
---------------------
-
-Go to **View > Board rules**
-
-.. image:: ../resources/images/howto/icezum-rules.png
-
-|
-
-
-Disable the board rules
------------------------
-
-Go to **Edit > Preferences > Board rules**
-
-.. image:: ../resources/images/howto/disable-rules.png
-
-|
-
-.. image:: ../resources/images/howto/rules-disabled.png
-
-|
-
 
 Configure a remote host
 ------------------------
 
-I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio as a client, first configure the host:
+I you want to use a RPi (or another computer), e.g. ``pi@192.168.0.22``, first configure the host:
 
 1. **Copy your SSH public key into the server**
 
@@ -477,7 +407,7 @@ I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio 
     $ ssh-keygen
     $ ssh-copy-id -i .ssh/id_rsa.pub pi@192.168.0.22
 
-2. **Install apio in the server**
+2. **Install apio on the server**
 
   .. code-block:: bash
 
@@ -488,18 +418,6 @@ I you want to use a RPi, eg pi@192.168.0.22, or another computer from Icestudio 
 
 3. **Enter the host name in Icestudio, Edit > Remote hostname**
 
-   .. image:: ../resources/images/howto/remotehost.png
+   .. image:: img/howto_remotehost.png
 
-   |
-
-4. **Now, Verify, Build and Upload tools will run in the selected host**
-
-
-Close the application
----------------------
-
-Go to **File > Quit** or click the application's close button. If there are unsaved changes an alert will appear to confirm or cancel the action:
-
-.. image:: ../resources/images/howto/close-alert.png
-
-|
+4. **Now, Verify, Build and Upload tools will run on the selected host**

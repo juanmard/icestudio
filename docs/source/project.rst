@@ -1,7 +1,7 @@
-.. _project:
+.. _DEV:project:
 
-Project
-=======
+ICE format
+==========
 
 Definition
 ----------

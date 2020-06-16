@@ -16,22 +16,11 @@
   <a title="Code Climate technical debt" href="https://david-dm.org/juanmard/icestudio/moon?path=app"><img src="https://img.shields.io/codeclimate/tech-debt/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a>
 </p>
 
-Visual editor for Verilog designs, built on top of [Icestorm](http://www.clifford.at/icestorm/) and [Apio](https://github.com/FPGAwars/apio). For more information visit [juanmard.github.io/icestudio](https://juanmard.github.io/icestudio).
-
-# Installation
-
-Requirements:
-
-- GNU/Linux: `xclip`.
-- macOS: [Homebrew](https://brew.sh).
-
-Since this repository is a proof of concept, no regular/tagged releases are available yet. However, after each commit is pushed, CI workflows produce nightly builds for all the supported platforms. Users can pick the artifacts from pre-release [nightly](https://github.com/juanmard/icestudio/releases/tag/nightly) or from any of the successful jobs in [juanmard/icestudio/actions?query=workflow:icestudio](https://github.com/juanmard/icestudio/actions?query=workflow%3Aicestudio).
-
-Check the [Documentation](https://juanmard.github.io/icestudio) for more information.
+Visual editor for Verilog designs, built on top of [Icestorm](http://www.clifford.at/icestorm/) and [Apio](https://github.com/FPGAwars/apio). Find installation guidelines, user guide and further information at [juanmard.github.io/icestudio](https://juanmard.github.io/icestudio).
 
 # Development
 
-Install [Python >= 3.5](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/). On Windows, the recommended Node.js version is `10.17.x`.
+Install [Python >= 3.6](https://www.python.org/downloads/) and [Node.js](https://nodejs.org/). On Windows, the recommended Node.js version is `10.17.x`.
 
 Install dependencies and start development:
 
