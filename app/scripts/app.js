@@ -25,25 +25,18 @@ angular
     utils,
     boards,
     collections,
-    gettextCatalog,
-    $timeout
+    gettextCatalog
   ) {
     'use strict';
-    $timeout(function () {
-      $('body').addClass('waiting');
-    }, 0);
-    // Load boards
+
+    $('html').attr('lang', profile.get('language'));
+    $('body').addClass('waiting');
     boards.loadBoards();
-    // Load profile
     utils.loadProfile(profile, function () {
-      // Load collections
       collections.loadAllCollections();
-      // Load language
       utils.loadLanguage(profile, function () {
         if (profile.get('board') === '') {
-          // Select board for the first time
           utils.selectBoardPrompt(function (selectedBoard) {
-            // Initialize selected board
             var newBoard = boards.selectBoard(selectedBoard);
             profile.set('board', newBoard.name);
             alertify.success(
@@ -51,20 +44,13 @@ angular
                 name: utils.bold(newBoard.info.label),
               })
             );
-            // Check if the toolchain is installed
             tools.checkToolchain();
           });
         } else {
-          // Initialize selected board
           profile.set('board', boards.selectBoard(profile.get('board')).name);
-          // Check if the toolchain is installed
           tools.checkToolchain();
         }
-
-        $('html').attr('lang', profile.get('language'));
-        // Rearrange collections
         collections.sort();
-        // Initialize title
         project.updateTitle(gettextCatalog.getString('Untitled'));
         $('body').removeClass('waiting');
       });

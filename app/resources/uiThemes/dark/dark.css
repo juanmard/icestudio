@@ -1,4 +1,5 @@
-html {
+html,
+.spinner-wrapper {
   background: #222;
 }
 
@@ -94,14 +95,6 @@ html {
 .io-block .io-virtual-content .header label {
   color: white !important;
   font-weight: bold !important;
-}
-
-.sk-cube-grid .sk-cube {
-  background-color: white;
-}
-
-.spinner-wrapper--bg {
-  background-color: #666;
 }
 
 .ajs-dialog {
