@@ -1026,6 +1026,7 @@ angular
       graph.stopBatch('change');
       return newBoard;
     };
+
     this.setBlockInfo = function (values, newValues, blockId) {
       if (common.allDependencies === undefined) {
         return false;

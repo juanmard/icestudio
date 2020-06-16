@@ -1,6 +1,12 @@
 angular
   .module('icestudio')
-  .service('profile', function (utils, common, _package, nodeFs) {
+  .service('profile', function (
+    utils,
+    common,
+    gettextCatalog,
+    _package,
+    nodeFs
+  ) {
     'use strict';
 
     this.data = {
@@ -87,5 +93,14 @@ angular
         .catch(function (error) {
           alertify.error(error, 30);
         });
+    };
+
+    this.setBoard = function (board) {
+      this.set('board', board.name);
+      alertify.success(
+        gettextCatalog.getString('Board {{name}} selected', {
+          name: utils.bold(board.info.label),
+        })
+      );
     };
   });

@@ -922,7 +922,7 @@ angular
                 'The current FPGA I/O configuration will be lost.'
               ),
               function () {
-                _boardSelected();
+                _selectBoardNotify(board);
               },
               function () {}
             )
@@ -933,18 +933,13 @@ angular
               },
             });
         } else {
-          _boardSelected();
+          _selectBoardNotify(board);
         }
       }
 
-      function _boardSelected() {
+      function _selectBoardNotify(board) {
         var newBoard = graph.selectBoard(board, true);
-        profile.set('board', newBoard.name);
-        alertify.success(
-          gettextCatalog.getString('Board {{name}} selected', {
-            name: utils.bold(newBoard.info.label),
-          })
-        );
+        profile.setBoard(newBoard);
       }
     }
 

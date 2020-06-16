@@ -37,13 +37,7 @@ angular
       utils.loadLanguage(profile, function () {
         if (profile.get('board') === '') {
           utils.selectBoardPrompt(function (selectedBoard) {
-            var newBoard = boards.selectBoard(selectedBoard);
-            profile.set('board', newBoard.name);
-            alertify.success(
-              gettextCatalog.getString('Board {{name}} selected', {
-                name: utils.bold(newBoard.info.label),
-              })
-            );
+            profile.setBoard(boards.selectBoard(selectedBoard));
             tools.checkToolchain();
           });
         } else {
