@@ -1851,14 +1851,6 @@ fs-extra@^0.30.0:
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
-fs-extra@^2.0.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-2.1.2.tgz#046c70163cef9aad46b0e4a7fa467fb22d71de35"
-  integrity sha1-BGxwFjzvmq1GsOSn+kZ/si1x3jU=
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^2.1.0"
-
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -2139,14 +2131,6 @@ grunt-angular-gettext@^2.5.0:
   integrity sha512-PEJvkZHifk6Qi7+Y6vIAtjdUII6EhhDXLaAOb7pZzyx0B1+8HUSbseM/e0lmJW1/sRe749qzrtluBNM6/VowFQ==
   dependencies:
     angular-gettext-tools "~2.5.3"
-
-grunt-appimage@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/grunt-appimage/-/grunt-appimage-0.6.0.tgz#9455135dd5107dfc4029ee2b14ce3dc80076d6ad"
-  integrity sha1-lFUTXdUQffxAKe4rFM49yAB21q0=
-  dependencies:
-    fs-extra "^2.0.0"
-    temporary "0.0.8"
 
 grunt-cli@^1.2.0, grunt-cli@~1.3.2:
   version "1.3.2"
@@ -3808,11 +3792,6 @@ package-json@^2.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-"package@>= 1.0.0 < 1.2.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/package/-/package-1.0.1.tgz#d25a1f99e2506dcb27d6704b83dca8a312e4edcc"
-  integrity sha1-0lofmeJQbcsn1nBLg9yooxLk7cw=
-
 pako@~0.2.0, pako@~0.2.5:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
@@ -4968,13 +4947,6 @@ temp@~0.7.0:
   integrity sha1-00vcjn+VXaKmpHP+oHrWAdaLp48=
   dependencies:
     rimraf "~2.2.6"
-
-temporary@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/temporary/-/temporary-0.0.8.tgz#a18a981d28ba8ca36027fb3c30538c3ecb740ac0"
-  integrity sha1-oYqYHSi6jKNgJ/s8MFOMPst0CsA=
-  dependencies:
-    package ">= 1.0.0 < 1.2.0"
 
 terser@^4.3.9:
   version "4.8.0"

@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 
   function targetLin(bits) {
     platforms.push('linux' + bits);
-    distCommands.push('compress:linux' + bits, 'appimage:linux' + bits);
+    distCommands.push('compress:linux' + bits);
   }
   function targetWin(bits) {
     platforms.push('win' + bits);
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   function targetOSX() {
     platforms.push('osx64');
     options.scope.push('darwinDependencies');
-    distCommands.push('compress:osx64', 'appdmg');
+    distCommands.push('compress:osx64');
   }
   var targets = process.env.DIST_TARGET;
   if (targets === undefined) {
@@ -128,52 +128,6 @@ module.exports = function (grunt) {
     src: ['dist/tmp/**'],
   };
 
-  function _appimage(bits) {
-    return {
-      options: {
-        name: 'Icestudio',
-        exec: 'icestudio',
-        arch: bits + 'bit',
-        icons: 'docs/resources/icons',
-        comment: 'Visual editor for open FPGA boards',
-        archive:
-          'dist/<%=pkg.name%>-<%=pkg.version%>-linux' + bits + '.AppImage',
-      },
-      files: [
-        {
-          expand: true,
-          cwd: 'dist/icestudio/linux' + bits + '/',
-          src: ['**'].concat(appFiles),
-        },
-      ],
-    };
-  }
-
-  gruntCfg.appimage = {
-    linux32: _appimage('32'),
-    linux64: _appimage('64'),
-  };
-
-  gruntCfg.appdmg = {
-    options: {
-      basepath: '.',
-      title: 'Icestudio Installer',
-      icon: 'docs/resources/images/logo/icestudio-logo.icns',
-      background: 'docs/resources/images/installation/installer-background.png',
-      window: {size: {width: 512, height: 385}},
-      contents: [
-        {x: 345, y: 250, type: 'link', path: '/Applications'},
-        {
-          x: 170,
-          y: 250,
-          type: 'file',
-          path: 'dist/icestudio/osx64/icestudio.app',
-        },
-      ],
-    },
-    target: {dest: 'dist/<%=pkg.name%>-<%=pkg.version%>-osx64.dmg'},
-  };
-
   function _compress(os, bits) {
     return {
       options: {
@@ -252,8 +206,6 @@ module.exports = function (grunt) {
   // Project configuration
   grunt.initConfig({
     pkg: pkg,
-    appdmg: gruntCfg.appdmg, // macOS only
-    appimage: gruntCfg.appimage, // GNU/Linux only
     compress: gruntCfg.compress, // Compress packages usin zip
     copy: gruntCfg.copy, // Copy dist files
     nwjs: gruntCfg.nwjs, // Execute nw-build packaging

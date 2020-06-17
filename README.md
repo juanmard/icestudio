@@ -1,12 +1,14 @@
 <p align="center">
+  <a title="juanmard.github.io/icestudio" href="https://juanmard.github.io/icestudio"><img src="https://img.shields.io/website.svg?label=juanmard.github.io%2Ficestudio&longCache=true&style=flat-square&url=http%3A%2F%2Fjuanmard.github.io%2Ficestudio%2Findex.html&logo=github"></a><!--
+  -->
+  <a title="'icestudio' workflow status" href="https://github.com/juanmard/icestudio/actions?query=workflow%3Aicestudio"><img alt="'icestudio' workflow status" src="https://img.shields.io/github/workflow/status/juanmard/icestudio/icestudio?longCache=true&style=flat-square&label=icestudio&logo=github"></a>
+</p>
+
+<p align="center">
 <a href="http://juanmard.github.io/icestudio"><img src="./docs/resources/images/logo/icestudio-logo-label-nightly.png" align="center"></a>
 </p>
 
 <p align="center">
-  <a title="juanmard.github.io/icestudio" href="https://juanmard.github.io/icestudio"><img src="https://img.shields.io/website.svg?label=juanmard.github.io%2Ficestudio&longCache=true&style=flat-square&url=http%3A%2F%2Fjuanmard.github.io%2Ficestudio%2Findex.html&logo=github"></a><!--
-  -->
-  <a title="'icestudio' workflow status" href="https://github.com/juanmard/icestudio/actions?query=workflow%3Aicestudio"><img alt="'icestudio' workflow status" src="https://img.shields.io/github/workflow/status/juanmard/icestudio/icestudio?longCache=true&style=flat-square&label=icestudio&logo=github"></a><!--
-  -->
   <a title="DevDependency Status" href="https://david-dm.org/juanmard/icestudio/moon?type=dev"><img src="https://img.shields.io/david/dev/juanmard/icestudio.svg?longCache=true&style=flat-square&label=devdeps&logo=npm"></a><!--
   -->
   <a title="Dependency Status" href="https://david-dm.org/juanmard/icestudio/moon?path=app"><img src="https://img.shields.io/david/juanmard/icestudio.svg?path=app&longCache=true&style=flat-square&label=app%20deps&logo=npm"></a><!--
@@ -58,9 +60,9 @@ Basque, Catalan, Chinese, Czech, Dutch, English, French, Galician, German, Greek
 yarn dist
 ```
 
-- GNU/Linux: (linux32,linux64).zip, (linux32,linux64).AppImage
+- GNU/Linux: (linux32,linux64).zip
 - Windows: (win32,win64).zip
-- Mac OS: osx64.zip, osx64.dmg
+- Mac OS: osx64.zip
 
 ## References
 
