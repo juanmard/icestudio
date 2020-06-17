@@ -3,17 +3,6 @@
 module.exports = function (grunt) {
   'use strict';
 
-  const appFiles = [
-    'index.html',
-    'package.json',
-    'fonts/**/*.*',
-    'node_modules/**/*.*',
-    'resources/**/*.*',
-    'scripts/**/*.*',
-    'styles/**/*.*',
-    'views/**/*.*',
-  ];
-
   var platforms = [];
   var distCommands = [];
   var options = {scope: ['devDependencies']};
@@ -67,40 +56,49 @@ module.exports = function (grunt) {
 
   var gruntCfg = {};
 
+  var copyArgs = [
+    {
+      expand: true,
+      cwd: 'app',
+      dest: 'dist/tmp',
+      src: [
+        'index.html',
+        'package.json',
+        'node_modules/**',
+        'resources/**',
+        'views/*.html',
+      ],
+    },
+    {
+      expand: true,
+      dest: 'dist/tmp/styles/fonts',
+      src: ['**'],
+      cwd: 'app/fonts/Lato2OFLWeb/Lato/fonts',
+    },
+    {
+      expand: true,
+      dest: 'dist/tmp/docs',
+      src: '**',
+      cwd: 'docs/_build/html',
+    },
+  ];
+
+  for (var font of [
+    'app/fonts/freefont/',
+    'app/bower_components/bootstrap/fonts',
+    'app/node_modules/font-awesome/fonts',
+  ]) {
+    copyArgs.push({
+      expand: true,
+      dest: 'dist/tmp/fonts',
+      src: '*.*',
+      cwd: font,
+    });
+  }
+
   gruntCfg.copy = {
     dist: {
-      files: [
-        {
-          expand: true,
-          cwd: 'app',
-          dest: 'dist/tmp',
-          src: [
-            'index.html',
-            'package.json',
-            'resources/**',
-            'node_modules/**',
-            'views/*.html',
-          ],
-        },
-        {
-          expand: true,
-          dest: 'dist/tmp/fonts',
-          src: '*.*',
-          cwd: 'app/bower_components/bootstrap/fonts',
-        },
-        {
-          expand: true,
-          dest: 'dist/tmp/fonts',
-          src: '*.*',
-          cwd: 'app/node_modules/font-awesome/fonts',
-        },
-        {
-          expand: true,
-          dest: 'dist/tmp/docs',
-          src: '**',
-          cwd: 'docs/_build/html',
-        },
-      ],
+      files: copyArgs,
     },
   };
 
@@ -137,7 +135,16 @@ module.exports = function (grunt) {
         {
           expand: true,
           cwd: 'dist/icestudio/' + os + bits + '/',
-          src: ['**'].concat(appFiles),
+          src: ['**'].concat([
+            'index.html',
+            'package.json',
+            'fonts/**/*.*',
+            'node_modules/**/*.*',
+            'resources/**/*.*',
+            'scripts/**/*.*',
+            'styles/**/*.*',
+            'views/**/*.*',
+          ]),
           dest: '<%=pkg.name%>-<%=pkg.version%>-' + os + bits,
         },
       ],

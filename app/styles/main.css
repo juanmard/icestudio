@@ -1,7 +1,7 @@
 /* Webfont: Lato-Black */
 @font-face {
   font-family: 'SVG-SANS';
-  src: url('../resources/fonts/freefont/FreeSerifBold.ttf') format('truetype');
+  src: url('fonts/FreeSerifBold.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
   text-rendering: optimizeLegibility;

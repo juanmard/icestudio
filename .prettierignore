@@ -1,7 +1,7 @@
 .vscode
 app/docs
+app/fonts
 app/resources/collection
-app/resources/fonts
 app/resources/plugins/serial-term/js/xterm
 app/resources/plugins/serial-term/css/tailwind.css
 bower_components
