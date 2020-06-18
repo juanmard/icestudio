@@ -24,6 +24,10 @@ angular
   ) {
     'use strict';
 
+    const _tcStr = function (str, args) {
+      return gettextCatalog.getString(str, args);
+    };
+
     var taskRunning = false;
     var resources = [];
     var startAlert = null;
@@ -82,7 +86,14 @@ angular
           graph
             .resetCodeErrors()
             .then(function () {
-              return checkToolchainInstalled();
+              return new Promise(function (resolve, reject) {
+                if (toolchain.installed) {
+                  resolve();
+                } else {
+                  _toolchainNotInstalledAlert('Toolchain not installed');
+                  reject();
+                }
+              });
             })
             .then(function () {
               utils.beginBlockingTask();
@@ -116,9 +127,7 @@ angular
             .then(function () {
               // Success
               if (endMessage) {
-                resultAlert = alertify.success(
-                  gettextCatalog.getString(endMessage)
-                );
+                resultAlert = alertify.success(_tcStr(endMessage));
               }
               utils.endBlockingTask();
               restoreTask();
@@ -141,19 +150,6 @@ angular
         }
         taskRunning = false;
       }, 1000);
-    }
-
-    function checkToolchainInstalled() {
-      return new Promise(function (resolve, reject) {
-        if (toolchain.installed) {
-          resolve();
-        } else {
-          toolchainNotInstalledAlert(
-            gettextCatalog.getString('Toolchain not installed')
-          );
-          reject();
-        }
-      });
     }
 
     function generateCode(cmd) {
@@ -280,7 +276,7 @@ angular
         var copySuccess = utils.copySync(origPath, destPath);
         if (!copySuccess) {
           resultAlert = alertify.error(
-            gettextCatalog.getString('File {{file}} does not exist', {
+            _tcStr('File {{file}} does not exist', {
               file: file,
             }),
             30
@@ -302,9 +298,7 @@ angular
           toolchain.apio = '';
           toolchain.installed = false;
           // Apio not installed
-          toolchainNotInstalledAlert(
-            gettextCatalog.getString('Toolchain not installed')
-          );
+          _toolchainNotInstalledAlert('Toolchain not installed');
           if (callback) {
             callback();
           }
@@ -321,9 +315,7 @@ angular
                 if (error) {
                   toolchain.apio = '';
                   // Toolchain not properly installed
-                  toolchainNotInstalledAlert(
-                    gettextCatalog.getString('Toolchain not installed')
-                  );
+                  _toolchainNotInstalledAlert('Toolchain not installed');
                 }
                 if (callback) {
                   callback();
@@ -332,9 +324,7 @@ angular
             );
           } else {
             // An old version is installed
-            toolchainNotInstalledAlert(
-              gettextCatalog.getString('Toolchain version does not match')
-            );
+            _toolchainNotInstalledAlert('Toolchain version does not match');
             if (callback) {
               callback();
             }
@@ -343,13 +333,12 @@ angular
       });
     }
 
-    function toolchainNotInstalledAlert(message) {
+    function _toolchainNotInstalledAlert(message) {
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
       resultAlert = alertify.warning(
-        `${message}.<br>` +
-          gettextCatalog.getString('Click here to install it'),
+        `${_tcStr(message)}.<br>` + _tcStr('Click here to install it'),
         100000,
         function (isClicked) {
           if (isClicked) {
@@ -361,9 +350,7 @@ angular
 
     function executeRemote(commands, hostname) {
       return new Promise(function (resolve) {
-        startAlert.setContent(
-          gettextCatalog.getString('Synchronize remote files ...')
-        );
+        startAlert.setContent(_tcStr('Synchronize remote files ...'));
         nodeRSync(
           {
             src: common.BUILD_DIR + '/',
@@ -385,7 +372,7 @@ angular
           function (error, stdout, stderr /*, cmd*/) {
             if (!error) {
               startAlert.setContent(
-                gettextCatalog.getString('Execute remote {{label}} ...', {
+                _tcStr('Execute remote {{label}} ...', {
                   label: '',
                 })
               );
@@ -489,19 +476,14 @@ angular
               stdout.indexOf('USBError') !== -1 ||
               stdout.indexOf('Activate bootloader') !== -1
             ) {
-              var errorMessage = gettextCatalog.getString(
-                'Board {{name}} not connected',
-                {
-                  name: utils.bold(boardLabel),
-                }
-              );
+              var errorMessage = _tcStr('Board {{name}} not connected', {
+                name: utils.bold(boardLabel),
+              });
               if (stdout.indexOf('Activate bootloader') !== -1) {
                 if (common.selectedBoard.name.startsWith('TinyFPGA-B')) {
                   // TinyFPGA bootloader notification
                   errorMessage +=
-                    '</br>(' +
-                    gettextCatalog.getString('Bootloader not active') +
-                    ')';
+                    '</br>(' + _tcStr('Bootloader not active') + ')';
                 }
               }
               resultAlert = alertify.error(errorMessage, 30);
@@ -510,17 +492,14 @@ angular
               -1
             ) {
               resultAlert = alertify.error(
-                gettextCatalog.getString('Board {{name}} not available', {
+                _tcStr('Board {{name}} not available', {
                   name: utils.bold(boardLabel),
                 }),
                 30
               );
               setupDriversAlert();
             } else if (stdout.indexOf('Error: unknown board') !== -1) {
-              resultAlert = alertify.error(
-                gettextCatalog.getString('Unknown board'),
-                30
-              );
+              resultAlert = alertify.error(_tcStr('Unknown board'), 30);
             } else if (stdout.indexOf('[upload] Error') !== -1) {
               switch (common.selectedBoard.name) {
                 // TinyFPGA-B2 programmer errors
@@ -529,12 +508,12 @@ angular
                   var match = stdout.match(/Bootloader\snot\sactive/g);
                   if (match && match.length === 3) {
                     resultAlert = alertify.error(
-                      gettextCatalog.getString('Bootloader not active'),
+                      _tcStr('Bootloader not active'),
                       30
                     );
                   } else if (stdout.indexOf('Device or resource busy') !== -1) {
                     resultAlert = alertify.error(
-                      gettextCatalog.getString('Board {{name}} not available', {
+                      _tcStr('Board {{name}} not available', {
                         name: utils.bold(boardLabel),
                       }),
                       30
@@ -546,23 +525,17 @@ angular
                     ) !== -1
                   ) {
                     resultAlert = alertify.error(
-                      gettextCatalog.getString('Board {{name}} disconnected', {
+                      _tcStr('Board {{name}} disconnected', {
                         name: utils.bold(boardLabel),
                       }),
                       30
                     );
                   } else {
-                    resultAlert = alertify.error(
-                      gettextCatalog.getString(stdout),
-                      30
-                    );
+                    resultAlert = alertify.error(_tcStr(stdout), 30);
                   }
                   break;
                 default:
-                  resultAlert = alertify.error(
-                    gettextCatalog.getString(stdout),
-                    30
-                  );
+                  resultAlert = alertify.error(_tcStr(stdout), 30);
               }
               console.warn(stdout);
             }
@@ -572,7 +545,7 @@ angular
               stdout.indexOf('libffi') !== -1
             ) {
               resultAlert = alertify.error(
-                gettextCatalog.getString('Configuration not completed'),
+                _tcStr('Configuration not completed'),
                 30
               );
               setupDriversAlert();
@@ -583,14 +556,14 @@ angular
               stdout.indexOf('fatal error: unknown pin') !== -1
             ) {
               resultAlert = alertify.error(
-                gettextCatalog.getString('FPGA I/O ports not defined'),
+                _tcStr('FPGA I/O ports not defined'),
                 30
               );
             } else if (
               stdout.indexOf('fatal error: duplicate pin constraints') !== -1
             ) {
               resultAlert = alertify.error(
-                gettextCatalog.getString('Duplicated FPGA I/O ports'),
+                _tcStr('Duplicated FPGA I/O ports'),
                 30
               );
             } else {
@@ -695,13 +668,13 @@ angular
 
               if (hasErrors) {
                 resultAlert = alertify.error(
-                  gettextCatalog.getString('Errors detected in the design'),
+                  _tcStr('Errors detected in the design'),
                   5
                 );
               } else {
                 if (hasWarnings) {
                   resultAlert = alertify.warning(
-                    gettextCatalog.getString('Warnings detected in the design'),
+                    _tcStr('Warnings detected in the design'),
                     5
                   );
                 }
@@ -755,14 +728,14 @@ angular
               stderr.indexOf('Connection refused') !== -1
             ) {
               resultAlert = alertify.error(
-                gettextCatalog.getString('Wrong remote hostname {{name}}', {
+                _tcStr('Wrong remote hostname {{name}}', {
                   name: profile.get('remoteHostname'),
                 }),
                 30
               );
             } else if (stderr.indexOf('No route to host') !== -1) {
               resultAlert = alertify.error(
-                gettextCatalog.getString('Remote host {{name}} not connected', {
+                _tcStr('Remote host {{name}} not connected', {
                   name: profile.get('remoteHostname'),
                 }),
                 30
@@ -1010,7 +983,7 @@ angular
         installDefaultToolchain();
       } else {
         alertify.confirm(
-          gettextCatalog.getString(
+          _tcStr(
             'Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?'
           ),
           function () {
@@ -1026,7 +999,7 @@ angular
         resultAlert.dismiss(false);
       }
       alertify.confirm(
-        gettextCatalog.getString(
+        _tcStr(
           'The toolchain will be updated. This operation requires Internet connection. Do you want to continue?'
         ),
         function () {
@@ -1041,7 +1014,7 @@ angular
       }
       if (utils.checkDefaultToolchain()) {
         alertify.confirm(
-          gettextCatalog.getString(
+          _tcStr(
             'The toolchain will be restored to default. Do you want to continue?'
           ),
           function () {
@@ -1051,12 +1024,9 @@ angular
         );
       } else {
         alertify.alert(
-          gettextCatalog.getString(
-            "Error: default toolchain not found in '{{dir}}'",
-            {
-              dir: common.TOOLCHAIN_DIR,
-            }
-          )
+          _tcStr("Error: default toolchain not found in '{{dir}}'", {
+            dir: common.TOOLCHAIN_DIR,
+          })
         );
       }
     };
@@ -1066,14 +1036,12 @@ angular
         resultAlert.dismiss(false);
       }
       alertify.confirm(
-        gettextCatalog.getString(
-          'The toolchain will be removed. Do you want to continue?'
-        ),
+        _tcStr('The toolchain will be removed. Do you want to continue?'),
         function () {
           utils.removeToolchain();
           toolchain.apio = '';
           toolchain.installed = false;
-          alertify.success(gettextCatalog.getString('Toolchain removed'));
+          alertify.success(_tcStr('Toolchain removed'));
         }
       );
     };
@@ -1106,9 +1074,7 @@ angular
 
       var content = [
         '<div>',
-        '  <p id="progress-message">' +
-          gettextCatalog.getString('Installing toolchain') +
-          '</p>',
+        '  <p id="progress-message">' + _tcStr('Installing toolchain') + '</p>',
         '  </br>',
         '  <div class="progress">',
         '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
@@ -1146,9 +1112,7 @@ angular
 
       var content = [
         '<div>',
-        '  <p id="progress-message">' +
-          gettextCatalog.getString('Installing toolchain') +
-          '</p>',
+        '  <p id="progress-message">' + _tcStr('Installing toolchain') + '</p>',
         '  </br>',
         '  <div class="progress">',
         '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
@@ -1190,15 +1154,12 @@ angular
     }
 
     function checkInternetConnection(callback) {
-      updateProgress(
-        gettextCatalog.getString('Check Internet connection...'),
-        0
-      );
+      updateProgress(_tcStr('Check Internet connection...'), 0);
       utils.isOnline(callback, function () {
         closeToolchainAlert();
         restoreStatus();
         resultAlert = alertify.error(
-          gettextCatalog.getString('Internet connection required'),
+          _tcStr('Internet connection required'),
           30
         );
         callback(true);
@@ -1206,14 +1167,14 @@ angular
     }
 
     function ensurePythonIsAvailable(callback) {
-      updateProgress(gettextCatalog.getString('Check Python...'), 0);
+      updateProgress(_tcStr('Check Python...'), 0);
       if (utils.getPythonExecutable()) {
         callback();
       } else {
         closeToolchainAlert();
         restoreStatus();
         resultAlert = alertify.error(
-          gettextCatalog.getString('At least Python 3.5 is required'),
+          _tcStr('At least Python 3.5 is required'),
           30
         );
         callback(true);
@@ -1221,30 +1182,24 @@ angular
     }
 
     function createVirtualenv(callback) {
-      updateProgress(gettextCatalog.getString('Create virtualenv...'), 10);
+      updateProgress(_tcStr('Create virtualenv...'), 10);
       utils.createVirtualenv(callback);
     }
 
     // Local installation
 
     function extractDefaultApio(callback) {
-      updateProgress(
-        gettextCatalog.getString('Extract default apio files...'),
-        30
-      );
+      updateProgress(_tcStr('Extract default apio files...'), 30);
       utils.extractDefaultApio(callback);
     }
 
     function installDefaultApio(callback) {
-      updateProgress(gettextCatalog.getString('Install default apio...'), 50);
+      updateProgress(_tcStr('Install default apio...'), 50);
       utils.installDefaultApio(callback);
     }
 
     function extractDefaultApioPackages(callback) {
-      updateProgress(
-        gettextCatalog.getString('Extract default apio packages...'),
-        70
-      );
+      updateProgress(_tcStr('Extract default apio packages...'), 70);
       utils.extractDefaultApioPackages(callback);
     }
 
@@ -1319,11 +1274,8 @@ angular
       checkToolchain(function () {
         if (toolchain.installed) {
           closeToolchainAlert();
-          updateProgress(
-            gettextCatalog.getString('Installation completed'),
-            100
-          );
-          alertify.success(gettextCatalog.getString('Toolchain installed'));
+          updateProgress(_tcStr('Installation completed'), 100);
+          alertify.success(_tcStr('Toolchain installed'));
           setupDriversAlert();
         }
         restoreStatus();
@@ -1333,9 +1285,7 @@ angular
 
     function setupDriversAlert() {
       if (common.showDrivers()) {
-        var message = gettextCatalog.getString(
-          'Click here to <b>setup the drivers</b>'
-        );
+        var message = _tcStr('Click here to <b>setup the drivers</b>');
         if (!infoAlert) {
           setTimeout(function () {
             infoAlert = alertify.message(message, 30);
@@ -1398,7 +1348,7 @@ angular
     this.addCollections = function (filepaths) {
       // Load zip file
       async.eachSeries(filepaths, function (filepath, nextzip) {
-        //alertify.message(gettextCatalog.getString('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
+        //alertify.message(_tcStr('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
         var zipData = nodeAdmZip(filepath);
         var _collections = getCollections(zipData);
 
@@ -1411,8 +1361,8 @@ angular
                 (collection.blocks || collection.examples)
               ) {
                 alertify.prompt(
-                  gettextCatalog.getString('Add collection'),
-                  gettextCatalog.getString('Enter name for the collection:'),
+                  _tcStr('Add collection'),
+                  _tcStr('Enter name for the collection:'),
                   collection.origName,
                   function (evt, name) {
                     if (!name) {
@@ -1426,37 +1376,26 @@ angular
                     );
                     if (nodeFs.existsSync(destPath)) {
                       alertify.confirm(
-                        gettextCatalog.getString(
-                          'The collection {{name}} already exists.',
-                          {
-                            name: utils.bold(name),
-                          }
-                        ) +
+                        _tcStr('The collection {{name}} already exists.', {
+                          name: utils.bold(name),
+                        }) +
                           '<br>' +
-                          gettextCatalog.getString(
-                            'Do you want to replace it?'
-                          ),
+                          _tcStr('Do you want to replace it?'),
                         function () {
                           utils.deleteFolderRecursive(destPath);
                           installCollection(collection, zipData);
                           alertify.success(
-                            gettextCatalog.getString(
-                              'Collection {{name}} replaced',
-                              {
-                                name: utils.bold(name),
-                              }
-                            )
+                            _tcStr('Collection {{name}} replaced', {
+                              name: utils.bold(name),
+                            })
                           );
                           next(name);
                         },
                         function () {
                           alertify.warning(
-                            gettextCatalog.getString(
-                              'Collection {{name}} not replaced',
-                              {
-                                name: utils.bold(name),
-                              }
-                            )
+                            _tcStr('Collection {{name}} not replaced', {
+                              name: utils.bold(name),
+                            })
                           );
                           next(name);
                         }
@@ -1464,7 +1403,7 @@ angular
                     } else {
                       installCollection(collection, zipData);
                       alertify.success(
-                        gettextCatalog.getString('Collection {{name}} added', {
+                        _tcStr('Collection {{name}} added', {
                           name: utils.bold(name),
                         })
                       );
@@ -1475,7 +1414,7 @@ angular
                 );
               } else {
                 alertify.warning(
-                  gettextCatalog.getString('Invalid collection {{name}}', {
+                  _tcStr('Invalid collection {{name}}', {
                     name: utils.bold(name),
                   })
                 );
@@ -1596,7 +1535,7 @@ angular
       utils.deleteFolderRecursive(collection.path);
       collections.loadInternalCollections();
       alertify.success(
-        gettextCatalog.getString('Collection {{name}} removed', {
+        _tcStr('Collection {{name}} removed', {
           name: utils.bold(collection.name),
         })
       );
@@ -1605,7 +1544,7 @@ angular
     this.removeAllCollections = function () {
       utils.removeCollections();
       collections.loadInternalCollections();
-      alertify.success(gettextCatalog.getString('All collections removed'));
+      alertify.success(_tcStr('All collections removed'));
     };
 
     this.canCheckVersion =

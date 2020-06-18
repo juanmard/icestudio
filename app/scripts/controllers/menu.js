@@ -22,6 +22,10 @@ angular
   ) {
     'use strict';
 
+    const _tcStr = function (str, args) {
+      return gettextCatalog.getString(str, args);
+    };
+
     $scope.common = common;
     $scope.profile = profile;
     $scope.project = project;
@@ -42,6 +46,7 @@ angular
     $scope.fitContent = () => {
       graph.fitContent();
     };
+    $scope.setProjectInformation = _setProjectInformation;
 
     // Convert the list of boards into a format suitable for 'menutree' directive
     function _getBoardsMenu(boards) {
@@ -254,8 +259,8 @@ angular
     function _saveProject() {
       if (common.isEditingSubmodule) {
         alertify.alert(
-          gettextCatalog.getString('Save submodule'),
-          gettextCatalog.getString(
+          _tcStr('Save submodule'),
+          _tcStr(
             'To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'
           ),
           function () {}
@@ -289,8 +294,8 @@ angular
     function _saveProjectAs(localCallback) {
       if (common.isEditingSubmodule) {
         alertify.confirm(
-          gettextCatalog.getString('Export submodule'),
-          gettextCatalog.getString(
+          _tcStr('Export submodule'),
+          _tcStr(
             'You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'
           ),
           function () {
@@ -361,7 +366,7 @@ angular
               .saveFile(filepath, data)
               .then(function () {
                 alertify.success(
-                  gettextCatalog.getString('{{name}} exported', {
+                  _tcStr('{{name}} exported', {
                     name: name,
                   })
                 );
@@ -394,7 +399,7 @@ angular
               )
             ) {
               alertify.success(
-                gettextCatalog.getString('{{name}} exported', {
+                _tcStr('{{name}} exported', {
                   name: name,
                 })
               );
@@ -426,10 +431,8 @@ angular
       }
       alertify
         .confirm(
-          gettextCatalog.getString('Do you want to close the application?'),
-          gettextCatalog.getString(
-            'Your changes will be lost if you don’t save them'
-          ),
+          _tcStr('Do you want to close the application?'),
+          _tcStr('Your changes will be lost if you don’t save them'),
           function () {
             __exit();
           },
@@ -437,7 +440,7 @@ angular
         )
         .setting({
           labels: {
-            ok: gettextCatalog.getString('Close'),
+            ok: _tcStr('Close'),
           },
           defaultFocus: 'cancel',
         });
@@ -503,9 +506,7 @@ angular
         [
           {
             type: 'text',
-            title: gettextCatalog.getString(
-              'Enter the external collections path'
-            ),
+            title: _tcStr('Enter the external collections path'),
             value: externalCollections || '',
           },
         ],
@@ -522,13 +523,11 @@ angular
               profile.set('externalCollections', newExternalCollections);
               collections.loadExternalCollections();
               utils.rootScopeSafeApply();
-              alertify.success(
-                gettextCatalog.getString('External collections updated')
-              );
+              alertify.success(_tcStr('External collections updated'));
             } else {
               evt.cancel = true;
               resultAlert = alertify.error(
-                gettextCatalog.getString(
+                _tcStr(
                   'Path {{path}} does not exist',
                   {path: newExternalCollections},
                   5
@@ -587,7 +586,7 @@ angular
         [
           {
             type: 'text',
-            title: gettextCatalog.getString('Enter the external plugins path'),
+            title: _tcStr('Enter the external plugins path'),
             value: externalPlugins || '',
           },
         ],
@@ -602,13 +601,11 @@ angular
               nodeFs.existsSync(newExternalPlugins)
             ) {
               profile.set('externalPlugins', newExternalPlugins);
-              alertify.success(
-                gettextCatalog.getString('External plugins updated')
-              );
+              alertify.success(_tcStr('External plugins updated'));
             } else {
               evt.cancel = true;
               resultAlert = alertify.error(
-                gettextCatalog.getString(
+                _tcStr(
                   'Path {{path}} does not exist',
                   {path: newExternalPlugins},
                   5
@@ -623,7 +620,7 @@ angular
     $scope.setRemoteHostname = function () {
       var current = profile.get('remoteHostname');
       alertify.prompt(
-        gettextCatalog.getString('Enter the remote hostname user@host'),
+        _tcStr('Enter the remote hostname user@host'),
         '',
         current ? current : '',
         function (evt, remoteHostname) {
@@ -638,19 +635,19 @@ angular
       if (!_.isEqual(values, newValues)) {
         graph.setInfo(values, newValues, project);
         alertify.message(
-          gettextCatalog.getString('Project information updated') +
+          _tcStr('Project information updated') +
             '.<br>' +
-            gettextCatalog.getString('Click here to view'),
+            _tcStr('Click here to view'),
           5
         ).callback = function (isClicked) {
           if (isClicked) {
-            $scope.setProjectInformation();
+            _setProjectInformation();
           }
         };
       }
     });
 
-    $scope.setProjectInformation = function () {
+    function _setProjectInformation() {
       var values = getProjectInformation();
       utils.projectinfoprompt(values, function (evt, newValues) {
         if (!_.isEqual(values, newValues)) {
@@ -663,12 +660,10 @@ angular
           } else {
             graph.setInfo(values, newValues, project);
           }
-          alertify.success(
-            gettextCatalog.getString('Project information updated')
-          );
+          alertify.success(_tcStr('Project information updated'));
         }
       });
-    };
+    }
 
     function getProjectInformation() {
       var p =
@@ -683,7 +678,7 @@ angular
     $scope.toggleBoardRules = function () {
       graph.setBoardRules(!profile.get('boardRules'));
       alertify.success(
-        gettextCatalog.getString(
+        _tcStr(
           'Board rules ' + (profile.get('boardRules') ? 'enabled' : 'disabled')
         )
       );
@@ -705,7 +700,7 @@ angular
             graph.loadDesign(project.get('design'), {
               disabled: false,
             });
-            //alertify.success(gettextCatalog.getString("Language {{name}} selected",  { name: utils.bold(language) }));
+            //alertify.success(_tcStr("Language {{name}} selected",  { name: utils.bold(language) }));
           }
         );
         // Rearrange the collections content
@@ -718,9 +713,7 @@ angular
       if (profile.get('uiTheme') !== theme) {
         profile.set('uiTheme', theme);
         alertify.warning(
-          gettextCatalog.getString(
-            'Icestudio needs to be restarted to switch the new UI Theme.'
-          ),
+          _tcStr('Icestudio needs to be restarted to switch the new UI Theme.'),
           15
         );
       }
@@ -777,7 +770,7 @@ angular
         );
       } else {
         alertify.warning(
-          gettextCatalog.getString('{{board}} pinout not defined', {
+          _tcStr('{{board}} pinout not defined', {
             board: utils.bold(board.info.label),
           }),
           5
@@ -791,7 +784,7 @@ angular
         gui.Shell.openExternal(board.info.datasheet);
       } else {
         alertify.error(
-          gettextCatalog.getString('{{board}} datasheet not defined', {
+          _tcStr('{{board}} datasheet not defined', {
             board: utils.bold(board.info.label),
           }),
           5
@@ -820,7 +813,7 @@ angular
         );
       } else {
         alertify.error(
-          gettextCatalog.getString('{{board}} rules not defined', {
+          _tcStr('{{board}} rules not defined', {
             board: utils.bold(board.info.label),
           }),
           5
@@ -850,20 +843,18 @@ angular
       console.debug('[menu.showCollectionData] content:', collection.content);
       if (!readme) {
         alertify.error(
-          gettextCatalog.getString(
-            'Info of collection &lt;{{collection}}&gt; is undefined',
-            {collection: cname}
-          ),
+          _tcStr('Info of collection &lt;{{collection}}&gt; is undefined', {
+            collection: cname,
+          }),
           5
         );
         return;
       }
       if (!nodeFs.existsSync(readme)) {
         alertify.error(
-          gettextCatalog.getString(
-            'README of collection &lt;{{collection}}&gt; does not exist',
-            {collection: cname}
-          ),
+          _tcStr('README of collection &lt;{{collection}}&gt; does not exist', {
+            collection: cname,
+          }),
           5
         );
         return;
@@ -878,7 +869,7 @@ angular
       winCommandOutput = _openWindow(
         'resources/viewers/plain/output.html?content=' +
           encodeURIComponent(common.commandOutput),
-        gettextCatalog.getString('Command output')
+        _tcStr('Command output')
       );
     };
 
@@ -915,13 +906,10 @@ angular
         if (!graph.isEmpty()) {
           alertify
             .confirm(
-              gettextCatalog.getString(
-                'Do you want to change to {{name}} board?',
-                {name: utils.bold(board.info.label)}
-              ),
-              gettextCatalog.getString(
-                'The current FPGA I/O configuration will be lost.'
-              ),
+              _tcStr('Do you want to change to {{name}} board?', {
+                name: utils.bold(board.info.label),
+              }),
+              _tcStr('The current FPGA I/O configuration will be lost.'),
               function () {
                 _selectBoardNotify(board);
               },
@@ -929,8 +917,8 @@ angular
             )
             .setting({
               labels: {
-                ok: gettextCatalog.getString('Ok'),
-                cancel: gettextCatalog.getString('Cancel'),
+                ok: _tcStr('Ok'),
+                cancel: _tcStr('Cancel'),
               },
             });
         } else {
@@ -950,8 +938,8 @@ angular
       checkGraph()
         .then(function () {
           return tools.verifyCode(
-            gettextCatalog.getString('Start verification'),
-            gettextCatalog.getString('Verification done')
+            _tcStr('Start verification'),
+            _tcStr('Verification done')
           );
         })
         .catch(function () {});
@@ -960,8 +948,8 @@ angular
     $scope.buildCode = function () {
       if (common.isEditingSubmodule) {
         alertify.alert(
-          gettextCatalog.getString('Build'),
-          gettextCatalog.getString(
+          _tcStr('Build'),
+          _tcStr(
             'You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>'
           ),
           function () {}
@@ -971,10 +959,7 @@ angular
 
       checkGraph()
         .then(function () {
-          return tools.buildCode(
-            gettextCatalog.getString('Start build'),
-            gettextCatalog.getString('Build done')
-          );
+          return tools.buildCode(_tcStr('Start build'), _tcStr('Build done'));
         })
         .then(function () {
           resetBuildStack();
@@ -985,8 +970,8 @@ angular
     $scope.uploadCode = function () {
       if (common.isEditingSubmodule) {
         alertify.alert(
-          gettextCatalog.getString('Upload'),
-          gettextCatalog.getString(
+          _tcStr('Upload'),
+          _tcStr(
             'You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>'
           ),
           function () {}
@@ -997,8 +982,8 @@ angular
       checkGraph()
         .then(function () {
           return tools.uploadCode(
-            gettextCatalog.getString('Start upload'),
-            gettextCatalog.getString('Upload done')
+            _tcStr('Start upload'),
+            _tcStr('Upload done')
           );
         })
         .then(function () {
@@ -1015,10 +1000,7 @@ angular
           if (resultAlert) {
             resultAlert.dismiss(true);
           }
-          resultAlert = alertify.warning(
-            gettextCatalog.getString('Add a block to start'),
-            5
-          );
+          resultAlert = alertify.warning(_tcStr('Add a block to start'), 5);
           reject();
         }
       });
@@ -1037,12 +1019,9 @@ angular
 
     $scope.removeCollection = function (collection) {
       alertify.confirm(
-        gettextCatalog.getString(
-          'Do you want to remove the {{name}} collection?',
-          {
-            name: utils.bold(collection.name),
-          }
-        ),
+        _tcStr('Do you want to remove the {{name}} collection?', {
+          name: utils.bold(collection.name),
+        }),
         function () {
           tools.removeCollection(collection);
           utils.rootScopeSafeApply();
@@ -1053,7 +1032,7 @@ angular
     $scope.removeAllCollections = function () {
       if (common.internalCollections.length > 0) {
         alertify.confirm(
-          gettextCatalog.getString(
+          _tcStr(
             'All stored collections will be lost. Do you want to continue?'
           ),
           function () {
@@ -1062,7 +1041,7 @@ angular
           }
         );
       } else {
-        alertify.warning(gettextCatalog.getString('No collections stored'), 5);
+        alertify.warning(_tcStr('No collections stored'), 5);
       }
     };
 
@@ -1157,7 +1136,7 @@ angular
           $scope.$apply();
           if (!err) {
             alertify.success(
-              gettextCatalog.getString('Image {{name}} saved', {
+              _tcStr('Image {{name}} saved', {
                 name: utils.bold(utils.basename(filepath)),
               })
             );

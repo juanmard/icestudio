@@ -16,6 +16,10 @@ angular
   ) {
     'use strict';
 
+    const _tcStr = function (str, args) {
+      return gettextCatalog.getString(str, args);
+    };
+
     var z = {index: 100};
     var graph = null;
     var paper = null;
@@ -182,21 +186,21 @@ angular
           ) {
             if (magnetS !== magnetT) {
               // Show warning if source and target blocks are different
-              warning(gettextCatalog.getString('Invalid connection'));
+              warning(_tcStr('Invalid connection'));
             }
             return false;
           }
           // Ensure right -> left connections
           if (magnetS && magnetS.getAttribute('pos') === 'right') {
             if (magnetT && magnetT.getAttribute('pos') !== 'left') {
-              warning(gettextCatalog.getString('Invalid connection'));
+              warning(_tcStr('Invalid connection'));
               return false;
             }
           }
           // Ensure bottom -> top connections
           if (magnetS && magnetS.getAttribute('pos') === 'bottom') {
             if (magnetT && magnetT.getAttribute('pos') !== 'top') {
-              warning(gettextCatalog.getString('Invalid connection'));
+              warning(_tcStr('Invalid connection'));
               return false;
             }
           }
@@ -214,9 +218,7 @@ angular
               cellViewT.model.id === link.get('target').id &&
               magnetT.getAttribute('port') === link.get('target').port
             ) {
-              warning(
-                gettextCatalog.getString('Invalid multiple input connections')
-              );
+              warning(_tcStr('Invalid multiple input connections'));
               return false;
             }
             // Prevent to connect a pull-up if other blocks are connected
@@ -225,7 +227,7 @@ angular
               cellViewS.model.id === link.get('source').id
             ) {
               warning(
-                gettextCatalog.getString(
+                _tcStr(
                   'Invalid <i>Pull up</i> connection:<br>block already connected'
                 )
               );
@@ -237,7 +239,7 @@ angular
               cellViewS.model.id === link.get('source').id
             ) {
               warning(
-                gettextCatalog.getString(
+                _tcStr(
                   'Invalid block connection:<br><i>Pull up</i> already connected'
                 )
               );
@@ -249,7 +251,7 @@ angular
             var ret = cellViewS.model.get('blockType') === 'basic.input';
             if (!ret) {
               warning(
-                gettextCatalog.getString(
+                _tcStr(
                   'Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed'
                 )
               );
@@ -272,7 +274,7 @@ angular
           lsize = lsize || 1;
           if (tsize !== lsize) {
             warning(
-              gettextCatalog.getString('Invalid connection: {{a}} → {{b}}', {
+              _tcStr('Invalid connection: {{a}} → {{b}}', {
                 a: lsize,
                 b: tsize,
               })
@@ -460,7 +462,7 @@ angular
             common.isEditingSubmodule === true
           ) {
             alertify.warning(
-              gettextCatalog.getString(
+              _tcStr(
                 'To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'
               )
             );
@@ -1527,7 +1529,7 @@ angular
 
       if (isMigrated) {
         alertify.warning(
-          gettextCatalog.getString(
+          _tcStr(
             "If you have blank IN/OUT pins, it's because there is no equivalent in this board"
           )
         );

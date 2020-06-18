@@ -3,6 +3,10 @@ angular
   .service('blocks', function (joint, utils, common, gettextCatalog) {
     'use strict';
 
+    const _tcStr = function (str, args) {
+      return gettextCatalog.getString(str, args);
+    };
+
     var gridsize = 8;
     var resultAlert = null;
 
@@ -49,6 +53,30 @@ angular
       }
     }
 
+    const colorOpts = [
+      {value: 'indianred', label: _tcStr('IndianRed')},
+      {value: 'red', label: _tcStr('Red')},
+      {value: 'deeppink', label: _tcStr('DeepPink')},
+      {value: 'mediumVioletRed', label: _tcStr('MediumVioletRed')},
+      {value: 'coral', label: _tcStr('Coral')},
+      {value: 'orangered', label: _tcStr('OrangeRed')},
+      {value: 'darkorange', label: _tcStr('DarkOrange')},
+      {value: 'gold', label: _tcStr('Gold')},
+      {value: 'yellow', label: _tcStr('Yellow')},
+      {value: 'fuchsia', label: _tcStr('Fuchsia')},
+      {value: 'slateblue', label: _tcStr('SlateBlue')},
+      {value: 'greenyellow', label: _tcStr('GreenYellow')},
+      {value: 'springgreen', label: _tcStr('SpringGreen')},
+      {value: 'darkgreen', label: _tcStr('DarkGreen')},
+      {value: 'olivedrab', label: _tcStr('OliveDrab')},
+      {value: 'lightseagreen', label: _tcStr('LightSeaGreen')},
+      {value: 'turquoise', label: _tcStr('Turquoise')},
+      {value: 'steelblue', label: _tcStr('SteelBlue')},
+      {value: 'deepskyblue', label: _tcStr('DeepSkyBlue')},
+      {value: 'royalblue', label: _tcStr('RoyalBlue')},
+      {value: 'navy', label: _tcStr('Navy')},
+    ];
+
     function newBasicOutputLabel(callback) {
       var blockInstance = {
         id: null,
@@ -59,54 +87,14 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the input blocks'),
+          title: _tcStr('Enter the input blocks'),
           value: '',
         },
         {
           type: 'combobox',
-          label: gettextCatalog.getString('Choose a color'),
+          label: _tcStr('Choose a color'),
           value: 'fuchsia',
-          options: [
-            {value: 'indianred', label: gettextCatalog.getString('IndianRed')},
-            {value: 'red', label: gettextCatalog.getString('Red')},
-            {value: 'deeppink', label: gettextCatalog.getString('DeepPink')},
-            {
-              value: 'mediumVioletRed',
-              label: gettextCatalog.getString('MediumVioletRed'),
-            },
-            {value: 'coral', label: gettextCatalog.getString('Coral')},
-            {value: 'orangered', label: gettextCatalog.getString('OrangeRed')},
-            {
-              value: 'darkorange',
-              label: gettextCatalog.getString('DarkOrange'),
-            },
-            {value: 'gold', label: gettextCatalog.getString('Gold')},
-            {value: 'yellow', label: gettextCatalog.getString('Yellow')},
-            {value: 'fuchsia', label: gettextCatalog.getString('Fuchsia')},
-            {value: 'slateblue', label: gettextCatalog.getString('SlateBlue')},
-            {
-              value: 'greenyellow',
-              label: gettextCatalog.getString('GreenYellow'),
-            },
-            {
-              value: 'springgreen',
-              label: gettextCatalog.getString('SpringGreen'),
-            },
-            {value: 'darkgreen', label: gettextCatalog.getString('DarkGreen')},
-            {value: 'olivedrab', label: gettextCatalog.getString('OliveDrab')},
-            {
-              value: 'lightseagreen',
-              label: gettextCatalog.getString('LightSeaGreen'),
-            },
-            {value: 'turquoise', label: gettextCatalog.getString('Turquoise')},
-            {value: 'steelblue', label: gettextCatalog.getString('SteelBlue')},
-            {
-              value: 'deepskyblue',
-              label: gettextCatalog.getString('DeepSkyBlue'),
-            },
-            {value: 'royalblue', label: gettextCatalog.getString('RoyalBlue')},
-            {value: 'navy', label: gettextCatalog.getString('Navy')},
-          ],
+          options: colorOpts,
         },
       ];
       utils.renderForm(formSpecs, function (evt, values) {
@@ -131,7 +119,7 @@ angular
           } else {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', {
+              _tcStr('Wrong block name {{name}}', {
                 name: labels[l],
               })
             );
@@ -145,7 +133,7 @@ angular
           if (portInfo.rangestr && clock) {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Clock not allowed for data buses')
+              _tcStr('Clock not allowed for data buses')
             );
             return;
           }
@@ -179,17 +167,17 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the input blocks'),
+          title: _tcStr('Enter the input blocks'),
           value: '',
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
+          label: _tcStr('FPGA pin'),
           value: true,
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
+          label: _tcStr('Show clock'),
           value: false,
         },
       ];
@@ -214,7 +202,7 @@ angular
           } else {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', {
+              _tcStr('Wrong block name {{name}}', {
                 name: labels[l],
               })
             );
@@ -228,7 +216,7 @@ angular
           if (portInfo.rangestr && clock) {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Clock not allowed for data buses')
+              _tcStr('Clock not allowed for data buses')
             );
             return;
           }
@@ -261,12 +249,12 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the output blocks'),
+          title: _tcStr('Enter the output blocks'),
           value: '',
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
+          label: _tcStr('FPGA pin'),
           value: true,
         },
       ];
@@ -290,7 +278,7 @@ angular
           } else {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', {
+              _tcStr('Wrong block name {{name}}', {
                 name: labels[l],
               })
             );
@@ -329,54 +317,14 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the output blocks'),
+          title: _tcStr('Enter the output blocks'),
           value: '',
         },
         {
           type: 'combobox',
-          label: gettextCatalog.getString('Choose a color'),
+          label: _tcStr('Choose a color'),
           value: 'fuchsia',
-          options: [
-            {value: 'indianred', label: gettextCatalog.getString('IndianRed')},
-            {value: 'red', label: gettextCatalog.getString('Red')},
-            {value: 'deeppink', label: gettextCatalog.getString('DeepPink')},
-            {
-              value: 'mediumvioletred',
-              label: gettextCatalog.getString('MediumVioletRed'),
-            },
-            {value: 'coral', label: gettextCatalog.getString('Coral')},
-            {value: 'orangered', label: gettextCatalog.getString('OrangeRed')},
-            {
-              value: 'darkorange',
-              label: gettextCatalog.getString('DarkOrange'),
-            },
-            {value: 'gold', label: gettextCatalog.getString('Gold')},
-            {value: 'yellow', label: gettextCatalog.getString('Yellow')},
-            {value: 'fuchsia', label: gettextCatalog.getString('Fuchsia')},
-            {value: 'slateblue', label: gettextCatalog.getString('SlateBlue')},
-            {
-              value: 'greenyellow',
-              label: gettextCatalog.getString('GreenYellow'),
-            },
-            {
-              value: 'springgreen',
-              label: gettextCatalog.getString('SpringGreen'),
-            },
-            {value: 'darkgreen', label: gettextCatalog.getString('DarkGreen')},
-            {value: 'olivedrab', label: gettextCatalog.getString('OliveDrab')},
-            {
-              value: 'lightseagreen',
-              label: gettextCatalog.getString('LightSeaGreen'),
-            },
-            {value: 'turquoise', label: gettextCatalog.getString('Turquoise')},
-            {value: 'steelblue', label: gettextCatalog.getString('SteelBlue')},
-            {
-              value: 'deepskyblue',
-              label: gettextCatalog.getString('DeepSkyBlue'),
-            },
-            {value: 'royalblue', label: gettextCatalog.getString('RoyalBlue')},
-            {value: 'navy', label: gettextCatalog.getString('Navy')},
-          ],
+          options: colorOpts,
         },
       ];
       utils.renderForm(formSpecs, function (evt, values) {
@@ -400,7 +348,7 @@ angular
           } else {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', {
+              _tcStr('Wrong block name {{name}}', {
                 name: labels[l],
               })
             );
@@ -452,12 +400,12 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the constant blocks'),
+          title: _tcStr('Enter the constant blocks'),
           value: '',
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
+          label: _tcStr('Local parameter'),
           value: false,
         },
       ];
@@ -481,7 +429,7 @@ angular
           } else {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', {
+              _tcStr('Wrong block name {{name}}', {
                 name: labels[l],
               })
             );
@@ -517,22 +465,22 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the memory blocks'),
+          title: _tcStr('Enter the memory blocks'),
           value: '',
         },
         {
           type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
+          label: _tcStr('Address format'),
           value: 10,
           options: [
-            {value: 2, label: gettextCatalog.getString('Binary')},
-            {value: 10, label: gettextCatalog.getString('Decimal')},
-            {value: 16, label: gettextCatalog.getString('Hexadecimal')},
+            {value: 2, label: _tcStr('Binary')},
+            {value: 10, label: _tcStr('Decimal')},
+            {value: 16, label: _tcStr('Hexadecimal')},
           ],
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
+          label: _tcStr('Local parameter'),
           value: false,
         },
       ];
@@ -557,7 +505,7 @@ angular
           } else {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Wrong block name {{name}}', {
+              _tcStr('Wrong block name {{name}}', {
                 name: labels[l],
               })
             );
@@ -624,17 +572,17 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the input ports'),
+          title: _tcStr('Enter the input ports'),
           value: defaultValues[0],
         },
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the output ports'),
+          title: _tcStr('Enter the output ports'),
           value: defaultValues[1],
         },
         {
           type: 'text',
-          title: gettextCatalog.getString('Enter the parameters'),
+          title: _tcStr('Enter the parameters'),
           value: defaultValues[2],
         },
       ];
@@ -665,7 +613,7 @@ angular
             } else {
               evt.cancel = true;
               resultAlert = alertify.warning(
-                gettextCatalog.getString('Wrong port name {{name}}', {
+                _tcStr('Wrong port name {{name}}', {
                   name: inPorts[i],
                 })
               );
@@ -691,7 +639,7 @@ angular
             } else {
               evt.cancel = true;
               resultAlert = alertify.warning(
-                gettextCatalog.getString('Wrong port name {{name}}', {
+                _tcStr('Wrong port name {{name}}', {
                   name: outPorts[o],
                 })
               );
@@ -704,9 +652,7 @@ angular
         if (nib >= inPorts.length && nob >= outPorts.length) {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString(
-              'Code block needs at least one input or one output'
-            )
+            _tcStr('Code block needs at least one input or one output')
           );
           return;
         }
@@ -726,7 +672,7 @@ angular
             } else {
               evt.cancel = true;
               resultAlert = alertify.warning(
-                gettextCatalog.getString('Wrong parameter name {{name}}', {
+                _tcStr('Wrong parameter name {{name}}', {
                   name: params[p],
                 })
               );
@@ -779,9 +725,7 @@ angular
           }
         } else {
           evt.cancel = true;
-          resultAlert = alertify.warning(
-            gettextCatalog.getString('Duplicated block attributes')
-          );
+          resultAlert = alertify.warning(_tcStr('Duplicated block attributes'));
         }
       });
     }
@@ -820,7 +764,7 @@ angular
         }
       } else {
         resultAlert = alertify.error(
-          gettextCatalog.getString('Wrong block format: {{type}}', {
+          _tcStr('Wrong block format: {{type}}', {
             type: type,
           }),
           30
@@ -1042,7 +986,7 @@ angular
     function loadBasicInfo(instance, disabled) {
       // Translate info content
       if (instance.data.info && instance.data.readonly) {
-        instance.data.text = gettextCatalog.getString(instance.data.info);
+        instance.data.text = _tcStr(instance.data.info);
       }
       var cell = new joint.shapes.ice.Info({
         id: instance.id,
@@ -1133,7 +1077,7 @@ angular
         pullup: block.design.pullup,
         image: blockImage,
         label: blockLabel,
-        tooltip: gettextCatalog.getString(block.package.description),
+        tooltip: _tcStr(block.package.description),
         position: instance.position,
         size: size,
         disabled: disabled,
@@ -1219,57 +1163,17 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: _tcStr('Update the block name'),
           value: block.data.name + (block.data.range || ''),
         },
         {
           type: 'combobox',
-          title: gettextCatalog.getString('Choose a color'),
+          title: _tcStr('Choose a color'),
           value:
             typeof block.data.blockColor !== 'undefined'
               ? block.data.blockColor
               : 'fuchsia',
-          options: [
-            {value: 'indianred', label: gettextCatalog.getString('IndianRed')},
-            {value: 'red', label: gettextCatalog.getString('Red')},
-            {value: 'deeppink', label: gettextCatalog.getString('DeepPink')},
-            {
-              value: 'mediumvioletred',
-              label: gettextCatalog.getString('MediumVioletRed'),
-            },
-            {value: 'coral', label: gettextCatalog.getString('Coral')},
-            {value: 'orangered', label: gettextCatalog.getString('OrangeRed')},
-            {
-              value: 'darkorange',
-              label: gettextCatalog.getString('DarkOrange'),
-            },
-            {value: 'gold', label: gettextCatalog.getString('Gold')},
-            {value: 'yellow', label: gettextCatalog.getString('Yellow')},
-            {value: 'fuchsia', label: gettextCatalog.getString('Fuchsia')},
-            {value: 'slateblue', label: gettextCatalog.getString('SlateBlue')},
-            {
-              value: 'greenyellow',
-              label: gettextCatalog.getString('GreenYellow'),
-            },
-            {
-              value: 'springgreen',
-              label: gettextCatalog.getString('SpringGreen'),
-            },
-            {value: 'darkgreen', label: gettextCatalog.getString('DarkGreen')},
-            {value: 'olivedrab', label: gettextCatalog.getString('OliveDrab')},
-            {
-              value: 'lightseagreen',
-              label: gettextCatalog.getString('LightSeaGreen'),
-            },
-            {value: 'turquoise', label: gettextCatalog.getString('Turquoise')},
-            {value: 'steelblue', label: gettextCatalog.getString('SteelBlue')},
-            {
-              value: 'deepskyblue',
-              label: gettextCatalog.getString('DeepSkyBlue'),
-            },
-            {value: 'royalblue', label: gettextCatalog.getString('RoyalBlue')},
-            {value: 'navy', label: gettextCatalog.getString('Navy')},
-          ],
+          options: colorOpts,
         },
       ];
       utils.renderForm(formSpecs, function (evt, values) {
@@ -1293,7 +1197,7 @@ angular
           if (portInfo.rangestr && clock) {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Clock not allowed for data buses')
+              _tcStr('Clock not allowed for data buses')
             );
             return;
           }
@@ -1325,9 +1229,7 @@ angular
               callback(loadBasic(blockInstance));
               cellView.model.remove();
               graph.stopBatch('change');
-              resultAlert = alertify.success(
-                gettextCatalog.getString('Block updated')
-              );
+              resultAlert = alertify.success(_tcStr('Block updated'));
             }
           } else if (
             block.data.name !== portInfo.name ||
@@ -1356,14 +1258,12 @@ angular
             cellView.model.translate(0, offset);
             graph.stopBatch('change');
             cellView.apply();
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         } else {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', {name: label})
+            _tcStr('Wrong block name {{name}}', {name: label})
           );
         }
       });
@@ -1375,57 +1275,17 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: _tcStr('Update the block name'),
           value: block.data.name + (block.data.range || ''),
         },
         {
           type: 'combobox',
-          title: gettextCatalog.getString('Choose a color'),
+          title: _tcStr('Choose a color'),
           value:
             typeof block.data.blockColor !== 'undefined'
               ? block.data.blockColor
               : 'fuchsia',
-          options: [
-            {value: 'indianred', label: gettextCatalog.getString('IndianRed')},
-            {value: 'red', label: gettextCatalog.getString('Red')},
-            {value: 'deeppink', label: gettextCatalog.getString('DeepPink')},
-            {
-              value: 'mediumvioletred',
-              label: gettextCatalog.getString('MediumVioletRed'),
-            },
-            {value: 'coral', label: gettextCatalog.getString('Coral')},
-            {value: 'orangered', label: gettextCatalog.getString('OrangeRed')},
-            {
-              value: 'darkorange',
-              label: gettextCatalog.getString('DarkOrange'),
-            },
-            {value: 'gold', label: gettextCatalog.getString('Gold')},
-            {value: 'yellow', label: gettextCatalog.getString('Yellow')},
-            {value: 'fuchsia', label: gettextCatalog.getString('Fuchsia')},
-            {value: 'slateblue', label: gettextCatalog.getString('SlateBlue')},
-            {
-              value: 'greenyellow',
-              label: gettextCatalog.getString('GreenYellow'),
-            },
-            {
-              value: 'springgreen',
-              label: gettextCatalog.getString('SpringGreen'),
-            },
-            {value: 'darkgreen', label: gettextCatalog.getString('DarkGreen')},
-            {value: 'olivedrab', label: gettextCatalog.getString('OliveDrab')},
-            {
-              value: 'lightseagreen',
-              label: gettextCatalog.getString('LightSeaGreen'),
-            },
-            {value: 'turquoise', label: gettextCatalog.getString('Turquoise')},
-            {value: 'steelblue', label: gettextCatalog.getString('SteelBlue')},
-            {
-              value: 'deepskyblue',
-              label: gettextCatalog.getString('DeepSkyBlue'),
-            },
-            {value: 'royalblue', label: gettextCatalog.getString('RoyalBlue')},
-            {value: 'navy', label: gettextCatalog.getString('Navy')},
-          ],
+          options: colorOpts,
         },
       ];
       utils.renderForm(formSpecs, function (evt, values) {
@@ -1472,9 +1332,7 @@ angular
               callback(loadBasic(blockInstance));
               cellView.model.remove();
               graph.stopBatch('change');
-              resultAlert = alertify.success(
-                gettextCatalog.getString('Block updated')
-              );
+              resultAlert = alertify.success(_tcStr('Block updated'));
             }
           } else if (
             block.data.name !== portInfo.name ||
@@ -1501,14 +1359,12 @@ angular
             cellView.model.translate(0, offset);
             graph.stopBatch('change');
             cellView.apply();
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         } else {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', {name: label})
+            _tcStr('Wrong block name {{name}}', {name: label})
           );
         }
       });
@@ -1520,17 +1376,17 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: _tcStr('Update the block name'),
           value: block.data.name + (block.data.range || ''),
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
+          label: _tcStr('FPGA pin'),
           value: !block.data.virtual,
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('Show clock'),
+          label: _tcStr('Show clock'),
           value: block.data.clock,
         },
       ];
@@ -1554,7 +1410,7 @@ angular
           if (portInfo.rangestr && clock) {
             evt.cancel = true;
             resultAlert = alertify.warning(
-              gettextCatalog.getString('Clock not allowed for data buses')
+              _tcStr('Clock not allowed for data buses')
             );
             return;
           }
@@ -1586,9 +1442,7 @@ angular
               callback(loadBasic(blockInstance));
               cellView.model.remove();
               graph.stopBatch('change');
-              resultAlert = alertify.success(
-                gettextCatalog.getString('Block updated')
-              );
+              resultAlert = alertify.success(_tcStr('Block updated'));
             }
           } else if (
             block.data.name !== portInfo.name ||
@@ -1614,14 +1468,12 @@ angular
             cellView.model.translate(0, offset);
             graph.stopBatch('change');
             cellView.apply();
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         } else {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', {name: label})
+            _tcStr('Wrong block name {{name}}', {name: label})
           );
         }
       });
@@ -1633,12 +1485,12 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: _tcStr('Update the block name'),
           value: block.data.name + (block.data.range || ''),
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('FPGA pin'),
+          label: _tcStr('FPGA pin'),
           value: !block.data.virtual,
         },
       ];
@@ -1685,9 +1537,7 @@ angular
               callback(loadBasic(blockInstance));
               cellView.model.remove();
               graph.stopBatch('change');
-              resultAlert = alertify.success(
-                gettextCatalog.getString('Block updated')
-              );
+              resultAlert = alertify.success(_tcStr('Block updated'));
             }
           } else if (
             block.data.name !== portInfo.name ||
@@ -1711,14 +1561,12 @@ angular
             cellView.model.translate(0, offset);
             graph.stopBatch('change');
             cellView.apply();
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         } else {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', {name: label})
+            _tcStr('Wrong block name {{name}}', {name: label})
           );
         }
       });
@@ -1729,12 +1577,12 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: _tcStr('Update the block name'),
           value: block.data.name,
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
+          label: _tcStr('Local parameter'),
           value: block.data.local,
         },
       ];
@@ -1759,14 +1607,12 @@ angular
             data.local = local;
             cellView.model.set('data', data);
             cellView.apply();
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         } else {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', {name: label})
+            _tcStr('Wrong block name {{name}}', {name: label})
           );
           return;
         }
@@ -1778,22 +1624,22 @@ angular
       var formSpecs = [
         {
           type: 'text',
-          title: gettextCatalog.getString('Update the block name'),
+          title: _tcStr('Update the block name'),
           value: block.data.name,
         },
         {
           type: 'combobox',
-          label: gettextCatalog.getString('Address format'),
+          label: _tcStr('Address format'),
           value: block.data.format,
           options: [
-            {value: 2, label: gettextCatalog.getString('Binary')},
-            {value: 10, label: gettextCatalog.getString('Decimal')},
-            {value: 16, label: gettextCatalog.getString('Hexadecimal')},
+            {value: 2, label: _tcStr('Binary')},
+            {value: 10, label: _tcStr('Decimal')},
+            {value: 16, label: _tcStr('Hexadecimal')},
           ],
         },
         {
           type: 'checkbox',
-          label: gettextCatalog.getString('Local parameter'),
+          label: _tcStr('Local parameter'),
           value: block.data.local,
         },
       ];
@@ -1824,14 +1670,12 @@ angular
             data.format = format;
             cellView.model.set('data', data);
             cellView.apply();
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         } else {
           evt.cancel = true;
           resultAlert = alertify.warning(
-            gettextCatalog.getString('Wrong block name {{name}}', {name: label})
+            _tcStr('Wrong block name {{name}}', {name: label})
           );
           return;
         }
@@ -1881,9 +1725,7 @@ angular
               }
             }
             graph.stopBatch('change');
-            resultAlert = alertify.success(
-              gettextCatalog.getString('Block updated')
-            );
+            resultAlert = alertify.success(_tcStr('Block updated'));
           }
         }
       }, blockInstance);
@@ -1907,7 +1749,7 @@ angular
       data.readonly = !data.readonly;
       // Translate info content
       if (data.info && data.readonly) {
-        data.text = gettextCatalog.getString(data.info);
+        data.text = _tcStr(data.info);
       }
       cellView.model.set('data', data);
       cellView.apply();

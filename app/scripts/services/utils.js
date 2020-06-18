@@ -23,6 +23,11 @@ angular
     fastCopy
   ) {
     'use strict';
+
+    const _tcStr = function (str, args) {
+      return gettextCatalog.getString(str, args);
+    };
+
     var _pythonExecutableCached = null;
     // Get the system executable
     this.getPythonExecutable = function () {
@@ -717,10 +722,10 @@ angular
       var i;
       var content = [];
       var messages = [
-        gettextCatalog.getString('Name'),
-        gettextCatalog.getString('Version'),
-        gettextCatalog.getString('Description'),
-        gettextCatalog.getString('Author'),
+        _tcStr('Name'),
+        _tcStr('Version'),
+        _tcStr('Description'),
+        _tcStr('Author'),
       ];
       var n = messages.length;
       var image = values[4];
@@ -728,50 +733,34 @@ angular
         'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
       content.push('<div>');
       for (i in messages) {
-        if (i > 0) {
-          //content.push('<br>');
-        }
-        content.push('  <p>' + messages[i] + '</p>');
-        content.push(
-          '  <input class="ajs-input" id="input' +
-            i +
-            '" type="text" value="' +
-            values[i] +
-            '">'
-        );
+        content.push(`<p>${messages[i]}</p>
+<input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
       }
-      content.push('  <p>' + gettextCatalog.getString('Image') + '</p>');
-      content.push(
-        '  <input id="input-open-svg" type="file" accept=".svg" class="hidden">'
-      );
-      content.push(
-        '  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">'
-      );
-      content.push('  <div>');
-      content.push(
-        '  <img id="preview-svg" class="ajs-input" src="' +
-          (image ? 'data:image/svg+xml,' + image : blankImage) +
-          '" height="68" style="pointer-events:none">'
-      );
-      content.push('  </div>');
-      content.push('  <div>');
-      content.push(
-        '    <label for="input-open-svg" class="btn">' +
-          gettextCatalog.getString('Open SVG') +
-          '</label>'
-      );
-      content.push(
-        '    <label id="save-svg" for="input-save-svg" class="btn">' +
-          gettextCatalog.getString('Save SVG') +
-          '</label>'
-      );
-      content.push(
-        '    <label id="reset-svg" class="btn">' +
-          gettextCatalog.getString('Reset SVG') +
-          '</label>'
-      );
-      content.push('  </div>');
-      content.push('</div>');
+      const img = image ? 'data:image/svg+xml,' + image : blankImage;
+      content.push(`
+  <p>${_tcStr('Image')}</p>
+  <input id="input-open-svg" type="file" accept=".svg" class="hidden">
+  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
+  <div>
+    <img id="preview-svg" class="ajs-input" src="${img}" height="68" style="pointer-events:none">
+  </div>
+  <div>
+    <label
+      for="input-open-svg"
+      class="btn"
+    >${_tcStr('Open SVG')}</label>
+    <label
+      id="save-svg"
+      for="input-save-svg"
+      class="btn"
+    >${_tcStr('Save SVG')}</label>
+    <label
+      id="reset-svg"
+      class="btn"
+    >${_tcStr('Reset SVG')}</label>
+  </div>
+</div>
+`);
       // Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i).val(values[i]);
@@ -845,26 +834,29 @@ angular
         });
       });
 
-      alertify.confirm(
-        'Project Information',
-        content.join('\n'),
-        // onok
-        function (evt) {
-          var values = [];
-          for (var i = 0; i < n; i++) {
-            values.push($('#input' + i).val());
-          }
-          values.push(image);
-          if (callback) {
-            callback(evt, values);
-          }
-          alertify.confirm().set('onshow', prevOnshow);
-        },
-        // oncancel'
-        function (/*evt*/) {
-          alertify.confirm().set('onshow', prevOnshow);
-        }
-      );
+      alertify
+        .confirm(
+          'Project Information',
+          content.join('\n'),
+          // onok
+          function (evt) {
+            var values = [];
+            for (var i = 0; i < n; i++) {
+              values.push($('#input' + i).val());
+            }
+            values.push(image);
+            if (callback) {
+              callback(evt, values);
+            }
+          },
+          function () {}
+        )
+        .setting({
+          labels: {
+            ok: _tcStr('Ok'),
+            cancel: _tcStr('Cancel'),
+          },
+        });
     };
 
     this.selectBoardPrompt = function (callback) {
@@ -876,7 +868,7 @@ angular
       var formSpecs = [
         {
           type: 'combobox',
-          label: gettextCatalog.getString('Select your board'),
+          label: _tcStr('Select your board'),
           value: '',
           options: common.boards.map(function (board) {
             return {
@@ -918,7 +910,7 @@ angular
         return true;
       } catch (e) {
         alertify.error(
-          gettextCatalog.getString('Error: {{error}}', {
+          _tcStr('Error: {{error}}', {
             error: e.toString(),
           }),
           30
@@ -1002,10 +994,7 @@ angular
         ret.rangestr = match[2];
         if (match[2]) {
           if (match[3] > maxSize || match[4] > maxSize) {
-            alertify.warning(
-              gettextCatalog.getString('Maximum bus size: 96 bits'),
-              5
-            );
+            alertify.warning(_tcStr('Maximum bus size: 96 bits'), 5);
             return null;
           } else {
             if (match[3] > match[4]) {
@@ -1132,7 +1121,7 @@ angular
           if (common.LINUX) {
             // xclip installation message
             var cmd = '';
-            var message = gettextCatalog.getString('{{app}} is required.', {
+            var message = _tcStr('{{app}} is required.', {
               app: '<b>xclip</b>',
             });
             nodeGetOS(function (e, os) {
@@ -1158,7 +1147,7 @@ angular
                 if (cmd) {
                   message +=
                     ' ' +
-                    gettextCatalog.getString('Please run: {{cmd}}', {
+                    _tcStr('Please run: {{cmd}}', {
                       cmd: '<br><b><code>' + cmd + '</code></b>',
                     });
                 }
