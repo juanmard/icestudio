@@ -166,10 +166,85 @@
   max-width: 500px;
 }
 
-.fpga-resources span {
-  padding: 5px 10px;
+.btn {
+  border-radius: 0 !important;
 }
 
-.btn {
-  border-radius: 2px;
+.table .btn-group {
+  white-space: nowrap;
+}
+.table .btn-group .btn {
+  display: inline-block;
+  float: none;
+}
+.table .btn-group .btn + .btn {
+  margin-left: -5px;
+}
+
+/* Preferences */
+
+.modal-content,
+.panel-group .panel,
+.panel-heading {
+  border-radius: 0;
+}
+
+.modal-content,
+.modal-body {
+  padding: 5px;
+}
+
+.modal-title {
+  margin-bottom: 5px;
+}
+
+.panel-group {
+  margin-bottom: 0;
+}
+
+.panel-group .panel-heading {
+  padding: 5px;
+  border-color: #d5dadd;
+  background: #f8f8f8;
+}
+
+.panel-heading > a {
+  text-decoration: none !important;
+  color: #333;
+  outline: none !important;
+}
+
+.no-btn {
+  cursor: default !important;
+  opacity: 1 !important;
+}
+
+.no-btn-200 {
+  min-width: 200px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table > tbody > tr > td {
+  border: 0;
+}
+
+.table > tbody > tr:hover {
+  background-color: #f5f5f5;
+}
+
+.modal-dialog {
+  margin: 35px auto;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    margin: 40px auto;
+  }
 }

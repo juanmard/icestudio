@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <a href uib-dropdown-toggle
   >{{ 'Edit' | translate }} <span class="caret"></span
 ></a>
@@ -67,188 +68,15 @@
 
   <li class="divider"></li>
 
-  <li class="dropdown-submenu" uib-dropdown>
-    <a href uib-dropdown-toggle
+  <li>
+    <a href ng-click="setPythonEnv()">{{ 'Python environment' | translate }}</a>
+  </li>
+
+  <li>
+    <a href ng-click="setPreferences()"
       ><i class="fa fa-fw fa-gears" aria-hidden="true"></i> {{ 'Preferences' |
       translate }}</a
     >
-    <ul uib-dropdown-menu>
-      <li class="dropdown-submenu" uib-dropdown>
-        <a href uib-dropdown-toggle
-          ><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> {{ 'Manage
-          collections' | translate }}...</a
-        >
-        <ul uib-dropdown-menu>
-          <li>
-            <a href ng-click="addCollections()"
-              ><i class="fa fa-fw fa-plus" aria-hidden="true"></i> {{ 'Add' |
-              translate }}...</a
-            >
-          </li>
-          <li>
-            <a href ng-click="setExternalCollections()"
-              ><i class="fa fa-fw fa-external-link" aria-hidden="true"></i> {{
-              'Add external' | translate }}...</a
-            >
-          </li>
-          <li>
-            <a href ng-click="reloadCollections()"
-              ><i class="fa fa-fw fa-refresh" aria-hidden="true"></i> {{
-              'Reload' | translate }}</a
-            >
-          </li>
-          <li class="dropdown-submenu" uib-dropdown>
-            <a href uib-dropdown-toggle
-              ><i class="fa fa-fw fa-remove" aria-hidden="true"></i> {{ 'Remove'
-              | translate }}</a
-            >
-            <ul uib-dropdown-menu>
-              <li
-                ng-show="common.internalCollections.length > 0"
-                ng-repeat="collection in common.internalCollections"
-              >
-                <a
-                  href
-                  ng-click="removeCollection(collection)"
-                  ng-if="collection.name != ''"
-                  >{{ collection.name | translate }}</a
-                >
-              </li>
-              <li
-                class="divider"
-                ng-show="common.internalCollections.length > 0"
-              ></li>
-              <li>
-                <a href ng-click="removeAllCollections()"
-                  >{{ 'Remove all' | translate }}</a
-                >
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href ng-click="setExternalPlugins()"
-          ><i class="fa fa-fw fa-exchange" aria-hidden="true"></i> {{ 'Add
-          external plugin' | translate }}...</a
-        >
-      </li>
-      <li>
-        <a href ng-click="setPythonEnv()">{{ 'Python environment' | translate }}</a>
-      </li>
-      <li>
-        <a href ng-click="setRemoteHostname()"
-          ><i class="fa fa-fw fa-at" aria-hidden="true"></i> {{ 'Set remote
-          hostname' | translate }}...<span
-            ng-show="profile.data.remoteHostname"
-            class="glyphicon glyphicon-ok-circle"
-          ></span
-        ></a>
-      </li>
-      <li class="divider" ng-if="common.showToolchain()"></li>
-      <li class="dropdown-submenu" uib-dropdown ng-if="common.showToolchain()">
-        <a href uib-dropdown-toggle
-          ><i class="fa fa-fw fa-gear" aria-hidden="true"></i> {{ 'Manage
-          toolchain' | translate }}</a
-        >
-        <ul uib-dropdown-menu>
-          <li ng-class="toolchain.disabled ? 'is-disabled' : ''">
-            <a
-              href
-              ng-hide="toolchain.installed"
-              ng-click="tools.installToolchain()"
-              >{{ 'Install' | translate }}</a
-            >
-            <a
-              href
-              ng-show="toolchain.installed"
-              ng-click="tools.updateToolchain()"
-              >{{ 'Update' | translate }}</a
-            >
-          </li>
-          <li
-            ng-class="(toolchain.disabled || !toolchain.installed) ? 'is-disabled' : ''"
-          >
-            <a
-              href
-              ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.removeToolchain()"
-              >{{ 'Remove' | translate }}</a
-            >
-          </li>
-          <li
-            ng-class="(toolchain.disabled || !toolchain.installed) ? 'is-disabled' : ''"
-          >
-            <a
-              href
-              ng-click="(toolchain.disabled || !toolchain.installed) ? '' : tools.resetToolchain()"
-              >{{ 'Reset default' | translate }}</a
-            >
-          </li>
-          <li class="divider" ng-show="toolchain.apio"></li>
-          <li class="disabled" ng-show="toolchain.apio">
-            <a href>{{ 'Apio ' + toolchain.apio }}</a>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown-submenu" uib-dropdown ng-if="common.showDrivers()">
-        <a href uib-dropdown-toggle
-          ><i class="fa fa-fw fa-rocket" aria-hidden="true"></i> {{ 'Drivers' |
-          translate }}</a
-        >
-        <ul uib-dropdown-menu>
-          <li>
-            <a href ng-click="tools.enableDrivers()"
-              >{{ 'Enable' | translate }}</a
-            >
-          </li>
-          <li>
-            <a href ng-click="tools.disableDrivers()"
-              >{{ 'Disable' | translate }}</a
-            >
-          </li>
-        </ul>
-      </li>
-      <li class="divider"></li>
-      <li class="dropdown-submenu" uib-dropdown>
-        <a href uib-dropdown-toggle
-          ><i class="fa fa-fw fa-language" aria-hidden="true"></i> {{ 'Language'
-          | translate }}</a
-        >
-        <ul uib-dropdown-menu>
-          <li>
-            <a
-              href
-              ng-repeat="lang in languages"
-              ng-click="selectLanguage(lang[0])"
-              ><i
-                class="fa fa-fw"
-                ng-class="'fa-'+(profile.data.language == lang[0]?'check-':'')+'square-o'"
-                aria-hidden="true"
-              ></i>
-              {{ lang[1] | translate }}</a
-            >
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown-submenu" uib-dropdown>
-        <a href uib-dropdown-toggle
-          ><i class="fa fa-fw fa-snowflake-o" aria-hidden="true"></i> {{ 'UI
-          theme' | translate }}</a
-        >
-        <ul uib-dropdown-menu>
-          <li>
-            <a href ng-repeat="theme in themes" ng-click="selectTheme(theme[0])"
-              ><i
-                class="fa fa-fw"
-                ng-class="'fa-'+(profile.data.uiTheme == theme[0]?'check-':'')+'square-o'"
-                aria-hidden="true"
-              ></i>
-              {{ theme[1] | translate }}</a
-            >
-          </li>
-        </ul>
-      </li>
-    </ul>
   </li>
 
   <li>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <a href uib-dropdown-toggle
   >{{ 'File' | translate }}<span class="caret"></span
 ></a>
@@ -33,16 +34,7 @@
         class="dropdown-submenu"
         uib-dropdown
       >
-        <a
-          href
-          ng-click="collection.disabled = !collection.disabled && collection.name!='Basic'"
-          ><i
-            class="fa fa-fw"
-            ng-class="collection.name!='Basic'?('fa-'+(collection.disabled?'':'check-')+'square-o'):'fa-square'"
-            aria-hidden="true"
-          ></i>
-          {{ collection.name }}</a
-        >
+        <a href>{{ collection.name }}</a>
         <ul uib-dropdown-menu>
           <li class="is-disabled" style="text-align: center;">
             <a href
@@ -65,12 +57,6 @@
               data="collection.content.blocks"
               callback="openProject(path)"
             ></menutree>
-          </li>
-          <li>
-            <a href ng-click="showCollectionData(collection)"
-              ><i class="fa fa-fw fa-info-circle" aria-hidden="true"></i> {{
-              'Collection info' | translate }}</a
-            >
           </li>
         </ul>
       </li>

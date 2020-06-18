@@ -6,17 +6,18 @@ angular
     $log,
     $rootScope,
     $scope,
+    $uibModal,
+    _package,
+    collections,
+    common,
+    gettextCatalog,
+    graph,
+    gui,
     profile,
     project,
-    collections,
-    graph,
+    shortcuts,
     tools,
     utils,
-    common,
-    shortcuts,
-    gettextCatalog,
-    gui,
-    _package,
     nodeFs,
     nodePath
   ) {
@@ -48,6 +49,17 @@ angular
     };
     $scope.setProjectInformation = _setProjectInformation;
 
+    $scope.setPreferences = function () {
+      $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/preferences.html',
+        controller: 'PrefCtrl',
+        size: 'lg',
+      });
+    };
+
     // Convert the list of boards into a format suitable for 'menutree' directive
     function _getBoardsMenu(boards) {
       let boardList = [];
@@ -73,28 +85,6 @@ angular
     }
 
     $scope.common.boardMenu = _getBoardsMenu(common.boards);
-
-    $scope.languages = [
-      ['ca_ES', 'Catalan'],
-      ['cs_CZ', 'Czech'],
-      ['de_DE', 'German'],
-      ['el_GR', 'Greek'],
-      ['en', 'English'],
-      ['es_ES', 'Spanish'],
-      ['eu_ES', 'Basque'],
-      ['fr_FR', 'French'],
-      ['gl_ES', 'Galician'],
-      ['it_IT', 'Italian'],
-      ['ko_KR', 'Korean'],
-      ['nl_NL', 'Dutch'],
-      ['ru_RU', 'Russian'],
-      ['zh_CN', 'Chinese'],
-    ];
-
-    $scope.themes = [
-      ['dark', 'Dark'],
-      ['light', 'Light'],
-    ];
 
     var zeroProject = true; // New project without changes
     var resultAlert = null;
@@ -138,8 +128,8 @@ angular
         : '?icestudio_argv=' +
           atob(decodeURI(loc.replace('?icestudio_argv=', '')))) + '&';
 
-    console.debug('[cnt.menu] window.location.search:', window.location.search);
-    console.debug('[cnt.menu] queryStr:', queryStr);
+    $log.debug('[cnt.menu] window.location.search:', window.location.search);
+    $log.debug('[cnt.menu] queryStr:', queryStr);
 
     var argv = window.opener.opener ? [] : gui.App.argv;
 
@@ -147,7 +137,7 @@ angular
     if (val !== queryStr) {
       // If there are url params, compatibilize it with shell call
       var params = JSON.parse(decodeURI(val));
-      console.debug('[cnt.menu] params:', params);
+      $log.debug('[cnt.menu] params:', params);
       if (params) {
         for (var idx in params) {
           argv.push(params[idx]);
@@ -186,18 +176,18 @@ angular
     function _isEditable(fpath) {
       const cond = [_isInDefault(fpath, false), _isInInternal(fpath, false)];
       const editable = !cond[0] && !cond[1];
-      console.debug('[cnt.menu._isEditable] fpath:', fpath);
-      console.debug(
+      $log.debug('[cnt.menu._isEditable] fpath:', fpath);
+      $log.debug(
         '[cnt.menu._isEditable] _isInDefault:',
         common.DEFAULT_COLLECTION_DIR,
         cond[0]
       );
-      console.debug(
+      $log.debug(
         '[cnt.menu._isEditable] _isInInternal:',
         common.INTERNAL_COLLECTIONS_DIR,
         cond[1]
       );
-      console.debug('[cnt.menu._isEditable] editable?', editable);
+      $log.debug('[cnt.menu._isEditable] editable?', editable);
       return editable;
     }
 
@@ -351,7 +341,7 @@ angular
           exportFromBuilder('bin', 'Bitstream', '.bin');
           break;
         default:
-          console.error(`Unknown export type ${etype}!`);
+          $log.error(`Unknown export type ${etype}!`);
       }
     }
 
@@ -500,136 +490,6 @@ angular
         .catch(function () {});
     }
 
-    $scope.setExternalCollections = function () {
-      var externalCollections = profile.get('externalCollections');
-      utils.renderForm(
-        [
-          {
-            type: 'text',
-            title: _tcStr('Enter the external collections path'),
-            value: externalCollections || '',
-          },
-        ],
-        function (evt, values) {
-          var newExternalCollections = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
-          }
-          if (newExternalCollections !== externalCollections) {
-            if (
-              newExternalCollections === '' ||
-              nodeFs.existsSync(newExternalCollections)
-            ) {
-              profile.set('externalCollections', newExternalCollections);
-              collections.loadExternalCollections();
-              utils.rootScopeSafeApply();
-              alertify.success(_tcStr('External collections updated'));
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                _tcStr(
-                  'Path {{path}} does not exist',
-                  {path: newExternalCollections},
-                  5
-                )
-              );
-            }
-          }
-        }
-      );
-    };
-
-    $scope.setPythonEnv = function () {
-      let pythonEnv = profile.get('pythonEnv');
-      let formSpecs = [{
-        type: 'text',
-        title: gettextCatalog.getString('Enter the python version > 3.8 path'),
-        value: pythonEnv.python || ''
-      },{
-        type: 'text',
-        title: gettextCatalog.getString('Enter the pip version > 3.8 path'),
-        value:  pythonEnv.pip || ''
-
-      }
-    ];
-      utils.renderForm(formSpecs, function (evt, values) {
-
-        let newPythonPath= values[0];
-        let newPipPath= values[1];
-
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        if (newPythonPath !== pythonEnv.python || newPipPath !== pythonEnv.pip) {
-          if (
-            (newPythonPath === '' || nodeFs.existsSync(newPythonPath) ) &&
-             (newPipPath === '' || nodeFs.existsSync(newPipPath) )
-             ){
-
-               let newPythonEnv ={python: newPythonPath, pip:newPipPath};
-            profile.set('pythonEnv', newPythonEnv);
-
-            alertify.success(gettextCatalog.getString('Python Environment updated'));
-          } else {
-            evt.cancel = true;
-            resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', {
-              path: 'of python or pip'
-            }, 5));
-          }
-        }
-      });
-    };
-
-    $scope.setExternalPlugins = function () {
-      var externalPlugins = profile.get('externalPlugins');
-      utils.renderForm(
-        [
-          {
-            type: 'text',
-            title: _tcStr('Enter the external plugins path'),
-            value: externalPlugins || '',
-          },
-        ],
-        function (evt, values) {
-          var newExternalPlugins = values[0];
-          if (resultAlert) {
-            resultAlert.dismiss(false);
-          }
-          if (newExternalPlugins !== externalPlugins) {
-            if (
-              newExternalPlugins === '' ||
-              nodeFs.existsSync(newExternalPlugins)
-            ) {
-              profile.set('externalPlugins', newExternalPlugins);
-              alertify.success(_tcStr('External plugins updated'));
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                _tcStr(
-                  'Path {{path}} does not exist',
-                  {path: newExternalPlugins},
-                  5
-                )
-              );
-            }
-          }
-        }
-      );
-    };
-
-    $scope.setRemoteHostname = function () {
-      var current = profile.get('remoteHostname');
-      alertify.prompt(
-        _tcStr('Enter the remote hostname user@host'),
-        '',
-        current ? current : '',
-        function (evt, remoteHostname) {
-          profile.set('remoteHostname', remoteHostname);
-        },
-        function () {}
-      );
-    };
-
     $(document).on('infoChanged', function (evt, newValues) {
       var values = getProjectInformation();
       if (!_.isEqual(values, newValues)) {
@@ -684,39 +544,45 @@ angular
       );
     };
 
-    $(document).on('langChanged', function (evt, lang) {
-      $scope.selectLanguage(lang);
-    });
+    $scope.setPythonEnv = function () {
+      let pythonEnv = profile.get('pythonEnv');
+      let formSpecs = [{
+        type: 'text',
+        title: gettextCatalog.getString('Enter the python version > 3.8 path'),
+        value: pythonEnv.python || ''
+      },{
+        type: 'text',
+        title: gettextCatalog.getString('Enter the pip version > 3.8 path'),
+        value:  pythonEnv.pip || ''
 
-    $scope.selectLanguage = function (language) {
-      if (profile.get('language') !== language) {
-        profile.set('language', graph.selectLanguage(language));
-        // Reload the project
-        project.update(
-          {
-            deps: false,
-          },
-          function () {
-            graph.loadDesign(project.get('design'), {
-              disabled: false,
-            });
-            //alertify.success(_tcStr("Language {{name}} selected",  { name: utils.bold(language) }));
+      }
+    ];
+      utils.renderForm(formSpecs, function (evt, values) {
+
+        let newPythonPath= values[0];
+        let newPipPath= values[1];
+
+        if (resultAlert) {
+          resultAlert.dismiss(false);
+        }
+        if (newPythonPath !== pythonEnv.python || newPipPath !== pythonEnv.pip) {
+          if (
+            (newPythonPath === '' || nodeFs.existsSync(newPythonPath) ) &&
+             (newPipPath === '' || nodeFs.existsSync(newPipPath) )
+             ){
+
+               let newPythonEnv ={python: newPythonPath, pip:newPipPath};
+            profile.set('pythonEnv', newPythonEnv);
+
+            alertify.success(gettextCatalog.getString('Python Environment updated'));
+          } else {
+            evt.cancel = true;
+            resultAlert = alertify.error(gettextCatalog.getString('Path {{path}} does not exist', {
+              path: 'of python or pip'
+            }, 5));
           }
-        );
-        // Rearrange the collections content
-        collections.sort();
-      }
-    };
-
-    // Theme support
-    $scope.selectTheme = function (theme) {
-      if (profile.get('uiTheme') !== theme) {
-        profile.set('uiTheme', theme);
-        alertify.warning(
-          _tcStr('Icestudio needs to be restarted to switch the new UI Theme.'),
-          15
-        );
-      }
+        }
+      });
     };
 
     //-- View
@@ -822,7 +688,7 @@ angular
     };
 
     function _openWindow(url, title) {
-      console.log(url);
+      $log.log(url);
       return gui.Window.open(url, {
         title: title,
         focus: true,
@@ -835,35 +701,6 @@ angular
         icon: 'resources/images/icestudio-logo.png',
       });
     }
-
-    $scope.showCollectionData = function (collection) {
-      const cname = collection.name;
-      console.debug('[menu.showCollectionData] cname:', cname);
-      var readme = collection.content.readme;
-      console.debug('[menu.showCollectionData] content:', collection.content);
-      if (!readme) {
-        alertify.error(
-          _tcStr('Info of collection &lt;{{collection}}&gt; is undefined', {
-            collection: cname,
-          }),
-          5
-        );
-        return;
-      }
-      if (!nodeFs.existsSync(readme)) {
-        alertify.error(
-          _tcStr('README of collection &lt;{{collection}}&gt; does not exist', {
-            collection: cname,
-          }),
-          5
-        );
-        return;
-      }
-      _openWindow(
-        'resources/viewers/markdown/readme.html?readme=' + escape(readme),
-        'Collection: ' + cname
-      );
-    };
 
     $scope.showCommandOutput = function () {
       winCommandOutput = _openWindow(
@@ -1005,47 +842,6 @@ angular
         }
       });
     }
-
-    $scope.addCollections = function () {
-      utils.openDialog('#input-add-collection', '.zip', function (filepaths) {
-        filepaths = filepaths.split(';');
-        tools.addCollections(filepaths);
-      });
-    };
-
-    $scope.reloadCollections = function () {
-      collections.loadAllCollections();
-    };
-
-    $scope.removeCollection = function (collection) {
-      alertify.confirm(
-        _tcStr('Do you want to remove the {{name}} collection?', {
-          name: utils.bold(collection.name),
-        }),
-        function () {
-          tools.removeCollection(collection);
-          utils.rootScopeSafeApply();
-        }
-      );
-    };
-
-    $scope.removeAllCollections = function () {
-      if (common.internalCollections.length > 0) {
-        alertify.confirm(
-          _tcStr(
-            'All stored collections will be lost. Do you want to continue?'
-          ),
-          function () {
-            tools.removeAllCollections();
-            utils.rootScopeSafeApply();
-          }
-        );
-      } else {
-        alertify.warning(_tcStr('No collections stored'), 5);
-      }
-    };
-
-    //-- Help
 
     $scope.openUrl = function (url, $event) {
       $event.preventDefault();

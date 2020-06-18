@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<table class="table">
+  <tbody>
+    <tr
+      ng-repeat="collection in [common.defaultCollection].concat(common.internalCollections)"
+    >
+      <td>
+        <span
+          href
+          ng-click="collection.disabled = !collection.disabled && collection.name!='Basic'"
+          ng-class="{'pointer':collection.name !== 'Basic'}"
+          style="white-space: nowrap;"
+          ><i
+            class="fa fa-fw"
+            ng-class="{
+            'fa-square': collection.name === 'Basic',
+            'fa-square-o': collection.name !=='Basic' && collection.disabled,
+            'fa-check-square-o': collection.name !=='Basic' && !collection.disabled
+          }"
+            aria-hidden="true"
+          ></i>
+          {{ collection.name }}</span
+        >
+      </td>
+      <td>-</td>
+      <td style="overflow: hidden;" title="{{ collection.path }}">
+        {{collection.path.slice(0,32)}}...
+      </td>
+      <td>
+        <span style="max-width: 175px; overflow: hidden; display: inline;"
+          >{{collection.origin?collection.origin:'zipfile'}}</span
+        >
+      </td>
+      <td>
+        <div class="btn-toolbar" role="toolbar" aria-label="...">
+          <div class="btn-group btn-group-xs" role="group">
+            <button
+              class="btn btn-xs btn-default"
+              ng-click="showCollectionData(collection)"
+              uib-tooltip="{{ 'Show' | translate }} {{ collection.name | translate }} {{ 'collection info' | translate }}"
+              tooltip-append-to-body="true"
+            >
+              <i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="btn-group btn-group-xs" role="group">
+            <button
+              class="btn btn-xs btn-danger"
+              ng-click="removeCollection(collection)"
+              uib-tooltip="{{ 'Remove' | translate }} {{ collection.name | translate }}"
+              tooltip-append-to-body="true"
+              ng-show="collection.name != 'Basic'"
+            >
+              <i class="fa fa-fw fa-remove" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

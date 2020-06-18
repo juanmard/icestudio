@@ -280,3 +280,62 @@ html,
   border-color: white;
   border-radius: 5px;
 }
+
+.modal-content {
+  background: #444;
+  border-color: #666;
+  color: #fff;
+}
+
+.panel-group .panel-heading {
+  background: #333;
+  border-color: #666;
+  color: #fff;
+}
+
+.panel-heading > a {
+  color: #fff;
+}
+
+.panel-body {
+  background: #444;
+}
+
+.badge {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.panel-default > .panel-heading .badge {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.table > tbody > tr:hover {
+  background-color: #333;
+}
+
+.list-group-item {
+  color: #fff;
+  background-color: #444;
+  border: 0;
+  outline: none !important;
+}
+
+.list-group-item:first-child,
+.list-group-item:last-child {
+  border-radius: 0;
+}
+
+button.list-group-item {
+  color: #fff;
+}
+
+button.list-group-item:hover {
+  color: #fff;
+  background-color: #333;
+}
+
+button.list-group-item.active {
+  background-color: #333 !important;
+}

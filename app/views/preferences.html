@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<script type="text/ng-template" id="views/accordion-group.html">
+  <div class="panel" ng-class="panelClass || 'panel-default'">
+    <div
+      role="tab"
+      id="{{::headingId}}"
+      aria-selected="{{isOpen}}"
+      class="panel-heading"
+      ng-keypress="toggleOpen($event)"
+    >
+      <a role="button"
+        data-toggle="collapse"
+        href aria-expanded="{{isOpen}}"
+        aria-controls="{{::panelId}}"
+        tabindex="0"
+        class="accordion-toggle"
+        uib-accordion-transclude="heading"
+      ><span uib-accordion-header ng-class="{'text-muted': isDisabled}">{{$scope}}{{heading}}</span></a>
+    </div>
+    <div
+      id="{{::panelId}}"
+      aria-labelledby="{{::headingId}}"
+      aria-hidden="{{!isOpen}}"
+      role="tabpanel"
+      class="panel-collapse collapse"
+      uib-collapse="!isOpen"
+    >
+      <div class="panel-body" ng-transclude></div>
+    </div>
+  </div>
+</script>
+
+<div class="modal-body" id="modal-body">
+  <h4 class="modal-title" id="modal-title">
+    <i class="fa fa-fw fa-gear"></i> Preferences
+    <span class="pull-right" role="button"
+      ><i class="fa fa-fw fa-close" ng-click="done()" type="button"></i
+    ></span>
+  </h4>
+  <uib-accordion close-others="false">
+    <div
+      uib-accordion-group
+      class="panel-default"
+      ng-repeat="(key, val) in tabs"
+      is-disabled="val.disabled"
+      is-open="val.isopen"
+      template-url="views/accordion-group.html"
+    >
+      <uib-accordion-heading>
+        <span ng-if="!val.headonly" ng-click="val.isopen = !val.isopen">
+          <i
+            class="fa fa-fw"
+            ng-class="{'fa-caret-right': !val.isopen, 'fa-caret-down': val.isopen}"
+            style="padding-top: 4px;"
+          ></i
+          ><i class="fa fa-fw fa-{{val.icon}}"></i> {{ val.title | translate }}
+        </span>
+        <span ng-if="val.headonly" style="cursor: default;">
+          <i class="fa fa-fw"></i><i class="fa fa-fw fa-{{val.icon}}"></i> {{
+          val.title | translate }}
+        </span>
+        <span ng-if="val.disabled" class="pull-right"
+          ><i class="fa fa-fw fa-ban" style="padding-top: 1px;"></i>
+        </span>
+        <span
+          ng-if="!val.disabled"
+          ng-include="'views/pref_head_'+ key +'.html'"
+        ></span>
+      </uib-accordion-heading>
+      <div ng-if="!val.headonly" ng-include="'views/pref_'+ key +'.html'"></div>
+    </div>
+  </uib-accordion>
+</div>
+
+<script type="text/ng-template" id="views/pref_head_collections.html">
+  <span class="pull-right">
+    <div class="btn-toolbar" role="toolbar" style="display:inline-block;">
+
+      <div
+        class="btn-group btn-group-xs"
+        role="group"
+        ng-class="{'is-disabled': toolchain.disabled}"
+      >
+        <button
+          type="button"
+          class="btn btn-default"
+          ng-click="addCollections()"
+          uib-tooltip="{{ 'Add collection(s)...' | translate }}"
+          tooltip-append-to-body="true"
+        ><i class="fa fa-fw fa-plus" aria-hidden="true"></i
+          ></button>
+      </div>
+
+      <div
+        class="btn-group btn-group-xs"
+        role="group"
+        ng-class="{'is-disabled': toolchain.disabled}"
+      >
+        <button
+          type="button"
+          class="btn btn-default"
+          ng-click="reloadCollections()"
+          uib-tooltip="{{ 'Reload all collections' |
+        translate }}"
+          tooltip-append-to-body="true"
+        ><i class="fa fa-fw fa-refresh" aria-hidden="true"></i
+          ></button>
+          <span
+          class="btn btn-default no-btn disabled"
+          uib-tooltip="{{ 'Installed collections' | translate }}"
+          tooltip-append-to-body="true"
+        >{{common.internalCollections.length}} + {{common.externalCollections.length}}</span>
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          ng-click="removeAllCollections()"
+          uib-tooltip="{{ 'Remove all collection' | translate }}"
+          tooltip-append-to-body="true"
+        ><i class="fa fa-fw fa-remove" aria-hidden="true"></i
+          ></button>
+
+      </div>
+
+      <div class="btn-group btn-group-xs" role="group">
+      <span
+      class="btn btn-default disabled no-btn no-btn-200"
+      uib-tooltip="{{ 'External collections path' | translate }}"
+      tooltip-append-to-body="true"
+    >{{ externalPath ? externalPath : 'unset' }}</span>
+        <button
+          type="button"
+          class="btn btn-default"
+          ng-click="setExternalCollections()"
+          uib-tooltip="{{ 'Set external collections path' | translate }}"
+          tooltip-append-to-body="true"
+        ><i
+          class="fa fa-fw"
+          aria-hidden="true"
+          ng-class="'fa-' + (externalPath?'external-link':'pencil')"></i
+          ></button>
+      </div>
+
+    </div>
+  </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_head_plugins.html">
+  <span class="pull-right">
+    <div class="btn-group btn-group-xs" role="group">
+      <span
+      class="btn btn-default disabled no-btn no-btn-200"
+      uib-tooltip="{{ 'External plugin path' | translate }}"
+      tooltip-append-to-body="true"
+    ><span v-if="profile.data.externalPlugins">{{ profile.data.externalPlugins }}</span>
+    <span v-if="!profile.data.externalPlugins"><i>unset</i></span></span>
+        <button
+          type="button"
+          class="btn btn-default"
+          ng-click="setExternalPlugins()"
+          uib-tooltip="{{ 'Set external plugin path' | translate }}"
+          tooltip-append-to-body="true"
+        ><i
+          class="fa fa-fw"
+          aria-hidden="true"
+          ng-class="'fa-' + (profile.data.externalPlugins?'check':'pencil')"></i
+          ></button>
+      </div>
+  </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_head_remote.html">
+  <span class="pull-right">
+    <span class="pull-right">
+      <div class="btn-group btn-group-xs" role="group">
+        <span
+        class="btn btn-default disabled no-btn no-btn-200"
+        uib-tooltip="{{ 'Remote hostname (SSH)' | translate }}"
+        tooltip-append-to-body="true"
+      ><span v-if="profile.data.remoteHostname">{{ profile.data.remoteHostname }}</span>
+      <span v-if="!profile.data.remoteHostname"><i>unset</i></span></span>
+          <button
+            type="button"
+            class="btn btn-default"
+            ng-click="setRemoteHostname()"
+            uib-tooltip="{{ 'Set remote hostname' | translate }}"
+            tooltip-append-to-body="true"
+          ><i
+            class="fa fa-fw"
+            aria-hidden="true"
+            ng-class="'fa-' + (profile.data.remoteHostname?'link':'pencil')"></i
+            ></button>
+        </div>
+    </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_head_language.html">
+  <span class="pull-right" ng-click="val.isopen = !val.isopen">
+    {{ languages[profile.data.language] }} <span class="badge" style="margin-left: 5px; min-width: 50px">{{profile.data.language | translate}}</span>
+  </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_language.html">
+  <div class="list-group">
+    <button type="button"
+      class="list-group-item"
+      ng-repeat="(key, val) in languages"
+      ng-click="selectLanguage(key)"
+      ng-class="{'active': profile.data.language == key}"
+    ><i
+    class="fa fa-fw"
+    ng-class="'fa-'+(profile.data.language == key?'check-':'')+'square-o'"
+    aria-hidden="true"
+  ></i> {{ val | translate }} <span class="badge" style="min-width: 50px">{{key}}</span></button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="views/pref_head_theme.html">
+    <span class="pull-right">
+      <div class="btn-group btn-group-xs" role="group">
+        <button
+          type="button"
+          class="btn btn-default"
+          ng-click="selectTheme(theme[0])"
+          ng-repeat="theme in themes"
+          ng-class="{
+            'disabled no-btn': profile.data.uiTheme == theme[0]
+          }"
+        ><i
+        ng-if="profile.data.uiTheme == theme[0]"
+        class="fa fa-fw fa-check"
+        aria-hidden="true"
+      ></i> {{ theme[1] | translate }}</button>
+      </div>
+
+  <!-- TODO: use 'uib-btn-radio'; needs reworking profile.data.uiTheme
+
+      <div class="btn-group">
+        <label
+          class="btn btn-xs btn-default"
+          ng-model="profile.data.uiTheme"
+          uib-btn-radio="theme[0]"
+          uib-btn-checkbox
+          ng-click="selectTheme(theme[0])"
+          ng-repeat="theme in themes"
+        >{{ theme[1] | translate }}</label>
+      </div>
+  -->
+    </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_head_toolchain.html">
+  <span class="pull-right">
+    <div class="btn-toolbar" role="toolbar" aria-label="...">
+    <div
+      class="btn-group btn-group-xs"
+      role="group"
+      ng-class="{'is-disabled': toolchain.disabled}"
+    >
+
+      <button
+        type="button"
+        class="btn btn-default"
+        ng-click="tools.installToolchain()"
+        ng-class="{'is-disabled': toolchain.installed}"
+      >{{ 'Install' | translate }}</button>
+
+    <button
+      type="button"
+      class="btn btn-default"
+      ng-click="tools.updateToolchain()"
+      ng-class="{'is-disabled': !toolchain.installed}"
+    >{{ 'Update' | translate }}</button>
+
+    <button
+      type="button"
+      class="btn btn-default"
+      ng-click="tools.removeToolchain()"
+      ng-class="{'is-disabled': !toolchain.installed}"
+    >{{ 'Remove' | translate }}</button>
+
+    <button
+      type="button"
+      class="btn btn-default"
+      ng-click="tools.resetToolchain()"
+      ng-class="{'is-disabled': !toolchain.installed}"
+    >{{ 'Reset default' | translate }}</button>
+
+    </div>
+
+    <div
+      ng-if="!toolchain.apio"
+      class="btn-group btn-group-xs is-disabled"
+      role="group"
+    >
+    <button
+      type="button"
+      class="btn btn-xs btn-default"
+    >{{ 'Apio ' + toolchain.apio }}</button>
+    </div>
+  </div>
+  </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_toolchain.html">
+    <div ng-class="{'is-disabled': !common.showDrivers()}">
+    <div class="btn-group btn-group-xs" role="group" aria-label="...">
+      <button type="button" class="btn btn-default" ng-click="tools.enableDrivers()">{{ 'Enable' | translate }}</button>
+      <button type="button" class="btn btn-default" ng-click="tools.disableDrivers()">{{ 'Disable' | translate }}</button>
+    </div>
+    <i class="fa fa-fw fa-rocket"></i> {{ 'Drivers' | translate }}
+  </div>
+</script>
