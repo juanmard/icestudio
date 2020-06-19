@@ -1,5 +1,6 @@
 {
   "label": "ORANGECRAB-r02-25F",
+  "device": "ECP5",
   "datasheet": "https://github.com/gregdavill/OrangeCrab",
   "interface": "FTDI",
   "arch": "ecp5",

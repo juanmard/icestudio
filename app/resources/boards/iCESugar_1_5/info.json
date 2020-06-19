@@ -1,5 +1,6 @@
 {
   "label": "iCESugar 1.5",
+  "device": "UP5K",
   "datasheet": "https://github.com/wuxx/icesugar/blob/master/README_en.md",
   "interface": "FTDI",
   "FPGAResources": {

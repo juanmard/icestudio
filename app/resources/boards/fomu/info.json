@@ -1,5 +1,6 @@
 {
   "label": "Fomu",
+  "device": "UP5K",
   "datasheet": "https://github.com/im-tomu/fomu-hardware",
   "interface": "SDU",
   "FPGAResources": {

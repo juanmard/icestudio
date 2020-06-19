@@ -1,5 +1,6 @@
 {
   "label": "BlackIce MX",
+  "device": "HX8K",
   "datasheet": "https://github.com/folknology/IceCore",
   "interface": "Serial",
   "FPGAResources": {

@@ -1,5 +1,6 @@
 {
   "label": "Alhambra II",
+  "device": "HX4K",
   "datasheet": "https://github.com/FPGAwars/Alhambra-II-FPGA",
   "interface": "FTDI",
   "FPGAResources": {

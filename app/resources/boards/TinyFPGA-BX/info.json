@@ -1,5 +1,6 @@
 {
   "label": "TinyFPGA BX",
+  "device": "LP8K",
   "datasheet": "https://github.com/tinyfpga/TinyFPGA-BX",
   "interface": "Serial",
   "FPGAResources": {

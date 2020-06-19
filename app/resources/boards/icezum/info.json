@@ -1,5 +1,6 @@
 {
   "label": "IceZUM Alhambra",
+  "device": "HX1K",
   "datasheet": "https://github.com/FPGAwars/icezum",
   "interface": "FTDI",
   "FPGAResources": {

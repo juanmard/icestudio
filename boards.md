@@ -20,6 +20,7 @@
 
 | Board name                                                                                                       | Interface |
 | :--------------------------------------------------------------------------------------------------------------- | :-------: |
+| [Alchitry-Cu](https://alchitry.com/products/alchitry-cu-fpga-development-board)                                  |   FTDI    |
 | [BlackIce](https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board)                     |  Serial   |
 | [BlackIce II](https://github.com/mystorm-org/BlackIce-II)                                                        |  Serial   |
 | [icoBOARD 1.0](http://icoboard.org/about-icoboard.html)                                                          | GPIO RPi  |

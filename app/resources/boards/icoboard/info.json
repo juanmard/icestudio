@@ -1,5 +1,6 @@
 {
   "label": "icoBOARD 1.0",
+  "device": "HX8K",
   "datasheet": "http://icoboard.org/about-icoboard.html",
   "interface": "GPIO",
   "FPGAResources": {

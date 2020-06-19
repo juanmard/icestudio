@@ -1,5 +1,6 @@
 {
   "label": "Nandland Go board",
+  "device": "HX1K",
   "datasheet": "https://www.nandland.com/goboard/introduction.html",
   "interface": "FTDI",
   "FPGAResources": {

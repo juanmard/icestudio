@@ -1,5 +1,6 @@
 {
   "label": "iCEBreaker bitsy",
+  "device": "UP5K",
   "datasheet": "https://github.com/icebreaker-fpga/icebreaker",
   "interface": "FTDI",
   "FPGAResources": {

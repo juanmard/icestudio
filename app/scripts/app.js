@@ -19,13 +19,14 @@ angular
     },
   ])
   .run(function (
+    boards,
+    collections,
+    common,
+    gettextCatalog,
     profile,
     project,
     tools,
-    utils,
-    boards,
-    collections,
-    gettextCatalog
+    utils
   ) {
     'use strict';
 
@@ -37,11 +38,13 @@ angular
       utils.loadLanguage(profile, function () {
         if (profile.get('board') === '') {
           utils.selectBoardPrompt(function (selectedBoard) {
-            profile.setBoard(boards.selectBoard(selectedBoard));
+            boards.selectBoard(selectedBoard);
+            profile.set('board', common.selectedBoard.name);
             tools.checkToolchain();
           });
         } else {
-          profile.set('board', boards.selectBoard(profile.get('board')).name);
+          boards.selectBoard(profile.get('board'));
+          profile.set('board', common.selectedBoard.name);
           tools.checkToolchain();
         }
         collections.sort();

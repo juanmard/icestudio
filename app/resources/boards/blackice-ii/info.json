@@ -1,5 +1,6 @@
 {
   "label": "BlackIce II",
+  "device": "HX8K",
   "datasheet": "https://github.com/mystorm-org/BlackIce-II",
   "interface": "Serial",
   "FPGAResources": {

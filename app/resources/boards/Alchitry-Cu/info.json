@@ -1,5 +1,6 @@
 {
-  "label": "Alchitry Cu",
+  "label": "Alchitry",
+  "device": "HX8K",
   "datasheet": "https://alchitry.com/products/alchitry-cu-fpga-development-board",
   "interface": "FTDI",
   "FPGAResources": {

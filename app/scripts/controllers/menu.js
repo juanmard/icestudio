@@ -61,30 +61,16 @@ angular
     };
 
     // Convert the list of boards into a format suitable for 'menutree' directive
-    function _getBoardsMenu(boards) {
-      let boardList = [];
-      for (const val of boards) {
-        let exists = false;
-        for (const fam of boardList) {
-          if (!boardList.hasOwnProperty(fam)) {
-            if (fam.name === val.type) {
-              fam.children.push({path: val.name, name: val.info.label});
-              exists = true;
-              break;
-            }
-          }
-        }
-        if (!exists) {
-          boardList.push({
-            name: val.type,
-            children: [{path: val.name, name: val.info.label}],
-          });
-        }
-      }
-      return boardList;
-    }
-
-    $scope.common.boardMenu = _getBoardsMenu(common.boards);
+    $scope.boardMenu = common.devices.map(function (key) {
+      return {
+        name: key,
+        children: common.boards
+          .filter((x) => x.info.device === key)
+          .map(function (x) {
+            return {path: x.name, name: x.info.label};
+          }),
+      };
+    });
 
     var zeroProject = true; // New project without changes
     var resultAlert = null;
@@ -726,7 +712,8 @@ angular
 
     $(document).on('boardChanged', function (evt, board) {
       if (common.selectedBoard.name !== board.name) {
-        profile.set('board', graph.selectBoard(board).name);
+        graph.selectBoard(board);
+        profile.set('board', common.selectedBoard.name);
       }
     });
 
@@ -764,8 +751,8 @@ angular
       }
 
       function _selectBoardNotify(board) {
-        var newBoard = graph.selectBoard(board, true);
-        profile.setBoard(newBoard);
+        graph.selectBoard(board, true);
+        profile.setBoard(common.selectedBoard);
       }
     }
 

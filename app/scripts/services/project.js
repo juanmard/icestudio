@@ -145,7 +145,8 @@ angular
           common.hasChangesSinceBuild = true;
         });
         if (ret) {
-          profile.set('board', boards.selectBoard(project.design.board).name);
+          boards.selectBoard(project.design.board);
+          profile.set('board', common.selectedBoard.name);
           self.updateTitle(name);
           let bdir = utils.filepath2buildpath(self.filepath);
           common.setBuildDir(bdir);

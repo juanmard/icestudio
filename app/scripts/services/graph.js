@@ -1021,12 +1021,11 @@ angular
           next: board,
         },
       });
-      var newBoard = boards.selectBoard(board.name);
+      boards.selectBoard(board.name);
       if (reset) {
         resetBlocks();
       }
       graph.stopBatch('change');
-      return newBoard;
     };
 
     this.setBlockInfo = function (values, newValues, blockId) {

@@ -1,5 +1,6 @@
 {
   "label": "iCE40 UltraPlus Breakout Board",
+  "device": "UP5K",
   "datasheet": "http://www.latticesemi.com/en/Products/DevelopmentBoardsAndKits/iCE40UltraPlusBreakoutBoard",
   "interface": "FTDI",
   "FPGAResources": {
