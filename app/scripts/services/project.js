@@ -125,12 +125,12 @@ angular
         if (originalBoard !== undefined && originalBoard !== false) {
           for (var i = 0; i < common.boards.length; i++) {
             if (String(common.boards[i].name) === String(originalBoard)) {
-              opt.originalPinout = common.boards[i].pinout;
+              opt.originalPinout = common.boards[i].info['pinout'];
             }
             if (
               String(common.boards[i].name) === String(project.design.board)
             ) {
-              opt.designPinout = common.boards[i].pinout;
+              opt.designPinout = common.boards[i].info['pinout'];
             }
           }
         }

@@ -9,7 +9,7 @@
           href
           ng-click="collection.disabled = !collection.disabled && collection.name!='Basic'"
           ng-class="{'pointer':collection.name !== 'Basic'}"
-          style="white-space: nowrap;"
+          style="white-space: nowrap"
           ><i
             class="fa fa-fw"
             ng-class="{
@@ -23,11 +23,11 @@
         >
       </td>
       <td>-</td>
-      <td style="overflow: hidden;" title="{{ collection.path }}">
+      <td style="overflow: hidden" title="{{ collection.path }}">
         {{collection.path.slice(0,32)}}...
       </td>
       <td>
-        <span style="max-width: 175px; overflow: hidden; display: inline;"
+        <span style="max-width: 175px; overflow: hidden; display: inline"
           >{{collection.origin?collection.origin:'zipfile'}}</span
         >
       </td>

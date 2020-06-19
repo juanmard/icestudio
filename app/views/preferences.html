@@ -51,16 +51,16 @@
           <i
             class="fa fa-fw"
             ng-class="{'fa-caret-right': !val.isopen, 'fa-caret-down': val.isopen}"
-            style="padding-top: 4px;"
+            style="padding-top: 4px"
           ></i
           ><i class="fa fa-fw fa-{{val.icon}}"></i> {{ val.title | translate }}
         </span>
-        <span ng-if="val.headonly" style="cursor: default;">
+        <span ng-if="val.headonly" style="cursor: default">
           <i class="fa fa-fw"></i><i class="fa fa-fw fa-{{val.icon}}"></i> {{
           val.title | translate }}
         </span>
         <span ng-if="val.disabled" class="pull-right"
-          ><i class="fa fa-fw fa-ban" style="padding-top: 1px;"></i>
+          ><i class="fa fa-fw fa-ban" style="padding-top: 1px"></i>
         </span>
         <span
           ng-if="!val.disabled"

@@ -5,10 +5,10 @@
 ></a>
 <ul uib-dropdown-menu>
   <li
-    ng-class="pinoutAvailable() ? '' : 'is-disabled'"
-    style="text-align: center;"
+    ng-class="svgPinoutAvailable() ? '' : 'is-disabled'"
+    style="text-align: center"
   >
-    <a href ng-click="showPinout()"
+    <a href ng-click="showSvgPinout()"
       ><i>{{ common.selectedBoard.info.label }}</i></a
     >
   </li>

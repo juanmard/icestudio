@@ -737,30 +737,28 @@ angular
 <input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
       }
       const img = image ? 'data:image/svg+xml,' + image : blankImage;
-      content.push(`
-  <p>${_tcStr('Image')}</p>
-  <input id="input-open-svg" type="file" accept=".svg" class="hidden">
-  <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
-  <div>
-    <img id="preview-svg" class="ajs-input" src="${img}" height="68" style="pointer-events:none">
-  </div>
-  <div>
-    <label
-      for="input-open-svg"
-      class="btn"
-    >${_tcStr('Open SVG')}</label>
-    <label
-      id="save-svg"
-      for="input-save-svg"
-      class="btn"
-    >${_tcStr('Save SVG')}</label>
-    <label
-      id="reset-svg"
-      class="btn"
-    >${_tcStr('Reset SVG')}</label>
-  </div>
-</div>
-`);
+      content.push(`<p>${_tcStr('Image')}</p>
+        <input id="input-open-svg" type="file" accept=".svg" class="hidden">
+        <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
+        <div>
+          <img id="preview-svg" class="ajs-input" src="${img}" height="68" style="pointer-events:none">
+        </div>
+        <div>
+          <label
+            for="input-open-svg"
+            class="btn"
+          >${_tcStr('Open SVG')}</label>
+          <label
+            id="save-svg"
+            for="input-save-svg"
+            class="btn"
+          >${_tcStr('Save SVG')}</label>
+          <label
+            id="reset-svg"
+            class="btn"
+          >${_tcStr('Reset SVG')}</label>
+        </div>
+      </div>`);
       // Restore values
       for (i = 0; i < n; i++) {
         $('#input' + i).val(values[i]);

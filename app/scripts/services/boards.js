@@ -13,14 +13,10 @@ angular
         section.boards.forEach(function (name) {
           var contentPath = nodePath.join(path, name);
           if (nodeFs.statSync(contentPath).isDirectory()) {
-            var info = readJSONFile(contentPath, 'info.json');
-            var pinout = readJSONFile(contentPath, 'pinout.json');
-            var rules = readJSONFile(contentPath, 'rules.json');
             boards.push({
               name: name,
-              info: info,
-              pinout: pinout,
-              rules: rules,
+              info: readJSONFile(contentPath, 'info.json'),
+              rules: readJSONFile(contentPath, 'rules.json'),
               type: section.type,
             });
           }
@@ -59,11 +55,11 @@ angular
       }
       common.selectedBoard = selectedBoard;
       common.pinoutInputHTML = generateHTMLOptions(
-        common.selectedBoard.pinout,
+        common.selectedBoard.info['pinout'],
         'input'
       );
       common.pinoutOutputHTML = generateHTMLOptions(
-        common.selectedBoard.pinout,
+        common.selectedBoard.info['pinout'],
         'output'
       );
       utils.rootScopeSafeApply();

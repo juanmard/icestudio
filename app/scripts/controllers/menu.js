@@ -604,7 +604,7 @@ angular
       );
     };
 
-    $scope.pinoutAvailable = function () {
+    $scope.svgPinoutAvailable = function () {
       if (common.selectedBoard) {
         return nodeFs.existsSync(
           nodePath.join(
@@ -617,9 +617,9 @@ angular
       }
       return false;
     };
-    $scope.showPinout = function () {
+    $scope.showSvgPinout = function () {
       var board = common.selectedBoard;
-      if (this.pinoutAvailable()) {
+      if (this.svgPinoutAvailable()) {
         gui.Window.open(
           'resources/viewers/svg/pinout.html?board=' + board.name,
           {
