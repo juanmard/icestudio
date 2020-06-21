@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <ul class="nav navbar-nav navbar-right" ng-show="common.selectedBoard">
+  <!-- TODO: use a "button toolbar" instead of two separate button groups-->
   <li>
     <div class="btn-group" role="group" aria-label="...">
       <button
         ng-click="verifyCode()"
         type="button"
         class="btn btn-sm btn-default"
-        title="{{ 'Verify' | translate }}"
+        uib-tooltip="{{ 'Verify' | translate }} · {{ 'verifyCode' | shortcut }}"
+        tooltip-append-to-body="true"
       >
         <i class="fa fa-fw fa-check" aria-hidden="true"></i>
       </button>
@@ -14,7 +16,8 @@
         ng-click="buildCode()"
         type="button"
         class="btn btn-sm btn-default"
-        title="{{ 'Build' | translate }}"
+        uib-tooltip="{{ 'Build' | translate }} · {{ 'buildCode' | shortcut }}"
+        tooltip-append-to-body="true"
       >
         <i class="fa fa-fw fa-gear" aria-hidden="true"></i>
       </button>
@@ -22,7 +25,8 @@
         ng-click="uploadCode()"
         type="button"
         class="btn btn-sm btn-default"
-        title="{{ 'Upload' | translate }}"
+        uib-tooltip="{{ 'Upload' | translate }} · {{ 'uploadCode' | shortcut }}"
+        tooltip-append-to-body="true"
       >
         <i class="fa fa-fw fa-rocket" aria-hidden="true"></i>
       </button>
@@ -30,16 +34,20 @@
         ng-click="showCommandOutput()"
         type="button"
         class="btn btn-sm btn-default"
-        title="{{ 'View command output' | translate }}"
+        uib-tooltip="{{ 'View command output' | translate }}"
+        tooltip-append-to-body="true"
       >
         <i class="fa fa-fw fa-align-left" aria-hidden="true"></i>
       </button>
     </div>
   </li>
-  <li>
+  <li
+    uib-tooltip="{{ 'Device resource usage' | translate }}"
+    tooltip-append-to-body="true"
+    tooltip-placement="left"
+  >
     <div class="btn-group dropup">
       <button
-        title="FPGA resource usage"
         type="button"
         class="btn btn-sm btn-default dropdown-toggle"
         data-toggle="dropdown"
