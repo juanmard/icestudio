@@ -56,6 +56,7 @@ angular
           console.error(`[srv.boards._selectBoard] board ${name} not found!`);
           return;
         }
+        common.selectedDevice = common.selectedBoard.info.device;
         common.pinoutInputHTML = generateHTMLOptions(
           common.selectedBoard.info['pinout'],
           'input'

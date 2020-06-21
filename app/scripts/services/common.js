@@ -18,6 +18,7 @@ angular
     // Selected board
     this.boards = [];
     this.selectedBoard = null;
+    this.selectedDevice = null;
     this.pinoutInputHTML = '';
     this.pinoutOutputHTML = '';
 

@@ -90,12 +90,6 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li
-            ng-include="'views/menu_basic.html'"
-            uib-dropdown
-            ng-show="!common.defaultCollection.disabled"
-          ></li>
-
-          <li
             uib-dropdown
             ng-repeat="collection in common.internalCollections.concat(common.externalCollections)"
             ng-show="!collection.disabled"
@@ -110,7 +104,11 @@
             ></menutree>
           </li>
 
-          <li ng-include="'views/menu_board.html'" uib-dropdown></li>
+          <li
+            ng-include="'views/menu_basic.html'"
+            uib-dropdown
+            ng-show="!common.defaultCollection.disabled"
+          ></li>
         </ul>
       </div>
     </nav>
@@ -123,7 +121,7 @@
               uib-tooltip="{{ 'Unsaved changes in the project!' | translate }}"
               tooltip-append-to-body="true"
               tooltip-placement="right"
-              style="color: chocolate;"
+              style="color: chocolate"
               ><i class="fa fa-fw fa-warning" aria-hidden="true"></i
             ></a>
           </li>

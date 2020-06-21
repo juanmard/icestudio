@@ -53,6 +53,7 @@ angular
       graph.fitContent();
     };
     $scope.setProjectInformation = _setProjectInformation;
+    $scope.showBoardOptions = _showBoardOptions;
 
     $scope.setPreferences = function () {
       $uibModal.open({
@@ -63,6 +64,17 @@ angular
         controller: 'PrefCtrl',
         size: 'lg',
       });
+    };
+
+    $scope.selectedDeviceBoards = common.boards.filter(
+      (board) => board.info.device === common.selectedDevice
+    );
+
+    $scope.selectDevice = function (device) {
+      common.selectedDevice = device;
+      $scope.selectedDeviceBoards = common.boards.filter(
+        (board) => board.info.device === device
+      );
     };
 
     // Convert the list of boards into a format suitable for 'menutree' directive
@@ -76,6 +88,17 @@ angular
           }),
       };
     });
+
+    $scope.selectedDeviceBoards = common.boards.filter(
+      (board) => board.info.device === common.selectedDevice
+    );
+
+    $scope.selectDevice = function (device) {
+      common.selectedDevice = device;
+      $scope.selectedDeviceBoards = common.boards.filter(
+        (board) => board.info.device === device
+      );
+    };
 
     var zeroProject = true; // New project without changes
     var resultAlert = null;
@@ -567,7 +590,60 @@ angular
       });
     };
 
-    //-- View
+    //-- Board options
+
+    var boardDialog = undefined;
+
+    // Create a new dialog based on 'alert';
+    // so that 'Board options' window is not affected by other alerts
+    // See https://alertifyjs.com/factory.html
+    if (!alertify.boardWindow) {
+      alertify.dialog(
+        'boardWindow',
+        function factory() {
+          return {
+            main: function (content) {
+              this.setContent(content);
+            },
+            build: function () {
+              this.setHeader($('#boardoptshead')[0]);
+              boardDialog = this.elements.dialog;
+              boardDialog.classList.add('board-window');
+            },
+          };
+        },
+        false,
+        'alert'
+      );
+    }
+
+    function _showBoardOptions() {
+      if (alertify.boardWindow().isOpen()) {
+        alertify.boardWindow().close();
+        return;
+      }
+      common.selectedDevice = common.selectedBoard.info.device;
+      alertify.boardWindow($('#boardopts')[0]).setting({
+        frameless: true,
+        autoReset: false,
+        modal: false,
+        pinnable: false,
+        closable: true,
+        closableByDimmer: false,
+        movable: true,
+        moveBounded: true,
+        maximizable: true,
+        resizable: false,
+      });
+    }
+
+    $scope.toggleBoardWindowSize = function (open) {
+      if (open) {
+        boardDialog.classList.add('is-dropdown-open');
+      } else {
+        boardDialog.classList.remove('is-dropdown-open');
+      }
+    };
 
     $scope.showPCF = function () {
       gui.Window.open(

@@ -1,52 +1,155 @@
 <!DOCTYPE html>
-<a href uib-dropdown-toggle
-  ><i class="fa fa-fw fa-microchip" aria-hidden="true"></i>
-  <span class="caret"></span
-></a>
-<ul uib-dropdown-menu>
-  <li
-    ng-class="svgPinoutAvailable() ? '' : 'is-disabled'"
-    style="text-align: center"
+<div style="display: none">
+  <div id="boardoptshead">
+    <i class="fa fa-fw fa-microchip" aria-hidden="true"></i> {{
+    common.selectedBoard.info.label }}
+  </div>
+  <div
+    id="boardopts"
+    style="height: 100%; padding-top: 27px"
+    class="text-center"
   >
-    <a href ng-click="showSvgPinout()"
-      ><i>{{ common.selectedBoard.info.label }}</i></a
-    >
-  </li>
-  <li>
-    <a href ng-click="showPCF()"
-      ><i class="fa fa-fw fa-wrench" aria-hidden="true"></i> {{ 'Constraints' |
-      translate }}</a
-    >
-  </li>
-  <li>
-    <a href ng-click="showDatasheet()"
-      ><i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> {{ 'Datasheet'
-      | translate }}</a
-    >
-  </li>
-  <li>
-    <a href ng-click="toggleBoardRules()"
-      ><i
-        class="fa fa-fw"
-        ng-class="'fa-toggle-'+(profile.data.boardRules?'on':'off')"
-        aria-hidden="true"
-      ></i>
-      {{ 'Toggle board rules' | translate }}</a
-    >
-  </li>
-  <li>
-    <a href ng-click="showBoardRules()"
-      ><i class="fa fa-fw fa-eye" aria-hidden="true"></i> {{ 'View board rules'
-      | translate }}</a
-    >
-  </li>
-  <li class="divider"></li>
-  <li class="dropdown-submenu-right" uib-dropdown right="true">
-    <a href uib-dropdown-toggle>{{ 'Change board' | translate }}</a>
-    <menutree
-      data="boardMenu"
-      callback="selectBoard(path)"
-      right="true"
-    ></menutree>
-  </li>
-</ul>
+    <div style="overflow-y: auto; height: 100%; padding: 10px">
+      <div>
+        <div
+          class="btn-toolbar"
+          role="toolbar"
+          aria-label="..."
+          style="display: inline-block"
+        >
+          <div
+            class="btn-group btn-group-xs"
+            uib-dropdown
+            on-toggle="toggleBoardWindowSize(open)"
+            title="{{ 'Device' | translate }}"
+          >
+            <button
+              type="button"
+              class="btn btn-default"
+              uib-dropdown-toggle
+              title="{{ 'Select another device' | translate }}"
+            >
+              <span class="caret"></span>
+              <span class="sr-only"
+                >{{ 'Select another device' | translate }}</span
+              >
+            </button>
+            <button
+              type="button"
+              class="btn btn-default is-disabled"
+              style="width: 55px"
+              title="{{ 'Device'| translate }}"
+            >
+              {{common.selectedDevice}}
+            </button>
+
+            <ul
+              class="dropdown-menu"
+              uib-dropdown-menu
+              role="menu"
+              aria-labelledby="single-button"
+            >
+              <li
+                role="menuitem"
+                ng-repeat="device in boardMenu"
+                ng-click="selectDevice(device.name)"
+              >
+                <a>{{device.name}}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="btn-group btn-group-xs"
+            uib-dropdown
+            on-toggle="toggleBoardWindowSize(open)"
+            title="{{ 'Board' | translate }}"
+          >
+            <button
+              type="button"
+              class="btn btn-default"
+              uib-dropdown-toggle
+              title="{{ 'Select another board' | translate }}"
+            >
+              <span class="caret"></span>
+              <span class="sr-only"
+                >{{ 'Select another board' | translate }}</span
+              >
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              style="width: 200px"
+              title="{{ 'Board'| translate }}"
+              ng-class="svgPinoutAvailable() ? '' : 'is-disabled'"
+              ng-click="showSvgPinout()"
+            >
+              <span
+                ng-show="common.selectedDevice === common.selectedBoard.info.device"
+                >{{common.selectedBoard.info.label}}</span
+              ><span
+                ng-show="common.selectedDevice !== common.selectedBoard.info.device"
+                ><i>{{ 'select board' | translate }}</i></span
+              >
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+              <li
+                role="menuitem"
+                ng-repeat="board in selectedDeviceBoards"
+                ng-click="selectBoard(board.name)"
+              >
+                <a
+                  >{{board.info.label}}
+                  <i
+                    class="fa fa-fw fa-check text-success"
+                    aria-hidden="true"
+                    ng-if="project.isBoardSupported(board.name)"
+                  ></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-click="showPCF()"
+              title="{{ 'Constraints' | translate }}"
+            >
+              <i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-click="showDatasheet()"
+              title="{{ 'Datasheet' | translate }}"
+            >
+              <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-click="toggleBoardRules()"
+              title="{{ 'Toggle board rules' | translate }}"
+            >
+              <i
+                class="fa fa-fw"
+                ng-class="'fa-toggle-'+(profile.data.boardRules?'on':'off')"
+                aria-hidden="true"
+              ></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              ng-click="showBoardRules()"
+              title="{{ 'View board rules' | translate }}"
+            >
+              <i class="fa fa-fw fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

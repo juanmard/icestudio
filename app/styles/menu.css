@@ -210,6 +210,34 @@
   border-radius: 0;
 }
 
+.alertify.ajs-maximized .ajs-commands,
+.alertify.ajs-frameless .ajs-commands {
+  margin: 4px 6px 0 0 !important;
+}
+
+.alertify.ajs-frameless .ajs-body .ajs-content {
+  padding: 0 !important;
+  padding-top: 8px !important;
+}
+
+.alertify.ajs-frameless .ajs-dialog.board-window {
+  width: 450px !important;
+  min-height: 112px !important;
+}
+
+.alertify.ajs-frameless:not(.ajs-resizable) .ajs-dialog.board-window {
+  min-height: 85px !important;
+}
+
+.alertify.ajs-frameless:not(.ajs-resizable)
+  .ajs-dialog.board-window.is-dropdown-open {
+  min-height: 285px !important;
+}
+
+.alertify.ajs-maximized .ajs-dialog.board-window {
+  width: unset !important;
+}
+
 .btn {
   border-radius: 0 !important;
 }
