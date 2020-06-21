@@ -194,11 +194,11 @@ angular
 
     function configureLinuxDrivers(commands, callback) {
       var command = 'sh -c "' + commands.join('; ') + '"';
-      utils.beginBlockingTask();
+      utils.startWait();
       nodeSudo.exec(command, {name: 'Icestudio'}, function (
         error /*, stdout, stderr*/
       ) {
-        utils.endBlockingTask();
+        utils.endWait();
         if (!error) {
           if (callback) {
             callback();
@@ -238,7 +238,7 @@ angular
       for (var i in brewPackages) {
         brewCommands = brewCommands.concat(brewInstall(brewPackages[i]));
       }
-      utils.beginBlockingTask();
+      utils.startWait();
       if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
         const fs = require('fs');
         fs.appendFileSync(common.LOGFILE, 'drivers.enableDarwinDrivers' + '\n');
@@ -284,7 +284,7 @@ angular
           }
           alertify.success(_tcStr('Drivers enabled'));
         }
-        utils.endBlockingTask();
+        utils.endWait();
       });
       if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
         const fs = require('fs');
@@ -405,12 +405,12 @@ angular
 
     function enableWindowsDrivers(type) {
       var option = '--' + type + '-enable';
-      utils.beginBlockingTask();
+      utils.startWait();
       nodeSudo.exec(
         [common.APIO_CMD, 'drivers', option].join(' '),
         {name: 'Icestudio'},
         function (error, stdout, stderr) {
-          utils.endBlockingTask();
+          utils.endWait();
           if (stderr) {
             alertify.error(
               _tcStr('Toolchain not installed') +
@@ -434,11 +434,11 @@ angular
 
     function disableWindowsDrivers(type) {
       var option = '--' + type + '-disable';
-      utils.beginBlockingTask();
+      utils.startWait();
       nodeChildProcess.exec(
         [common.APIO_CMD, 'drivers', option].join(' '),
         function (error, stdout, stderr) {
-          utils.endBlockingTask();
+          utils.endWait();
           if (stderr) {
             alertify.error(
               _tcStr('Toolchain not installed') +

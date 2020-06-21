@@ -31,7 +31,7 @@ angular
     'use strict';
 
     $('html').attr('lang', profile.get('language'));
-    $('body').addClass('waiting');
+    utils.startWait();
     boards.loadBoards();
     utils.loadProfile(profile, function () {
       collections.loadAllCollections();
@@ -49,7 +49,7 @@ angular
         }
         collections.sort();
         project.updateTitle(gettextCatalog.getString('Untitled'));
-        $('body').removeClass('waiting');
+        utils.endWait();
       });
     });
   })

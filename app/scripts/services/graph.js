@@ -473,7 +473,7 @@ angular
           var project = common.allDependencies[type];
           var breadcrumbsLength = self.breadcrumbs.length;
 
-          $('body').addClass('waiting');
+          utils.startWait();
           $rootScope.navigateProject(
             breadcrumbsLength === 1,
             project,
@@ -1349,7 +1349,7 @@ angular
     this.loadDesign = function (design, opt, callback) {
       if (design && design.graph && design.graph.blocks && design.graph.wires) {
         opt = opt || {};
-        $('body').addClass('waiting');
+        utils.startWait();
         commandManager.stopListening();
         self.clearAll();
         var cells = graphToCells(design.graph, opt);
@@ -1364,11 +1364,11 @@ angular
         }
         setTimeout(function () {
           updateWiresOnObstacles();
-          $('body').removeClass('waiting');
+          utils.endWait();
         }, 0);
-
         return true;
       }
+      return false;
     };
 
     function graphToCells(_graph, opt) {

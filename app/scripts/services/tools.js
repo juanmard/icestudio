@@ -10,7 +10,6 @@ angular
     utils,
     common,
     gettextCatalog,
-    gettext,
     nodeGettext,
     nodeFs,
     nodeFse,
@@ -96,7 +95,7 @@ angular
               });
             })
             .then(function () {
-              utils.beginBlockingTask();
+              utils.startWait();
               if (startMessage) {
                 startAlert = alertify.message(startMessage, 100000);
               }
@@ -129,13 +128,13 @@ angular
               if (endMessage) {
                 resultAlert = alertify.success(_tcStr(endMessage));
               }
-              utils.endBlockingTask();
+              utils.endWait();
               restoreTask();
               resolve();
             })
             .catch(function (/* e */) {
               // Error
-              utils.endBlockingTask();
+              utils.endWait();
               restoreTask();
             });
         }
@@ -1333,14 +1332,14 @@ angular
       // Disable user events
       utils.disableKeyEvents();
       utils.disableClickEvents();
-      $('body').addClass('waiting');
+      utils.startWait();
     }
 
     function restoreStatus() {
       // Enable user events
       utils.enableKeyEvents();
       utils.enableClickEvents();
-      $('body').removeClass('waiting');
+      utils.endWait();
     }
 
     // Collections management
