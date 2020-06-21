@@ -2,6 +2,7 @@ angular
   .module('icestudio')
   .service('utils', function (
     $rootScope,
+    alerts,
     gettextCatalog,
     common,
     _package,
@@ -675,11 +676,11 @@ angular
         }
       }
       content.push('</div>');
-      alertify.confirm(
-        specs[0].type === 'text' ? specs[0].title : 'Form',
-        content.join('\n'),
-        // onok
-        function (evt) {
+      alerts.confirm({
+        icon: 'question',
+        title: specs[0].type === 'text' ? specs[0].title : 'Form',
+        body: content.join('\n'),
+        onok: (evt) => {
           var values = [];
           if (callback) {
             for (var i in specs) {
@@ -697,11 +698,7 @@ angular
             callback(evt, values);
           }
         },
-        // oncancel
-        function () {
-          /*evt*/
-        }
-      );
+      });
       // Restore input values
       $('#form0').select();
       for (var i in specs) {
@@ -832,29 +829,21 @@ angular
         });
       });
 
-      alertify
-        .confirm(
-          'Project Information',
-          content.join('\n'),
-          // onok
-          function (evt) {
-            var values = [];
-            for (var i = 0; i < n; i++) {
-              values.push($('#input' + i).val());
-            }
-            values.push(image);
-            if (callback) {
-              callback(evt, values);
-            }
-          },
-          function () {}
-        )
-        .setting({
-          labels: {
-            ok: _tcStr('Ok'),
-            cancel: _tcStr('Cancel'),
-          },
-        });
+      alerts.confirm({
+        icon: 'tag',
+        title: _tcStr('Project Information'),
+        body: content.join('\n'),
+        onok: function (evt) {
+          var values = [];
+          for (var i = 0; i < n; i++) {
+            values.push($('#input' + i).val());
+          }
+          values.push(image);
+          if (callback) {
+            callback(evt, values);
+          }
+        },
+      });
     };
 
     this.selectBoardPrompt = function (callback) {

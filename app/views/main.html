@@ -12,4 +12,56 @@
     <div ng-include="'views/menu_submodule.html'"></div>
   </div>
   <div ng-include="'views/menu.html'"></div>
+  <div style="display: none;">
+    <div id="about">
+      <div class="row" style="padding: 15px;">
+        <img
+          class="center-block"
+          width="300"
+          src="docs/_images/icestudio-logo-label-nightly.png"
+        />
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <p>
+            Version:
+            <a
+              class="action-open-url-external-browser"
+              href="https://github.com/juanmard/icestudio{{ _package.sha != '00000000' ? '/commit/' + _package.sha : '' }}"
+              >{{ _package.version }}-g{{ _package.sha }}</a
+            >
+          </p>
+          <p>
+            License:
+            <a
+              class="action-open-url-external-browser"
+              href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+              >GPL-2.0</a
+            >
+          </p>
+          <p>
+            Documentation:
+            <a
+              class="action-open-url-external-browser"
+              href="http://juanmard.github.io/icestudio"
+              >juanmard.github.io/icestudio</a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 15px;">
+        <div class="col-sm-12">
+          <p>
+            Thanks to all the
+            <a
+              class="action-open-url-external-browser"
+              href="https://github.com/juanmard/icestudio/contributors"
+              >contributors</a
+            >
+            <i id="heart" class="fa fa-fw fa-heart"></i>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

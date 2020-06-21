@@ -2,16 +2,17 @@ angular
   .module('icestudio')
   .service('project', function (
     $rootScope,
-    graph,
+    alerts,
     boards,
-    compiler,
-    profile,
-    utils,
     common,
-    gui,
+    compiler,
     gettextCatalog,
+    graph,
+    gui,
     nodeFs,
-    nodePath
+    nodePath,
+    profile,
+    utils
   ) {
     'use strict';
 
@@ -89,32 +90,28 @@ angular
         project.design.board !== common.selectedBoard.name
       ) {
         var projectBoard = boards.boardLabel(project.design.board);
-        alertify
-          .confirm(
-            _tcStr('This project is designed for &lt;{{name}}&gt;', {
-              name: projectBoard,
-            }),
-            _tcStr(
-              'You can load it as it is or convert it for the &lt;{{name}}&gt; board.',
-              {name: common.selectedBoard.info.label}
-            ),
-            function () {
-              _load();
-            },
-            function () {
-              project.design.board = common.selectedBoard.name;
-              _load(
-                true,
-                boardMigration(projectBoard, common.selectedBoard.name)
-              );
-            }
-          )
-          .setting({
-            labels: {
-              ok: _tcStr('Load'),
-              cancel: _tcStr('Convert'),
-            },
-          });
+        alerts.confirm({
+          icon: 'microchip',
+          title: _tcStr('This project is designed for &lt;{{name}}&gt;', {
+            name: projectBoard,
+          }),
+          body: _tcStr(
+            'You can convert it for the &lt;{{name}}&gt; board or change the selected board.',
+            {name: common.selectedBoard.info.label}
+          ),
+          onok: () => {
+            project.design.board = common.selectedBoard.name;
+            _load(
+              true,
+              boardMigration(projectBoard, common.selectedBoard.name)
+            );
+          },
+          oncancel: _load,
+          labels: {
+            ok: _tcStr('Convert'),
+            cancel: _tcStr('Change board'),
+          },
+        });
       } else {
         _load();
       }
@@ -503,19 +500,20 @@ angular
         return;
       }
 
-      alertify
-        .confirm(
-          _tcStr('This import operation requires a project path'),
-          _tcStr(
-            'You need to save the current project. Do you want to continue?'
-          ),
-          function () {
-            $rootScope.saveProjectAs();
-            _importBlockWithFiles();
-          },
-          function () {}
-        )
-        .setting({labels: {ok: _tcStr('Save')}});
+      alerts.confirm({
+        title: _tcStr('This import operation requires a project path'),
+        body: _tcStr(
+          'You need to save the current project. Do you want to continue?'
+        ),
+        onok: () => {
+          $rootScope.saveProjectAs();
+          _importBlockWithFiles();
+        },
+        labels: {
+          ok: _tcStr('Save'),
+          cancel: _tcStr('Cancel'),
+        },
+      });
     }
 
     this.addBlockFile = function (filepath, notify) {
@@ -554,18 +552,18 @@ angular
                 next();
               }
               if (nodeFs.existsSync(nodePath.join(destPath, filename))) {
-                alertify.confirm(
-                  _tcStr('File {{file}} already exists in the project path', {
-                    file: utils.bold(filename),
-                  }),
-                  _tcStr('Do you want to replace it?'),
-                  function () {
-                    _ok();
-                  },
-                  function () {
-                    next();
-                  }
-                );
+                alerts.confirm({
+                  icon: 'question',
+                  title: _tcStr(
+                    'File {{file}} already exists in the project path',
+                    {
+                      file: utils.bold(filename),
+                    }
+                  ),
+                  body: _tcStr('Do you want to replace it?'),
+                  onok: _ok,
+                  oncancel: next,
+                });
               } else {
                 _ok();
               }

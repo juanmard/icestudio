@@ -1,6 +1,7 @@
 angular
   .module('icestudio')
   .service('tools', function (
+    alerts,
     project,
     compiler,
     profile,
@@ -981,15 +982,16 @@ angular
         utils.removeToolchain();
         installDefaultToolchain();
       } else {
-        alertify.confirm(
-          _tcStr(
-            'Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?'
+        alerts.confirm({
+          title: _tcStr('Default toolchain not found!'),
+          body: _tcStr(
+            'The toolchain will be downloaded. This operation requires Internet connection.'
           ),
-          function () {
+          onok: () => {
             utils.removeToolchain();
             installOnlineToolchain();
-          }
-        );
+          },
+        });
       }
     };
 
@@ -997,14 +999,11 @@ angular
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
-      alertify.confirm(
-        _tcStr(
-          'The toolchain will be updated. This operation requires Internet connection. Do you want to continue?'
-        ),
-        function () {
-          installOnlineToolchain();
-        }
-      );
+      alerts.confirm({
+        title: _tcStr('The toolchain will be updated'),
+        body: _tcStr('This operation requires Internet connection.'),
+        onok: installOnlineToolchain,
+      });
     };
 
     this.resetToolchain = function () {
@@ -1012,21 +1011,22 @@ angular
         resultAlert.dismiss(false);
       }
       if (utils.checkDefaultToolchain()) {
-        alertify.confirm(
-          _tcStr(
-            'The toolchain will be restored to default. Do you want to continue?'
-          ),
-          function () {
+        alerts.confirm({
+          title: _tcStr('The toolchain will be restored to default'),
+          body: _tcStr('Do you want to continue?'),
+          onok: () => {
             utils.removeToolchain();
             installDefaultToolchain();
-          }
-        );
+          },
+        });
       } else {
-        alertify.alert(
-          _tcStr("Error: default toolchain not found in '{{dir}}'", {
+        alerts.alert({
+          icon: 'bell-o',
+          title: _tcStr('Default toolchain not found!'),
+          body: _tcStr("Search location: '{{dir}}'", {
             dir: common.TOOLCHAIN_DIR,
-          })
-        );
+          }),
+        });
       }
     };
 
@@ -1034,15 +1034,16 @@ angular
       if (resultAlert) {
         resultAlert.dismiss(false);
       }
-      alertify.confirm(
-        _tcStr('The toolchain will be removed. Do you want to continue?'),
-        function () {
+      alerts.confirm({
+        title: _tcStr('The toolchain will be removed.'),
+        body: _tcStr('Do you want to continue?'),
+        onok: () => {
           utils.removeToolchain();
           toolchain.apio = '';
           toolchain.installed = false;
           alertify.success(_tcStr('Toolchain removed'));
-        }
-      );
+        },
+      });
     };
 
     $rootScope.$on(
@@ -1070,28 +1071,19 @@ angular
 
     function installDefaultToolchain() {
       installationStatus();
-
-      var content = [
-        '<div>',
-        '  <p id="progress-message">' + _tcStr('Installing toolchain') + '</p>',
-        '  </br>',
-        '  <div class="progress">',
-        '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-        '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-        '    </div>',
-        '  </div>',
-        '</div>',
-      ].join('\n');
-      toolchainAlert = alertify.alert(content, function () {
-        setTimeout(function () {
+      toolchainAlert = alerts.alert({
+        title: _tcStr('Installing toolchain'),
+        body: `<div>
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            </div>
+          </div>
+        </div>`,
+        onok: () => {
           initProgress();
-          // Restore OK button
-          $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
-        }, 200);
+        },
       });
-      // Hide OK button
-      $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
-
       toolchain.installed = false;
 
       // Reset toolchain
@@ -1108,28 +1100,19 @@ angular
 
     function installOnlineToolchain() {
       installationStatus();
-
-      var content = [
-        '<div>',
-        '  <p id="progress-message">' + _tcStr('Installing toolchain') + '</p>',
-        '  </br>',
-        '  <div class="progress">',
-        '    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"',
-        '    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">',
-        '    </div>',
-        '  </div>',
-        '</div>',
-      ].join('\n');
-      toolchainAlert = alertify.alert(content, function () {
-        setTimeout(function () {
+      toolchainAlert = alerts.alert({
+        title: _tcStr('Installing toolchain'),
+        body: `<div>
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            </div>
+          </div>
+        </div>`,
+        onok: () => {
           initProgress();
-          // Restore OK button
-          $(toolchainAlert.__internal.buttons[0].element).removeClass('hidden');
-        }, 200);
+        },
       });
-      // Hide OK button
-      $(toolchainAlert.__internal.buttons[0].element).addClass('hidden');
-
       toolchain.installed = false;
 
       // Install toolchain
@@ -1374,13 +1357,13 @@ angular
                       name
                     );
                     if (nodeFs.existsSync(destPath)) {
-                      alertify.confirm(
-                        _tcStr('The collection {{name}} already exists.', {
-                          name: utils.bold(name),
-                        }) +
-                          '<br>' +
-                          _tcStr('Do you want to replace it?'),
-                        function () {
+                      alerts.confirm({
+                        title: _tcStr(
+                          'The collection {{name}} already exists.',
+                          {name: utils.bold(name)}
+                        ),
+                        body: _tcStr('Do you want to replace it?'),
+                        onok: () => {
                           utils.deleteFolderRecursive(destPath);
                           installCollection(collection, zipData);
                           alertify.success(
@@ -1390,15 +1373,15 @@ angular
                           );
                           next(name);
                         },
-                        function () {
+                        oncancel: () => {
                           alertify.warning(
                             _tcStr('Collection {{name}} not replaced', {
                               name: utils.bold(name),
                             })
                           );
                           next(name);
-                        }
-                      );
+                        },
+                      });
                     } else {
                       installCollection(collection, zipData);
                       alertify.success(

@@ -196,3 +196,31 @@ body.waiting .spinner-wrapper {
 .img-responsive {
   width: 100%;
 }
+
+#about > .row > div > p > a {
+  color: #31b0d5;
+  text-decoration: none;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.25);
+  }
+  50% {
+    transform: scale(0.75);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#heart {
+  color: red;
+  animation: heartbeat 1s infinite;
+}

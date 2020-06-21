@@ -1,15 +1,15 @@
 angular
   .module('icestudio')
   .service('drivers', function (
-    gettextCatalog,
-    profile,
+    $rootScope,
+    alerts,
     common,
+    gettextCatalog,
     gui,
-    utils,
-    nodePath,
     nodeSudo,
     nodeChildProcess,
-    $rootScope
+    profile,
+    utils
   ) {
     'use strict';
 
@@ -367,39 +367,51 @@ angular
      */
 
     function enableWindowsDriversFTDI() {
-      var message =
-        _tcStr(
-          '<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the FTDI driver installer will be launched in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>'
-        ) + _tcStr('It is recommended to use <b>USB 2.0</b> ports');
-      alertify.confirm(message, function () {
-        enableWindowsDrivers('ftdi');
+      alerts.confirm({
+        title: _tcStr('FTDI driver installation instructions'),
+        body:
+          _tcStr(
+            '<ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the FTDI driver installer will be launched in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>'
+          ) + _tcStr('It is recommended to use <b>USB 2.0</b> ports'),
+        onok: () => {
+          enableWindowsDrivers('ftdi');
+        },
       });
     }
 
     function disableWindowsDriversFTDI() {
-      var message = _tcStr(
-        '<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'
-      );
-      alertify.confirm(message, function () {
-        disableWindowsDrivers('ftdi');
+      alerts.confirm({
+        title: _tcStr('FTDI driver uninstallation instructions'),
+        body: _tcStr(
+          '<ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'
+        ),
+        onok: () => {
+          disableWindowsDrivers('ftdi');
+        },
       });
     }
 
     function enableWindowsDriversSerial() {
-      var message = _tcStr(
-        '<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the Serial driver installer will be launched in a new window</li><li>In the installer, follow the steps to install the driver</li><li>Unplug and reconnect the board</li></ol>'
-      );
-      alertify.confirm(message, function () {
-        enableWindowsDrivers('serial');
+      alerts.confirm({
+        title: _tcStr('Serial driver installation instructions'),
+        body: _tcStr(
+          '<ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the Serial driver installer will be launched in a new window</li><li>In the installer, follow the steps to install the driver</li><li>Unplug and reconnect the board</li></ol>'
+        ),
+        onok: () => {
+          enableWindowsDrivers('serial');
+        },
       });
     }
 
     function disableWindowsDriversSerial() {
-      var message = _tcStr(
-        '<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'
-      );
-      alertify.confirm(message, function () {
-        disableWindowsDrivers('serial');
+      alerts.confirm({
+        title: _tcStr('Serial driver uninstallation instructions'),
+        body: _tcStr(
+          '<ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'
+        ),
+        onok: () => {
+          disableWindowsDrivers('serial');
+        },
       });
     }
 

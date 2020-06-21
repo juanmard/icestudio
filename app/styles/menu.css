@@ -166,6 +166,50 @@
   max-width: 500px;
 }
 
+.ajs-dimmer {
+  opacity: 0.75 !important;
+}
+
+.alertify .ajs-dialog,
+.alertify .ajs-header {
+  border-radius: 0;
+}
+
+.alertify .ajs-dialog {
+  min-width: 350px !important;
+}
+
+.ajs-header {
+  padding: 7px 14px !important;
+  opacity: 1 !important;
+  min-height: unset !important;
+}
+
+.ajs-commands {
+  margin: -20px 8px 0 0 !important;
+}
+
+.ajs-body {
+  min-height: 28px !important;
+}
+
+.ajs-body .ajs-content {
+  padding: 8px 16px !important;
+  padding-bottom: 0 !important;
+}
+
+.ajs-input {
+  margin: 0 !important;
+}
+
+.ajs-button {
+  font-size: 12px !important;
+  text-transform: none !important;
+  min-height: 26px !important;
+  min-width: 75px !important;
+  border-radius: 0;
+}
+
 .btn {
   border-radius: 0 !important;
 }

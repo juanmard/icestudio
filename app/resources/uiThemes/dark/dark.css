@@ -97,22 +97,28 @@ html,
   font-weight: bold !important;
 }
 
-.ajs-dialog {
-  background: #444 !important;
+.ajs-header {
+  border-color: #666 !important;
+  color: white !important;
+  background: #333 !important;
 }
 
 .ajs-body {
   color: white !important;
 }
 
+.ajs-dialog,
 .ajs-footer {
   background: #444 !important;
+}
+
+.ajs-dialog {
+  border: 1px solid #666;
 }
 
 .ajs-button {
   color: white !important;
   background: #333 !important;
-  border-radius: 4px;
 }
 
 .ajs-input,

@@ -1,6 +1,7 @@
 angular
   .module('icestudio')
   .controller('DesignCtrl', function (
+    $log,
     $rootScope,
     $scope,
     common,
@@ -63,11 +64,7 @@ angular
 
     function _breadcrumbsJump(selectedItem) {
       if (common.isEditingSubmodule) {
-        alertify.warning(
-          gettextCatalog.getString(
-            'To navigate through design, you need to close "edit mode".'
-          )
-        );
+        $log.error('Navigation while editing is not supported!');
         return;
       }
       var item;

@@ -3,6 +3,7 @@
 angular
   .module('icestudio')
   .controller('MainCtrl', function (
+    $scope,
     _package,
     gettextCatalog,
     common,
@@ -10,6 +11,8 @@ angular
     utils
   ) {
     'use strict';
+
+    $scope._package = _package;
 
     alertify.defaults.movable = false;
     alertify.defaults.closable = false;

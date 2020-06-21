@@ -8,6 +8,7 @@ angular
     $scope,
     $uibModal,
     _package,
+    alerts,
     collections,
     common,
     gettextCatalog,
@@ -45,7 +46,7 @@ angular
     $scope.openProject = _openProject;
     $scope.addAsBlock = _addAsBlock;
     $scope.saveProject = _saveProject;
-    $scope.saveProjectAs = _saveProjectAs;
+    $rootScope.saveProjectAs = _saveProjectAs;
     $scope.newProject = utils.newWindow;
     $scope.quit = _exit;
     $scope.fitContent = () => {
@@ -238,13 +239,13 @@ angular
 
     function _saveProject() {
       if (common.isEditingSubmodule) {
-        alertify.alert(
-          _tcStr('Save submodule'),
-          _tcStr(
-            'To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute "Save as" command to do it.'
+        alerts.alert({
+          icon: 'save',
+          title: _tcStr('Saving submodules is not supported yet'),
+          body: _tcStr(
+            "However, you can export this submodule through 'File > Save as...'"
           ),
-          function () {}
-        );
+        });
         return;
       }
       var filepath = project.path;
@@ -258,33 +259,31 @@ angular
       }
     }
 
-    function _saveProjectAsDialog(localCallback) {
-      utils.saveDialog('#input-save-project', '.ice', function (filepath) {
-        updateWorkingdir(filepath);
-        project.save(filepath, function () {
-          reloadCollectionsIfRequired(filepath);
+    function _saveProjectAs() {
+      function _saveProjectAsDialog() {
+        utils.saveDialog('#input-save-project', '.ice', function (filepath) {
+          updateWorkingdir(filepath);
+          project.save(filepath, function () {
+            reloadCollectionsIfRequired(filepath);
+          });
+          resetChangedStack();
         });
-        resetChangedStack();
-        if (localCallback) {
-          localCallback();
-        }
-      });
-    }
+      }
 
-    function _saveProjectAs(localCallback) {
       if (common.isEditingSubmodule) {
-        alertify.confirm(
-          _tcStr('Export submodule'),
-          _tcStr(
-            'You are editing a submodule, if you save it, you save only the submodule (in this situation "save as" works like "export module"), Do you like to continue?'
+        alerts.confirm({
+          icon: 'hdd-o',
+          title: _tcStr('Export submodule'),
+          body: _tcStr(
+            'You are about to export a submodule, NOT the full design. Do you want to continue?'
           ),
-          function () {
-            _saveProjectAsDialog(localCallback);
+          onok: function () {
+            _saveProjectAsDialog();
           },
-          function () {}
-        );
+          invokeOnCloseOff: false,
+        });
       } else {
-        _saveProjectAsDialog(localCallback);
+        _saveProjectAsDialog();
       }
     }
 
@@ -409,21 +408,14 @@ angular
         __exit();
         return;
       }
-      alertify
-        .confirm(
-          _tcStr('Do you want to close the application?'),
-          _tcStr('Your changes will be lost if you don’t save them'),
-          function () {
-            __exit();
-          },
-          function () {}
-        )
-        .setting({
-          labels: {
-            ok: _tcStr('Close'),
-          },
-          defaultFocus: 'cancel',
-        });
+      alerts.confirm({
+        icon: 'warning',
+        title: _tcStr('Do you want to close the application?'),
+        body: _tcStr('Your changes will be lost if you don’t save them'),
+        onok: function () {
+          __exit();
+        },
+      });
     }
 
     //-- Edit
@@ -732,23 +724,16 @@ angular
 
       if (common.selectedBoard.name !== name) {
         if (!graph.isEmpty()) {
-          alertify
-            .confirm(
-              _tcStr('Do you want to change to {{name}} board?', {
-                name: utils.bold(board.info.label),
-              }),
-              _tcStr('The current FPGA I/O configuration will be lost.'),
-              function () {
-                _selectBoardNotify(board);
-              },
-              function () {}
-            )
-            .setting({
-              labels: {
-                ok: _tcStr('Ok'),
-                cancel: _tcStr('Cancel'),
-              },
-            });
+          alerts.confirm({
+            icon: 'microchip',
+            title: _tcStr('Do you want to change to {{name}} board?', {
+              name: utils.bold(board.info.label),
+            }),
+            body: _tcStr('The current FPGA I/O configuration will be lost.'),
+            onok: function () {
+              _selectBoardNotify(board);
+            },
+          });
         } else {
           _selectBoardNotify(board);
         }
@@ -773,15 +758,17 @@ angular
         .catch(function () {});
     };
 
+    var submoduleActionAlertBody = _tcStr(
+      'Inside submodules, <strong><i class="fa fa-fw fa-check"></i> Verify</strong> is supported only.'
+    );
+
     $scope.buildCode = function () {
       if (common.isEditingSubmodule) {
-        alertify.alert(
-          _tcStr('Build'),
-          _tcStr(
-            'You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>'
-          ),
-          function () {}
-        );
+        alerts.alert({
+          icon: 'gear',
+          title: _tcStr('Building submodules is not supported yet'),
+          body: submoduleActionAlertBody,
+        });
         return;
       }
 
@@ -797,13 +784,11 @@ angular
 
     $scope.uploadCode = function () {
       if (common.isEditingSubmodule) {
-        alertify.alert(
-          _tcStr('Upload'),
-          _tcStr(
-            'You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>'
-          ),
-          function () {}
-        );
+        alerts.alert({
+          icon: 'rocket',
+          title: _tcStr('Uploading submodules is not supported yet'),
+          body: submoduleActionAlertBody,
+        });
         return;
       }
 
@@ -841,36 +826,20 @@ angular
     };
 
     $scope.about = function () {
-      const ref = _package.sha !== '00000000' ? '/commit/' + _package.sha : '';
-      alertify
-        .alert(
-          'Icestudio, visual editor for Verilog designs',
-          `
-<div class="row" style="margin-top:15px;">
-  <div class="col-sm-12">
-    <p>Version: <a class="action-open-url-external-browser" href="https://github.com/juanmard/icestudio${ref}">${_package.version}-g${_package.sha}</a></p>
-    <p>License: <a class="action-open-url-external-browser" href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPL-2.0</a></p>
-    <p>Documentation: <a class="action-open-url-external-browser" href="http://juanmard.github.io/icestudio">juanmard.github.io/icestudio</a></p>
-  </div>
-</div>
-<div class="row" style="margin-top:15px;">
-  <div class="col-sm-12">
-    <p>Thanks to all the <a class="action-open-url-external-browser" href="https://github.com/juanmard/icestudio/contributors">contributors</a>!</p>
-  </div>
-</div>
-`,
-          function () {
-            if (tools.canCheckVersion) {
-              tools.checkForNewVersion();
-            }
+      alerts.alert({
+        icon: 'heart-o',
+        title: 'Icestudio, visual editor for Verilog designs',
+        body: $('#about')[0],
+        onok: function () {
+          if (tools.canCheckVersion) {
+            tools.checkForNewVersion();
           }
-        )
-        .setting({
-          closable: true,
-          modal: true,
-          label: tools.canCheckVersion ? 'Check for Updates...' : 'Close',
-          invokeOnCloseOff: true,
-        });
+        },
+        label: tools.canCheckVersion
+          ? _tcStr('Check for updates...')
+          : _tcStr('Close'),
+        invokeOnCloseOff: false,
+      });
     };
 
     // Events
@@ -900,11 +869,12 @@ angular
 
     $(document).on('keydown', function (event) {
       event.stopImmediatePropagation();
-      var ret = shortcuts.execute(event, {
-        prompt: false,
-        disabled: !graph.isEnabled(),
-      });
-      if (ret.preventDefault) {
+      if (
+        shortcuts.execute(event, {
+          prompt: false,
+          disabled: !graph.isEnabled(),
+        }).preventDefault
+      ) {
         event.preventDefault();
       }
     });
