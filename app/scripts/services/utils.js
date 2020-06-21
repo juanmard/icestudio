@@ -1368,4 +1368,46 @@ angular
       gui.Shell.openExternal(url);
       //require('nw.gui').Shell.openExternal( url);
     };
+
+    const DEFAULT_BOARD = 'icestick';
+
+    this.selectBoard = _selectBoard;
+
+    function _selectBoard(name) {
+      try {
+        name = name || DEFAULT_BOARD;
+        common.selectedBoard = common.boards.find((x) => x.name === name);
+        if (!common.selectedBoard) {
+          console.error(`[srv.boards._selectBoard] board ${name} not found!`);
+          return;
+        }
+        common.selectedDevice = common.selectedBoard.info.device;
+        common.pinoutInputHTML = generateHTMLOptions(
+          common.selectedBoard.info['pinout'],
+          'input'
+        );
+        common.pinoutOutputHTML = generateHTMLOptions(
+          common.selectedBoard.info['pinout'],
+          'output'
+        );
+        this.rootScopeSafeApply();
+      } catch (err) {
+        console.error('[srv.boards._readJSONFile]', err);
+      }
+    }
+
+    function generateHTMLOptions(pinout, type) {
+      var code = '<option></option>';
+      for (var i in pinout) {
+        if (pinout[i].type === type || pinout[i].type === 'inout') {
+          code +=
+            '<option value="' +
+            pinout[i].value +
+            '">' +
+            pinout[i].name +
+            '</option>';
+        }
+      }
+      return code;
+    }
   });

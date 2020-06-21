@@ -2,8 +2,10 @@
 
 angular
   .module('icestudio')
-  .service('common', function (nodePath, nodeTmp, nodeFs) {
+  .service('common', function ($log, nodeFs, nodePath, nodeTmp) {
     'use strict';
+
+    const self = this;
 
     // Project version
     this.VERSION = '1.2';
@@ -15,14 +17,15 @@ angular
     // All project dependencies
     this.allDependencies = {};
 
-    // Selected board
+    // Boards
     this.boards = [];
+    this.devices = [];
     this.selectedBoard = null;
     this.selectedDevice = null;
     this.pinoutInputHTML = '';
     this.pinoutOutputHTML = '';
 
-    // Selected collection
+    // Collections
     this.defaultCollection = null;
     this.internalCollections = [];
     this.externalCollections = [];
@@ -182,4 +185,47 @@ angular
       );
     };
     this.isEditingSubmodule = false;
+
+    // Read list of subdirs of 'resources/boards' which do not start with '_';
+    // for each, read 'info.json' and 'rules'.json'.
+    // Generate list of boards and list of devices.
+    try {
+      var boards = [];
+      var devices = [];
+      var rpath = nodePath.join('resources', 'boards');
+      nodeFs.readdirSync(rpath).forEach((bdir) => {
+        if (bdir[0] !== '_' && !nodePath.extname(bdir)) {
+          const bpath = nodePath.join(rpath, bdir);
+          const idata = _readJSONFile(bpath, 'info.json');
+          boards.push({
+            name: bdir,
+            info: idata,
+            rules: _readJSONFile(bpath, 'rules.json'),
+          });
+          if (devices.indexOf(idata.device) < 0) {
+            devices.push(idata.device);
+          }
+        }
+      });
+      self.boards = boards;
+      self.devices = devices.sort();
+    } catch (err) {
+      console.error('[srv.boards.loadBoards]', err);
+    }
+
+    function _readJSONFile(filepath, filename) {
+      try {
+        return JSON.parse(
+          nodeFs.readFileSync(nodePath.join(filepath, filename))
+        );
+      } catch (err) {
+        $log.error('[srv.boards._readJSONFile]', err);
+      }
+      return {};
+    }
+
+    this.boardLabel = function (name) {
+      const label = this.boards.find((board) => board.name === name).info.label;
+      return label ? label : name;
+    };
   });

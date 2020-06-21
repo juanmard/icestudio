@@ -5,7 +5,6 @@ angular
   .service('graph', function (
     $rootScope,
     joint,
-    boards,
     blocks,
     profile,
     utils,
@@ -1021,7 +1020,7 @@ angular
           next: board,
         },
       });
-      boards.selectBoard(board.name);
+      utils.selectBoard(board.name);
       if (reset) {
         resetBlocks();
       }

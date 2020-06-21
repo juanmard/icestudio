@@ -19,7 +19,6 @@ angular
     },
   ])
   .run(function (
-    boards,
     collections,
     common,
     gettextCatalog,
@@ -32,18 +31,17 @@ angular
 
     $('html').attr('lang', profile.get('language'));
     utils.startWait();
-    boards.loadBoards();
     utils.loadProfile(profile, function () {
       collections.loadAllCollections();
       utils.loadLanguage(profile, function () {
         if (profile.get('board') === '') {
           utils.selectBoardPrompt(function (selectedBoard) {
-            boards.selectBoard(selectedBoard);
+            utils.selectBoard(selectedBoard);
             profile.set('board', common.selectedBoard.name);
             tools.checkToolchain();
           });
         } else {
-          boards.selectBoard(profile.get('board'));
+          utils.selectBoard(profile.get('board'));
           profile.set('board', common.selectedBoard.name);
           tools.checkToolchain();
         }
