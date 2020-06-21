@@ -1,6 +1,6 @@
 angular
   .module('icestudio')
-  .service('blocks', function (joint, utils, common, gettextCatalog) {
+  .service('blocks', function ($log, joint, utils, common, gettextCatalog) {
     'use strict';
 
     const _tcStr = function (str, args) {
@@ -22,35 +22,25 @@ angular
     //-- New
 
     function newBasic(type, callback) {
-      switch (type) {
-        case 'basic.input':
-          newBasicInput(callback);
-          break;
-        case 'basic.output':
-          newBasicOutput(callback);
-          break;
-        case 'basic.outputLabel':
-          newBasicOutputLabel(callback);
-          break;
-        case 'basic.inputLabel':
-          newBasicInputLabel(callback);
-          break;
-
-        case 'basic.constant':
-          newBasicConstant(callback);
-          break;
-        case 'basic.memory':
-          newBasicMemory(callback);
-          break;
-        case 'basic.code':
-          newBasicCode(callback);
-          break;
-        case 'basic.info':
-          newBasicInfo(callback);
-          break;
-        default:
-          break;
+      if (type.slice(0, 6) !== 'basic.') {
+        return;
       }
+      const fmap = {
+        input: newBasicInput,
+        output: newBasicOutput,
+        outputLabel: newBasicOutputLabel,
+        inputLabel: newBasicInputLabel,
+        constant: newBasicConstant,
+        memory: newBasicMemory,
+        code: newBasicCode,
+        info: newBasicInfo,
+      };
+      const fcn = fmap[type.slice(6)];
+      if (fcn) {
+        fcn(callback);
+        return;
+      }
+      $log.error('[srv.blocks.newBasic] unknown type:', type);
     }
 
     const colorOpts = [
