@@ -27,6 +27,10 @@ angular
       return gettextCatalog.getString(str, args);
     };
 
+    if (!$scope.status) {
+      $scope.status = {};
+    }
+
     $scope.common = common;
     $scope.profile = profile;
     $scope.project = project;
@@ -929,60 +933,6 @@ angular
         });
       });
     }
-
-    // Show/Hide menu management
-
-    var menu;
-
-    // mousedown event
-    var mousedown = false;
-    $(document).on('mouseup', function () {
-      mousedown = false;
-    });
-
-    $(document).on('mousedown', '.paper', function () {
-      mousedown = true;
-      // Close current menu
-      if ($scope.status && $scope.status[menu]) {
-        $scope.status[menu] = false;
-      }
-      utils.rootScopeSafeApply();
-    });
-
-    $scope.showMenu = function (newMenu) {
-      if (
-        !mousedown &&
-        !graph.addingDraggableBlock &&
-        (!$scope.status || !$scope.status[newMenu])
-      ) {
-        _fixMenu(newMenu);
-      }
-    };
-
-    $scope.hideMenu = function () {
-      if (!$scope.status) {
-        $scope.status = {};
-      }
-      $scope.status[menu] = false;
-    };
-
-    $scope.fixMenu = _fixMenu;
-
-    function _fixMenu(newMenu) {
-      menu = newMenu;
-      if (!$scope.status) {
-        $scope.status = {};
-      }
-      $scope.status[menu] = true;
-    }
-
-    // Disable click in submenus
-    $(document).click('.dropdown-submenu', function (event) {
-      if ($(event.target).hasClass('dropdown-toggle')) {
-        event.stopImmediatePropagation();
-        event.preventDefault();
-      }
-    });
 
     // -- Tools
 
