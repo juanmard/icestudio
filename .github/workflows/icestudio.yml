@@ -101,6 +101,7 @@ jobs:
 
   nightly:
     needs: [linwin, mac]
+    if: github.ref == 'refs/heads/moon' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
@@ -110,7 +111,6 @@ jobs:
             mv "$item" "${item%.*}-${GITHUB_SHA}.zip"
           done
       - uses: eine/tip@master
-        if: github.ref == 'refs/heads/moon' && github.event_name != 'pull_request'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: 'nightly'
