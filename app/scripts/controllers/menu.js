@@ -622,7 +622,9 @@ angular
         alertify.boardWindow().close();
         return;
       }
-      common.selectedDevice = common.selectedBoard.info.device;
+      if (common.selectedBoard) {
+        common.selectedDevice = common.selectedBoard.info.device;
+      }
       alertify.boardWindow($('#boardopts')[0]).setting({
         frameless: true,
         autoReset: false,

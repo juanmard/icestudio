@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<ul class="nav navbar-nav navbar-right" ng-show="common.selectedBoard">
+<ul class="nav navbar-nav navbar-right">
   <div ng-include="'views/menu_board.html'"></div>
   <li>
     <div class="btn-group" role="group" aria-label="...">
@@ -7,13 +7,18 @@
         ng-click="showBoardOptions()"
         type="button"
         class="btn btn-sm btn-default"
-        uib-tooltip="{{common.selectedBoard.info.label}} · {{common.selectedBoard.info.device}}"
+        uib-tooltip="{{ common.selectedBoard ? (common.selectedBoard.info.label + ' · ' + common.selectedBoard.info.device) : 'unselected' }}"
         tooltip-append-to-body="true"
       >
         <i class="fa fa-fw fa-microchip" aria-hidden="true"></i>
       </button>
     </div>
-    <div class="btn-group" role="group" aria-label="...">
+    <div
+      class="btn-group"
+      role="group"
+      aria-label="..."
+      ng-class="{'is-disabled': !common.selectedBoard}"
+    >
       <button
         ng-click="verifyCode()"
         type="button"
@@ -53,6 +58,7 @@
     </div>
   </li>
   <li
+    ng-class="{'is-disabled': !common.selectedBoard}"
     uib-tooltip="{{ 'Device resource usage' | translate }}"
     tooltip-append-to-body="true"
     tooltip-placement="left"

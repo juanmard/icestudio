@@ -2,7 +2,7 @@
 <div style="display: none">
   <div id="boardoptshead">
     <i class="fa fa-fw fa-microchip" aria-hidden="true"></i> {{
-    common.selectedBoard.info.label }}
+    common.selectedBoard ? common.selectedBoard.info.label : 'unselected' }}
   </div>
   <div
     id="boardopts"
@@ -40,7 +40,12 @@
               style="width: 55px"
               title="{{ 'Device'| translate }}"
             >
-              {{common.selectedDevice}}
+              <span ng-show="common.selectedDevice"
+                >{{ common.selectedDevice }}</span
+              >
+              <span ng-show="!common.selectedDevice"
+                ><i>{{ 'select' | translate }}</i></span
+              >
             </button>
 
             <ul
@@ -64,6 +69,7 @@
             uib-dropdown
             on-toggle="toggleBoardWindowSize(open)"
             title="{{ 'Board' | translate }}"
+            ng-class="{'is-disabled': !common.selectedDevice}"
           >
             <button
               type="button"
@@ -110,7 +116,12 @@
             </ul>
           </div>
 
-          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+          <div
+            class="btn-group btn-group-xs"
+            role="group"
+            aria-label="..."
+            ng-class="{'is-disabled': !common.selectedBoard}"
+          >
             <button
               type="button"
               class="btn btn-default"
