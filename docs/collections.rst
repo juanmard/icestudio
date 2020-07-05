@@ -28,15 +28,21 @@ Managing collections
 
 Submenu **Edit > Preferences > Manage collections** allows to add/remove/reload internal or external collections.
 
-+--------------+-------------------------------------------------------+
-| Add          | Add a zipfile with one or more collections            |
-+--------------+-------------------------------------------------------+
-| Add external | Set path to *external collections* dir in your system |
-+--------------+-------------------------------------------------------+
-| Reload       | Reload all the collections from sources               |
-+--------------+-------------------------------------------------------+
-| Remove       | Remove some or all the collections                    |
-+--------------+-------------------------------------------------------+
++--------------+--------------------------------------------------------+
+| Add (+)      | Add a zipfile with one or more collections.            |
++--------------+--------------------------------------------------------+
+| Reload       | Reload all the collections from sources.               |
++--------------+--------------------------------------------------------+
+| Add external | Set path to *external collections* dir in your system. |
++--------------+--------------------------------------------------------+
+| Remove (x)   | Remove some or all the collections.                    |
++--------------+--------------------------------------------------------+
+| Info (i)     | Show basic collection info *(Readme.md)*.              |
++--------------+--------------------------------------------------------+
+
+.. image:: img/collection_managing.png
+   :width: 400 px
+   :align: center
 
 Internal collections are those installed in ``~/.icestudio/collections``. Zipfiles are used for adding internal collections. A single zipfile can contain at least one or multiple *Collection directories* at the main level.
 
@@ -47,12 +53,12 @@ Basic
 
 Contains the basic blocks:
 
-* **Input**: show a dialog to insert the name and type of the input block.
-* **Output**: show a dialog to insert the name and type of the output block.
-* **Constant**: show a dialog to insert the name and type of the constant block.
-* **Memory**: show a dialog to insert the name and type of the memory block.
-* **Code**: show a dialog to insert the ports and parameters of the code block.
-* **Information**: create an empty text box block.
+* **Input**:  Show a dialog to insert the name and type of the input block.
+* **Output**:  Show a dialog to insert the name and type of the output block.
+* **Constant**:  Show a dialog to insert the name and type of the constant block.
+* **Memory**:  Show a dialog to insert the name and type of the memory block.
+* **Code**:  Show a dialog to insert the ports and parameters of the code block.
+* **Information**:  Create an empty text box block.
 
 .. note:: **Input** and **Output** ports can be set to **virtual**. Virtual ports are used to independent-FPGA
   projects. Also, they can be configured as a **bus** by adding the notation ``[x:y]`` to the port name.

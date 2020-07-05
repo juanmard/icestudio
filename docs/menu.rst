@@ -4,59 +4,68 @@ Menus
 +----------------------------+-------------+------------------------------------------------+
 |                            | Ctrl+ | ⌘+  |                                                |
 +----------------------------+-------------+------------------------------------------------+
-| File > New                 | N           | Create a new window                            |
+| File > New                 | N           | Create a new window.                           |
 +----------------------------+-------------+------------------------------------------------+
-| File > Open...             | O           | Open a :ref:`project`                          |
+| File > Open...             | O           | Open a :ref:`project`.                         |
 +----------------------------+-------------+------------------------------------------------+
-| File > Add as block...     |             | Add a :ref:`project` as a block                |
+| File > Add as block...     |             | Add a :ref:`project` as a block.               |
 +----------------------------+-------------+------------------------------------------------+
-| File > Collections         |             | See :ref:`collections`                         |
+| File > Collections         |             | See :ref:`collections`.                        |
 +----------------------------+-------------+------------------------------------------------+
-| File > Plugins             |             | List of available plugins                      |
+| File > Plugins             |             | List of available plugins.                     |
 +----------------------------+-------------+------------------------------------------------+
-| File > Save                | S           | Save the current :ref:`project`                |
+| File > Save                | S           | Save the current :ref:`project`.               |
 +----------------------------+-------------+------------------------------------------------+
-| File > Save as...          | Shift+S     | Save the current :ref:`project` in a new file  |
+| File > Save as...          | Shift+S     | Save the current :ref:`project` in a new file. |
 +----------------------------+-------------+------------------------------------------------+
-| File > Export...           |             | Export multiple output files                   |
+| File > Export...           |             | Export multiple output files.                  |
 +----------------------------+-------------+------------------------------------------------+
-| File > Verify              | R           | Check the generated verilog code               |
+| File > Documentation.      |             | View built-in documentation.                   |
 +----------------------------+-------------+------------------------------------------------+
-| File > Build               | B           | Synthesize the bitstream from the design       |
+| File > About               |             | Information about the application.             |
 +----------------------------+-------------+------------------------------------------------+
-| File > Upload              | U           | Upload the bitstream to the FPGA               |
+| File > Quit                | Q           | Exit the application.                          |
 +----------------------------+-------------+------------------------------------------------+
-| File > View output         |             | Show  output of the latest executed command    |
+| Edit > Undo                | Z           | Undo the last change.                          |
 +----------------------------+-------------+------------------------------------------------+
-| File > Documentation       |             | View built-in documentation                    |
+| Edit > Redo                | Y | Shift+Z | Revert the last undo.                          |
 +----------------------------+-------------+------------------------------------------------+
-| File > About               |             | Information about the application              |
+| Edit > Cut                 | X           | Cut selected blocks.                           |
 +----------------------------+-------------+------------------------------------------------+
-| File > Quit                | Q           | Exit the application                           |
+| Edit > Copy                | C           | Copy selected blocks.                          |
 +----------------------------+-------------+------------------------------------------------+
-| Edit > Undo                | Z           | Undo the last change                           |
-+----------------------------+-------------+------------------------------------------------+
-| Edit > Redo                | Y | Shift+Z | Revert the last undo                           |
-+----------------------------+-------------+------------------------------------------------+
-| Edit > Cut                 | X           | Cut selected blocks                            |
-+----------------------------+-------------+------------------------------------------------+
-| Edit > Copy                | C           | Copy selected blocks                           |
-+----------------------------+-------------+------------------------------------------------+
-| Edit > Paste               | V           | Paste copied blocks                            |
+| Edit > Paste               | V           | Paste copied blocks.                           |
 +----------------------------+-------------+------------------------------------------------+
 | Edit > Clone               | Shift+V     |                                                |
 +----------------------------+-------------+------------------------------------------------+
-| Edit > Select all          | A           | Select all the blocks                          |
+| Edit > Select all          | A           | Select all the blocks.                         |
 +----------------------------+-------------+------------------------------------------------+
-| Edit > Fit content         | 1           | Fit the content into the screen                |
+| Edit > Fit content         | 1           | Fit the content into the screen.               |
 +----------------------------+-------------+------------------------------------------------+
-| Edit > Preferences         |             | See :ref:`preferences`                         |
+| Edit > Preferences         |             | See :ref:`preferences`.                        |
 +----------------------------+-------------+------------------------------------------------+
-| Edit > Project information |             | View/edit :ref:`project` metadata              |
+| Edit > Project information |             | View/edit :ref:`project` metadata.             |
 +----------------------------+-------------+------------------------------------------------+
 
 .. note:: Export files/formats are: Verilog, PCF, Testbench, GTKWave, BLIF, ASC and Bitstream.
 
 .. note:: *Upload* will trigger *Synthesize*, if required.
 
-.. hint:: Commands *Verify*, *Build*, *Upload* and *View output* can also be triggered with the buttons on the bottom right corner. A fifth button shows dropup list with device resource usage figures provided by synthesis and P&R tools.
+Bottom bar buttons.
+-------------------
+
++----------------------------+-------------+------------------------------------------------+
+|                            | Ctrl+ | ⌘+  |                                                |
++----------------------------+-------------+------------------------------------------------+
+| Boards                     |             | Change the current :ref:`board` and settings.  |
++----------------------------+-------------+------------------------------------------------+
+| Verify                     | R           | Check the generated verilog code.              |
++----------------------------+-------------+------------------------------------------------+
+| Build                      | B           | Synthesize the bitstream from the design.      |
++----------------------------+-------------+------------------------------------------------+
+| Upload                     | U           | Upload the bitstream to the FPGA.              |
++----------------------------+-------------+------------------------------------------------+
+| View output                |             | Show output of the latest executed command.    |
++----------------------------+-------------+------------------------------------------------+
+| Device resource usage      |             | Figures provided by synthesis and P&R tools.   |
++----------------------------+-------------+------------------------------------------------+
