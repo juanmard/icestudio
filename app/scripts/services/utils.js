@@ -680,7 +680,7 @@ angular
         }
         content.push('</div>');
         alerts.confirm({
-          icon: 'question',
+          icon: 'question-circle',
           title: specs[0].type === 'text' ? specs[0].title : 'Form',
           body: content.join('\n'),
           onok: (evt) => {

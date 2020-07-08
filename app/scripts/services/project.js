@@ -561,7 +561,7 @@ angular
                 }
                 if (nodeFs.existsSync(nodePath.join(destPath, filename))) {
                   alerts.confirm({
-                    icon: 'question',
+                    icon: 'question-circle',
                     title: _tcStr(
                       'File {{file}} already exists in the project path',
                       {
