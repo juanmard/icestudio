@@ -815,21 +815,22 @@ angular
           }
         }
 
+        if (!common.selectedBoard || graph.isEmpty()) {
+          _selectBoardNotify(board);
+          return;
+        }
+
         if (common.selectedBoard.name !== name) {
-          if (!graph.isEmpty()) {
-            alerts.confirm({
-              icon: 'microchip',
-              title: _tcStr('Do you want to change to {{name}} board?', {
-                name: utils.bold(board.info.label),
-              }),
-              body: _tcStr('The current FPGA I/O configuration will be lost.'),
-              onok: function () {
-                _selectBoardNotify(board);
-              },
-            });
-          } else {
-            _selectBoardNotify(board);
-          }
+          alerts.confirm({
+            icon: 'microchip',
+            title: _tcStr('Do you want to change to {{name}} board?', {
+              name: utils.bold(board.info.label),
+            }),
+            body: _tcStr('The current FPGA I/O configuration will be lost.'),
+            onok: function () {
+              _selectBoardNotify(board);
+            },
+          });
         }
 
         function _selectBoardNotify(board) {

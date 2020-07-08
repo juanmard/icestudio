@@ -36,10 +36,7 @@ angular
       this.getPythonExecutable = function () {
         if (!_pythonExecutableCached) {
           const possibleExecutables = [];
-          if (
-            typeof common.PYTHON_ENV !== 'undefined' &&
-            common.PYTHON_ENV.length > 0
-          ) {
+          if (common.PYTHON_ENV && common.PYTHON_ENV.length > 0) {
             possibleExecutables.push(common.PYTHON_ENV);
           } else if (common.WIN32) {
             possibleExecutables.push('C:\\Python39\\python.exe');
