@@ -64,6 +64,7 @@ angular
           ariaDescribedBy: 'modal-body',
           templateUrl: 'views/preferences.html',
           controller: 'PrefCtrl',
+          scope: $scope,
           size: 'lg',
         });
       };

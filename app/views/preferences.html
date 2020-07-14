@@ -252,7 +252,7 @@
 <script type="text/ng-template" id="views/pref_head_toolchain.html">
   <span class="pull-right">
     <div class="btn-toolbar" role="toolbar" aria-label="...">
-    <div
+      <div
       class="btn-group btn-group-xs"
       role="group"
       ng-class="{'is-disabled': toolchain.disabled}"
@@ -285,19 +285,12 @@
       ng-click="tools.resetToolchain()"
       ng-class="{'is-disabled': !toolchain.installed}"
     >{{ 'Reset default' | translate }}</button>
-
     </div>
 
-    <div
-      ng-if="!toolchain.apio"
-      class="btn-group btn-group-xs is-disabled"
-      role="group"
-    >
-    <button
-      type="button"
-      class="btn btn-xs btn-default"
-    >{{ 'Apio ' + toolchain.apio }}</button>
-    </div>
+    <span ng-if="toolchain.apio" style="padding-left: 20px;">
+      {{ 'Apio ' + toolchain.apio }}
+    </span>
+
   </div>
   </span>
 </script>
@@ -305,8 +298,21 @@
 <script type="text/ng-template" id="views/pref_toolchain.html">
     <div ng-class="{'is-disabled': !common.showDrivers()}">
     <div class="btn-group btn-group-xs" role="group" aria-label="...">
-      <button type="button" class="btn btn-default" ng-click="tools.enableDrivers()">{{ 'Enable' | translate }}</button>
-      <button type="button" class="btn btn-default" ng-click="tools.disableDrivers()">{{ 'Disable' | translate }}</button>
+      <button
+        type="button"
+        class="btn btn-default"
+        ng-class="{'is-disabled': !toolchain.disable}"
+        ng-click="tools.enableDrivers()">
+        {{ 'Enable' | translate }}
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-default"
+        ng-class="{'is-disabled': toolchain.disable}"
+        ng-click="tools.disableDrivers()">
+        {{ 'Disable' | translate }}
+      </button>
     </div>
     <i class="fa fa-fw fa-rocket"></i> {{ 'Drivers' | translate }}
   </div>
