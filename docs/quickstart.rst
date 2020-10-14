@@ -3,6 +3,9 @@
 Quick Start
 ===========
 
+Select board
+------------
+
 The first time *Icestudio* is executed, a board needs to be selected:
 
 .. image:: img/start_selectboard-prompt.png
@@ -15,19 +18,37 @@ A *microchip* icon on the bottom right corner provides access to board details, 
    :width: 400 px
    :align: center
 
+
+Install/configure the toolchain
+-------------------------------
+
 For configuring the built-in toolchain of custom statically built binaries, go to **Edit > Preferences** and select *install*:
 
 .. image:: img/start_toolchain.png
    :width: 400 px
    :align: center
 
-A cached release of `Apio <https://github.com/FPGAwars/apio>`_ and all its needed `packages <https://github.com/FPGAwars/apio#apio-packages>`_ will be installed.
+The latest stable release of `Apio <https://github.com/FPGAwars/apio>`_ and all its built-in packages will be installed.
+
+.. IMPORTANT:: Some boards are not supported in the stable releases of Apio, but are available in the development branch.
+   You might need to install/update Apio from the git repository.
+
+   NOTE: on GNU/Linux, first ``source ~/.icestudio/venv/bin/activate``.
+
+   .. code-block:: shell
+
+      pip install -U git+https://github.com/FPGAwars/apio.git@develop#egg=apio
+
+
+Install/configure the drivers
+-----------------------------
 
 Then, for configuring drivers, connect your board and select **Enable** in *toolchain* section. This operation requires **administrator privileges**.
 
-.. note::
+.. attention::
 
-    On Windows, an external application (`Zadig <https://zadig.akeo.ie/>`_) is used. It replaces the existing FTDI driver of the **Interface 0** with **libusbK**.
+    On Windows, an external application (`Zadig <https://zadig.akeo.ie/>`_) is used for boards with FTDI devices.
+    It replaces the existing FTDI driver of the **Interface 0** with **libusbK**.
 
     .. image:: img/zadig.png
        :width: 400 px
@@ -36,6 +57,10 @@ Then, for configuring drivers, connect your board and select **Enable** in *tool
     |
 
     On macOS, this operation requires internet connection to allow *Homebrew* to install ``libffi`` and ``libftdi`` packages.
+
+
+Test 'One LED' example
+----------------------
 
 After doing the initial setup, go to **File > Collections > Basic > 1. Basic > 01. One LED**
 
@@ -52,6 +77,7 @@ Last, the design can be verified, built or uploaded through the buttons on the b
 .. image:: img/start_upload.gif
    :width: 400 px
    :align: center
+
 
 .. _project:
 
