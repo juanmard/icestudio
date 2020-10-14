@@ -1,3 +1,6 @@
+from pathlib import Path
+from json import dump, loads
+
 # -- General configuration ------------------------------------------------
 
 extensions = []
@@ -21,14 +24,24 @@ language = 'None'
 
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-pygments_style = 'sphinx'
-
 todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
 
-html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'logo_only': True,
+    'home_breadcrumbs': False,
+    'vcs_pageview_mode': 'blob',
+}
+
+html_context = {}
+ctx = Path(__file__).resolve().parent / 'context.json'
+if ctx.is_file():
+    html_context.update(loads(ctx.open('r').read()))
+
+html_theme_path = ["."]
+html_theme = "_theme"
 
 html_static_path = ['source/_static']
 

@@ -15,30 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-python@v1
         with:
           python-version: 3.8
-      - run: pip3 install -r docs/requirements.txt
-      - name: Build docs
-        run: |
-          cd docs
-          make html
-      - uses: actions/upload-artifact@master
+
+      - uses: buildthedocs/btd@v0
+        with:
+          token: ${{ github.token }}
+
+      - uses: actions/upload-artifact@v2
         with:
           name: docs
           path: docs/_build/html
-      - name: 'publish site to gh-pages'
-        if: github.event_name != 'pull_request' && github.repository == 'juanmard/icestudio'
-        run: |
-          cd docs/_build/html
-          touch .nojekyll
-          git init
-          git add .
-          git config --local user.email "push@gha"
-          git config --local user.name "GHA"
-          git commit -a -m "update ${{ github.sha }}"
-          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
-          git push -u origin +HEAD:gh-pages
 
   linwin:
     needs: [doc]
@@ -55,23 +44,31 @@ jobs:
     steps:
       - run: git config --global core.autocrlf input
         shell: bash
+
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+
       - run: yarn
+
       - run: yarn run check
+
       - uses: actions/download-artifact@v2
         with:
           name: docs
           path: docs/_build/html
+
       - run: yarn dist -v
         env:
           DIST_TARGET: ${{ matrix.task.arg }}
+
       - uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.task.arg }}64
           path: dist/*${{ matrix.task.larg }}64.zip
+
       - uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.task.arg }}32
@@ -87,18 +84,24 @@ jobs:
     runs-on: macos-${{ matrix.os.ver }}
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+
       - run: yarn
+
       - run: yarn run check
+
       - uses: actions/download-artifact@v2
         with:
           name: docs
           path: docs/_build/html
+
       - run: yarn dist -v
         env:
           DIST_TARGET: osx
+
       - uses: actions/upload-artifact@master
         with:
           name: osx64-${{ matrix.os.name }}
@@ -110,6 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
+
       - name: Append GITHUB_SHA to release assets
         run: |
           for item in lin32/* lin64/* win32/* win64/*; do
