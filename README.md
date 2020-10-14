@@ -15,7 +15,7 @@
   -->
   <a title="Code Climate maintainability" href="https://codeclimate.com/github/juanmard/icestudio"><img src="https://img.shields.io/codeclimate/maintainability/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a><!--
   -->
-  <a title="Code Climate technical debt" href="https://david-dm.org/juanmard/icestudio/moon?path=app"><img src="https://img.shields.io/codeclimate/tech-debt/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a>
+  <a title="Code Climate technical debt" href="https://codeclimate.com/github/juanmard/icestudio/trends/technical_debt"><img src="https://img.shields.io/codeclimate/tech-debt/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a>
 </p>
 
 Visual editor for Verilog designs, built on top of [Icestorm](http://www.clifford.at/icestorm/) and [Apio](https://github.com/FPGAwars/apio). Find installation guidelines, user guide and further information at [juanmard.github.io/icestudio](https://juanmard.github.io/icestudio).
