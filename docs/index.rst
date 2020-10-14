@@ -7,7 +7,8 @@ Icestudio v1 (nightly)
    :align: center
    :target: https://github.com/juanmard/icestudio
 
-Icestudio is a visual editor for Verilog designs, built on top of `yosys <http://www.clifford.at/yosys/>`_, `nextpnr <https://github.com/YosysHQ/nextpnr>`_ and `icestorm <http://www.clifford.at/icestorm/>`_.
+.. centered::
+   Icestudio is a visual editor for Verilog designs, built on top of `yosys <http://www.clifford.at/yosys/>`_, `nextpnr <https://github.com/YosysHQ/nextpnr>`_ and `icestorm <http://www.clifford.at/icestorm/>`_.
 
 .. image:: img/main.png
    :width: 550 px
@@ -24,7 +25,7 @@ Icestudio is a visual editor for Verilog designs, built on top of `yosys <http:/
     design
     board
     preferences
-    howto
+    howto/index
 
 .. toctree::
     :caption: Development
