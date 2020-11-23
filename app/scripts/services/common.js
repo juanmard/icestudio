@@ -158,15 +158,15 @@ angular
     }
 
     this.setBuildDir = function (buildpath) {
-      let fserror=false;
+      let fserror = false;
       if (!nodeFs.existsSync(buildpath)) {
         try {
           nodeFs.mkdirSync(buildpath, {recursive: true});
         } catch (e) {
-          fserror=true;
+          fserror = true;
         }
       }
-      this.BUILD_DIR = (fserror) ? his.BUILD_DIR_TMP : buildpath;
+      this.BUILD_DIR = fserror ? his.BUILD_DIR_TMP : buildpath;
     };
 
     this.showToolchain = function () {

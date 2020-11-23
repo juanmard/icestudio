@@ -660,10 +660,8 @@ angular
           //-- these are better names to use in the top module, instead of the current not-for-humans pin names
           var ports = getPorts(project);
 
-
           //-- Debug
           //console.log(ports)
-
 
           var content = getContent(name, project);
 
@@ -696,20 +694,17 @@ angular
             content: content,
           };
 
-          code += '//---- Top entity'
+          code += '//---- Top entity';
           code += module(data);
         }
 
         // Dependencies modules
-        if(typeof project.package !== 'undefined'){
-
-          code+='\n/*-------------------------------------------------*/\n';
-          code+='/*-- '+project.package.name+'  */\n';
-          code+='/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
-          code+='/*-- '+project.package.description+'\n';
-          code+='/*-------------------------------------------------*/\n';
-
-
+        if (typeof project.package !== 'undefined') {
+          code += '\n/*-------------------------------------------------*/\n';
+          code += '/*-- ' + project.package.name + '  */\n';
+          code += '/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
+          code += '/*-- ' + project.package.description + '\n';
+          code += '/*-------------------------------------------------*/\n';
         }
         for (var d in dependencies) {
           code += verilogCompiler(utils.digestId(d), dependencies[d]);
@@ -835,44 +830,45 @@ angular
         code = '';
       var blocks = project.design.graph.blocks;
 
-      code += '# -- Board: '
-      code += common.selectedBoard.name
-      code += '\n\n'
+      code += '# -- Board: ';
+      code += common.selectedBoard.name;
+      code += '\n\n';
 
       for (i in blocks) {
         block = blocks[i];
         if (block.type === 'basic.input' || block.type === 'basic.output') {
-
-            //-- Future improvement: Both cases: 1-pin or multiple pins in an array
-            //-- could be refactorized instead of repeating code
-            //-- (i usually name this as plural and singular cases)
+          //-- Future improvement: Both cases: 1-pin or multiple pins in an array
+          //-- could be refactorized instead of repeating code
+          //-- (i usually name this as plural and singular cases)
 
           if (block.data.pins.length > 1) {
             for (var p in block.data.pins) {
               pin = block.data.pins[p];
               value = block.data.virtual ? '' : pin.value;
               code += 'LOCATE COMP "';
-              code += utils.digestId(block.id);  //-- Future improvement: use pin.name. It should also be changed in the main module
+              code += utils.digestId(block.id); //-- Future improvement: use pin.name. It should also be changed in the main module
               code += '[' + pin.index + ']" SITE "';
               code += value;
               code += '";\n';
 
               code += 'IOBUF  PORT "';
               code += utils.digestId(block.id);
-              code += '[' + pin.index + ']" '
+              code += '[' + pin.index + ']" ';
 
               //-- Get the pullmode property of the physical pin (its id is pin.value)
-              let pullmode = common.selectedBoard.pinout.find(x => x.value == value).pullmode;
-              pullmode = (typeof pullmode == 'undefined') ? 'NONE' : pullmode;
+              let pullmode = common.selectedBoard.pinout.find(
+                (x) => x.value == value
+              ).pullmode;
+              pullmode = typeof pullmode == 'undefined' ? 'NONE' : pullmode;
 
-              code += 'PULLMODE=' + pullmode
+              code += 'PULLMODE=' + pullmode;
               code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
             }
           } else if (block.data.pins.length > 0) {
             pin = block.data.pins[0];
             value = block.data.virtual ? '' : pin.value;
             code += 'LOCATE COMP "';
-            code += utils.digestId(block.id);  //-- Future improvement: use pin.name. It should also be changed in the main module
+            code += utils.digestId(block.id); //-- Future improvement: use pin.name. It should also be changed in the main module
             code += '" SITE "';
             code += value;
             code += '";\n';
@@ -882,10 +878,12 @@ angular
             code += '" ';
 
             //-- Get the pullmode property of the physical pin (its id is pin.value)
-            let pullmode = common.selectedBoard.pinout.find(x => x.value == value).pullmode;
-            pullmode = (typeof pullmode == 'undefined') ? 'NONE' : pullmode;
+            let pullmode = common.selectedBoard.pinout.find(
+              (x) => x.value == value
+            ).pullmode;
+            pullmode = typeof pullmode == 'undefined' ? 'NONE' : pullmode;
 
-            code += 'PULLMODE=' + pullmode
+            code += 'PULLMODE=' + pullmode;
             code += ' IO_TYPE=LVCMOS33 DRIVE=4;\n\n';
           }
         }

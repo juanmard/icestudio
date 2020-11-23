@@ -168,47 +168,49 @@ var IcePlugManager = function () {
       return false;
     }
     let _this = this;
-    nw.Window.open(this.pluginUri + '/' + id + '/index.html', {}, function (
-      newWin
-    ) {
-      if (typeof plug.manifest.width !== 'undefined') {
-        newWin.width = plug.manifest.width;
-      }
-      if (typeof plug.manifest.height !== 'undefined') {
-        newWin.height = plug.manifest.height;
-      }
-      newWin.focus();
-      // Listen to main window's close event
-      newWin.on('close', function () {
-        if (typeof this.window.onClose !== 'undefined') {
-          this.window.onClose();
+    nw.Window.open(
+      this.pluginUri + '/' + id + '/index.html',
+      {},
+      function (newWin) {
+        if (typeof plug.manifest.width !== 'undefined') {
+          newWin.width = plug.manifest.width;
         }
-
-        this.close(true);
-      });
-
-      newWin.on('loaded', function () {
-        let filter = [
-          'WIN32',
-          'LINUX',
-          'DARWIN',
-          'VERSION',
-          'LOGFILE',
-          'BUILD_DIR',
-        ];
-        let envFiltered = {};
-        for (let prop in _this.env) {
-          if (filter.indexOf(prop) > -1) {
-            envFiltered[prop] = _this.env[prop];
+        if (typeof plug.manifest.height !== 'undefined') {
+          newWin.height = plug.manifest.height;
+        }
+        newWin.focus();
+        // Listen to main window's close event
+        newWin.on('close', function () {
+          if (typeof this.window.onClose !== 'undefined') {
+            this.window.onClose();
           }
-        }
-        // this.window.postMessage({type:'ice-plugin-message', env:env_filtered});
 
-        if (typeof this.window.onLoad !== 'undefined') {
-          this.window.onLoad(envFiltered);
-        }
-      });
-    });
+          this.close(true);
+        });
+
+        newWin.on('loaded', function () {
+          let filter = [
+            'WIN32',
+            'LINUX',
+            'DARWIN',
+            'VERSION',
+            'LOGFILE',
+            'BUILD_DIR',
+          ];
+          let envFiltered = {};
+          for (let prop in _this.env) {
+            if (filter.indexOf(prop) > -1) {
+              envFiltered[prop] = _this.env[prop];
+            }
+          }
+          // this.window.postMessage({type:'ice-plugin-message', env:env_filtered});
+
+          if (typeof this.window.onLoad !== 'undefined') {
+            this.window.onLoad(envFiltered);
+          }
+        });
+      }
+    );
   };
 
   this.init = function () {

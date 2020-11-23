@@ -1,444 +1,447 @@
 angular
   .module('icestudio')
-  .service('utils', function (
-    $rootScope,
-    alerts,
-    gettextCatalog,
-    common,
-    _package,
-    window,
-    nodeFs,
-    nodeFse,
-    nodePath,
-    nodeChildProcess,
-    nodeExtract,
-    nodeZlib,
-    nodeOnline,
-    nodeGlob,
-    nodeSha1,
-    nodeCP,
-    nodeGetOS,
-    nodeLangInfo,
-    gui,
-    SVGO,
-    fastCopy
-  ) {
-    'use strict';
+  .service(
+    'utils',
+    function (
+      $rootScope,
+      alerts,
+      gettextCatalog,
+      common,
+      _package,
+      window,
+      nodeFs,
+      nodeFse,
+      nodePath,
+      nodeChildProcess,
+      nodeExtract,
+      nodeZlib,
+      nodeOnline,
+      nodeGlob,
+      nodeSha1,
+      nodeCP,
+      nodeGetOS,
+      nodeLangInfo,
+      gui,
+      SVGO,
+      fastCopy
+    ) {
+      'use strict';
 
-    const _tcStr = function (str, args) {
-      return gettextCatalog.getString(str, args);
-    };
+      const _tcStr = function (str, args) {
+        return gettextCatalog.getString(str, args);
+      };
 
-    var _pythonExecutableCached = null;
-    // Get the system executable
-    this.getPythonExecutable = function () {
-      if (!_pythonExecutableCached) {
-
-        const possibleExecutables = [];
-        if(typeof common.PYTHON_ENV !== 'undefined' &&
-        common.PYTHON_ENV .length>0){
-
-          possibleExecutables.push(common.PYTHON_ENV);
-
-        }else if (common.WIN32) {
-          possibleExecutables.push('C:\\Python39\\python.exe');
-          possibleExecutables.push('C:\\Python38\\python.exe');
-          possibleExecutables.push('C:\\Python37\\python.exe');
-          possibleExecutables.push('C:\\Python36\\python.exe');
-          possibleExecutables.push('C:\\Python35\\python.exe');
-          possibleExecutables.push('py.exe -3');
-          possibleExecutables.push('python.exe');
-        } else {
-          possibleExecutables.push('/usr/local/Cellar/python/3.8.2/bin/python3');
-          possibleExecutables.push('/usr/local/Cellar/python/3.7.7/bin/python3');
-
-          possibleExecutables.push('/usr/bin/python3.9');
-          possibleExecutables.push('/usr/bin/python3.8');
-          possibleExecutables.push('/usr/bin/python3.7');
-          possibleExecutables.push('/usr/bin/python3.6');
-          possibleExecutables.push('/usr/bin/python3.5');
-          possibleExecutables.push('/usr/bin/python3');
-          possibleExecutables.push('/usr/bin/python');
-
-          possibleExecutables.push('/usr/local/bin/python3.9');
-          possibleExecutables.push('/usr/local/bin/python3.8');
-          possibleExecutables.push('/usr/local/bin/python3.7');
-          possibleExecutables.push('/usr/local/bin/python3.6');
-          possibleExecutables.push('/usr/local/bin/python3.5');
-          possibleExecutables.push('/usr/local/bin/python3');
-          possibleExecutables.push('/usr/local/bin/python');
-
-          possibleExecutables.push('python3.9');
-          possibleExecutables.push('python3.8');
-          possibleExecutables.push('python3.7');
-          possibleExecutables.push('python3.6');
-          possibleExecutables.push('python3.5');
-          possibleExecutables.push('python3');
-          possibleExecutables.push('python');
-        }
-        console.log('possible python', possibleExecutables);
-        for (var i in possibleExecutables) {
-          var executable = possibleExecutables[i];
-          if (isPython3(executable)) {
-            _pythonExecutableCached = executable;
-            break;
-          }
-        }
-      }
-      return _pythonExecutableCached;
-    };
-
-    function isPython3(executable) {
-      console.log('Python test', executable);
-      executable += ' -V';
-      try {
-        const result = nodeChildProcess.execSync(executable);
-        console.log('==>',result.toString());
-        return (result !== false && result !== null &&
-          (result.toString().indexOf('3.5') >= 0 || result.toString().indexOf('3.6') >= 0 ||
-            result.toString().indexOf('3.7') >= 0 || result.toString().indexOf('3.8') >= 0 ||
-            result.toString().indexOf('3.9') >= 0));
-      } catch (e) {
-        return false;
-      }
-    }
-
-    this.extractZip = function (source, destination, callback) {
-      nodeExtract(
-        source,
-        {
-          dir: destination,
-        },
-        function (error) {
-          if (error) {
-            callback(true);
+      var _pythonExecutableCached = null;
+      // Get the system executable
+      this.getPythonExecutable = function () {
+        if (!_pythonExecutableCached) {
+          const possibleExecutables = [];
+          if (
+            typeof common.PYTHON_ENV !== 'undefined' &&
+            common.PYTHON_ENV.length > 0
+          ) {
+            possibleExecutables.push(common.PYTHON_ENV);
+          } else if (common.WIN32) {
+            possibleExecutables.push('C:\\Python39\\python.exe');
+            possibleExecutables.push('C:\\Python38\\python.exe');
+            possibleExecutables.push('C:\\Python37\\python.exe');
+            possibleExecutables.push('C:\\Python36\\python.exe');
+            possibleExecutables.push('C:\\Python35\\python.exe');
+            possibleExecutables.push('py.exe -3');
+            possibleExecutables.push('python.exe');
           } else {
-            callback();
+            possibleExecutables.push(
+              '/usr/local/Cellar/python/3.8.2/bin/python3'
+            );
+            possibleExecutables.push(
+              '/usr/local/Cellar/python/3.7.7/bin/python3'
+            );
+
+            possibleExecutables.push('/usr/bin/python3.9');
+            possibleExecutables.push('/usr/bin/python3.8');
+            possibleExecutables.push('/usr/bin/python3.7');
+            possibleExecutables.push('/usr/bin/python3.6');
+            possibleExecutables.push('/usr/bin/python3.5');
+            possibleExecutables.push('/usr/bin/python3');
+            possibleExecutables.push('/usr/bin/python');
+
+            possibleExecutables.push('/usr/local/bin/python3.9');
+            possibleExecutables.push('/usr/local/bin/python3.8');
+            possibleExecutables.push('/usr/local/bin/python3.7');
+            possibleExecutables.push('/usr/local/bin/python3.6');
+            possibleExecutables.push('/usr/local/bin/python3.5');
+            possibleExecutables.push('/usr/local/bin/python3');
+            possibleExecutables.push('/usr/local/bin/python');
+
+            possibleExecutables.push('python3.9');
+            possibleExecutables.push('python3.8');
+            possibleExecutables.push('python3.7');
+            possibleExecutables.push('python3.6');
+            possibleExecutables.push('python3.5');
+            possibleExecutables.push('python3');
+            possibleExecutables.push('python');
+          }
+          console.log('possible python', possibleExecutables);
+          for (var i in possibleExecutables) {
+            var executable = possibleExecutables[i];
+            if (isPython3(executable)) {
+              _pythonExecutableCached = executable;
+              break;
+            }
           }
         }
-      );
-    };
+        return _pythonExecutableCached;
+      };
 
-    function disableEvent(event) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
+      function isPython3(executable) {
+        console.log('Python test', executable);
+        executable += ' -V';
+        try {
+          const result = nodeChildProcess.execSync(executable);
+          console.log('==>', result.toString());
+          return (
+            result !== false &&
+            result !== null &&
+            (result.toString().indexOf('3.5') >= 0 ||
+              result.toString().indexOf('3.6') >= 0 ||
+              result.toString().indexOf('3.7') >= 0 ||
+              result.toString().indexOf('3.8') >= 0 ||
+              result.toString().indexOf('3.9') >= 0)
+          );
+        } catch (e) {
+          return false;
+        }
+      }
 
-    this.enableClickEvents = function () {
-      document.removeEventListener('click', disableEvent, true);
-    };
-
-    this.disableClickEvents = function () {
-      document.addEventListener('click', disableEvent, true);
-    };
-
-    this.enableKeyEvents = function () {
-      document.removeEventListener('keyup', disableEvent, true);
-      document.removeEventListener('keydown', disableEvent, true);
-      document.removeEventListener('keypress', disableEvent, true);
-    };
-
-    this.disableKeyEvents = function () {
-      document.addEventListener('keyup', disableEvent, true);
-      document.addEventListener('keydown', disableEvent, true);
-      document.addEventListener('keypress', disableEvent, true);
-    };
-
-    this.executeCommand = function (command, callback) {
-      var cmd = command.join(' ');
-      //const fs = require('fs');
-      if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
-        nodeFs.appendFileSync(
-          common.LOGFILE,
-          'utils.executeCommand=>' + cmd + '\n'
+      this.extractZip = function (source, destination, callback) {
+        nodeExtract(
+          source,
+          {
+            dir: destination,
+          },
+          function (error) {
+            if (error) {
+              callback(true);
+            } else {
+              callback();
+            }
+          }
         );
-      }
-      nodeChildProcess.exec(
-        cmd,
-        function (error, stdout, stderr) {
-          common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
-          $(document).trigger('commandOutputChanged', [common.commandOutput]);
-          if (error) {
-            this.enableKeyEvents();
-            this.enableClickEvents();
-            callback(true);
-            alertify.error(error.message, 30);
-          } else {
-            callback();
-          }
-        }.bind(this)
-      );
-    };
+      };
 
-    //------------------------------------------
-    //-- Create the python virtual environment
-    //-- with the command python -m venv venv
-    //------------------------------------------
-    this.createVirtualenv = function (callback) {
+      this.extractVirtualenv = function (callback) {
+        this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
+      };
 
-      //-- Check if the .icestudio folder exist
-      if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
-
-        //-- Create the .icestudio folder
-        nodeFs.mkdirSync(common.ICESTUDIO_DIR);
+      function disableEvent(event) {
+        event.stopPropagation();
+        event.preventDefault();
       }
 
-      //-- Check if the venv folder exist
-      if (!nodeFs.existsSync(common.ENV_DIR)) {
+      this.enableClickEvents = function () {
+        document.removeEventListener('click', disableEvent, true);
+      };
 
-        //-- Construct the command for creating the virtual env:
-        //-- python -m venv venv
-        var command = [this.getPythonExecutable(), '-m venv', coverPath(common.ENV_DIR)];
+      this.disableClickEvents = function () {
+        document.addEventListener('click', disableEvent, true);
+      };
 
-        //-- Debug
-        console.log(command);
+      this.enableKeyEvents = function () {
+        document.removeEventListener('keyup', disableEvent, true);
+        document.removeEventListener('keydown', disableEvent, true);
+        document.removeEventListener('keypress', disableEvent, true);
+      };
 
-        //-- Check if extra parameter is needed for windows...
-        if (common.WIN32) {
-          //command.push('--always-copy');
-        }
-        this.executeCommand(command, callback);
+      this.disableKeyEvents = function () {
+        document.addEventListener('keyup', disableEvent, true);
+        document.addEventListener('keydown', disableEvent, true);
+        document.addEventListener('keypress', disableEvent, true);
+      };
 
-      } else {
-        //-- The virtual environmente already existed
-        callback();
-      }
-    };
-
-    this.checkDefaultToolchain = function () {
-      console.log('Toolchain start',common.TOOLCHAIN_DIR);
-      try {
-        // TODO: use zip with sha1
-        return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
-      } catch (err) {
-        return false;
-      }
-    };
-
-    this.installDefaultPythonPackagesDir = function (defaultDir, callback) {
-      var self = this;
-      nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
-        if (!error) {
-          files = files.map(function (item) {
-            return coverPath(item);
-          });
-          self.executeCommand(
-            [coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(
-              files
-            ),
-            callback
+      this.executeCommand = function (command, callback) {
+        var cmd = command.join(' ');
+        //const fs = require('fs');
+        if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
+          nodeFs.appendFileSync(
+            common.LOGFILE,
+            'utils.executeCommand=>' + cmd + '\n'
           );
         }
-      });
-    };
-
-    this.extractDefaultPythonPackages = function (callback) {
-      this.extractZip(
-        common.DEFAULT_PYTHON_PACKAGES_ZIP,
-        common.DEFAULT_PYTHON_PACKAGES_DIR,
-        callback
-      );
-    };
-
-    this.installDefaultPythonPackages = function (callback) {
-      this.installDefaultPythonPackagesDir(
-        common.DEFAULT_PYTHON_PACKAGES_DIR,
-        callback
-      );
-    };
-
-    this.extractDefaultApio = function (callback) {
-      this.extractZip(
-        common.DEFAULT_APIO_ZIP,
-        common.DEFAULT_APIO_DIR,
-        callback
-      );
-    };
-
-    this.installDefaultApio = function (callback) {
-      this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
-    };
-
-    this.extractDefaultApioPackages = function (callback) {
-      this.extractZip(
-        common.DEFAULT_APIO_PACKAGES_ZIP,
-        common.APIO_HOME_DIR,
-        callback
-      );
-    };
-
-    this.isOnline = function (callback, error) {
-      nodeOnline({timeout: 5000}, function (err, online) {
-        if (online) {
-          callback();
-          return;
-        }
-        error();
-        callback(true);
-      });
-    };
-
-    this.installOnlinePythonPackages = function (callback) {
-      var pythonPackages = [];
-      this.executeCommand(
-        [coverPath(common.ENV_PIP), 'install', '-U'] + pythonPackages,
-        callback
-      );
-    };
-
-    this.installOnlineApio = function (callback) {
-      var versionRange =
-        '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
-      var extraPackages = _package.apio.extras || [];
-      var apio = this.getApioInstallable();
-      this.executeCommand(
-        [
-          coverPath(common.ENV_PIP),
-          'install',
-          '-U',
-          apio + '[' + extraPackages.toString() + ']' + versionRange,
-        ],
-        callback
-      );
-    };
-
-    this.getApioInstallable = function () {
-      return _package.apio.branch
-        ? common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch)
-        : 'apio';
-    };
-
-    this.apioInstall = function (pkg, callback) {
-      this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
-    };
-
-    this.toolchainDisabled = false;
-
-    this.getApioExecutable = function () {
-      var candidateApio = process.env.ICESTUDIO_APIO
-        ? process.env.ICESTUDIO_APIO
-        : _package.apio.external;
-      if (nodeFs.existsSync(candidateApio)) {
-        if (!this.toolchainDisabled) {
-          // Show message only on start
-          alertify.message('Using external apio: ' + candidateApio, 5);
-        }
-        this.toolchainDisabled = true;
-        return coverPath(candidateApio);
-      }
-      this.toolchainDisabled = false;
-      return common.APIO_CMD;
-    };
-
-    this.removeToolchain = function () {
-      this.deleteFolderRecursive(common.ENV_DIR);
-      this.deleteFolderRecursive(common.CACHE_DIR);
-      this.deleteFolderRecursive(common.APIO_HOME_DIR);
-    };
-
-    this.removeCollections = function () {
-      this.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
-    };
-
-    this.deleteFolderRecursive = function (path) {
-      if (nodeFs.existsSync(path)) {
-        nodeFs.readdirSync(path).forEach(
-          function (file /*, index*/) {
-            var curPath = nodePath.join(path, file);
-            if (nodeFs.lstatSync(curPath).isDirectory()) {
-              // recursive
-              this.deleteFolderRecursive(curPath);
+        nodeChildProcess.exec(
+          cmd,
+          function (error, stdout, stderr) {
+            common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
+            $(document).trigger('commandOutputChanged', [common.commandOutput]);
+            if (error) {
+              this.enableKeyEvents();
+              this.enableClickEvents();
+              callback(true);
+              alertify.error(error.message, 30);
             } else {
-              // delete file
-              nodeFs.unlinkSync(curPath);
+              callback();
             }
           }.bind(this)
         );
-        nodeFs.rmdirSync(path);
+      };
+
+      this.createVirtualenv = function (callback) {
+        //-- Check if the .icestudio folder exist
+        if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
+          //-- Create the .icestudio folder
+          nodeFs.mkdirSync(common.ICESTUDIO_DIR);
+        }
+        //-- Check if the venv folder exist
+        if (!nodeFs.existsSync(common.ENV_DIR)) {
+          //-- Construct the command for creating the virtual env:
+          //-- python -m venv venv
+          var command = [this.getPythonExecutable(), '-m venv', coverPath(common.ENV_DIR)];
+          //-- Debug
+          console.log(command);
+          //-- Check if extra parameter is needed for windows...
+          if (common.WIN32) {
+            //command.push('--always-copy');
+          }
+          this.executeCommand(command, callback);
+        } else {
+          //-- The virtual environmente already existed
+          callback();
+        }
+      };
+
+      this.checkDefaultToolchain = function () {
+        console.log('Toolchain start', common.TOOLCHAIN_DIR);
+        try {
+          // TODO: use zip with sha1
+          return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
+        } catch (err) {
+          return false;
+        }
+      };
+
+      this.installDefaultPythonPackagesDir = function (defaultDir, callback) {
+        var self = this;
+        nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
+          if (!error) {
+            files = files.map(function (item) {
+              return coverPath(item);
+            });
+            self.executeCommand(
+              [coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(
+                files
+              ),
+              callback
+            );
+          }
+        });
+      };
+
+      this.extractDefaultPythonPackages = function (callback) {
+        this.extractZip(
+          common.DEFAULT_PYTHON_PACKAGES_ZIP,
+          common.DEFAULT_PYTHON_PACKAGES_DIR,
+          callback
+        );
+      };
+
+      this.installDefaultPythonPackages = function (callback) {
+        this.installDefaultPythonPackagesDir(
+          common.DEFAULT_PYTHON_PACKAGES_DIR,
+          callback
+        );
+      };
+
+      this.extractDefaultApio = function (callback) {
+        this.extractZip(
+          common.DEFAULT_APIO_ZIP,
+          common.DEFAULT_APIO_DIR,
+          callback
+        );
+      };
+
+      this.installDefaultApio = function (callback) {
+        this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
+      };
+
+      this.extractDefaultApioPackages = function (callback) {
+        this.extractZip(
+          common.DEFAULT_APIO_PACKAGES_ZIP,
+          common.APIO_HOME_DIR,
+          callback
+        );
+      };
+
+      this.isOnline = function (callback, error) {
+        nodeOnline({timeout: 5000}, function (err, online) {
+          if (online) {
+            callback();
+            return;
+          }
+          error();
+          callback(true);
+        });
+      };
+
+      this.installOnlinePythonPackages = function (callback) {
+        var pythonPackages = [];
+        this.executeCommand(
+          [coverPath(common.ENV_PIP), 'install', '-U'] + pythonPackages,
+          callback
+        );
+      };
+
+      this.installOnlineApio = function (callback) {
+        var versionRange =
+          '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
+        var extraPackages = _package.apio.extras || [];
+        var apio = this.getApioInstallable();
+        this.executeCommand(
+          [
+            coverPath(common.ENV_PIP),
+            'install',
+            '-U',
+            apio + '[' + extraPackages.toString() + ']' + versionRange,
+          ],
+          callback
+        );
+      };
+
+      this.getApioInstallable = function () {
+        return _package.apio.branch
+          ? common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch)
+          : 'apio';
+      };
+
+      this.apioInstall = function (pkg, callback) {
+        this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
+      };
+
+      this.toolchainDisabled = false;
+
+      this.getApioExecutable = function () {
+        var candidateApio = process.env.ICESTUDIO_APIO
+          ? process.env.ICESTUDIO_APIO
+          : _package.apio.external;
+        if (nodeFs.existsSync(candidateApio)) {
+          if (!this.toolchainDisabled) {
+            // Show message only on start
+            alertify.message('Using external apio: ' + candidateApio, 5);
+          }
+          this.toolchainDisabled = true;
+          return coverPath(candidateApio);
+        }
+        this.toolchainDisabled = false;
+        return common.APIO_CMD;
+      };
+
+      this.removeToolchain = function () {
+        this.deleteFolderRecursive(common.ENV_DIR);
+        this.deleteFolderRecursive(common.CACHE_DIR);
+        this.deleteFolderRecursive(common.APIO_HOME_DIR);
+      };
+
+      this.removeCollections = function () {
+        this.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
+      };
+
+      this.deleteFolderRecursive = function (path) {
+        if (nodeFs.existsSync(path)) {
+          nodeFs.readdirSync(path).forEach(
+            function (file /*, index*/) {
+              var curPath = nodePath.join(path, file);
+              if (nodeFs.lstatSync(curPath).isDirectory()) {
+                // recursive
+                this.deleteFolderRecursive(curPath);
+              } else {
+                // delete file
+                nodeFs.unlinkSync(curPath);
+              }
+            }.bind(this)
+          );
+          nodeFs.rmdirSync(path);
+        }
+      };
+
+      this.sep = nodePath.sep;
+
+      this.basename = basename;
+
+      function basename(filepath) {
+        let b = nodePath.basename(filepath);
+        return b.substr(0, b.lastIndexOf('.'));
       }
-    };
 
-    this.sep = nodePath.sep;
+      this.dirname = function (filepath) {
+        return nodePath.dirname(filepath);
+      };
 
-    this.basename = basename;
+      this.filepath2buildpath = function (filepath) {
+        let b = nodePath.basename(filepath);
+        let localdir = filepath.substr(0, filepath.lastIndexOf(b));
+        let dirname = b.substr(0, b.lastIndexOf('.'));
+        let path = nodePath.join(localdir, 'ice-build');
+        //If we want to remove spaces return nodePath.join(path,dirname).replace(/ /g, '_');
+        return nodePath.join(path, dirname);
+      };
 
-    function basename(filepath) {
-      let b = nodePath.basename(filepath);
-      return b.substr(0, b.lastIndexOf('.'));
-    }
+      this.readFile = function (filepath) {
+        return new Promise(function (resolve, reject) {
+          if (nodeFs.existsSync(common.PROFILE_PATH)) {
+            nodeFs.readFile(filepath, 'utf8', function (err, content) {
+              if (err) {
+                reject(err.toString());
+              } else {
+                var data = false;
 
-    this.dirname = function (filepath) {
-      return nodePath.dirname(filepath);
-    };
+                let name = basename(filepath);
+                let test = true;
+                if (
+                  test &&
+                  typeof ICEpm !== 'undefined' &&
+                  ICEpm.isFactory(name)
+                ) {
+                  ICEpm.factory(name, content, function (data) {
+                    if (data) {
+                      // JSON data
+                      resolve(data);
+                    } else {
+                      reject();
+                    }
+                  });
+                } else {
+                  data = isJSON(content);
 
-    this.filepath2buildpath = function (filepath) {
-      let b = nodePath.basename(filepath);
-      let localdir = filepath.substr(0, filepath.lastIndexOf(b));
-      let dirname = b.substr(0, b.lastIndexOf('.'));
-      let path = nodePath.join(localdir,'ice-build');
-      //If we want to remove spaces return nodePath.join(path,dirname).replace(/ /g, '_');
-      return nodePath.join(path,dirname);
-    };
-
-    this.readFile = function (filepath) {
-      return new Promise(function (resolve, reject) {
-        if (nodeFs.existsSync(common.PROFILE_PATH)) {
-          nodeFs.readFile(filepath, 'utf8', function (err, content) {
-            if (err) {
-              reject(err.toString());
-            } else {
-              var data = false;
-
-              let name = basename(filepath);
-              let test = true;
-              if (
-                test &&
-                typeof ICEpm !== 'undefined' &&
-                ICEpm.isFactory(name)
-              ) {
-                ICEpm.factory(name, content, function (data) {
                   if (data) {
                     // JSON data
                     resolve(data);
                   } else {
                     reject();
                   }
-                });
-              } else {
-                data = isJSON(content);
-
-                if (data) {
-                  // JSON data
-                  resolve(data);
-                } else {
-                  reject();
                 }
               }
-            }
-          });
-        } else {
-          resolve({});
-        }
-      });
-    };
-
-    this.saveFile = function (filepath, data) {
-      return new Promise(function (resolve, reject) {
-        var content = data;
-        if (typeof data !== 'string') {
-          content = JSON.stringify(data, null, 2);
-        }
-        nodeFs.writeFile(filepath, content, function (err) {
-          if (err) {
-            reject(err.toString());
+            });
           } else {
-            resolve();
+            resolve({});
           }
         });
-      });
-    };
+      };
 
-    /*function compressJSON(data, callback) {
+      this.saveFile = function (filepath, data) {
+        return new Promise(function (resolve, reject) {
+          var content = data;
+          if (typeof data !== 'string') {
+            content = JSON.stringify(data, null, 2);
+          }
+          nodeFs.writeFile(filepath, content, function (err) {
+            if (err) {
+              reject(err.toString());
+            } else {
+              resolve();
+            }
+          });
+        });
+      };
+
+      /*function compressJSON(data, callback) {
       var content = JSON.stringify(data);
       nodeZlib.gzip(content, function (_, compressed) {
         if (callback) {
@@ -447,7 +450,7 @@ angular
       });
     }*/
 
-    /*function decompressJSON(content, callback) {
+      /*function decompressJSON(content, callback) {
       nodeZlib.gunzip(content, function(_, uncompressed) {
         var data = JSON.parse(uncompressed);
         if (callback) {
@@ -456,285 +459,285 @@ angular
       });
     }*/
 
-    function isJSON(content) {
-      try {
-        return JSON.parse(content);
-      } catch (e) {
-        return false;
-      }
-    }
-
-    this.findCollections = function (folder) {
-      var collectionsPaths = [];
-      try {
-        if (folder) {
-          collectionsPaths = nodeFs
-            .readdirSync(folder)
-            .map(function (name) {
-              return nodePath.join(folder, name);
-            })
-            .filter(function (path) {
-              return (
-                (isDirectory(path) || isSymbolicLink(path)) &&
-                isCollectionPath(path)
-              );
-            });
+      function isJSON(content) {
+        try {
+          return JSON.parse(content);
+        } catch (e) {
+          return false;
         }
-      } catch (e) {
-        // console.warn(e);
       }
-      return collectionsPaths;
-    };
 
-    function isCollectionPath(path) {
-      var result = false;
-      try {
-        var content = nodeFs.readdirSync(path);
-        result =
-          content &&
-          contains(content, 'package.json') &&
-          isFile(nodePath.join(path, 'package.json')) &&
-          ((contains(content, 'blocks') &&
-            isDirectory(nodePath.join(path, 'blocks'))) ||
-            (contains(content, 'examples') &&
-              isDirectory(nodePath.join(path, 'examples'))));
-      } catch (e) {
-        // console.warn(e);
-      }
-      return result;
-    }
-
-    function isFile(path) {
-      return nodeFs.lstatSync(path).isFile();
-    }
-
-    function isDirectory(path) {
-      return nodeFs.lstatSync(path).isDirectory();
-    }
-
-    function isSymbolicLink(path) {
-      return nodeFs.lstatSync(path).isSymbolicLink();
-    }
-
-    function contains(array, item) {
-      return array.indexOf(item) !== -1;
-    }
-
-    function getFilesRecursive(folder, level) {
-      var fileTree = [];
-      var validator = /.*\.(ice|json|md)$/;
-
-      try {
-        var content = nodeFs.readdirSync(folder);
-
-        level--;
-
-        content.forEach(function (name) {
-          var path = nodePath.join(folder, name);
-
-          if (isDirectory(path)) {
-            fileTree.push({
-              name: name,
-              path: path,
-              children: level >= 0 ? getFilesRecursive(path, level) : [],
-            });
-          } else if (validator.test(name)) {
-            fileTree.push({
-              name: basename(name),
-              path: path,
-            });
+      this.findCollections = function (folder) {
+        var collectionsPaths = [];
+        try {
+          if (folder) {
+            collectionsPaths = nodeFs
+              .readdirSync(folder)
+              .map(function (name) {
+                return nodePath.join(folder, name);
+              })
+              .filter(function (path) {
+                return (
+                  (isDirectory(path) || isSymbolicLink(path)) &&
+                  isCollectionPath(path)
+                );
+              });
           }
-        });
-      } catch (e) {
-        console.warn(e);
+        } catch (e) {
+          // console.warn(e);
+        }
+        return collectionsPaths;
+      };
+
+      function isCollectionPath(path) {
+        var result = false;
+        try {
+          var content = nodeFs.readdirSync(path);
+          result =
+            content &&
+            contains(content, 'package.json') &&
+            isFile(nodePath.join(path, 'package.json')) &&
+            ((contains(content, 'blocks') &&
+              isDirectory(nodePath.join(path, 'blocks'))) ||
+              (contains(content, 'examples') &&
+                isDirectory(nodePath.join(path, 'examples'))));
+        } catch (e) {
+          // console.warn(e);
+        }
+        return result;
       }
 
-      return fileTree;
-    }
+      function isFile(path) {
+        return nodeFs.lstatSync(path).isFile();
+      }
 
-    this.getFilesRecursive = getFilesRecursive;
+      function isDirectory(path) {
+        return nodeFs.lstatSync(path).isDirectory();
+      }
 
-    this.setLocale = function (locale, callback) {
-      // Update current locale format
-      locale = splitLocale(locale);
-      // Load supported languages
-      var supported = getSupportedLanguages();
-      // Set the best matching language
-      var bestLang = bestLocale(locale, supported);
-      gettextCatalog.setCurrentLanguage(bestLang);
-      // Application strings
-      gettextCatalog.loadRemote(
-        nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json')
-      );
-      // Collections strings
-      var collections = [common.defaultCollection]
-        .concat(common.internalCollections)
-        .concat(common.externalCollections);
-      for (var c in collections) {
-        var collection = collections[c];
-        var filepath = nodePath.join(
-          collection.path,
-          'locale',
-          bestLang,
-          bestLang + '.json'
+      function isSymbolicLink(path) {
+        return nodeFs.lstatSync(path).isSymbolicLink();
+      }
+
+      function contains(array, item) {
+        return array.indexOf(item) !== -1;
+      }
+
+      function getFilesRecursive(folder, level) {
+        var fileTree = [];
+        var validator = /.*\.(ice|json|md)$/;
+
+        try {
+          var content = nodeFs.readdirSync(folder);
+
+          level--;
+
+          content.forEach(function (name) {
+            var path = nodePath.join(folder, name);
+
+            if (isDirectory(path)) {
+              fileTree.push({
+                name: name,
+                path: path,
+                children: level >= 0 ? getFilesRecursive(path, level) : [],
+              });
+            } else if (validator.test(name)) {
+              fileTree.push({
+                name: basename(name),
+                path: path,
+              });
+            }
+          });
+        } catch (e) {
+          console.warn(e);
+        }
+
+        return fileTree;
+      }
+
+      this.getFilesRecursive = getFilesRecursive;
+
+      this.setLocale = function (locale, callback) {
+        // Update current locale format
+        locale = splitLocale(locale);
+        // Load supported languages
+        var supported = getSupportedLanguages();
+        // Set the best matching language
+        var bestLang = bestLocale(locale, supported);
+        gettextCatalog.setCurrentLanguage(bestLang);
+        // Application strings
+        gettextCatalog.loadRemote(
+          nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json')
         );
-        if (nodeFs.existsSync(filepath)) {
-          gettextCatalog.loadRemote('file://' + filepath);
-        }
-      }
-      if (callback) {
-        callback();
-      }
-      // Return the best language
-      return bestLang;
-    };
-
-    function splitLocale(locale) {
-      var ret = {};
-      var list = locale.split('_');
-      if (list.length > 0) {
-        ret.lang = list[0];
-      }
-      if (list.length > 1) {
-        ret.country = list[1];
-      }
-      return ret;
-    }
-
-    function getSupportedLanguages() {
-      var supported = [];
-      nodeFs
-        .readdirSync(common.LOCALE_DIR)
-        .forEach(function (element /*, index*/) {
-          var curPath = nodePath.join(common.LOCALE_DIR, element);
-          if (nodeFs.lstatSync(curPath).isDirectory()) {
-            supported.push(splitLocale(element));
-          }
-        });
-      return supported;
-    }
-
-    function bestLocale(locale, supported) {
-      var i;
-      // 1. Try complete match
-      if (locale.country) {
-        for (i = 0; i < supported.length; i++) {
-          if (
-            locale.lang === supported[i].lang &&
-            locale.country === supported[i].country
-          ) {
-            return supported[i].lang + '_' + supported[i].country;
-          }
-        }
-      }
-      // 2. Try lang match
-      for (i = 0; i < supported.length; i++) {
-        if (locale.lang === supported[i].lang) {
-          return (
-            supported[i].lang +
-            (supported[i].country ? '_' + supported[i].country : '')
+        // Collections strings
+        var collections = [common.defaultCollection]
+          .concat(common.internalCollections)
+          .concat(common.externalCollections);
+        for (var c in collections) {
+          var collection = collections[c];
+          var filepath = nodePath.join(
+            collection.path,
+            'locale',
+            bestLang,
+            bestLang + '.json'
           );
+          if (nodeFs.existsSync(filepath)) {
+            gettextCatalog.loadRemote('file://' + filepath);
+          }
         }
-      }
-      // 3. Return default lang
-      return 'en';
-    }
+        if (callback) {
+          callback();
+        }
+        // Return the best language
+        return bestLang;
+      };
 
-    this.renderForm = function (specs, callback) {
-      var content = [];
-      content.push('<div>');
-      for (var i in specs) {
-        var spec = specs[i];
-        switch (spec.type) {
-          case 'text':
-            content.push(
-              `<input class="ajs-input" type="text" id="form${i}"/>`
+      function splitLocale(locale) {
+        var ret = {};
+        var list = locale.split('_');
+        if (list.length > 0) {
+          ret.lang = list[0];
+        }
+        if (list.length > 1) {
+          ret.country = list[1];
+        }
+        return ret;
+      }
+
+      function getSupportedLanguages() {
+        var supported = [];
+        nodeFs
+          .readdirSync(common.LOCALE_DIR)
+          .forEach(function (element /*, index*/) {
+            var curPath = nodePath.join(common.LOCALE_DIR, element);
+            if (nodeFs.lstatSync(curPath).isDirectory()) {
+              supported.push(splitLocale(element));
+            }
+          });
+        return supported;
+      }
+
+      function bestLocale(locale, supported) {
+        var i;
+        // 1. Try complete match
+        if (locale.country) {
+          for (i = 0; i < supported.length; i++) {
+            if (
+              locale.lang === supported[i].lang &&
+              locale.country === supported[i].country
+            ) {
+              return supported[i].lang + '_' + supported[i].country;
+            }
+          }
+        }
+        // 2. Try lang match
+        for (i = 0; i < supported.length; i++) {
+          if (locale.lang === supported[i].lang) {
+            return (
+              supported[i].lang +
+              (supported[i].country ? '_' + supported[i].country : '')
             );
-            break;
-          case 'checkbox':
-            content.push(`<div class="checkbox">
+          }
+        }
+        // 3. Return default lang
+        return 'en';
+      }
+
+      this.renderForm = function (specs, callback) {
+        var content = [];
+        content.push('<div>');
+        for (var i in specs) {
+          var spec = specs[i];
+          switch (spec.type) {
+            case 'text':
+              content.push(
+                `<input class="ajs-input" type="text" id="form${i}"/>`
+              );
+              break;
+            case 'checkbox':
+              content.push(`<div class="checkbox">
               <label><input
                 type="checkbox"
                 ${spec.value ? 'checked ' : ''}
                 id="form${i}"
               />${spec.label}</label>
             </div>`);
-            break;
-          case 'combobox':
-            var options = spec.options
-              .map(function (option) {
-                return `<option value="${
-                  option.value
-                }" ${spec.value === option.value ? ' selected' : ''}>${option.label}</option>`;
-              })
-              .join('');
-            content.push(`<div class="form-group">
+              break;
+            case 'combobox':
+              var options = spec.options
+                .map(function (option) {
+                  return `<option value="${
+                    option.value
+                  }" ${spec.value === option.value ? ' selected' : ''}>${option.label}</option>`;
+                })
+                .join('');
+              content.push(`<div class="form-group">
               <label style="font-weight:normal">${spec.label}</label>
               <select class="form-control" id="form${i}">${options}</select>
             </div>`);
-            break;
-        }
-      }
-      content.push('</div>');
-      alerts.confirm({
-        icon: 'question',
-        title: specs[0].type === 'text' ? specs[0].title : 'Form',
-        body: content.join('\n'),
-        onok: (evt) => {
-          var values = [];
-          if (callback) {
-            for (var i in specs) {
-              var spec = specs[i];
-              switch (spec.type) {
-                case 'text':
-                case 'combobox':
-                  values.push($('#form' + i).val());
-                  break;
-                case 'checkbox':
-                  values.push($('#form' + i).prop('checked'));
-                  break;
-              }
-            }
-            callback(evt, values);
+              break;
           }
-        },
-      });
-      // Restore input values
-      $('#form0').select();
-      for (var i in specs) {
-        var spec = specs[i];
-        switch (spec.type) {
-          case 'text':
-          case 'combobox':
-            $('#form' + i).val(spec.value);
-            break;
-          case 'checkbox':
-            $('#form' + i).prop('checked', spec.value);
-            break;
         }
-      }
-    };
+        content.push('</div>');
+        alerts.confirm({
+          icon: 'question',
+          title: specs[0].type === 'text' ? specs[0].title : 'Form',
+          body: content.join('\n'),
+          onok: (evt) => {
+            var values = [];
+            if (callback) {
+              for (var i in specs) {
+                var spec = specs[i];
+                switch (spec.type) {
+                  case 'text':
+                  case 'combobox':
+                    values.push($('#form' + i).val());
+                    break;
+                  case 'checkbox':
+                    values.push($('#form' + i).prop('checked'));
+                    break;
+                }
+              }
+              callback(evt, values);
+            }
+          },
+        });
+        // Restore input values
+        $('#form0').select();
+        for (var i in specs) {
+          var spec = specs[i];
+          switch (spec.type) {
+            case 'text':
+            case 'combobox':
+              $('#form' + i).val(spec.value);
+              break;
+            case 'checkbox':
+              $('#form' + i).prop('checked', spec.value);
+              break;
+          }
+        }
+      };
 
-    this.projectinfoprompt = function (values, callback) {
-      var i;
-      var content = [];
-      var messages = [
-        _tcStr('Name'),
-        _tcStr('Version'),
-        _tcStr('Description'),
-        _tcStr('Author'),
-      ];
-      var n = messages.length;
-      var image = values[4];
-      var blankImage =
-        'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-      content.push('<div>');
-      for (i in messages) {
-        content.push(`<p>${messages[i]}</p>
+      this.projectinfoprompt = function (values, callback) {
+        var i;
+        var content = [];
+        var messages = [
+          _tcStr('Name'),
+          _tcStr('Version'),
+          _tcStr('Description'),
+          _tcStr('Author'),
+        ];
+        var n = messages.length;
+        var image = values[4];
+        var blankImage =
+          'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+        content.push('<div>');
+        for (i in messages) {
+          content.push(`<p>${messages[i]}</p>
 <input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
-      }
-      const img = image ? 'data:image/svg+xml,' + image : blankImage;
-      content.push(`<p>${_tcStr('Image')}</p>
+        }
+        const img = image ? 'data:image/svg+xml,' + image : blankImage;
+        content.push(`<p>${_tcStr('Image')}</p>
         <input id="input-open-svg" type="file" accept=".svg" class="hidden">
         <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
         <div>
@@ -756,658 +759,660 @@ angular
           >${_tcStr('Reset SVG')}</label>
         </div>
       </div>`);
-      // Restore values
-      for (i = 0; i < n; i++) {
-        $('#input' + i).val(values[i]);
-      }
-      $('#preview-svg').attr(
-        'src',
-        image ? 'data:image/svg+xml,' + image : blankImage
-      );
+        // Restore values
+        for (i = 0; i < n; i++) {
+          $('#input' + i).val(values[i]);
+        }
+        $('#preview-svg').attr(
+          'src',
+          image ? 'data:image/svg+xml,' + image : blankImage
+        );
 
-      function registerSave() {
-        // Save SVG
-        var label = $('#save-svg');
-        if (image) {
-          label.removeClass('disabled');
-          label.attr('for', 'input-save-svg');
-          var chooserSave = $('#input-save-svg');
-          chooserSave.unbind('change');
-          chooserSave.change(function (/*evt*/) {
-            if (image) {
-              var filepath = $(this).val();
-              if (!filepath.endsWith('.svg')) {
-                filepath += '.svg';
-              }
-              nodeFs.writeFile(filepath, decodeURI(image), function (err) {
-                if (err) {
-                  throw err;
+        function registerSave() {
+          // Save SVG
+          var label = $('#save-svg');
+          if (image) {
+            label.removeClass('disabled');
+            label.attr('for', 'input-save-svg');
+            var chooserSave = $('#input-save-svg');
+            chooserSave.unbind('change');
+            chooserSave.change(function (/*evt*/) {
+              if (image) {
+                var filepath = $(this).val();
+                if (!filepath.endsWith('.svg')) {
+                  filepath += '.svg';
                 }
+                nodeFs.writeFile(filepath, decodeURI(image), function (err) {
+                  if (err) {
+                    throw err;
+                  }
+                });
+                $(this).val('');
+              }
+            });
+          } else {
+            label.addClass('disabled');
+            label.attr('for', '');
+          }
+        }
+
+        // Restore onshow
+        var prevOnshow = alertify.confirm().get('onshow') || function () {};
+
+        alertify.confirm().set('onshow', function () {
+          prevOnshow();
+
+          // Open SVG
+          var chooserOpen = $('#input-open-svg');
+          chooserOpen.unbind('change');
+          chooserOpen.change(function (/*evt*/) {
+            var filepath = $(this).val();
+
+            nodeFs.readFile(filepath, 'utf8', function (err, data) {
+              if (err) {
+                throw err;
+              }
+              SVGO.optimize(data, function (result) {
+                image = encodeURI(result.data);
+                registerSave();
+                $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
               });
-              $(this).val('');
-            }
-          });
-        } else {
-          label.addClass('disabled');
-          label.attr('for', '');
-        }
-      }
-
-      // Restore onshow
-      var prevOnshow = alertify.confirm().get('onshow') || function () {};
-
-      alertify.confirm().set('onshow', function () {
-        prevOnshow();
-
-        // Open SVG
-        var chooserOpen = $('#input-open-svg');
-        chooserOpen.unbind('change');
-        chooserOpen.change(function (/*evt*/) {
-          var filepath = $(this).val();
-
-          nodeFs.readFile(filepath, 'utf8', function (err, data) {
-            if (err) {
-              throw err;
-            }
-            SVGO.optimize(data, function (result) {
-              image = encodeURI(result.data);
-              registerSave();
-              $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
             });
+            $(this).val('');
           });
-          $(this).val('');
-        });
 
-        registerSave();
-
-        // Reset SVG
-        var reset = $('#reset-svg');
-        reset.click(function (/*evt*/) {
-          image = '';
           registerSave();
-          $('#preview-svg').attr('src', blankImage);
+
+          // Reset SVG
+          var reset = $('#reset-svg');
+          reset.click(function (/*evt*/) {
+            image = '';
+            registerSave();
+            $('#preview-svg').attr('src', blankImage);
+          });
         });
-      });
 
-      alerts.confirm({
-        icon: 'tag',
-        title: _tcStr('Project Information'),
-        body: content.join('\n'),
-        onok: function (evt) {
-          var values = [];
-          for (var i = 0; i < n; i++) {
-            values.push($('#input' + i).val());
-          }
-          values.push(image);
-          if (callback) {
-            callback(evt, values);
-          }
-        },
-      });
-    };
-
-    this.selectBoardPrompt = function (callback) {
-      // Disable user events
-      this.disableKeyEvents();
-      // Hide Cancel button
-      $('.ajs-cancel').addClass('hidden');
-
-      var formSpecs = [
-        {
-          type: 'combobox',
-          label: _tcStr('Select your board'),
-          value: '',
-          options: common.boards.map(function (board) {
-            return {
-              value: board.name,
-              label: board.info.label,
-            };
-          }),
-        },
-      ];
-
-      this.renderForm(
-        formSpecs,
-        function (evt, values) {
-          var selectedBoard = values[0];
-          if (selectedBoard) {
-            evt.cancel = false;
+        alerts.confirm({
+          icon: 'tag',
+          title: _tcStr('Project Information'),
+          body: content.join('\n'),
+          onok: function (evt) {
+            var values = [];
+            for (var i = 0; i < n; i++) {
+              values.push($('#input' + i).val());
+            }
+            values.push(image);
             if (callback) {
-              callback(selectedBoard);
+              callback(evt, values);
             }
-            // Enable user events
-            this.enableKeyEvents();
-            // Restore Cancel button
-            setTimeout(function () {
-              $('.ajs-cancel').removeClass('hidden');
-            }, 200);
-          } else {
-            evt.cancel = true;
-          }
-        }.bind(this)
-      );
-    };
-
-    this.copySync = function (orig, dest) {
-      if (!nodeFs.existsSync(orig)) {
-        return false;
-      }
-      try {
-        nodeFse.copySync(orig, dest);
-        return true;
-      } catch (e) {
-        alertify.error(
-          _tcStr('Error: {{error}}', {
-            error: e.toString(),
-          }),
-          30
-        );
-      }
-      return false;
-    };
-
-    this.findIncludedFiles = function (code) {
-      var ret = [];
-      var patterns = [
-        /[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g,
-        /[\n|\s][^\/]?\"(.*\.list?)\"/g,
-      ];
-      for (var p in patterns) {
-        var match;
-        while ((match = patterns[p].exec(code))) {
-          var file = match[1].replace(/ /g, '');
-          if (ret.indexOf(file) === -1) {
-            ret.push(file);
-          }
-        }
-      }
-      return ret;
-    };
-
-    this.bold = function (text) {
-      return '<b>' + text + '</b>';
-    };
-
-    this.openDialog = function (inputID, ext, callback) {
-      var chooser = $(inputID);
-      chooser.unbind('change');
-      chooser.change(function (/*evt*/) {
-        var filepath = $(this).val();
-        //if (filepath.endsWith(ext)) {
-        if (callback) {
-          callback(filepath);
-        }
-        //}
-        $(this).val('');
-      });
-      chooser.trigger('click');
-    };
-
-    this.saveDialog = function (inputID, ext, callback) {
-      var chooser = $(inputID);
-      chooser.unbind('change');
-      chooser.change(function (/*evt*/) {
-        var filepath = $(this).val();
-        if (!filepath.endsWith(ext)) {
-          filepath += ext;
-        }
-        if (callback) {
-          callback(filepath);
-        }
-        $(this).val('');
-      });
-      chooser.trigger('click');
-    };
-
-    this.updateWindowTitle = function (title) {
-      window.get().title = title;
-    };
-
-    this.rootScopeSafeApply = function () {
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
-      }
-    };
-
-    this.parsePortLabel = function (data, pattern) {
-      // e.g: name[x:y]
-      var match,
-        ret = {};
-      var maxSize = 95;
-      pattern = pattern || common.PATTERN_PORT_LABEL;
-      match = pattern.exec(data);
-      if (match && match[0] === match.input) {
-        ret.name = match[1] ? match[1] : '';
-        ret.rangestr = match[2];
-        if (match[2]) {
-          if (match[3] > maxSize || match[4] > maxSize) {
-            alertify.warning(_tcStr('Maximum bus size: 96 bits'), 5);
-            return null;
-          } else {
-            if (match[3] > match[4]) {
-              ret.range = _.range(match[3], parseInt(match[4]) - 1, -1);
-            } else {
-              ret.range = _.range(match[3], parseInt(match[4]) + 1, +1);
-            }
-          }
-        }
-        return ret;
-      }
-      return null;
-    };
-
-    this.parseParamLabel = function (data, pattern) {
-      // e.g: name
-      var match,
-        ret = {};
-      pattern = pattern || common.PATTERN_PARAM_LABEL;
-      match = pattern.exec(data);
-      if (match && match[0] === match.input) {
-        ret.name = match[1] ? match[1] : '';
-        return ret;
-      }
-      return null;
-    };
-
-    this.clone = function (data) {
-      // Very slow in comparison but more stable for all types
-      // of objects, if fails, rollback to JSON method or try strict
-      // on fast-copy module
-      //return  JSON.parse(JSON.stringify(data));
-      return fastCopy(data);
-    };
-
-    this.dependencyID = function (dependency) {
-      if (dependency.package && dependency.design) {
-        return nodeSha1(
-          JSON.stringify(dependency.package) + JSON.stringify(dependency.design)
-        );
-      }
-    };
-
-    this.newWindow = function (filepath, local) {
-      var params = false;
-
-      if (typeof filepath !== 'undefined') {
-        params = {
-          filepath: filepath,
-        };
-      }
-
-      if (typeof local !== 'undefined' && local === true) {
-        if (params === false) {
-          params = {};
-        }
-        params.local = 'local';
-      }
-      // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
-      // that contains the same arguments that shell call, in this way the two calls will be
-      // compatible.
-      // If in the future you will add more paremeters to the new window , you should review
-      // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
-
-      var url =
-        'index.html' +
-        (params === false
-          ? ''
-          : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
-      // Create a new window and get it.
-      // new-instance and new_instance are necesary for OS compatibility
-      // to avoid crash on new window project after close parent
-      // (little trick for nwjs bug).
-      //url='index.html?icestudio_argv=fsdfsfa';
-
-      gui.Window.open(url, {
-        // new_instance: true,  //Deprecated for new nwjs versios
-        //      'new_instance': true,  //Deprecated for new nwjs versios
-        position: 'center',
-        //        'toolbar': false,   //Deprecated for new nwjs versios
-        width: 900,
-        height: 600,
-        show: true,
-      });
-    };
-
-    this.coverPath = coverPath;
-
-    function coverPath(filepath) {
-      return '"' + filepath + '"';
-    }
-
-    this.mergeDependencies = function (type, block) {
-      if (type in common.allDependencies) {
-        return; // If the block is already in dependencies
-      }
-      // Merge the block's dependencies
-      var deps = block.dependencies;
-      for (var depType in deps) {
-        if (!(depType in common.allDependencies)) {
-          common.allDependencies[depType] = deps[depType];
-        }
-      }
-      // Add the block as a dependency
-      delete block.dependencies;
-      common.allDependencies[type] = block;
-    };
-
-    this.copyToClipboard = function (selection, graph) {
-      var cells = selectionToCells(selection, graph);
-      var clipboard = {
-        icestudio: this.cellsToProject(cells, graph),
-      };
-
-      // Send the clipboard object the global clipboard as a string
-      nodeCP.copy(JSON.stringify(clipboard), function () {
-        // Success
-      });
-    };
-
-    this.pasteFromClipboard = function (callback) {
-      nodeCP.paste(function (err, text) {
-        if (err) {
-          if (common.LINUX) {
-            // xclip installation message
-            var cmd = '';
-            var message = _tcStr('{{app}} is required.', {
-              app: '<b>xclip</b>',
-            });
-            nodeGetOS(function (e, os) {
-              if (!e) {
-                if (
-                  os.dist.indexOf('Debian') !== -1 ||
-                  os.dist.indexOf('Ubuntu Linux') !== -1 ||
-                  os.dist.indexOf('Linux Mint') !== -1
-                ) {
-                  cmd = 'sudo apt-get install xclip';
-                } else if (os.dist.indexOf('Fedora')) {
-                  cmd = 'sudo dnf install xclip';
-                } else if (
-                  os.dist.indexOf('RHEL') !== -1 ||
-                  os.dist.indexOf('RHAS') !== -1 ||
-                  os.dist.indexOf('Centos') !== -1 ||
-                  os.dist.indexOf('Red Hat Linux') !== -1
-                ) {
-                  cmd = 'sudo yum install xclip';
-                } else if (os.dist.indexOf('Arch Linux') !== -1) {
-                  cmd = 'sudo pacman install xclip';
-                }
-                if (cmd) {
-                  message +=
-                    ' ' +
-                    _tcStr('Please run: {{cmd}}', {
-                      cmd: '<br><b><code>' + cmd + '</code></b>',
-                    });
-                }
-              }
-              alertify.warning(message, 30);
-            });
-          }
-        } else {
-          // Parse the global clipboard
-          var clipboard = JSON.parse(text);
-          if (callback && clipboard && clipboard.icestudio) {
-            callback(clipboard.icestudio);
-          }
-        }
-      });
-    };
-
-    function selectionToCells(selection, graph) {
-      var cells = [];
-      var blocksMap = {};
-      selection.each(function (block) {
-        // Add block
-        cells.push(block.attributes);
-        // Map blocks
-        blocksMap[block.id] = block;
-        // Add connected wires
-        var processedWires = {};
-        var connectedWires = graph.getConnectedLinks(block);
-        _.each(connectedWires, function (wire) {
-          if (processedWires[wire.id]) {
-            return;
-          }
-
-          var source = blocksMap[wire.get('source').id];
-          var target = blocksMap[wire.get('target').id];
-
-          if (source && target) {
-            cells.push(wire.attributes);
-            processedWires[wire.id] = true;
-          }
+          },
         });
-      });
-      return cells;
-    }
-
-    this.cellsToProject = function (cells, opt) {
-      // Convert a list of cells into the following sections of a project:
-      // - design.graph
-      // - dependencies
-
-      var blocks = [];
-      var wires = [];
-      var p = {
-        version: common.VERSION,
-        design: {},
-        dependencies: {},
       };
 
-      opt = opt || {};
+      this.selectBoardPrompt = function (callback) {
+        // Disable user events
+        this.disableKeyEvents();
+        // Hide Cancel button
+        $('.ajs-cancel').addClass('hidden');
 
-      for (var c = 0; c < cells.length; c++) {
-        var cell = cells[c];
+        var formSpecs = [
+          {
+            type: 'combobox',
+            label: _tcStr('Select your board'),
+            value: '',
+            options: common.boards.map(function (board) {
+              return {
+                value: board.name,
+                label: board.info.label,
+              };
+            }),
+          },
+        ];
 
-        if (
-          cell.type === 'ice.Generic' ||
-          cell.type === 'ice.Input' ||
-          cell.type === 'ice.Output' ||
-          cell.type === 'ice.Code' ||
-          cell.type === 'ice.Info' ||
-          cell.type === 'ice.Constant' ||
-          cell.type === 'ice.Memory'
-        ) {
-          var block = {};
-          block.id = cell.id;
-          block.type = cell.blockType;
-          block.data = cell.data;
-          block.position = cell.position;
-          if (
-            cell.type === 'ice.Generic' ||
-            cell.type === 'ice.Code' ||
-            cell.type === 'ice.Info' ||
-            cell.type === 'ice.Memory'
-          ) {
-            block.size = cell.size;
-          }
-          blocks.push(block);
-        } else if (cell.type === 'ice.Wire') {
-          var wire = {};
-          wire.source = {
-            block: cell.source.id,
-            port: cell.source.port,
-          };
-          wire.target = {
-            block: cell.target.id,
-            port: cell.target.port,
-          };
-          wire.vertices = cell.vertices;
-          wire.size = cell.size > 1 ? cell.size : undefined;
-          wires.push(wire);
-        }
-      }
-
-      p.design.board = common.selectedBoard.name;
-      p.design.graph = {
-        blocks: blocks,
-        wires: wires,
-      };
-
-      // Update dependencies
-      if (opt.deps !== false) {
-        var types = this.findSubDependencies(p, common.allDependencies);
-        for (var t in types) {
-          p.dependencies[types[t]] = common.allDependencies[types[t]];
-        }
-      }
-
-      return p;
-    };
-
-    this.findSubDependencies = function (dependency) {
-      var subDependencies = [];
-      if (dependency) {
-        var blocks = dependency.design.graph.blocks;
-        for (var i in blocks) {
-          var type = blocks[i].type;
-          if (type.indexOf('basic.') === -1) {
-            subDependencies.push(type);
-            var newSubDependencies = this.findSubDependencies(
-              common.allDependencies[type]
-            );
-            subDependencies = subDependencies.concat(newSubDependencies);
-          }
-        }
-        return _.unique(subDependencies);
-      }
-      return subDependencies;
-    };
-
-    this.hasInputRule = function (port, apply) {
-      apply = apply === undefined ? true : apply;
-      var _default;
-      var rules = common.selectedBoard.rules;
-      if (rules) {
-        var allInitPorts = rules.input;
-        if (allInitPorts) {
-          for (var i in allInitPorts) {
-            if (port === allInitPorts[i].port) {
-              _default = allInitPorts[i];
-              _default.apply = apply;
-              break;
-            }
-          }
-        }
-      }
-      return _.clone(_default);
-    };
-
-    this.hasLeftButton = function (evt) {
-      return evt.which === 1;
-    };
-
-    this.hasMiddleButton = function (evt) {
-      return evt.which === 2;
-    };
-
-    this.hasRightButton = function (evt) {
-      return evt.which === 3;
-    };
-
-    this.hasButtonPressed = function (evt) {
-      return evt.which !== 0;
-    };
-
-    this.hasShift = function (evt) {
-      return evt.shiftKey;
-    };
-
-    this.hasCtrl = function (evt) {
-      return evt.ctrlKey;
-    };
-
-    this.loadProfile = function (profile, callback) {
-      profile.load(function () {
-        if (callback) {
-          callback();
-        }
-      });
-    };
-
-    this.loadLanguage = function (profile, callback) {
-      var lang = profile.get('language');
-      if (lang) {
-        this.setLocale(lang, callback);
-      } else {
-        // If lang is empty, use the system language
-        nodeLangInfo(
-          function (err, sysLang) {
-            if (!err) {
-              profile.set('language', this.setLocale(sysLang, callback));
+        this.renderForm(
+          formSpecs,
+          function (evt, values) {
+            var selectedBoard = values[0];
+            if (selectedBoard) {
+              evt.cancel = false;
+              if (callback) {
+                callback(selectedBoard);
+              }
+              // Enable user events
+              this.enableKeyEvents();
+              // Restore Cancel button
+              setTimeout(function () {
+                $('.ajs-cancel').removeClass('hidden');
+              }, 200);
+            } else {
+              evt.cancel = true;
             }
           }.bind(this)
         );
-      }
-    };
+      };
 
-    this.digestId = function (id) {
-      if (id.indexOf('-') !== -1) {
-        id = nodeSha1(id).toString();
-      }
-      return 'v' + id.substring(0, 6);
-    };
-
-    this.startWait = function () {
-      angular.element('#menu').addClass('is-disabled');
-      $('body').addClass('waiting');
-    };
-
-    this.endWait = function () {
-      angular.element('#menu').removeClass('is-disabled');
-      $('body').removeClass('waiting');
-    };
-
-    this.isFunction = function (functionToCheck) {
-      return (
-        functionToCheck &&
-        {}.toString.call(functionToCheck) === '[object Function]'
-      );
-    };
-
-    this.openUrlExternalBrowser = function (url) {
-      gui.Shell.openExternal(url);
-      //require('nw.gui').Shell.openExternal( url);
-    };
-
-    const DEFAULT_BOARD = 'icestick';
-
-    this.selectBoard = _selectBoard;
-
-    function _selectBoard(name) {
-      try {
-        name = name || DEFAULT_BOARD;
-        common.selectedBoard = common.boards.find((x) => x.name === name);
-        if (!common.selectedBoard) {
-          console.error(`[srv.boards._selectBoard] board ${name} not found!`);
-          return;
+      this.copySync = function (orig, dest) {
+        if (!nodeFs.existsSync(orig)) {
+          return false;
         }
-        common.selectedDevice = common.selectedBoard.info.device;
-        common.pinoutInputHTML = generateHTMLOptions(
-          common.selectedBoard.info['pinout'],
-          'input'
+        try {
+          nodeFse.copySync(orig, dest);
+          return true;
+        } catch (e) {
+          alertify.error(
+            _tcStr('Error: {{error}}', {
+              error: e.toString(),
+            }),
+            30
+          );
+        }
+        return false;
+      };
+
+      this.findIncludedFiles = function (code) {
+        var ret = [];
+        var patterns = [
+          /[\n|\s]\/\/\s*@include\s+([^\s]*\.(v|vh))(\n|\s)/g,
+          /[\n|\s][^\/]?\"(.*\.list?)\"/g,
+        ];
+        for (var p in patterns) {
+          var match;
+          while ((match = patterns[p].exec(code))) {
+            var file = match[1].replace(/ /g, '');
+            if (ret.indexOf(file) === -1) {
+              ret.push(file);
+            }
+          }
+        }
+        return ret;
+      };
+
+      this.bold = function (text) {
+        return '<b>' + text + '</b>';
+      };
+
+      this.openDialog = function (inputID, ext, callback) {
+        var chooser = $(inputID);
+        chooser.unbind('change');
+        chooser.change(function (/*evt*/) {
+          var filepath = $(this).val();
+          //if (filepath.endsWith(ext)) {
+          if (callback) {
+            callback(filepath);
+          }
+          //}
+          $(this).val('');
+        });
+        chooser.trigger('click');
+      };
+
+      this.saveDialog = function (inputID, ext, callback) {
+        var chooser = $(inputID);
+        chooser.unbind('change');
+        chooser.change(function (/*evt*/) {
+          var filepath = $(this).val();
+          if (!filepath.endsWith(ext)) {
+            filepath += ext;
+          }
+          if (callback) {
+            callback(filepath);
+          }
+          $(this).val('');
+        });
+        chooser.trigger('click');
+      };
+
+      this.updateWindowTitle = function (title) {
+        window.get().title = title;
+      };
+
+      this.rootScopeSafeApply = function () {
+        if (!$rootScope.$$phase) {
+          $rootScope.$apply();
+        }
+      };
+
+      this.parsePortLabel = function (data, pattern) {
+        // e.g: name[x:y]
+        var match,
+          ret = {};
+        var maxSize = 95;
+        pattern = pattern || common.PATTERN_PORT_LABEL;
+        match = pattern.exec(data);
+        if (match && match[0] === match.input) {
+          ret.name = match[1] ? match[1] : '';
+          ret.rangestr = match[2];
+          if (match[2]) {
+            if (match[3] > maxSize || match[4] > maxSize) {
+              alertify.warning(_tcStr('Maximum bus size: 96 bits'), 5);
+              return null;
+            } else {
+              if (match[3] > match[4]) {
+                ret.range = _.range(match[3], parseInt(match[4]) - 1, -1);
+              } else {
+                ret.range = _.range(match[3], parseInt(match[4]) + 1, +1);
+              }
+            }
+          }
+          return ret;
+        }
+        return null;
+      };
+
+      this.parseParamLabel = function (data, pattern) {
+        // e.g: name
+        var match,
+          ret = {};
+        pattern = pattern || common.PATTERN_PARAM_LABEL;
+        match = pattern.exec(data);
+        if (match && match[0] === match.input) {
+          ret.name = match[1] ? match[1] : '';
+          return ret;
+        }
+        return null;
+      };
+
+      this.clone = function (data) {
+        // Very slow in comparison but more stable for all types
+        // of objects, if fails, rollback to JSON method or try strict
+        // on fast-copy module
+        //return  JSON.parse(JSON.stringify(data));
+        return fastCopy(data);
+      };
+
+      this.dependencyID = function (dependency) {
+        if (dependency.package && dependency.design) {
+          return nodeSha1(
+            JSON.stringify(dependency.package) +
+              JSON.stringify(dependency.design)
+          );
+        }
+      };
+
+      this.newWindow = function (filepath, local) {
+        var params = false;
+
+        if (typeof filepath !== 'undefined') {
+          params = {
+            filepath: filepath,
+          };
+        }
+
+        if (typeof local !== 'undefined' && local === true) {
+          if (params === false) {
+            params = {};
+          }
+          params.local = 'local';
+        }
+        // To pass parameters to the new project window, we use de GET parameter "icestudio_argv"
+        // that contains the same arguments that shell call, in this way the two calls will be
+        // compatible.
+        // If in the future you will add more paremeters to the new window , you should review
+        // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+
+        var url =
+          'index.html' +
+          (params === false
+            ? ''
+            : '?icestudio_argv=' + encodeURI(btoa(JSON.stringify(params))));
+        // Create a new window and get it.
+        // new-instance and new_instance are necesary for OS compatibility
+        // to avoid crash on new window project after close parent
+        // (little trick for nwjs bug).
+        //url='index.html?icestudio_argv=fsdfsfa';
+
+        gui.Window.open(url, {
+          // new_instance: true,  //Deprecated for new nwjs versios
+          //      'new_instance': true,  //Deprecated for new nwjs versios
+          position: 'center',
+          //        'toolbar': false,   //Deprecated for new nwjs versios
+          width: 900,
+          height: 600,
+          show: true,
+        });
+      };
+
+      this.coverPath = coverPath;
+
+      function coverPath(filepath) {
+        return '"' + filepath + '"';
+      }
+
+      this.mergeDependencies = function (type, block) {
+        if (type in common.allDependencies) {
+          return; // If the block is already in dependencies
+        }
+        // Merge the block's dependencies
+        var deps = block.dependencies;
+        for (var depType in deps) {
+          if (!(depType in common.allDependencies)) {
+            common.allDependencies[depType] = deps[depType];
+          }
+        }
+        // Add the block as a dependency
+        delete block.dependencies;
+        common.allDependencies[type] = block;
+      };
+
+      this.copyToClipboard = function (selection, graph) {
+        var cells = selectionToCells(selection, graph);
+        var clipboard = {
+          icestudio: this.cellsToProject(cells, graph),
+        };
+
+        // Send the clipboard object the global clipboard as a string
+        nodeCP.copy(JSON.stringify(clipboard), function () {
+          // Success
+        });
+      };
+
+      this.pasteFromClipboard = function (callback) {
+        nodeCP.paste(function (err, text) {
+          if (err) {
+            if (common.LINUX) {
+              // xclip installation message
+              var cmd = '';
+              var message = _tcStr('{{app}} is required.', {
+                app: '<b>xclip</b>',
+              });
+              nodeGetOS(function (e, os) {
+                if (!e) {
+                  if (
+                    os.dist.indexOf('Debian') !== -1 ||
+                    os.dist.indexOf('Ubuntu Linux') !== -1 ||
+                    os.dist.indexOf('Linux Mint') !== -1
+                  ) {
+                    cmd = 'sudo apt-get install xclip';
+                  } else if (os.dist.indexOf('Fedora')) {
+                    cmd = 'sudo dnf install xclip';
+                  } else if (
+                    os.dist.indexOf('RHEL') !== -1 ||
+                    os.dist.indexOf('RHAS') !== -1 ||
+                    os.dist.indexOf('Centos') !== -1 ||
+                    os.dist.indexOf('Red Hat Linux') !== -1
+                  ) {
+                    cmd = 'sudo yum install xclip';
+                  } else if (os.dist.indexOf('Arch Linux') !== -1) {
+                    cmd = 'sudo pacman install xclip';
+                  }
+                  if (cmd) {
+                    message +=
+                      ' ' +
+                      _tcStr('Please run: {{cmd}}', {
+                        cmd: '<br><b><code>' + cmd + '</code></b>',
+                      });
+                  }
+                }
+                alertify.warning(message, 30);
+              });
+            }
+          } else {
+            // Parse the global clipboard
+            var clipboard = JSON.parse(text);
+            if (callback && clipboard && clipboard.icestudio) {
+              callback(clipboard.icestudio);
+            }
+          }
+        });
+      };
+
+      function selectionToCells(selection, graph) {
+        var cells = [];
+        var blocksMap = {};
+        selection.each(function (block) {
+          // Add block
+          cells.push(block.attributes);
+          // Map blocks
+          blocksMap[block.id] = block;
+          // Add connected wires
+          var processedWires = {};
+          var connectedWires = graph.getConnectedLinks(block);
+          _.each(connectedWires, function (wire) {
+            if (processedWires[wire.id]) {
+              return;
+            }
+
+            var source = blocksMap[wire.get('source').id];
+            var target = blocksMap[wire.get('target').id];
+
+            if (source && target) {
+              cells.push(wire.attributes);
+              processedWires[wire.id] = true;
+            }
+          });
+        });
+        return cells;
+      }
+
+      this.cellsToProject = function (cells, opt) {
+        // Convert a list of cells into the following sections of a project:
+        // - design.graph
+        // - dependencies
+
+        var blocks = [];
+        var wires = [];
+        var p = {
+          version: common.VERSION,
+          design: {},
+          dependencies: {},
+        };
+
+        opt = opt || {};
+
+        for (var c = 0; c < cells.length; c++) {
+          var cell = cells[c];
+
+          if (
+            cell.type === 'ice.Generic' ||
+            cell.type === 'ice.Input' ||
+            cell.type === 'ice.Output' ||
+            cell.type === 'ice.Code' ||
+            cell.type === 'ice.Info' ||
+            cell.type === 'ice.Constant' ||
+            cell.type === 'ice.Memory'
+          ) {
+            var block = {};
+            block.id = cell.id;
+            block.type = cell.blockType;
+            block.data = cell.data;
+            block.position = cell.position;
+            if (
+              cell.type === 'ice.Generic' ||
+              cell.type === 'ice.Code' ||
+              cell.type === 'ice.Info' ||
+              cell.type === 'ice.Memory'
+            ) {
+              block.size = cell.size;
+            }
+            blocks.push(block);
+          } else if (cell.type === 'ice.Wire') {
+            var wire = {};
+            wire.source = {
+              block: cell.source.id,
+              port: cell.source.port,
+            };
+            wire.target = {
+              block: cell.target.id,
+              port: cell.target.port,
+            };
+            wire.vertices = cell.vertices;
+            wire.size = cell.size > 1 ? cell.size : undefined;
+            wires.push(wire);
+          }
+        }
+
+        p.design.board = common.selectedBoard.name;
+        p.design.graph = {
+          blocks: blocks,
+          wires: wires,
+        };
+
+        // Update dependencies
+        if (opt.deps !== false) {
+          var types = this.findSubDependencies(p, common.allDependencies);
+          for (var t in types) {
+            p.dependencies[types[t]] = common.allDependencies[types[t]];
+          }
+        }
+
+        return p;
+      };
+
+      this.findSubDependencies = function (dependency) {
+        var subDependencies = [];
+        if (dependency) {
+          var blocks = dependency.design.graph.blocks;
+          for (var i in blocks) {
+            var type = blocks[i].type;
+            if (type.indexOf('basic.') === -1) {
+              subDependencies.push(type);
+              var newSubDependencies = this.findSubDependencies(
+                common.allDependencies[type]
+              );
+              subDependencies = subDependencies.concat(newSubDependencies);
+            }
+          }
+          return _.unique(subDependencies);
+        }
+        return subDependencies;
+      };
+
+      this.hasInputRule = function (port, apply) {
+        apply = apply === undefined ? true : apply;
+        var _default;
+        var rules = common.selectedBoard.rules;
+        if (rules) {
+          var allInitPorts = rules.input;
+          if (allInitPorts) {
+            for (var i in allInitPorts) {
+              if (port === allInitPorts[i].port) {
+                _default = allInitPorts[i];
+                _default.apply = apply;
+                break;
+              }
+            }
+          }
+        }
+        return _.clone(_default);
+      };
+
+      this.hasLeftButton = function (evt) {
+        return evt.which === 1;
+      };
+
+      this.hasMiddleButton = function (evt) {
+        return evt.which === 2;
+      };
+
+      this.hasRightButton = function (evt) {
+        return evt.which === 3;
+      };
+
+      this.hasButtonPressed = function (evt) {
+        return evt.which !== 0;
+      };
+
+      this.hasShift = function (evt) {
+        return evt.shiftKey;
+      };
+
+      this.hasCtrl = function (evt) {
+        return evt.ctrlKey;
+      };
+
+      this.loadProfile = function (profile, callback) {
+        profile.load(function () {
+          if (callback) {
+            callback();
+          }
+        });
+      };
+
+      this.loadLanguage = function (profile, callback) {
+        var lang = profile.get('language');
+        if (lang) {
+          this.setLocale(lang, callback);
+        } else {
+          // If lang is empty, use the system language
+          nodeLangInfo(
+            function (err, sysLang) {
+              if (!err) {
+                profile.set('language', this.setLocale(sysLang, callback));
+              }
+            }.bind(this)
+          );
+        }
+      };
+
+      this.digestId = function (id) {
+        if (id.indexOf('-') !== -1) {
+          id = nodeSha1(id).toString();
+        }
+        return 'v' + id.substring(0, 6);
+      };
+
+      this.startWait = function () {
+        angular.element('#menu').addClass('is-disabled');
+        $('body').addClass('waiting');
+      };
+
+      this.endWait = function () {
+        angular.element('#menu').removeClass('is-disabled');
+        $('body').removeClass('waiting');
+      };
+
+      this.isFunction = function (functionToCheck) {
+        return (
+          functionToCheck &&
+          {}.toString.call(functionToCheck) === '[object Function]'
         );
-        common.pinoutOutputHTML = generateHTMLOptions(
-          common.selectedBoard.info['pinout'],
-          'output'
-        );
-        this.rootScopeSafeApply();
-      } catch (err) {
-        console.error('[srv.boards._readJSONFile]', err);
+      };
+
+      this.openUrlExternalBrowser = function (url) {
+        gui.Shell.openExternal(url);
+        //require('nw.gui').Shell.openExternal( url);
+      };
+
+      const DEFAULT_BOARD = 'icestick';
+
+      this.selectBoard = _selectBoard;
+
+      function _selectBoard(name) {
+        try {
+          name = name || DEFAULT_BOARD;
+          common.selectedBoard = common.boards.find((x) => x.name === name);
+          if (!common.selectedBoard) {
+            console.error(`[srv.boards._selectBoard] board ${name} not found!`);
+            return;
+          }
+          common.selectedDevice = common.selectedBoard.info.device;
+          common.pinoutInputHTML = generateHTMLOptions(
+            common.selectedBoard.info['pinout'],
+            'input'
+          );
+          common.pinoutOutputHTML = generateHTMLOptions(
+            common.selectedBoard.info['pinout'],
+            'output'
+          );
+          this.rootScopeSafeApply();
+        } catch (err) {
+          console.error('[srv.boards._readJSONFile]', err);
+        }
+      }
+
+      function generateHTMLOptions(pinout, type) {
+        var code = '<option></option>';
+        for (var i in pinout) {
+          if (pinout[i].type === type || pinout[i].type === 'inout') {
+            code +=
+              '<option value="' +
+              pinout[i].value +
+              '">' +
+              pinout[i].name +
+              '</option>';
+          }
+        }
+        return code;
       }
     }
-
-    function generateHTMLOptions(pinout, type) {
-      var code = '<option></option>';
-      for (var i in pinout) {
-        if (pinout[i].type === type || pinout[i].type === 'inout') {
-          code +=
-            '<option value="' +
-            pinout[i].value +
-            '">' +
-            pinout[i].name +
-            '</option>';
-        }
-      }
-      return code;
-    }
-  });
+  );
