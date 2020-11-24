@@ -79,7 +79,12 @@ jobs:
 
   mac:
     needs: [doc]
-    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        os: [{ver: '10.15', name: Catalina}, {ver: '11.0', name: BigSur}]
+    runs-on: macos-${{ matrix.os.ver }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -96,7 +101,7 @@ jobs:
           DIST_TARGET: osx
       - uses: actions/upload-artifact@master
         with:
-          name: osx64
+          name: osx64-${{ matrix.os.name }}
           path: dist/*osx64.zip
 
   nightly:
@@ -107,9 +112,14 @@ jobs:
       - uses: actions/download-artifact@v2
       - name: Append GITHUB_SHA to release assets
         run: |
-          for item in lin32/* lin64/* win32/* win64/* osx64/*; do
+          for item in lin32/* lin64/* win32/* win64/*; do
             mv "$item" "${item%.*}-${GITHUB_SHA}.zip"
           done
+          for name in Catalina BigSur; do
+            item="$(ls osx64-$name/*)"
+            mv "$item" "${item%.*}-$name-${GITHUB_SHA}.zip"
+          done
+
       - uses: eine/tip@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -120,7 +130,8 @@ jobs:
             lin64/*
             win32/*
             win64/*
-            osx64/*
+            osx64-Catalina/*
+            osx64-BigSur/*
 
 #---
 
