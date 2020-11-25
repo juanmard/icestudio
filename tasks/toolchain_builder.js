@@ -182,8 +182,8 @@ ToolchainBuilder.prototype.downloadApio = function () {
       'download',
       '--dest',
       self.options.apioDir,
-      //'apio[' + self.options.extraPackages.toString() + ']' + versionRange,
-      'git+https://github.com/FPGAwars/apio.git@develop#egg=apio',
+      'apio[' + self.options.extraPackages.toString() + ']' + versionRange,
+      //'git+https://github.com/FPGAwars/apio.git@develop#egg=apio',
     ];
     childProcess.exec(command.join(' '), function (error /*, stdout, stderr*/) {
       if (error) {
