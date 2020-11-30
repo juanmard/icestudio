@@ -126,10 +126,6 @@ angular
         );
       };
 
-      this.extractVirtualenv = function (callback) {
-        this.extractZip(common.VENV_ZIP, common.CACHE_DIR, callback);
-      };
-
       function disableEvent(event) {
         event.stopPropagation();
         event.preventDefault();
@@ -191,7 +187,11 @@ angular
         if (!nodeFs.existsSync(common.ENV_DIR)) {
           //-- Construct the command for creating the virtual env:
           //-- python -m venv venv
-          var command = [this.getPythonExecutable(), '-m venv', coverPath(common.ENV_DIR)];
+          var command = [
+            this.getPythonExecutable(),
+            '-m venv',
+            coverPath(common.ENV_DIR),
+          ];
           //-- Debug
           console.log(command);
           //-- Check if extra parameter is needed for windows...

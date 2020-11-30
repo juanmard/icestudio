@@ -73,7 +73,6 @@ ToolchainBuilder.prototype.build = function () {
   // Let's create the standalone toolchains
   return (
     this.ensurePythonIsAvailable()
-      .then(this.extractVirtualenv.bind(this))
       .then(this.createVirtualenv.bind(this))
       // .then(this.downloadPythonPackages.bind(this))
       // .then(this.packagePythonPackages.bind(this))
@@ -97,33 +96,12 @@ ToolchainBuilder.prototype.ensurePythonIsAvailable = function () {
   });
 };
 
-ToolchainBuilder.prototype.extractVirtualenv = function () {
-  'use strict';
-  var self = this;
-  self.emit('log', '> Extract virtualenv zip');
-  return new Promise(function (resolve, reject) {
-    var source = self.options.venvZipPath;
-    var target = path.resolve(self.options.toolchainDir);
-    extract(source, {dir: target}, function (error) {
-      if (error) {
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
-  });
-};
-
 ToolchainBuilder.prototype.createVirtualenv = function () {
   'use strict';
   var self = this;
   self.emit('log', '> Create virtualenv');
   return new Promise(function (resolve, reject) {
-    var command = [
-      getPythonExecutable(),
-      path.join(self.options.venvExtractDir, 'virtualenv.py'),
-      self.options.venvDir,
-    ];
+    var command = [getPythonExecutable(), '-m venv', self.options.venvDir];
     childProcess.exec(command.join(' '), function (error /*, stdout, stderr*/) {
       if (error) {
         reject(error);

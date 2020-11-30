@@ -1094,7 +1094,6 @@ angular
         // Reset toolchain
         async.series([
           ensurePythonIsAvailable,
-          extractVirtualenv,
           createVirtualenv,
           extractDefaultApio,
           installDefaultApio,
@@ -1201,17 +1200,17 @@ angular
       }
 
       function apioInstallSystem(callback) {
-        updateProgress('apio install system', 40);
+        updateProgress('apio install system', 35);
         utils.apioInstall('system', callback);
       }
 
       function apioInstallYosys(callback) {
-        updateProgress('apio install yosys', 50);
+        updateProgress('apio install yosys', 40);
         utils.apioInstall('yosys', callback);
       }
 
       function apioInstallIce40(callback) {
-        updateProgress('apio install ice40', 50);
+        updateProgress('apio install ice40', 45);
         utils.apioInstall('ice40', callback);
       }
 
@@ -1221,23 +1220,23 @@ angular
       }
 
       function apioInstallFujprog(callback) {
-        updateProgress('apio install fujprog', 50);
+        updateProgress('apio install fujprog', 55);
         utils.apioInstall('fujprog', callback);
+      }
+
+      function apioInstallIcesprog(callback) {
+        updateProgress('apio install icesprog', 60);
+        utils.apioInstall('icesprog', callback);
+      }
+
+      function apioInstallDfu(callback) {
+        updateProgress('apio install dfu', 65);
+        utils.apioInstall('dfu', callback);
       }
 
       function apioInstallIverilog(callback) {
         updateProgress('apio install iverilog', 70);
         utils.apioInstall('iverilog', callback);
-      }
-
-      function apioInstallIcesprog(callback) {
-        updateProgress('apio install icesprog', 50);
-        utils.apioInstall('icesprog', callback);
-      }
-
-      function apioInstallDfu(callback) {
-        updateProgress('apio install dfu', 50);
-        utils.apioInstall('dfu', callback);
       }
 
       function apioInstallDrivers(callback) {
