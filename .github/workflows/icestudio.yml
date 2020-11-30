@@ -13,18 +13,23 @@ env:
 jobs:
   doc:
     runs-on: ubuntu-latest
+    name: '📓 Docs'
     steps:
-      - uses: actions/checkout@v2
+      - name: '🧰 Checkout'
+        uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v1
+      - name: '🐍 Setup Python'
+        uses: actions/setup-python@v1
         with:
           python-version: 3.8
 
-      - uses: buildthedocs/btd@v0
+      - name: '📓 BuildTheDocs (BTD)'
+        uses: buildthedocs/btd@v0
         with:
           token: ${{ github.token }}
 
-      - uses: actions/upload-artifact@v2
+      - name: '📤 Upload artifact: HTML'
+        uses: actions/upload-artifact@v2
         with:
           name: docs
           path: docs/_build/html
@@ -35,44 +40,54 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        task:
+        include:
           [
-            {os: ubuntu, arg: lin, larg: linux},
-            {os: windows, arg: win, larg: win},
+            {label: '🐧 Ubuntu', os: ubuntu, arg: lin, larg: linux},
+            {label: '🧊 Windows', os: windows, arg: win, larg: win},
           ]
-    runs-on: ${{ matrix.task.os }}-latest
+    runs-on: ${{ matrix.os }}-latest
+    name: ${{ matrix.label }}
     steps:
-      - run: git config --global core.autocrlf input
+      - name: '⚙️ git config autocrlf'
+        run: git config --global core.autocrlf input
         shell: bash
 
-      - uses: actions/checkout@v2
+      - name: '🧰 Checkout'
+        uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1
+      - name: '⚙️ Setup Node.js'
+        uses: actions/setup-node@v1
         with:
           node-version: '10.x'
 
-      - run: yarn
+      - name: '▶️ yarn'
+        run: yarn
 
-      - run: yarn run check
+      - name: '▶️ check'
+        run: yarn run check
 
-      - uses: actions/download-artifact@v2
+      - name: '📥 Download artifact: HTML'
+        uses: actions/download-artifact@v2
         with:
           name: docs
           path: docs/_build/html
 
-      - run: yarn dist -v
+      - name: '▶️ dist'
+        run: yarn dist -v
         env:
-          DIST_TARGET: ${{ matrix.task.arg }}
+          DIST_TARGET: ${{ matrix.arg }}
 
-      - uses: actions/upload-artifact@master
+      - name: '📤 Upload artifact: 64 bit'
+        uses: actions/upload-artifact@master
         with:
-          name: ${{ matrix.task.arg }}64
-          path: dist/*${{ matrix.task.larg }}64.zip
+          name: ${{ matrix.arg }}64
+          path: dist/*${{ matrix.larg }}64.zip
 
-      - uses: actions/upload-artifact@master
+      - name: '📤 Upload artifact: 32 bit'
+        uses: actions/upload-artifact@master
         with:
-          name: ${{ matrix.task.arg }}32
-          path: dist/*${{ matrix.task.larg }}32.zip
+          name: ${{ matrix.arg }}32
+          path: dist/*${{ matrix.larg }}32.zip
 
   mac:
     needs: [doc]
@@ -80,39 +95,49 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        os: [{ver: '10.15', name: Catalina}, {ver: '11.0', name: BigSur}]
-    runs-on: macos-${{ matrix.os.ver }}
+        include: [{ver: '10.15', name: Catalina}, {ver: '11.0', name: BigSur}]
+    runs-on: macos-${{ matrix.ver }}
+    name: '🍎 macOS · ${{ matrix.name }}'
     steps:
-      - uses: actions/checkout@v2
+      - name: '🧰 Checkout'
+        uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1
+      - name: '⚙️ Setup Node.js'
+        uses: actions/setup-node@v1
         with:
           node-version: '10.x'
 
-      - run: yarn
+      - name: '▶️ yarn'
+        run: yarn
 
-      - run: yarn run check
+      - name: '▶️ check'
+        run: yarn run check
 
-      - uses: actions/download-artifact@v2
+      - name: '📥 Download artifact: HTML'
+        uses: actions/download-artifact@v2
         with:
           name: docs
           path: docs/_build/html
 
-      - run: yarn dist -v
+      - name: '▶️ dist'
+        run: yarn dist -v
         env:
           DIST_TARGET: osx
 
-      - uses: actions/upload-artifact@master
+      - name: '📤 Upload artifact: 64 bit'
+        uses: actions/upload-artifact@master
         with:
-          name: osx64-${{ matrix.os.name }}
+          name: osx64-${{ matrix.name }}
           path: dist/*osx64.zip
 
   nightly:
     needs: [linwin, mac]
     if: github.ref == 'refs/heads/moon' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    name: '📦 Nightly'
     steps:
-      - uses: actions/download-artifact@v2
+      - name: '📥 Download artifacts'
+        uses: actions/download-artifact@v2
 
       - name: Append GITHUB_SHA to release assets
         run: |
@@ -124,7 +149,8 @@ jobs:
             mv "$item" "${item%.*}-$name-${GITHUB_SHA}.zip"
           done
 
-      - uses: eine/tip@master
+      - name: '📦 Run eine/tip'
+        uses: eine/tip@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: 'nightly'
