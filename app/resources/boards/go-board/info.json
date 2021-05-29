@@ -2,7 +2,9 @@
   "label": "Nandland Go board",
   "device": "HX1K",
   "datasheet": "https://www.nandland.com/goboard/introduction.html",
-  "interface": "FTDI",
+  "prog": [
+    "FTDI"
+  ],
   "FPGAResources": {
     "ffs": 1280,
     "luts": 1280,

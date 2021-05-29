@@ -2,7 +2,9 @@
   "label": "UPDuino v2.1",
   "device": "UP5K",
   "datasheet": "https://github.com/tinyvision-ai-inc/UPduino-v2.1",
-  "interface": "FTDI",
+  "prog": [
+    "FTDI"
+  ],
   "FPGAResources": {
     "ffs": 5280,
     "luts": 5280,

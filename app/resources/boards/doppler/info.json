@@ -2,7 +2,9 @@
   "label": "doppler",
   "device": "UP5K",
   "datasheet": "https://github.com/dadamachines/doppler/tree/master/hardware",
-  "interface": "samd51",
+  "prog": [
+    "samd51"
+  ],
   "FPGAResources": {
     "ffs": 5280,
     "luts": 5280,

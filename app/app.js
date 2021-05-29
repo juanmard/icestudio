@@ -34,7 +34,11 @@ angular
     utils.loadProfile(profile, function () {
       collections.loadAllCollections();
       utils.loadLanguage(profile, function () {
-        if (profile.get('board') === '') {
+        var prog = profile.get('prog');
+        if (prog != null) {
+          common.selectedProgrammer = prog;
+        }
+        if (profile.get('board') === null) {
           utils.selectBoardPrompt(function (selectedBoard) {
             utils.selectBoard(selectedBoard);
             profile.set('board', common.selectedBoard.name);

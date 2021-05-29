@@ -118,6 +118,51 @@
 
           <div
             class="btn-group btn-group-xs"
+            uib-dropdown
+            on-toggle="toggleBoardWindowSize(open)"
+            title="{{ 'Programmer' | translate }}"
+            ng-class="{'is-disabled': !common.selectedDevice}"
+          >
+            <button
+              type="button"
+              class="btn btn-default"
+              uib-dropdown-toggle
+              title="{{ 'Select another programmer' | translate }}"
+            >
+              <span class="caret"></span>
+              <span class="sr-only"
+                >{{ 'Select another programmer' | translate }}</span
+              >
+            </button>
+            <button
+              type="button"
+              class="btn btn-default is-disabled"
+              style="width: 105px"
+              title="{{ 'Programmer'| translate }}"
+            >
+              <span
+                ng-show="(common.selectedDevice === common.selectedBoard.info.device) &&
+                common.selectedBoard.info.prog.includes(common.selectedProgrammer)"
+                >{{common.selectedProgrammer}}</span
+              ><span
+                ng-show="common.selectedDevice !== common.selectedBoard.info.device ||
+                !common.selectedBoard.info.prog.includes(common.selectedProgrammer)"
+                ><i>{{ 'select programmer' | translate }}</i></span
+              >
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+              <li
+                role="menuitem"
+                ng-repeat="prog in common.selectedBoard.info.prog"
+                ng-click="selectProgrammer(prog)"
+              >
+                <a>{{prog}}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="btn-group btn-group-xs"
             role="group"
             aria-label="..."
             ng-class="{'is-disabled': !common.selectedBoard}"

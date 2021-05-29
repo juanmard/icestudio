@@ -145,6 +145,7 @@ angular
             }
             if (newExternalCollections !== externalCollections) {
               if (
+                newExternalCollections === null ||
                 newExternalCollections === '' ||
                 nodeFs.existsSync(newExternalCollections)
               ) {
@@ -231,6 +232,7 @@ angular
             }
             if (newExternalPlugins !== externalPlugins) {
               if (
+                newExternalPlugins === null ||
                 newExternalPlugins === '' ||
                 nodeFs.existsSync(newExternalPlugins)
               ) {

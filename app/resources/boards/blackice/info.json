@@ -2,7 +2,9 @@
   "label": "BlackIce",
   "device": "HX8K",
   "datasheet": "https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board",
-  "interface": "Serial",
+  "prog": [
+    "Serial"
+  ],
   "FPGAResources": {
     "ffs": 7680,
     "luts": 7680,

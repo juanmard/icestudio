@@ -2,7 +2,9 @@
   "label": "TinyFPGA BX",
   "device": "LP8K",
   "datasheet": "https://github.com/tinyfpga/TinyFPGA-BX",
-  "interface": "Serial",
+  "prog": [
+    "Serial"
+  ],
   "FPGAResources": {
     "ffs": 7680,
     "luts": 7680,

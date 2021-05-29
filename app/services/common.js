@@ -20,6 +20,7 @@ angular
     // Boards
     this.boards = [];
     this.devices = [];
+    this.selectedProgrammer = null;
     this.selectedBoard = null;
     this.selectedDevice = null;
     this.pinoutInputHTML = '';
@@ -170,19 +171,17 @@ angular
     };
 
     this.showToolchain = function () {
-      return (
-        (this.selectedBoard && this.selectedBoard.info.interface !== 'GPIO') ||
-        false
-      );
+      if (! this.selectedBoard) {
+        return false;
+      }
+      return (this.selectedProgrammer !== 'GPIO');
     };
 
     this.showDrivers = function () {
-      return (
-        (this.selectedBoard &&
-          (this.selectedBoard.info.interface === 'FTDI' ||
-            this.selectedBoard.info.interface === 'Serial')) ||
-        false
-      );
+      if (! this.selectedBoard) {
+        return false;
+      }
+      return (this.selectedProgrammer === 'FTDI' || this.selectedProgrammer === 'Serial');
     };
     this.isEditingSubmodule = false;
 

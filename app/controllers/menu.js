@@ -78,7 +78,12 @@ angular
         $scope.selectedDeviceBoards = common.boards.filter(
           (board) => board.info.device === device
         );
+        common.selectedProgrammer = null;
       };
+
+      $scope.selectProgrammer = function _selectProgrammer(name) {
+        common.selectedProgrammer = name;
+      }
 
       // Convert the list of boards into a format suitable for 'menutree' directive
       $scope.boardMenu = common.devices.map(function (key) {
@@ -581,8 +586,8 @@ angular
             newPipPath !== pythonEnv.pip
           ) {
             if (
-              (newPythonPath === '' || nodeFs.existsSync(newPythonPath)) &&
-              (newPipPath === '' || nodeFs.existsSync(newPipPath))
+              (newPythonPath === null || newPythonPath === '' || nodeFs.existsSync(newPythonPath)) &&
+              (newPipPath === null || newPipPath === '' || nodeFs.existsSync(newPipPath))
             ) {
               let newPythonEnv = {python: newPythonPath, pip: newPipPath};
               profile.set('pythonEnv', newPythonEnv);
@@ -651,8 +656,8 @@ angular
           movable: true,
           moveBounded: true,
           maximizable: true,
-          resizable: false,
-        });
+          resizable: true,
+        }).resizeTo(600,100);
       }
 
       $scope.toggleBoardWindowSize = function (open) {
@@ -837,6 +842,15 @@ angular
         function _selectBoardNotify(board) {
           graph.selectBoard(board, true);
           profile.setBoard(common.selectedBoard);
+          var prog = board.info.prog;
+          if (!prog.includes(common.selectedProgrammer)) {
+            if (!prog.length === 1) {
+              common.selectedProgrammer = null;
+              return;
+            }
+            common.selectedProgrammer = prog[0]
+            profile.setProgrammer(common.selectedProgrammer);
+          }
         }
       }
 

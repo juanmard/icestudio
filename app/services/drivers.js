@@ -20,7 +20,7 @@ angular
       };
 
       this.enable = function () {
-        switch (common.selectedBoard.info.interface) {
+        switch (common.selectedProgrammer) {
           case 'FTDI':
             enableDriversFTDI();
             break;
@@ -28,12 +28,12 @@ angular
             enableDriversSerial();
             break;
           default:
-            console.warn('No valid selected board interface');
+            console.warn('No valid selected board programmer');
         }
       };
 
       this.disable = function () {
-        switch (common.selectedBoard.info.interface) {
+        switch (common.selectedProgrammer) {
           case 'FTDI':
             disableDriversFTDI();
             break;
@@ -41,7 +41,7 @@ angular
             disableDriversSerial();
             break;
           default:
-            console.warn('No valid selected board interface');
+            console.warn('No valid selected board programmer');
         }
       };
 
@@ -392,7 +392,7 @@ angular
         alerts.confirm({
           title: _tcStr('FTDI driver uninstallation instructions'),
           body: _tcStr(
-            '<ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'
+            '<ol><li>Find the FPGA USB Device</li><li>Select the board programmer and uninstall the driver</li></ol>'
           ),
           onok: () => {
             disableWindowsDrivers('ftdi');
@@ -416,7 +416,7 @@ angular
         alerts.confirm({
           title: _tcStr('Serial driver uninstallation instructions'),
           body: _tcStr(
-            '<ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>'
+            '<ol><li>Find the FPGA USB Device</li><li>Select the board programmer and uninstall the driver</li></ol>'
           ),
           onok: () => {
             disableWindowsDrivers('serial');

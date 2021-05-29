@@ -35,10 +35,10 @@ msgstr ""
 #: app/services/drivers.js:312
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+"Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+"Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 
 #: app/services/drivers.js:319
 msgid ""
@@ -59,10 +59,10 @@ msgstr ""
 #: app/services/drivers.js:326
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+"Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+"Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 
 #: app/views/menu.html:356
 msgid "About Icestudio"

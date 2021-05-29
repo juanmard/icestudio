@@ -6,15 +6,16 @@ angular
       'use strict';
 
       this.data = {
-        board: '',
+        board: null,
+        prog: null,
         boardRules: true,
-        collection: '',
-        externalCollections: '',
-        externalPlugins: '',
-        language: '',
+        collection: null,
+        externalCollections: null,
+        externalPlugins: null,
+        language: null,
         uiTheme: 'light',
-        remoteHostname: '',
-        pythonEnv: {python: '', pip: ''},
+        remoteHostname: null,
+        pythonEnv: {python: null, pip: null},
       };
 
       if (common.DARWIN) {
@@ -27,18 +28,19 @@ angular
           .readFile(common.PROFILE_PATH)
           .then(function (data) {
             self.data = {
-              board: data.board || '',
+              board: data.board || null,
+              prog: data.prog || null,
               boardRules: data.boardRules !== false,
-              collection: data.collection || '',
-              language: data.language || '',
+              collection: data.collection || null,
+              language: data.language || null,
               uiTheme: data.uiTheme || 'dark',
-              externalCollections: data.externalCollections || '',
-              externalPlugins: data.externalPlugins || '',
-              remoteHostname: data.remoteHostname || '',
-              pythonEnv: data.pythonEnv || {python: '', pip: ''},
+              externalCollections: data.externalCollections || null,
+              externalPlugins: data.externalPlugins || null,
+              remoteHostname: data.remoteHostname || null,
+              pythonEnv: data.pythonEnv || {python: null, pip: null},
             };
 
-            if (self.data.pythonEnv.python.length > 0) {
+            if (self.data.pythonEnv.python && (self.data.pythonEnv.python.length > 0)) {
               common.PYTHON_ENV = self.data.pythonEnv.python;
               console.log('PYTHON', common.PYTHON_ENV);
             }
@@ -96,6 +98,15 @@ angular
         alertify.success(
           gettextCatalog.getString('Board {{name}} selected', {
             name: utils.bold(board.info.label),
+          })
+        );
+      };
+
+      this.setProgrammer = function (name) {
+        this.set('prog', name);
+        alertify.success(
+          gettextCatalog.getString('Programmer {{name}} selected', {
+            name: utils.bold(name),
           })
         );
       };

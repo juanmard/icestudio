@@ -14,7 +14,7 @@ msgid "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA bo
 msgstr ""
 
 #: app/services/drivers.js:331
-msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr ""
 
 #: app/services/drivers.js:338
@@ -22,7 +22,7 @@ msgid "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA 
 msgstr ""
 
 #: app/services/drivers.js:345
-msgid "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgid "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr ""
 
 #: app/views/menu.html:356

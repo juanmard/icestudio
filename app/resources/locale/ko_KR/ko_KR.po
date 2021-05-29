@@ -24,7 +24,7 @@ msgid "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA bo
 msgstr "<h4>FTDI 드라이버 설치 지침 </h4><ol><li>FPGA 보드를 USB에 연결하고 Windows에서 드라이버의 기본 설치를 마칠 때까지 기다리십시오.OK(확인) 버튼을 클릭하면 FTDI 드라이버 설치 프로그램이 새 창[/li><li]에서 시작됨설치 프로그램에서 보드의 <b>(인터페이스 0) </b> 드라이버를 <b>libusbK </b></li><li>로 교체하고 보드 </li></ol>을 분리했다가 다시 연결한다"
 
 #: app/services/drivers.js:312
-msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr "<h4>FTDI 드라이버 제거 지침 </h4><ol><li>FPGA USB 장치 찾기 </li><li>보드 인터페이스를 선택하고 드라이버 </li></ol> 제거"
 
 #: app/services/drivers.js:319
@@ -32,7 +32,7 @@ msgid "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA 
 msgstr "<h4>시리얼 드라이버 설치 지침 </h4><ol><li>FPGA 보드를 USB에 연결하고 Windows에서 드라이버의 기본 설치를 마칠 때까지 기다리십시오.OK(확인) 버튼을 클릭하면 Serial Driver Installer(시리얼 드라이버 설치 관리자)가 새 창[/li><li]에서 시작됨설치 프로그램에서 드라이버 </li><li>를 설치하는 단계에 따라 보드 </li></ol>을 분리했다가 다시 연결하십시오"
 
 #: app/services/drivers.js:326
-msgid "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+msgid "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr "<h4>시리얼 드라이버 제거 지침 </h4><ol><li>FPGA USB 장치 찾기 </li><li>보드 인터페이스를 선택하고 드라이버 </li></ol> 제거"
 
 #: app/views/menu.html:356

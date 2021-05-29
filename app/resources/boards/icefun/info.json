@@ -2,7 +2,9 @@
   "label": "iceFUN",
   "device": "HX8K",
   "datasheet": "https://www.robot-electronics.co.uk/icefun.html",
-  "interface": "Serial",
+  "prog": [
+    "Serial"
+  ],
   "FPGAResources": {
     "ffs": 7680,
     "luts": 7680,

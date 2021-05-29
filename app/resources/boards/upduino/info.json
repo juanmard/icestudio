@@ -2,7 +2,9 @@
   "label": "UPDuino v1.0",
   "device": "UP5K",
   "datasheet": "https://github.com/gtjennings1/UPDuino_v1_0",
-  "interface": "FTDI",
+  "prog": [
+    "FTDI"
+  ],
   "FPGAResources": {
     "ffs": 5280,
     "luts": 5280,

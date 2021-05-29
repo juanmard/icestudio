@@ -2,7 +2,9 @@
   "label": "ORANGECRAB-r02-25F",
   "device": "ECP5",
   "datasheet": "https://github.com/gregdavill/OrangeCrab",
-  "interface": "FTDI",
+  "prog": [
+    "FTDI"
+  ],
   "arch": "ecp5",
   "FPGAResources": {
     "ffs": 5280,

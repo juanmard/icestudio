@@ -35,10 +35,10 @@ msgstr ""
 #: app/services/drivers.js:312
 msgid ""
 "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+"Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr ""
 "<h4>Instructions de désinstallation du pilote FTDI</h4><ol><li>Trouver le "
-"périphérique USB FPGA</li><li>Sélectionner la carte interface et "
+"périphérique USB FPGA</li><li>Sélectionner la carte programmer et "
 "désinstaller le pilote</li></ol>"
 
 #: app/services/drivers.js:319
@@ -60,10 +60,10 @@ msgstr ""
 #: app/services/drivers.js:326
 msgid ""
 "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB "
-"Device</li><li>Select the board interface and uninstall the driver</li></ol>"
+"Device</li><li>Select the board programmer and uninstall the driver</li></ol>"
 msgstr ""
 "<h4>Instructions pour la désinstallation du driver série</h4><ol><li>Trouver "
-"le périphérique USB du FPGA</li><li>Sélectionner l'interface de la carte et "
+"le périphérique USB du FPGA</li><li>Sélectionner l'programmer de la carte et "
 "désinstaller le driver</li></ol>"
 
 #: app/views/menu.html:356
