@@ -9,8 +9,8 @@
   "scripts": {
     "prettify": "prettier --write .",
     "check": "prettier --check .",
-    "lint": "eslint app/scripts/**/*.js tasks/*.js gruntfile.js",
-    "fix": "eslint --fix app/scripts/**/*.js tasks/*.js gruntfile.js",
+    "lint": "eslint app/**/*.js tasks/*.js gruntfile.js",
+    "fix": "eslint --fix app/**/*.js tasks/*.js gruntfile.js",
     "start": "grunt serve",
     "dist": "grunt dist",
     "gettext": "grunt nggettext_extract",

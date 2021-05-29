@@ -1045,7 +1045,7 @@ angular
         // that contains the same arguments that shell call, in this way the two calls will be
         // compatible.
         // If in the future you will add more paremeters to the new window , you should review
-        // scripts/controllers/menu.js even if all parameters that arrive are automatically parse
+        // controllers/menu.js even if all parameters that arrive are automatically parse
 
         var url =
           'index.html' +

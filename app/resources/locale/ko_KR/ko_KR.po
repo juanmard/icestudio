@@ -15,23 +15,23 @@ msgstr ""
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: kr_ko.po\n"
 
-#: app/scripts/services/drivers.js:170 app/scripts/services/drivers.js:346
+#: app/services/drivers.js:170 app/services/drivers.js:346
 msgid "<b>Unplug</b> and <b>reconnect</b> the board"
 msgstr "<b>플러그</b>와<b>를 다시 연결하세요</b>"
 
-#: app/scripts/services/drivers.js:305
+#: app/services/drivers.js:305
 msgid "<h4>FTDI driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the FTDI driver installer will be launched in a new window</li><li>In the installer, replace the <b>(Interface 0)</b> driver of the board by <b>libusbK</b></li><li>Unplug and reconnect the board</li></ol>"
 msgstr "<h4>FTDI 드라이버 설치 지침 </h4><ol><li>FPGA 보드를 USB에 연결하고 Windows에서 드라이버의 기본 설치를 마칠 때까지 기다리십시오.OK(확인) 버튼을 클릭하면 FTDI 드라이버 설치 프로그램이 새 창[/li><li]에서 시작됨설치 프로그램에서 보드의 <b>(인터페이스 0) </b> 드라이버를 <b>libusbK </b></li><li>로 교체하고 보드 </li></ol>을 분리했다가 다시 연결한다"
 
-#: app/scripts/services/drivers.js:312
+#: app/services/drivers.js:312
 msgid "<h4>FTDI driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr "<h4>FTDI 드라이버 제거 지침 </h4><ol><li>FPGA USB 장치 찾기 </li><li>보드 인터페이스를 선택하고 드라이버 </li></ol> 제거"
 
-#: app/scripts/services/drivers.js:319
+#: app/services/drivers.js:319
 msgid "<h4>Serial driver installation instructions</h4><ol><li>Connect the FPGA board to the USB and wait until Windows finishes the default installation of the driver</li><li>When the OK button is clicked, the Serial driver installer will be launched in a new window</li><li>In the installer, follow the steps to install the driver</li><li>Unplug and reconnect the board</li></ol>"
 msgstr "<h4>시리얼 드라이버 설치 지침 </h4><ol><li>FPGA 보드를 USB에 연결하고 Windows에서 드라이버의 기본 설치를 마칠 때까지 기다리십시오.OK(확인) 버튼을 클릭하면 Serial Driver Installer(시리얼 드라이버 설치 관리자)가 새 창[/li><li]에서 시작됨설치 프로그램에서 드라이버 </li><li>를 설치하는 단계에 따라 보드 </li></ol>을 분리했다가 다시 연결하십시오"
 
-#: app/scripts/services/drivers.js:326
+#: app/services/drivers.js:326
 msgid "<h4>Serial driver uninstallation instructions</h4><ol><li>Find the FPGA USB Device</li><li>Select the board interface and uninstall the driver</li></ol>"
 msgstr "<h4>시리얼 드라이버 제거 지침 </h4><ol><li>FPGA USB 장치 찾기 </li><li>보드 인터페이스를 선택하고 드라이버 </li></ol> 제거"
 
@@ -43,7 +43,7 @@ msgstr "Icestudio에 대해"
 msgid "Add"
 msgstr "더하기"
 
-#: app/scripts/controllers/menu.js:788
+#: app/controllers/menu.js:788
 msgid "Add a block to start"
 msgstr "시작하기 위해 블럭 더하기"
 
@@ -51,19 +51,19 @@ msgstr "시작하기 위해 블럭 더하기"
 msgid "Add as block"
 msgstr "블럭으로 더하기"
 
-#: app/scripts/services/blocks.js:1561 app/scripts/services/blocks.js:458
+#: app/services/blocks.js:1561 app/services/blocks.js:458
 msgid "Address format"
 msgstr "주소 구성 방식 "
 
-#: app/scripts/services/tools.js:1173
+#: app/services/tools.js:1173
 msgid "All collections removed"
 msgstr "선택한 것들 모두 지우기"
 
-#: app/scripts/controllers/menu.js:817
+#: app/controllers/menu.js:817
 msgid "All stored collections will be lost. Do you want to continue?"
 msgstr "저장된 모든 컬렉션이 손실될 것입니다. 계속하시곘습니까? "
 
-#: app/scripts/services/utils.js:575
+#: app/services/utils.js:575
 msgid "Author"
 msgstr "작가 "
 
@@ -83,20 +83,20 @@ msgstr "바스크"
 msgid "Because Icestudio is in actively development it is important to stay your icestudio in the last version. Now we are notifying you!"
 msgstr "Icestudio는 적극적으로 발전하고 있기 떄문에 마지막 버전에서 Icestudio를 유지하는 것이 중요하다는 사실을 공지합니다!"
 
-#: app/scripts/services/blocks.js:1564 app/scripts/services/blocks.js:461
+#: app/services/blocks.js:1564 app/services/blocks.js:461
 msgid "Binary"
 msgstr "2진수 "
 
-#: app/scripts/services/blocks.js:1183 app/scripts/services/blocks.js:1207
-#: app/scripts/services/blocks.js:1297 app/scripts/services/blocks.js:1319
-#: app/scripts/services/blocks.js:1394 app/scripts/services/blocks.js:1415
-#: app/scripts/services/blocks.js:1478 app/scripts/services/blocks.js:1497
-#: app/scripts/services/blocks.js:1540 app/scripts/services/blocks.js:1597
-#: app/scripts/services/blocks.js:1643
+#: app/services/blocks.js:1183 app/services/blocks.js:1207
+#: app/services/blocks.js:1297 app/services/blocks.js:1319
+#: app/services/blocks.js:1394 app/services/blocks.js:1415
+#: app/services/blocks.js:1478 app/services/blocks.js:1497
+#: app/services/blocks.js:1540 app/services/blocks.js:1597
+#: app/services/blocks.js:1643
 msgid "Block updated"
 msgstr "블록 업데이트 "
 
-#: app/scripts/services/project.js:475
+#: app/services/project.js:475
 msgid "Block {{name}} imported"
 msgstr "블록 {{name}} 가져오기"
 
@@ -112,43 +112,43 @@ msgstr "보드 "
 msgid "Board rules"
 msgstr "보드 규칙"
 
-#: app/scripts/controllers/menu.js:541
+#: app/controllers/menu.js:541
 msgid "Board rules disabled"
 msgstr "보드 규칙이 지켜지지 않았습니다"
 
-#: app/scripts/controllers/menu.js:538
+#: app/controllers/menu.js:538
 msgid "Board rules enabled"
 msgstr "보드 룰을 사용할 수 있습니다"
 
-#: app/scripts/services/tools.js:395
+#: app/services/tools.js:395
 msgid "Board {{name}} disconnected"
 msgstr "보드 {{name}} 연결불량 "
 
-#: app/scripts/services/tools.js:375 app/scripts/services/tools.js:391
+#: app/services/tools.js:375 app/services/tools.js:391
 msgid "Board {{name}} not available"
 msgstr "보드 {{name}} 불가능"
 
-#: app/scripts/services/tools.js:365
+#: app/services/tools.js:365
 msgid "Board {{name}} not connected"
 msgstr "보드 {{name}} 연결되지 않았음"
 
-#: app/scripts/app.js:51 app/scripts/controllers/menu.js:718
+#: app/app.js:51 app/controllers/menu.js:718
 msgid "Board {{name}} selected"
 msgstr "보드 {{name}} 선택됨 "
 
-#: app/scripts/services/tools.js:369 app/scripts/services/tools.js:388
+#: app/services/tools.js:369 app/services/tools.js:388
 msgid "Bootloader not active"
 msgstr "부트로더가 활성화되지 않음 "
 
-#: app/scripts/controllers/menu.js:740 app/views/menu.html:243
+#: app/controllers/menu.js:740 app/views/menu.html:243
 msgid "Build"
 msgstr "만들기"
 
-#: app/scripts/controllers/menu.js:746
+#: app/controllers/menu.js:746
 msgid "Build done"
 msgstr "만들기 완료 "
 
-#: app/scripts/controllers/main.js:15 app/scripts/services/project.js:132
+#: app/controllers/main.js:15 app/services/project.js:132
 msgid "Cancel"
 msgstr "취소 "
 
@@ -156,11 +156,11 @@ msgstr "취소 "
 msgid "Catalan"
 msgstr "카탈란어"
 
-#: app/scripts/services/tools.js:857
+#: app/services/tools.js:857
 msgid "Check Internet connection..."
 msgstr "인터넷 연결을 확인하세요."
 
-#: app/scripts/services/tools.js:867
+#: app/services/tools.js:867
 msgid "Check Python..."
 msgstr "파이썬을 확인하세요."
 
@@ -168,8 +168,8 @@ msgstr "파이썬을 확인하세요."
 msgid "Chinese"
 msgstr "중국"
 
-#: app/scripts/services/blocks.js:1107 app/scripts/services/blocks.js:1228
-#: app/scripts/services/blocks.js:300 app/scripts/services/blocks.js:71
+#: app/services/blocks.js:1107 app/services/blocks.js:1228
+#: app/services/blocks.js:300 app/services/blocks.js:71
 msgid "Choose a color"
 msgstr "색깔을 선택하세요"
 
@@ -177,25 +177,25 @@ msgstr "색깔을 선택하세요"
 msgid "Chrome Dev Tools"
 msgstr "크롬 데브  도구"
 
-#: app/scripts/services/project.js:156
+#: app/services/project.js:156
 msgid "Click here to <b>download a newer version</b> of Icestudio"
 msgstr "여기를 클릭하여 <b> 새로운 버전을 다운받으세요. </b>"
 
-#: app/scripts/services/tools.js:960
+#: app/services/tools.js:960
 msgid "Click here to <b>setup the drivers</b>"
 msgstr "여기를 클릭하여 <b>드라이버를 설정하세요.</b>"
 
-#: app/scripts/services/drivers.js:209 app/scripts/services/drivers.js:338
-#: app/scripts/services/drivers.js:357 app/scripts/services/tools.js:281
+#: app/services/drivers.js:209 app/services/drivers.js:338
+#: app/services/drivers.js:357 app/services/tools.js:281
 msgid "Click here to install it"
 msgstr "설치하려면 여기를 클릭하세요"
 
-#: app/scripts/controllers/menu.js:487
+#: app/controllers/menu.js:487
 msgid "Click here to view"
 msgstr "확인하려면 여기를 클릭하세요"
 
-#: app/scripts/services/blocks.js:1152 app/scripts/services/blocks.js:129
-#: app/scripts/services/blocks.js:1363 app/scripts/services/blocks.js:203
+#: app/services/blocks.js:1152 app/services/blocks.js:129
+#: app/services/blocks.js:1363 app/services/blocks.js:203
 msgid "Clock not allowed for data buses"
 msgstr "데이터 버스에는 클럭이 허용되지 않습니다"
 
@@ -203,7 +203,7 @@ msgstr "데이터 버스에는 클럭이 허용되지 않습니다"
 msgid "Clone"
 msgstr "복제 "
 
-#: app/scripts/controllers/menu.js:363 app/views/version.html:43
+#: app/controllers/menu.js:363 app/views/version.html:43
 msgid "Close"
 msgstr "닫기"
 
@@ -219,27 +219,27 @@ msgstr "컬렉션 "
 msgid "Collection info"
 msgstr "컬렉션 정보"
 
-#: app/scripts/controllers/menu.js:651
+#: app/controllers/menu.js:651
 msgid "Collection {{collection}} info not defined"
 msgstr "컬렉션 {{collection}} 정보가 정의되지 않았습니다"
 
-#: app/scripts/services/tools.js:1057
+#: app/services/tools.js:1057
 msgid "Collection {{name}} added"
 msgstr "컬렉션 {{name}} 추가"
 
-#: app/scripts/services/tools.js:1051
+#: app/services/tools.js:1051
 msgid "Collection {{name}} not replaced"
 msgstr "컬렉션 {{name}} 이 교체되지 않았음"
 
-#: app/scripts/services/tools.js:1167
+#: app/services/tools.js:1167
 msgid "Collection {{name}} removed"
 msgstr "컬렉션 {{name}}  삭제 "
 
-#: app/scripts/services/tools.js:1047
+#: app/services/tools.js:1047
 msgid "Collection {{name}} replaced"
 msgstr "컬렉션 {{name}}  교체"
 
-#: app/scripts/controllers/menu.js:684
+#: app/controllers/menu.js:684
 msgid "Collection {{name}} selected"
 msgstr "컬렉션 {{name}} 선택 "
 
@@ -247,7 +247,7 @@ msgstr "컬렉션 {{name}} 선택 "
 msgid "Collections"
 msgstr "컬렉션들 "
 
-#: app/scripts/controllers/menu.js:657 app/views/menu.html:171
+#: app/controllers/menu.js:657 app/views/menu.html:171
 msgid "Command output"
 msgstr "명령 출력"
 
@@ -255,7 +255,7 @@ msgstr "명령 출력"
 msgid "Community forum"
 msgstr "커뮤니티 포럼"
 
-#: app/scripts/services/tools.js:409
+#: app/services/tools.js:409
 msgid "Configuration not completed"
 msgstr "구성이 완료되지 않음"
 
@@ -263,7 +263,7 @@ msgstr "구성이 완료되지 않음"
 msgid "Constant"
 msgstr "정수"
 
-#: app/scripts/services/project.js:80
+#: app/services/project.js:80
 msgid "Convert"
 msgstr "변환"
 
@@ -275,12 +275,12 @@ msgstr "복사하기 "
 msgid "Copy & Paste OR Copy & Clone blocks"
 msgstr "복사&붙여넣기 또는 복사& 블록 복제"
 
-#: app/scripts/services/blocks.js:1114 app/scripts/services/blocks.js:1235
-#: app/scripts/services/blocks.js:307 app/scripts/services/blocks.js:78
+#: app/services/blocks.js:1114 app/services/blocks.js:1235
+#: app/services/blocks.js:307 app/services/blocks.js:78
 msgid "Coral"
 msgstr "코랄"
 
-#: app/scripts/services/tools.js:885
+#: app/services/tools.js:885
 msgid "Create virtualenv..."
 msgstr "virtualenv를 생성하기..."
 
@@ -292,13 +292,13 @@ msgstr "자르기 "
 msgid "Czech"
 msgstr "체코"
 
-#: app/scripts/services/blocks.js:1123 app/scripts/services/blocks.js:1244
-#: app/scripts/services/blocks.js:316 app/scripts/services/blocks.js:87
+#: app/services/blocks.js:1123 app/services/blocks.js:1244
+#: app/services/blocks.js:316 app/services/blocks.js:87
 msgid "DarkGreen"
 msgstr "암녹색"
 
-#: app/scripts/services/blocks.js:1116 app/scripts/services/blocks.js:1237
-#: app/scripts/services/blocks.js:309 app/scripts/services/blocks.js:80
+#: app/services/blocks.js:1116 app/services/blocks.js:1237
+#: app/services/blocks.js:309 app/services/blocks.js:80
 msgid "DarkOrange"
 msgstr "다크오렌지"
 
@@ -306,17 +306,17 @@ msgstr "다크오렌지"
 msgid "Datasheet"
 msgstr "데이터시트"
 
-#: app/scripts/services/blocks.js:1565 app/scripts/services/blocks.js:462
+#: app/services/blocks.js:1565 app/services/blocks.js:462
 msgid "Decimal"
 msgstr "10진수"
 
-#: app/scripts/services/blocks.js:1112 app/scripts/services/blocks.js:1233
-#: app/scripts/services/blocks.js:305 app/scripts/services/blocks.js:76
+#: app/services/blocks.js:1112 app/services/blocks.js:1233
+#: app/services/blocks.js:305 app/services/blocks.js:76
 msgid "DeepPink"
 msgstr "진분홍"
 
-#: app/scripts/services/blocks.js:1128 app/scripts/services/blocks.js:1249
-#: app/scripts/services/blocks.js:321 app/scripts/services/blocks.js:92
+#: app/services/blocks.js:1128 app/services/blocks.js:1249
+#: app/services/blocks.js:321 app/services/blocks.js:92
 msgid "DeepSkyBlue"
 msgstr "진파랑"
 
@@ -324,11 +324,11 @@ msgstr "진파랑"
 msgid "Default"
 msgstr "기본값"
 
-#: app/scripts/services/tools.js:711
+#: app/services/tools.js:711
 msgid "Default toolchain not found. Toolchain will be downloaded. This operation requires Internet connection. Do you want to continue?"
 msgstr "기본 툴체인을 찾을 수 없습니다. 툴체인이 다운로드 예정입니다. 이 작업은 인터넷 연결이 필요합니다. 계속하시겠습니까?"
 
-#: app/scripts/services/utils.js:574
+#: app/services/utils.js:574
 msgid "Description"
 msgstr "설명"
 
@@ -336,15 +336,15 @@ msgstr "설명"
 msgid "Disable"
 msgstr "불가"
 
-#: app/scripts/controllers/menu.js:367
+#: app/controllers/menu.js:367
 msgid "Do you want to close the application?"
 msgstr "응용 프로그램을 닫으시겠습니까?"
 
-#: app/scripts/controllers/menu.js:807
+#: app/controllers/menu.js:807
 msgid "Do you want to remove the {{name}} collection?"
 msgstr "{{name}} 컬렉션을 삭제하시겠습니까?"
 
-#: app/scripts/services/tools.js:1043
+#: app/services/tools.js:1043
 msgid "Do you want to replace it?"
 msgstr "교체하시겠습니까?"
 
@@ -360,21 +360,21 @@ msgstr "표시 안 함"
 msgid "Drivers"
 msgstr "드라이버"
 
-#: app/scripts/services/drivers.js:125 app/scripts/services/drivers.js:148
-#: app/scripts/services/drivers.js:237
+#: app/services/drivers.js:125 app/services/drivers.js:148
+#: app/services/drivers.js:237
 msgid "Drivers disabled"
 msgstr "드라이버 오류"
 
-#: app/scripts/services/drivers.js:116 app/scripts/services/drivers.js:140
-#: app/scripts/services/drivers.js:227
+#: app/services/drivers.js:116 app/services/drivers.js:140
+#: app/services/drivers.js:227
 msgid "Drivers enabled"
 msgstr "드라이버 가능"
 
-#: app/scripts/services/tools.js:418
+#: app/services/tools.js:418
 msgid "Duplicated FPGA I/O ports"
 msgstr "복사된 FPGA I/O 포트"
 
-#: app/scripts/services/blocks.js:671
+#: app/services/blocks.js:671
 msgid "Duplicated block attributes"
 msgstr "복사된 블록 특성"
 
@@ -386,7 +386,7 @@ msgstr "네덜란드어"
 msgid "Edit"
 msgstr "편집"
 
-#: app/scripts/services/tools.js:1032
+#: app/services/tools.js:1032
 msgid "Edit the collection name"
 msgstr "컬렉션 이름 편집"
 
@@ -398,51 +398,51 @@ msgstr "가능"
 msgid "English"
 msgstr "영어"
 
-#: app/scripts/services/blocks.js:395
+#: app/services/blocks.js:395
 msgid "Enter the constant blocks"
 msgstr "상수 블록 입력"
 
-#: app/scripts/controllers/menu.js:456
+#: app/controllers/menu.js:456
 msgid "Enter the external collections path"
 msgstr "외부 수집 경로 입력"
 
-#: app/scripts/services/blocks.js:162 app/scripts/services/blocks.js:66
+#: app/services/blocks.js:162 app/services/blocks.js:66
 msgid "Enter the input blocks"
 msgstr "입력 블록 입력"
 
-#: app/scripts/services/blocks.js:557
+#: app/services/blocks.js:557
 msgid "Enter the input ports"
 msgstr "입력 포트 입력"
 
-#: app/scripts/services/blocks.js:453
+#: app/services/blocks.js:453
 msgid "Enter the memory blocks"
 msgstr "메모리 블록 입력"
 
-#: app/scripts/services/blocks.js:234 app/scripts/services/blocks.js:294
+#: app/services/blocks.js:234 app/services/blocks.js:294
 msgid "Enter the output blocks"
 msgstr "출력 블록 입력"
 
-#: app/scripts/services/blocks.js:562
+#: app/services/blocks.js:562
 msgid "Enter the output ports"
 msgstr "출력 포트 입력"
 
-#: app/scripts/services/blocks.js:567
+#: app/services/blocks.js:567
 msgid "Enter the parameters"
 msgstr "매개 변수 입력"
 
-#: app/scripts/controllers/menu.js:529
+#: app/controllers/menu.js:529
 msgid "Enter the remote hostname user@host"
 msgstr "원격 호스트 이름 user@host를 입력하십시오"
 
-#: app/scripts/services/tools.js:741
+#: app/services/tools.js:741
 msgid "Error: default toolchain not found in '{{dir}}'"
 msgstr "오류: '{{dir}}'에서 기본 툴체인을 찾을 수 없음"
 
-#: app/scripts/services/utils.js:754
+#: app/services/utils.js:754
 msgid "Error: {{error}}"
 msgstr "에러:{{error}}"
 
-#: app/scripts/services/tools.js:523
+#: app/services/tools.js:523
 msgid "Errors detected in the design"
 msgstr "디자인에서 에러가 발생하였습니다"
 
@@ -450,7 +450,7 @@ msgstr "디자인에서 에러가 발생하였습니다"
 msgid "Examples"
 msgstr "예시"
 
-#: app/scripts/services/tools.js:303
+#: app/services/tools.js:303
 msgid "Execute remote {{label}} ..."
 msgstr "원격 {{label}} 시행..."
 
@@ -458,7 +458,7 @@ msgstr "원격 {{label}} 시행..."
 msgid "Export"
 msgstr "추출하다"
 
-#: app/scripts/controllers/menu.js:235
+#: app/controllers/menu.js:235
 msgid "Export submodule"
 msgstr "서브모듈을 추출하기"
 
@@ -466,28 +466,28 @@ msgstr "서브모듈을 추출하기"
 msgid "External collections"
 msgstr "외부의 콜렉션들"
 
-#: app/scripts/controllers/menu.js:473
+#: app/controllers/menu.js:473
 msgid "External collections updated"
 msgstr "외부의 콜렉션들이 업데이트 되었습니다"
 
-#: app/scripts/services/tools.js:892
+#: app/services/tools.js:892
 msgid "Extract default apio files..."
 msgstr "기본 apio 파일 추출..."
 
-#: app/scripts/services/tools.js:902
+#: app/services/tools.js:902
 msgid "Extract default apio packages..."
 msgstr "기본 apio 패키지 추출..."
 
-#: app/scripts/services/tools.js:880
+#: app/services/tools.js:880
 msgid "Extract virtualenv files..."
 msgstr "virtualenv 파일을 추출하기..."
 
-#: app/scripts/services/tools.js:415
+#: app/services/tools.js:415
 msgid "FPGA I/O ports not defined"
 msgstr "FPGA I/O 포트가 정의되지 않음"
 
-#: app/scripts/services/blocks.js:1340 app/scripts/services/blocks.js:1436
-#: app/scripts/services/blocks.js:167 app/scripts/services/blocks.js:239
+#: app/services/blocks.js:1340 app/services/blocks.js:1436
+#: app/services/blocks.js:167 app/services/blocks.js:239
 msgid "FPGA pin"
 msgstr "FPGA 핀"
 
@@ -499,15 +499,15 @@ msgstr "FPGA 리소스들"
 msgid "File"
 msgstr "파일"
 
-#: app/scripts/services/project.js:490
+#: app/services/project.js:490
 msgid "File {{file}} already exists in the project path. Do you want to replace it?"
 msgstr "{{file}} 파일이 프로젝트 경로에 이미 존재합니다. 교체하시겠습니까?"
 
-#: app/scripts/services/tools.js:229
+#: app/services/tools.js:229
 msgid "File {{file}} does not exist"
 msgstr "{{file}}이 존재하지 않음"
 
-#: app/scripts/services/project.js:524
+#: app/services/project.js:524
 msgid "File {{file}} imported"
 msgstr "{{file}}파일 가져오기"
 
@@ -519,8 +519,8 @@ msgstr "콘텐츠 맞춤"
 msgid "French"
 msgstr "프랑스어"
 
-#: app/scripts/services/blocks.js:1119 app/scripts/services/blocks.js:1240
-#: app/scripts/services/blocks.js:312 app/scripts/services/blocks.js:83
+#: app/services/blocks.js:1119 app/services/blocks.js:1240
+#: app/services/blocks.js:312 app/services/blocks.js:83
 msgid "Fuchsia"
 msgstr "후치아"
 
@@ -536,8 +536,8 @@ msgstr "일반 블록"
 msgid "German"
 msgstr "독일어"
 
-#: app/scripts/services/blocks.js:1117 app/scripts/services/blocks.js:1238
-#: app/scripts/services/blocks.js:310 app/scripts/services/blocks.js:81
+#: app/services/blocks.js:1117 app/services/blocks.js:1238
+#: app/services/blocks.js:310 app/services/blocks.js:81
 msgid "Gold"
 msgstr "황금"
 
@@ -545,8 +545,8 @@ msgstr "황금"
 msgid "Greek"
 msgstr "그리스어"
 
-#: app/scripts/services/blocks.js:1121 app/scripts/services/blocks.js:1242
-#: app/scripts/services/blocks.js:314 app/scripts/services/blocks.js:85
+#: app/services/blocks.js:1121 app/services/blocks.js:1242
+#: app/services/blocks.js:314 app/services/blocks.js:85
 msgid "GreenYellow"
 msgstr "녹노랑"
 
@@ -554,7 +554,7 @@ msgstr "녹노랑"
 msgid "Help"
 msgstr "도움"
 
-#: app/scripts/services/blocks.js:1566 app/scripts/services/blocks.js:463
+#: app/services/blocks.js:1566 app/services/blocks.js:463
 msgid "Hexadecimal"
 msgstr "16진수의"
 
@@ -570,15 +570,15 @@ msgstr "블록을 복제하는 경우 블록 정보를 변경하여 새 블록 �
 msgid "If you are developing a collection, you can make Generic blocks that works as templates. When you insert a generic block from a collection, acts as a clone for rapidly modifications without do a copy and clone operation."
 msgstr "컬렉션을 개발하는 경우 템플릿으로 작동하는 일반 블록을 만들 수 있습니다. 컬렉션에서 일반 블록을 삽입할 때 복사 및 복제 작업을 수행하지 않고 빠르게 수정하는 복제본 역할을 하십시오."
 
-#: app/scripts/services/graph.js:1395
+#: app/services/graph.js:1395
 msgid "If you have blank IN/OUT pins, it's because there is no equivalent in this board"
 msgstr "빈 IN/OUT 핀이 있는 경우, 이 보드에 동일한 핀이 없기 때문이다"
 
-#: app/scripts/services/utils.js:588
+#: app/services/utils.js:588
 msgid "Image"
 msgstr "사진"
 
-#: app/scripts/controllers/menu.js:995
+#: app/controllers/menu.js:995
 msgid "Image {{name}} saved"
 msgstr "사진 {{name}}이 저장되었음"
 
@@ -586,8 +586,8 @@ msgstr "사진 {{name}}이 저장되었음"
 msgid "In other way, if you copy and clone a block, you make it independently of the original block type and  the modifications only affect at this new block type"
 msgstr "다른 방법으로 블록을 복사하고 복제할 경우, 원래 블록 유형과 독립적으로 블록을 만들고 수정 내용은 이 새 블록 유형에만 영향을 끼칠것 입니다"
 
-#: app/scripts/services/blocks.js:1110 app/scripts/services/blocks.js:1231
-#: app/scripts/services/blocks.js:303 app/scripts/services/blocks.js:74
+#: app/services/blocks.js:1110 app/services/blocks.js:1231
+#: app/services/blocks.js:303 app/services/blocks.js:74
 msgid "IndianRed"
 msgstr "인디안 빨강"
 
@@ -607,56 +607,56 @@ msgstr "입력 라벨"
 msgid "Install"
 msgstr "설치"
 
-#: app/scripts/services/tools.js:897
+#: app/services/tools.js:897
 msgid "Install default apio..."
 msgstr "기본 apio 설치..."
 
-#: app/scripts/services/tools.js:949
+#: app/services/tools.js:949
 msgid "Installation completed"
 msgstr "설치 완료"
 
-#: app/scripts/services/tools.js:783 app/scripts/services/tools.js:820
+#: app/services/tools.js:783 app/services/tools.js:820
 msgid "Installing toolchain"
 msgstr "툴체인 설치"
 
-#: app/scripts/services/drivers.js:217 app/scripts/services/tools.js:861
+#: app/services/drivers.js:217 app/services/tools.js:861
 msgid "Internet connection required"
 msgstr "인터넷 연결 필요"
 
-#: app/scripts/services/graph.js:183
+#: app/services/graph.js:183
 msgid "Invalid <i>Pull up</i> connection:<br>block already connected"
 msgstr "잘못된 <i>풀 업 </i> 연결: <br> 블록이 이미 연결됨"
 
-#: app/scripts/services/graph.js:197
+#: app/services/graph.js:197
 msgid "Invalid <i>Pull up</i> connection:<br>only <i>Input</i> blocks allowed"
 msgstr "잘못된 <i>풀 업 </i> 연결: <i>만 허용됨"
 
-#: app/scripts/services/graph.js:189
+#: app/services/graph.js:189
 msgid "Invalid block connection:<br><i>Pull up</i> already connected"
 msgstr "잘못된 블록 연결: <br><i>Pull up </i>가 이미 연결됨"
 
-#: app/scripts/services/tools.js:1063
+#: app/services/tools.js:1063
 msgid "Invalid collection {{name}}"
 msgstr "잘못된 컬렉션 {{name}}"
 
-#: app/scripts/services/graph.js:147 app/scripts/services/graph.js:154
-#: app/scripts/services/graph.js:161
+#: app/services/graph.js:147 app/services/graph.js:154
+#: app/services/graph.js:161
 msgid "Invalid connection"
 msgstr "잘못 된 연결"
 
-#: app/scripts/services/graph.js:216
+#: app/services/graph.js:216
 msgid "Invalid connection: {{a}} → {{b}}"
 msgstr "잘못된 연결: {{a} → {{b}}"
 
-#: app/scripts/services/graph.js:177
+#: app/services/graph.js:177
 msgid "Invalid multiple input connections"
 msgstr "잘못된 다중 입력 연결"
 
-#: app/scripts/services/project.js:480 app/scripts/services/project.js:66
+#: app/services/project.js:480 app/services/project.js:66
 msgid "Invalid project format"
 msgstr "잘못된 프로젝트 형식"
 
-#: app/scripts/services/drivers.js:305
+#: app/services/drivers.js:305
 msgid "It is recommended to use <b>USB 2.0</b> ports"
 msgstr "<b>를 사용하는 것이 좋습니다.USB 2.0</b> 포트"
 
@@ -672,26 +672,26 @@ msgstr "라벨들"
 msgid "Language"
 msgstr "언어"
 
-#: app/scripts/services/blocks.js:1125 app/scripts/services/blocks.js:1246
-#: app/scripts/services/blocks.js:318 app/scripts/services/blocks.js:89
+#: app/services/blocks.js:1125 app/services/blocks.js:1246
+#: app/services/blocks.js:318 app/services/blocks.js:89
 msgid "LightSeaGreen"
 msgstr "밝은 바다 초록"
 
-#: app/scripts/services/project.js:79
+#: app/services/project.js:79
 msgid "Load"
 msgstr "로드"
 
-#: app/scripts/services/blocks.js:1517 app/scripts/services/blocks.js:1571
-#: app/scripts/services/blocks.js:400 app/scripts/services/blocks.js:468
+#: app/services/blocks.js:1517 app/services/blocks.js:1571
+#: app/services/blocks.js:400 app/services/blocks.js:468
 msgid "Local parameter"
 msgstr "지역 변수"
 
-#: app/scripts/services/utils.js:834
+#: app/services/utils.js:834
 msgid "Maximum bus size: 96 bits"
 msgstr "최대 버스 크기: 96비트"
 
-#: app/scripts/services/blocks.js:1113 app/scripts/services/blocks.js:1234
-#: app/scripts/services/blocks.js:306 app/scripts/services/blocks.js:77
+#: app/services/blocks.js:1113 app/services/blocks.js:1234
+#: app/services/blocks.js:306 app/services/blocks.js:77
 msgid "MediumVioletRed"
 msgstr "미디엄 바이올렛 레드"
 
@@ -699,12 +699,12 @@ msgstr "미디엄 바이올렛 레드"
 msgid "Memory"
 msgstr "메모리"
 
-#: app/scripts/services/utils.js:572
+#: app/services/utils.js:572
 msgid "Name"
 msgstr "이름"
 
-#: app/scripts/services/blocks.js:1130 app/scripts/services/blocks.js:1251
-#: app/scripts/services/blocks.js:323 app/scripts/services/blocks.js:94
+#: app/services/blocks.js:1130 app/services/blocks.js:1251
+#: app/services/blocks.js:323 app/services/blocks.js:94
 msgid "Navy"
 msgstr "남색"
 
@@ -712,17 +712,17 @@ msgstr "남색"
 msgid "New"
 msgstr "새로운"
 
-#: app/scripts/controllers/menu.js:825
+#: app/controllers/menu.js:825
 msgid "No collections stored"
 msgstr "저장된 컬렉션 없음"
 
-#: app/scripts/controllers/main.js:14 app/scripts/controllers/menu.js:377
-#: app/scripts/services/project.js:131
+#: app/controllers/main.js:14 app/controllers/menu.js:377
+#: app/services/project.js:131
 msgid "OK"
 msgstr "알겠습니다"
 
-#: app/scripts/services/blocks.js:1124 app/scripts/services/blocks.js:1245
-#: app/scripts/services/blocks.js:317 app/scripts/services/blocks.js:88
+#: app/services/blocks.js:1124 app/services/blocks.js:1245
+#: app/services/blocks.js:317 app/services/blocks.js:88
 msgid "OliveDrab"
 msgstr "생기없는 올리브"
 
@@ -730,16 +730,16 @@ msgstr "생기없는 올리브"
 msgid "Open"
 msgstr "열기"
 
-#: app/scripts/services/utils.js:595
+#: app/services/utils.js:595
 msgid "Open SVG"
 msgstr "SVG 열기"
 
-#: app/scripts/services/blocks.js:1115 app/scripts/services/blocks.js:1236
-#: app/scripts/services/blocks.js:308 app/scripts/services/blocks.js:79
+#: app/services/blocks.js:1115 app/services/blocks.js:1236
+#: app/services/blocks.js:308 app/services/blocks.js:79
 msgid "OrangeRed"
 msgstr "오렌지 레드"
 
-#: app/scripts/services/project.js:527
+#: app/services/project.js:527
 msgid "Original file {{file}} does not exist"
 msgstr "원본 파일 {{file}} 이 존재하지 않습니다"
 
@@ -755,11 +755,11 @@ msgstr "출력 라벨"
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: app/scripts/controllers/menu.js:477
+#: app/controllers/menu.js:477
 msgid "Path {{path}} does not exist"
 msgstr "경로 {{path}} 가 존재하지 않습니다"
 
-#: app/scripts/services/utils.js:977
+#: app/services/utils.js:977
 msgid "Please run: {{cmd}}"
 msgstr "작동: {{cmd}}"
 
@@ -771,19 +771,19 @@ msgstr "선호"
 msgid "Project information"
 msgstr "프로젝트 정보"
 
-#: app/scripts/controllers/menu.js:487 app/scripts/controllers/menu.js:505
+#: app/controllers/menu.js:487 app/controllers/menu.js:505
 msgid "Project information updated"
 msgstr "프로젝트 정보가 업데이트되었습니다"
 
-#: app/scripts/services/project.js:118
+#: app/services/project.js:118
 msgid "Project {{name}} loaded"
 msgstr "프로젝트 {{name}}이 로드되었습니다"
 
-#: app/scripts/services/project.js:387
+#: app/services/project.js:387
 msgid "Project {{name}} saved"
 msgstr "프로젝트 {{name}}이 저장되었습니다"
 
-#: app/scripts/services/tools.js:874
+#: app/services/tools.js:874
 msgid "Python 2.7 is required"
 msgstr "파이썬 2.7이 필요합니다"
 
@@ -795,8 +795,8 @@ msgstr "끝내기"
 msgid "Read only"
 msgstr "읽기 전용"
 
-#: app/scripts/services/blocks.js:1111 app/scripts/services/blocks.js:1232
-#: app/scripts/services/blocks.js:304 app/scripts/services/blocks.js:75
+#: app/services/blocks.js:1111 app/services/blocks.js:1232
+#: app/services/blocks.js:304 app/services/blocks.js:75
 msgid "Red"
 msgstr "빨강"
 
@@ -808,7 +808,7 @@ msgstr "다시하기"
 msgid "Reload"
 msgstr "다시로드하기"
 
-#: app/scripts/services/tools.js:566
+#: app/services/tools.js:566
 msgid "Remote host {{name}} not connected"
 msgstr "원격 호스트 {{name}}이 연결되지 않음"
 
@@ -824,7 +824,7 @@ msgstr "지우기"
 msgid "Remove all"
 msgstr "모두 지우기"
 
-#: app/scripts/services/utils.js:597
+#: app/services/utils.js:597
 msgid "Reset SVG"
 msgstr "SVG 재설정"
 
@@ -832,8 +832,8 @@ msgstr "SVG 재설정"
 msgid "Reset default"
 msgstr "기본값 초기화"
 
-#: app/scripts/services/blocks.js:1129 app/scripts/services/blocks.js:1250
-#: app/scripts/services/blocks.js:322 app/scripts/services/blocks.js:93
+#: app/services/blocks.js:1129 app/services/blocks.js:1250
+#: app/services/blocks.js:322 app/services/blocks.js:93
 msgid "RoyalBlue"
 msgstr "로얄 블루"
 
@@ -845,7 +845,7 @@ msgstr "러시아어"
 msgid "Save"
 msgstr "저장하다"
 
-#: app/scripts/services/utils.js:596
+#: app/services/utils.js:596
 msgid "Save SVG"
 msgstr "SVG 저장"
 
@@ -853,7 +853,7 @@ msgstr "SVG 저장"
 msgid "Save as"
 msgstr "다른이름으로 저장하기"
 
-#: app/scripts/controllers/menu.js:197
+#: app/controllers/menu.js:197
 msgid "Save submodule"
 msgstr "서브모듈 저장"
 
@@ -865,16 +865,16 @@ msgstr "선택"
 msgid "Select all"
 msgstr "모두 선택"
 
-#: app/scripts/services/utils.js:712
+#: app/services/utils.js:712
 msgid "Select your board"
 msgstr "보드를 선택하세요"
 
-#: app/scripts/services/blocks.js:1345 app/scripts/services/blocks.js:172
+#: app/services/blocks.js:1345 app/services/blocks.js:172
 msgid "Show clock"
 msgstr "시계를 표시"
 
-#: app/scripts/services/blocks.js:1120 app/scripts/services/blocks.js:1241
-#: app/scripts/services/blocks.js:313 app/scripts/services/blocks.js:84
+#: app/services/blocks.js:1120 app/services/blocks.js:1241
+#: app/services/blocks.js:313 app/services/blocks.js:84
 msgid "SlateBlue"
 msgstr "슬레이트 블루"
 
@@ -886,25 +886,25 @@ msgstr "소스코드"
 msgid "Spanish"
 msgstr "스페인어"
 
-#: app/scripts/services/blocks.js:1122 app/scripts/services/blocks.js:1243
-#: app/scripts/services/blocks.js:315 app/scripts/services/blocks.js:86
+#: app/services/blocks.js:1122 app/services/blocks.js:1243
+#: app/services/blocks.js:315 app/services/blocks.js:86
 msgid "SpringGreen"
 msgstr "봄 초록"
 
-#: app/scripts/controllers/menu.js:745
+#: app/controllers/menu.js:745
 msgid "Start build"
 msgstr "빌드 시작"
 
-#: app/scripts/controllers/menu.js:767
+#: app/controllers/menu.js:767
 msgid "Start upload"
 msgstr "업로드 시작"
 
-#: app/scripts/controllers/menu.js:726
+#: app/controllers/menu.js:726
 msgid "Start verification"
 msgstr "검증 시작"
 
-#: app/scripts/services/blocks.js:1127 app/scripts/services/blocks.js:1248
-#: app/scripts/services/blocks.js:320 app/scripts/services/blocks.js:91
+#: app/services/blocks.js:1127 app/services/blocks.js:1248
+#: app/services/blocks.js:320 app/services/blocks.js:91
 msgid "SteelBlue"
 msgstr "파란금속"
 
@@ -916,7 +916,7 @@ msgstr "서브모듈 에디션"
 msgid "Submodule edition affect at all of the same block types. For example if you have in you design six AND blocks, if you modify one of them, yo modify all of them."
 msgstr "하위 모듈 버전은 모든 동일한 블록 유형에 영향을 미칩니다. 예를 들어 6개의 AND 블록을 설계한 경우, 그 중 하나를 수정하면 모든 블록을 수정하십시오."
 
-#: app/scripts/services/tools.js:292
+#: app/services/tools.js:292
 msgid "Synchronize remote files ..."
 msgstr "원격 파일 동기화..."
 
@@ -924,23 +924,23 @@ msgstr "원격 파일 동기화..."
 msgid "Testbench"
 msgstr "테스트벤치"
 
-#: app/scripts/services/tools.js:1042
+#: app/services/tools.js:1042
 msgid "The collection {{name}} already exists."
 msgstr "컬렉션 {{name}}이(가) 이미 존재합니다."
 
-#: app/scripts/controllers/menu.js:705
+#: app/controllers/menu.js:705
 msgid "The current FPGA I/O configuration will be lost. Do you want to change to {{name}} board?"
 msgstr "현재 FPGA I/O 구성이 손실됩ㄴ다. {{name}}보드로 변경하시겠습니까?"
 
-#: app/scripts/services/tools.js:749
+#: app/services/tools.js:749
 msgid "The toolchain will be removed. Do you want to continue?"
 msgstr "툴체인이 제거됩니다. 계속하시겠습니까?"
 
-#: app/scripts/services/tools.js:734
+#: app/services/tools.js:734
 msgid "The toolchain will be restored to default. Do you want to continue?"
 msgstr "툴 체인은 기본값으로 복원될 것 입니다. 계속하시겠습니까?"
 
-#: app/scripts/services/tools.js:723
+#: app/services/tools.js:723
 msgid "The toolchain will be updated. This operation requires Internet connection. Do you want to continue?"
 msgstr "툴체인 업데이트 예정입니다. 이 작업은 인터넷 연결이 필요합니다. 계속하시겠습니까?"
 
@@ -952,15 +952,15 @@ msgstr "라벨을 사용하면 전선 없이 블록을 연결하여 더 큰 설�
 msgid "There are a number of updates in this version that we hope you will like, some of the key highlights include:"
 msgstr "본 버전에는 다음과 같은 몇 가지 업데이트가 있으며, 주요 주요 내용은 다음과 같다:"
 
-#: app/scripts/services/tools.js:1195
+#: app/services/tools.js:1195
 msgid "There is a new nightly version available"
 msgstr "새로운 야간 버전이 출시되었다"
 
-#: app/scripts/services/tools.js:1191
+#: app/services/tools.js:1191
 msgid "There is a new stable version available"
 msgstr "새로운 안정한 버전이 출시되었다"
 
-#: app/scripts/services/project.js:449
+#: app/services/project.js:449
 msgid "This import operation requires a project path. You need to save the current project. Do you want to continue?"
 msgstr "이 가져오기 작업에는 프로젝트 경로가 필요합니다. 현재 프로젝트를 저장해야 합니다. 계속하시겠습니까?"
 
@@ -968,7 +968,7 @@ msgstr "이 가져오기 작업에는 프로젝트 경로가 필요합니다. �
 msgid "This is a very powerfull feature to maintain large designs."
 msgstr "이것은 큰 디자인을 유지하기 위한 매우 강력한 기능이다."
 
-#: app/scripts/services/project.js:83
+#: app/services/project.js:83
 msgid "This project is designed for the {{name}} board."
 msgstr "이 프로젝트는 {{name}}보드에 맞게 설계되었다."
 
@@ -980,15 +980,15 @@ msgstr "본 버전은 블록 컨텐츠의 편집 가능성을 포함하여 판�
 msgid "To do it, only is necessary that prefix the block identifier with Generic-"
 msgstr "이 작업을 수행하려면 블록 식별자를 일반 식별자로 앞에 붙이면 된다-"
 
-#: app/scripts/services/graph.js:410
+#: app/services/graph.js:410
 msgid "To enter on \"edit mode\" of deeper block, you need to finish current \"edit mode\", lock the keylock to do it."
 msgstr "\"편집 모드\"의 깊은 블락에 들어가기위해서, 현재 \"편집모드\"를 키 락으로 잠가야 합니다"
 
-#: app/scripts/controllers/design.js:32
+#: app/controllers/design.js:32
 msgid "To navigate through design, you need to close \"edit mode\"."
 msgstr "디자인을 보기위해서는, \"편집모드\"를 닫아야합니다."
 
-#: app/scripts/controllers/menu.js:198
+#: app/controllers/menu.js:198
 msgid "To save your design you need to lock the keylock and go to top level design.<br/><br/>If you want to export this submodule to a file, execute \"Save as\" command to do it."
 msgstr "설계를 저장하려면 키록을 잠그고 최상위 설계로 이동하십시오.<br/><br/>이 하위 모듈을 파일로 내보내려면 \"다른 이름으로 저장\" 명령을 실행하여 파일을 내보내십시오."
 
@@ -996,21 +996,21 @@ msgstr "설계를 저장하려면 키록을 잠그고 최상위 설계로 이동
 msgid "Toolchain"
 msgstr "툴체인"
 
-#: app/scripts/services/tools.js:950
+#: app/services/tools.js:950
 msgid "Toolchain installed"
 msgstr "툴체인이 설치됨"
 
-#: app/scripts/services/drivers.js:338 app/scripts/services/drivers.js:357
-#: app/scripts/services/tools.js:132 app/scripts/services/tools.js:244
-#: app/scripts/services/tools.js:259
+#: app/services/drivers.js:338 app/services/drivers.js:357
+#: app/services/tools.js:132 app/services/tools.js:244
+#: app/services/tools.js:259
 msgid "Toolchain not installed"
 msgstr "툴체인이 설치되지 않았음"
 
-#: app/scripts/services/tools.js:754
+#: app/services/tools.js:754
 msgid "Toolchain removed"
 msgstr "툴체인이 제거되었음"
 
-#: app/scripts/services/tools.js:268
+#: app/services/tools.js:268
 msgid "Toolchain version does not match"
 msgstr "Toolchain 버전이 일치하지 않음"
 
@@ -1018,8 +1018,8 @@ msgstr "Toolchain 버전이 일치하지 않음"
 msgid "Tools"
 msgstr "도구들"
 
-#: app/scripts/services/blocks.js:1126 app/scripts/services/blocks.js:1247
-#: app/scripts/services/blocks.js:319 app/scripts/services/blocks.js:90
+#: app/services/blocks.js:1126 app/services/blocks.js:1247
+#: app/services/blocks.js:319 app/services/blocks.js:90
 msgid "Turquoise"
 msgstr "터키옥"
 
@@ -1027,15 +1027,15 @@ msgstr "터키옥"
 msgid "Undo"
 msgstr "뒤로가기"
 
-#: app/scripts/services/tools.js:379
+#: app/services/tools.js:379
 msgid "Unknown board"
 msgstr "알 수 없는 보드"
 
-#: app/scripts/services/project.js:155
+#: app/services/project.js:155
 msgid "Unsupported project format {{version}}"
 msgstr "지원되지 않는 프로젝트 형식 {{version}}"
 
-#: app/scripts/app.js:70
+#: app/app.js:70
 msgid "Untitled"
 msgstr "제목이 없음"
 
@@ -1043,21 +1043,21 @@ msgstr "제목이 없음"
 msgid "Update"
 msgstr "업데이트"
 
-#: app/scripts/services/blocks.js:1102 app/scripts/services/blocks.js:1223
-#: app/scripts/services/blocks.js:1335 app/scripts/services/blocks.js:1431
-#: app/scripts/services/blocks.js:1512 app/scripts/services/blocks.js:1556
+#: app/services/blocks.js:1102 app/services/blocks.js:1223
+#: app/services/blocks.js:1335 app/services/blocks.js:1431
+#: app/services/blocks.js:1512 app/services/blocks.js:1556
 msgid "Update the block name"
 msgstr "블럭 이름 업데이트"
 
-#: app/scripts/controllers/menu.js:760 app/views/menu.html:246
+#: app/controllers/menu.js:760 app/views/menu.html:246
 msgid "Upload"
 msgstr "업로드"
 
-#: app/scripts/controllers/menu.js:768
+#: app/controllers/menu.js:768
 msgid "Upload done"
 msgstr "업로드 완료"
 
-#: app/scripts/controllers/menu.js:727
+#: app/controllers/menu.js:727
 msgid "Verification done"
 msgstr "검증 완료"
 
@@ -1065,7 +1065,7 @@ msgstr "검증 완료"
 msgid "Verify"
 msgstr "입증하다"
 
-#: app/scripts/services/utils.js:573 app/views/menu.html:341
+#: app/services/utils.js:573 app/views/menu.html:341
 msgid "Version"
 msgstr "버전"
 
@@ -1081,7 +1081,7 @@ msgstr "보기"
 msgid "View license"
 msgstr "라이선스 보기"
 
-#: app/scripts/services/tools.js:527
+#: app/services/tools.js:527
 msgid "Warnings detected in the design"
 msgstr "설계에서 경고가 감지되었습니다"
 
@@ -1089,57 +1089,57 @@ msgstr "설계에서 경고가 감지되었습니다"
 msgid "Wellcome to Inception, Icestudio version, focused on submodules."
 msgstr "Icestudio 버전인에서 시작하며 서브모듈에 초점을 맞춘다."
 
-#: app/scripts/services/blocks.js:709
+#: app/services/blocks.js:709
 msgid "Wrong block format: {{type}}"
 msgstr "잘못된 블록 형식: {{type}}"
 
-#: app/scripts/services/blocks.js:119 app/scripts/services/blocks.js:1212
-#: app/scripts/services/blocks.js:1324 app/scripts/services/blocks.js:1420
-#: app/scripts/services/blocks.js:1502 app/scripts/services/blocks.js:1545
-#: app/scripts/services/blocks.js:1602 app/scripts/services/blocks.js:193
-#: app/scripts/services/blocks.js:259 app/scripts/services/blocks.js:346
-#: app/scripts/services/blocks.js:420 app/scripts/services/blocks.js:489
+#: app/services/blocks.js:119 app/services/blocks.js:1212
+#: app/services/blocks.js:1324 app/services/blocks.js:1420
+#: app/services/blocks.js:1502 app/services/blocks.js:1545
+#: app/services/blocks.js:1602 app/services/blocks.js:193
+#: app/services/blocks.js:259 app/services/blocks.js:346
+#: app/services/blocks.js:420 app/services/blocks.js:489
 msgid "Wrong block name {{name}}"
 msgstr "잘못된 블럭 이름{{name}}"
 
-#: app/scripts/services/blocks.js:620
+#: app/services/blocks.js:620
 msgid "Wrong parameter name {{name}}"
 msgstr "잘못된 매개 변수 이름 {{name}}"
 
-#: app/scripts/services/blocks.js:590 app/scripts/services/blocks.js:605
+#: app/services/blocks.js:590 app/services/blocks.js:605
 msgid "Wrong port name {{name}}"
 msgstr "잘못 된 포트 이름{{name}}"
 
-#: app/scripts/services/project.js:127
+#: app/services/project.js:127
 msgid "Wrong project format: {{name}}"
 msgstr "잘못된 프로젝트 형식: {{name}}"
 
-#: app/scripts/services/tools.js:563
+#: app/services/tools.js:563
 msgid "Wrong remote hostname {{name}}"
 msgstr "잘못된 원격 호스트 이름 {{name}}"
 
-#: app/scripts/services/blocks.js:1118 app/scripts/services/blocks.js:1239
-#: app/scripts/services/blocks.js:311 app/scripts/services/blocks.js:82
+#: app/services/blocks.js:1118 app/services/blocks.js:1239
+#: app/services/blocks.js:311 app/services/blocks.js:82
 msgid "Yellow"
 msgstr "노란색"
 
-#: app/scripts/controllers/menu.js:235
+#: app/controllers/menu.js:235
 msgid "You are editing a submodule, if you save it, you save only the submodule (in this situation \"save as\" works like \"export module\"), Do you like to continue?"
 msgstr "서브모듈을 편집하는 중에 서브모듈만 저장하면(이 경우 \"추출 된 모듈\"과 같은 \"저장\"이 작동함), 계속하시겠습니까?"
 
-#: app/scripts/services/project.js:84
+#: app/services/project.js:84
 msgid "You can load it as it is or convert it for the {{name}} board."
 msgstr "그대로 로드하거나 {{name}}보드로 변환 할 수 있다."
 
-#: app/scripts/controllers/menu.js:741
+#: app/controllers/menu.js:741
 msgid "You can only build at top-level design. Inside submodules you only can <strong>Verify</strong>"
 msgstr "최상위 레벨 디자인만을 빌드할 수 있습니다.서브모듈은 오직 입증만 <strong> 가능합니다"
 
-#: app/scripts/controllers/menu.js:761
+#: app/controllers/menu.js:761
 msgid "You can only upload  your design at top-level design. Inside submodules you only can <strong>Verify</strong>"
 msgstr "최고 수준의 설계에서만 디자인을 업로드할 수 있습니다.하위 모듈 내부에서는 <strong>만 확인할 수 있음"
 
-#: app/scripts/controllers/menu.js:368
+#: app/controllers/menu.js:368
 msgid "Your changes will be lost if you don’t save them"
 msgstr "변경사항을 저장하지 않으면 변경내용이 손실 될 것입니다"
 
@@ -1147,22 +1147,22 @@ msgstr "변경사항을 저장하지 않으면 변경내용이 손실 될 것입
 msgid "back"
 msgstr "뒤로가기"
 
-#: app/scripts/services/drivers.js:208 app/scripts/services/utils.js:956
+#: app/services/drivers.js:208 app/services/utils.js:956
 msgid "{{app}} is required."
 msgstr "{{앱}}이 필요합니다."
 
-#: app/scripts/controllers/menu.js:605
+#: app/controllers/menu.js:605
 msgid "{{board}} datasheet not defined"
 msgstr "{{board}}데이터시트가 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:595
+#: app/controllers/menu.js:595
 msgid "{{board}} pinout not defined"
 msgstr "{{board}}핀아웃이 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:626
+#: app/controllers/menu.js:626
 msgid "{{board}} rules not defined"
 msgstr "{{board}} 규칙이 정의되지 않았습니다"
 
-#: app/scripts/controllers/menu.js:315 app/scripts/controllers/menu.js:339
+#: app/controllers/menu.js:315 app/controllers/menu.js:339
 msgid "{{name}} exported"
 msgstr "{{name}} 이 추출되었습니다"
