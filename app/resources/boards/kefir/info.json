@@ -1,5 +1,5 @@
 {
-  "label": "Kéfir I iCE40-HX4K",
+  "label": "K\u00e9fir I iCE40-HX4K",
   "device": "HX4K",
   "datasheet": "http://fpgalibre.sourceforge.net/Kefir/",
   "prog": [
@@ -12,526 +12,108 @@
     "plbs": 960,
     "brams": 32
   },
-  "pinout": [
-    {
-      "type": "output",
-      "name": "U_VPO",
-      "value": "112"
-    },
-    {
-      "type": "input",
-      "name": "U_VPI",
-      "value": "115"
-    },
-    {
-      "type": "output",
-      "name": "U_VMO",
-      "value": "113"
-    },
-    {
-      "type": "input",
-      "name": "U_VMI",
-      "value": "114"
-    },
-    {
-      "type": "output",
-      "name": "U_NOE",
-      "value": "116"
-    },
-    {
-      "type": "input",
-      "name": "TXD",
-      "value": "37"
-    },
-    {
-      "type": "inout",
-      "name": "SS",
-      "value": "71"
-    },
-    {
-      "type": "inout",
-      "name": "SK",
-      "value": "70"
-    },
-    {
-      "type": "inout",
-      "name": "SDO",
-      "value": "67"
-    },
-    {
-      "type": "inout",
-      "name": "SDI",
-      "value": "68"
-    },
-    {
-      "type": "inout",
-      "name": "SDA",
-      "value": "18"
-    },
-    {
-      "type": "inout",
-      "name": "SCL",
-      "value": "17"
-    },
-    {
-      "type": "inout",
-      "name": "SCK",
-      "value": "70"
-    },
-    {
-      "type": "output",
-      "name": "RXD",
-      "value": "38"
-    },
-    {
-      "type": "input",
-      "name": "RTS",
-      "value": "39"
-    },
-    {
-      "type": "output",
-      "name": "RI",
-      "value": "45"
-    },
-    {
-      "type": "inout",
-      "name": "PRST",
-      "value": "73"
-    },
-    {
-      "type": "inout",
-      "name": "PMB7",
-      "value": "99"
-    },
-    {
-      "type": "inout",
-      "name": "PMB6",
-      "value": "98"
-    },
-    {
-      "type": "inout",
-      "name": "PMB5",
-      "value": "97"
-    },
-    {
-      "type": "inout",
-      "name": "PMB4",
-      "value": "96"
-    },
-    {
-      "type": "inout",
-      "name": "PMB3",
-      "value": "95"
-    },
-    {
-      "type": "inout",
-      "name": "PMB2",
-      "value": "91"
-    },
-    {
-      "type": "inout",
-      "name": "PMB1",
-      "value": "90"
-    },
-    {
-      "type": "inout",
-      "name": "PMB0",
-      "value": "88"
-    },
-    {
-      "type": "inout",
-      "name": "PMA7",
-      "value": "87"
-    },
-    {
-      "type": "inout",
-      "name": "PMA6",
-      "value": "81"
-    },
-    {
-      "type": "inout",
-      "name": "PMA5",
-      "value": "80"
-    },
-    {
-      "type": "inout",
-      "name": "PMA4",
-      "value": "79"
-    },
-    {
-      "type": "inout",
-      "name": "PMA3",
-      "value": "78"
-    },
-    {
-      "type": "inout",
-      "name": "PMA2",
-      "value": "76"
-    },
-    {
-      "type": "inout",
-      "name": "PMA1",
-      "value": "75"
-    },
-    {
-      "type": "inout",
-      "name": "PMA0",
-      "value": "74"
-    },
-    {
-      "type": "inout",
-      "name": "MOSI",
-      "value": "119"
-    },
-    {
-      "type": "inout",
-      "name": "MISO",
-      "value": "120"
-    },
-    {
-      "type": "output",
-      "name": "LED4",
-      "value": "121"
-    },
-    {
-      "type": "output",
-      "name": "LED3",
-      "value": "129"
-    },
-    {
-      "type": "output",
-      "name": "LED2",
-      "value": "135"
-    },
-    {
-      "type": "output",
-      "name": "LED1",
-      "value": "137"
-    },
-    {
-      "type": "inout",
-      "name": "ISCK",
-      "value": "118"
-    },
-    {
-      "type": "inout",
-      "name": "IRST",
-      "value": "117"
-    },
-    {
-      "type": "inout",
-      "name": "IO9",
-      "value": "21"
-    },
-    {
-      "type": "inout",
-      "name": "IO8",
-      "value": "19"
-    },
-    {
-      "type": "inout",
-      "name": "IO7",
-      "value": "12"
-    },
-    {
-      "type": "inout",
-      "name": "IO6",
-      "value": "10"
-    },
-    {
-      "type": "inout",
-      "name": "IO5",
-      "value": "8"
-    },
-    {
-      "type": "inout",
-      "name": "IO41",
-      "value": "34"
-    },
-    {
-      "type": "inout",
-      "name": "IO40",
-      "value": "33"
-    },
-    {
-      "type": "inout",
-      "name": "IO4",
-      "value": "4"
-    },
-    {
-      "type": "inout",
-      "name": "IO39",
-      "value": "32"
-    },
-    {
-      "type": "inout",
-      "name": "IO38",
-      "value": "29"
-    },
-    {
-      "type": "inout",
-      "name": "IO37",
-      "value": "26"
-    },
-    {
-      "type": "inout",
-      "name": "IO36",
-      "value": "24"
-    },
-    {
-      "type": "inout",
-      "name": "IO35",
-      "value": "22"
-    },
-    {
-      "type": "inout",
-      "name": "IO34",
-      "value": "20"
-    },
-    {
-      "type": "inout",
-      "name": "IO33",
-      "value": "11"
-    },
-    {
-      "type": "inout",
-      "name": "IO32",
-      "value": "9"
-    },
-    {
-      "type": "inout",
-      "name": "IO31",
-      "value": "7"
-    },
-    {
-      "type": "inout",
-      "name": "IO30",
-      "value": "3"
-    },
-    {
-      "type": "inout",
-      "name": "IO3",
-      "value": "1"
-    },
-    {
-      "type": "inout",
-      "name": "IO29",
-      "value": "2"
-    },
-    {
-      "type": "inout",
-      "name": "IO28",
-      "value": "144"
-    },
-    {
-      "type": "inout",
-      "name": "IO27",
-      "value": "142"
-    },
-    {
-      "type": "inout",
-      "name": "IO26",
-      "value": "139"
-    },
-    {
-      "type": "inout",
-      "name": "IO2",
-      "value": "143"
-    },
-    {
-      "type": "inout",
-      "name": "IO13",
-      "value": "31"
-    },
-    {
-      "type": "inout",
-      "name": "IO12",
-      "value": "28"
-    },
-    {
-      "type": "inout",
-      "name": "IO11",
-      "value": "25"
-    },
-    {
-      "type": "inout",
-      "name": "IO10",
-      "value": "23"
-    },
-    {
-      "type": "inout",
-      "name": "IO1",
-      "value": "141"
-    },
-    {
-      "type": "inout",
-      "name": "IO0",
-      "value": "138"
-    },
-    {
-      "type": "input",
-      "name": "DTR",
-      "value": "42"
-    },
-    {
-      "type": "output",
-      "name": "DSR",
-      "value": "43"
-    },
-    {
-      "type": "inout",
-      "name": "DO",
-      "value": "67"
-    },
-    {
-      "type": "inout",
-      "name": "DI",
-      "value": "68"
-    },
-    {
-      "type": "output",
-      "name": "DCD",
-      "value": "44"
-    },
-    {
-      "type": "output",
-      "name": "CTS",
-      "value": "41"
-    },
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "49"
-    },
-    {
-      "type": "input",
-      "name": "BTN4",
-      "value": "122"
-    },
-    {
-      "type": "input",
-      "name": "BTN3",
-      "value": "128"
-    },
-    {
-      "type": "input",
-      "name": "BTN2",
-      "value": "134"
-    },
-    {
-      "type": "input",
-      "name": "BTN1",
-      "value": "136"
-    },
-    {
-      "type": "input",
-      "name": "AD_DO",
-      "value": "104"
-    },
-    {
-      "type": "output",
-      "name": "AD_DI",
-      "value": "102"
-    },
-    {
-      "type": "output",
-      "name": "AD_CS",
-      "value": "101"
-    },
-    {
-      "type": "output",
-      "name": "AD_CK",
-      "value": "105"
-    },
-    {
-      "type": "inout",
-      "name": "AD7",
-      "value": "45"
-    },
-    {
-      "type": "inout",
-      "name": "AD6",
-      "value": "44"
-    },
-    {
-      "type": "inout",
-      "name": "AD5",
-      "value": "43"
-    },
-    {
-      "type": "inout",
-      "name": "AD4",
-      "value": "42"
-    },
-    {
-      "type": "inout",
-      "name": "AD3",
-      "value": "41"
-    },
-    {
-      "type": "inout",
-      "name": "AD2",
-      "value": "39"
-    },
-    {
-      "type": "inout",
-      "name": "AD1",
-      "value": "38"
-    },
-    {
-      "type": "inout",
-      "name": "AD0",
-      "value": "37"
-    },
-    {
-      "type": "inout",
-      "name": "AC7",
-      "value": "64"
-    },
-    {
-      "type": "inout",
-      "name": "AC6",
-      "value": "63"
-    },
-    {
-      "type": "inout",
-      "name": "AC5",
-      "value": "62"
-    },
-    {
-      "type": "inout",
-      "name": "AC4",
-      "value": "61"
-    },
-    {
-      "type": "inout",
-      "name": "AC3",
-      "value": "60"
-    },
-    {
-      "type": "inout",
-      "name": "AC2",
-      "value": "56"
-    },
-    {
-      "type": "inout",
-      "name": "AC1",
-      "value": "48"
-    },
-    {
-      "type": "inout",
-      "name": "AC0",
-      "value": "47"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "U_VPO": "112",
+    "U_VPI": "115",
+    "U_VMO": "113",
+    "U_VMI": "114",
+    "U_NOE": "116",
+    "TXD": "37",
+    "SS": "71",
+    "SK": "70",
+    "SDO": "67",
+    "SDI": "68",
+    "SDA": "18",
+    "SCL": "17",
+    "SCK": "70",
+    "RXD": "38",
+    "RTS": "39",
+    "RI": "45",
+    "PRST": "73",
+    "PMB7": "99",
+    "PMB6": "98",
+    "PMB5": "97",
+    "PMB4": "96",
+    "PMB3": "95",
+    "PMB2": "91",
+    "PMB1": "90",
+    "PMB0": "88",
+    "PMA7": "87",
+    "PMA6": "81",
+    "PMA5": "80",
+    "PMA4": "79",
+    "PMA3": "78",
+    "PMA2": "76",
+    "PMA1": "75",
+    "PMA0": "74",
+    "MOSI": "119",
+    "MISO": "120",
+    "LED4": "121",
+    "LED3": "129",
+    "LED2": "135",
+    "LED1": "137",
+    "ISCK": "118",
+    "IRST": "117",
+    "IO9": "21",
+    "IO8": "19",
+    "IO7": "12",
+    "IO6": "10",
+    "IO5": "8",
+    "IO41": "34",
+    "IO40": "33",
+    "IO4": "4",
+    "IO39": "32",
+    "IO38": "29",
+    "IO37": "26",
+    "IO36": "24",
+    "IO35": "22",
+    "IO34": "20",
+    "IO33": "11",
+    "IO32": "9",
+    "IO31": "7",
+    "IO30": "3",
+    "IO3": "1",
+    "IO29": "2",
+    "IO28": "144",
+    "IO27": "142",
+    "IO26": "139",
+    "IO2": "143",
+    "IO13": "31",
+    "IO12": "28",
+    "IO11": "25",
+    "IO10": "23",
+    "IO1": "141",
+    "IO0": "138",
+    "DTR": "42",
+    "DSR": "43",
+    "DO": "67",
+    "DI": "68",
+    "DCD": "44",
+    "CTS": "41",
+    "CLK": "49",
+    "BTN4": "122",
+    "BTN3": "128",
+    "BTN2": "134",
+    "BTN1": "136",
+    "AD_DO": "104",
+    "AD_DI": "102",
+    "AD_CS": "101",
+    "AD_CK": "105",
+    "AD7": "45",
+    "AD6": "44",
+    "AD5": "43",
+    "AD4": "42",
+    "AD3": "41",
+    "AD2": "39",
+    "AD1": "38",
+    "AD0": "37",
+    "AC7": "64",
+    "AC6": "63",
+    "AC5": "62",
+    "AC4": "61",
+    "AC3": "60",
+    "AC2": "56",
+    "AC1": "48",
+    "AC0": "47"
+  }
 }

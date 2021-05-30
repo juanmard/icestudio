@@ -12,226 +12,48 @@
     "plbs": 960,
     "brams": 32
   },
-  "pinout": [
-    {
-      "type": "inout",
-      "name": "USBPU",
-      "value": "A3"
-    },
-    {
-      "type": "inout",
-      "name": "USBP",
-      "value": "B4"
-    },
-    {
-      "type": "inout",
-      "name": "USBN",
-      "value": "A4"
-    },
-    {
-      "type": "inout",
-      "name": "SPI_SS",
-      "value": "F7"
-    },
-    {
-      "type": "inout",
-      "name": "SPI_SCK",
-      "value": "G7"
-    },
-    {
-      "type": "inout",
-      "name": "SPI_IO3",
-      "value": "J8"
-    },
-    {
-      "type": "inout",
-      "name": "SPI_IO2",
-      "value": "H4"
-    },
-    {
-      "type": "inout",
-      "name": "SPI_IO1",
-      "value": "H7"
-    },
-    {
-      "type": "inout",
-      "name": "SPI_IO0",
-      "value": "G6"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_9",
-      "value": "E1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_8",
-      "value": "E2"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_7",
-      "value": "D1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_6",
-      "value": "D2"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_5",
-      "value": "C1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_4",
-      "value": "C2"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_31",
-      "value": "J2"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_30",
-      "value": "E8"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_3",
-      "value": "B1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_29",
-      "value": "J9"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_28",
-      "value": "G9"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_27",
-      "value": "J4"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_26",
-      "value": "J3"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_25",
-      "value": "G1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_24",
-      "value": "A6"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_23",
-      "value": "B6"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_22",
-      "value": "A7"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_21",
-      "value": "B7"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_20",
-      "value": "A8"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_2",
-      "value": "A1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_19",
-      "value": "B8"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_18",
-      "value": "A9"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_17",
-      "value": "C9"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_16",
-      "value": "D8"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_15",
-      "value": "D9"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_14",
-      "value": "H9"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_13",
-      "value": "H2"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_12",
-      "value": "J1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_11",
-      "value": "H1"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_10",
-      "value": "G2"
-    },
-    {
-      "type": "inout",
-      "name": "PIN_1",
-      "value": "A2"
-    },
-    {
-      "type": "output",
-      "name": "LED",
-      "value": "B3"
-    },
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "B2"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "USBPU": "A3",
+    "USBP": "B4",
+    "USBN": "A4",
+    "SPI_SS": "F7",
+    "SPI_SCK": "G7",
+    "SPI_IO3": "J8",
+    "SPI_IO2": "H4",
+    "SPI_IO1": "H7",
+    "SPI_IO0": "G6",
+    "PIN_9": "E1",
+    "PIN_8": "E2",
+    "PIN_7": "D1",
+    "PIN_6": "D2",
+    "PIN_5": "C1",
+    "PIN_4": "C2",
+    "PIN_31": "J2",
+    "PIN_30": "E8",
+    "PIN_3": "B1",
+    "PIN_29": "J9",
+    "PIN_28": "G9",
+    "PIN_27": "J4",
+    "PIN_26": "J3",
+    "PIN_25": "G1",
+    "PIN_24": "A6",
+    "PIN_23": "B6",
+    "PIN_22": "A7",
+    "PIN_21": "B7",
+    "PIN_20": "A8",
+    "PIN_2": "A1",
+    "PIN_19": "B8",
+    "PIN_18": "A9",
+    "PIN_17": "C9",
+    "PIN_16": "D8",
+    "PIN_15": "D9",
+    "PIN_14": "H9",
+    "PIN_13": "H2",
+    "PIN_12": "J1",
+    "PIN_11": "H1",
+    "PIN_10": "G2",
+    "PIN_1": "A2",
+    "LED": "B3",
+    "CLK": "B2"
+  }
 }

@@ -10,7 +10,7 @@
 # ------------ Left side ------------------------------------------------------
 set_io --warn-no-port USB_DP A3
 set_io --warn-no-port USB_DM A4
-set_io --warn-no-port CLK    B4  # input
+set_io --warn-no-port CLK    B4
 set_io --warn-no-port PIN_4  B2
 set_io --warn-no-port PIN_5  A2
 set_io --warn-no-port PIN_6  A1

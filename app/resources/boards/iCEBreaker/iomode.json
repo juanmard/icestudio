@@ -1,0 +1,19 @@
+{
+  "TX": "output",
+  "RX": "input",
+  "LED_R": "output",
+  "LED_G": "output",
+  "LED_B": "output",
+  "LEDR": "output",
+  "LEDG": "output",
+  "LED5": "output",
+  "LED4": "output",
+  "LED3": "output",
+  "LED2": "output",
+  "LED1": "output",
+  "CLK": "input",
+  "BTN3": "input",
+  "BTN2": "input",
+  "BTN1": "input",
+  "BTN": "input"
+}

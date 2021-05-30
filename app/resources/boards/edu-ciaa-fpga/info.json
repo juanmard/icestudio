@@ -12,341 +12,71 @@
     "plbs": 960,
     "brams": 32
   },
-  "pinout": [
-    {
-      "type": "output",
-      "name": "TX",
-      "value": "56"
-    },
-    {
-      "type": "input",
-      "name": "RX",
-      "value": "55"
-    },
-    {
-      "type": "input",
-      "name": "RTS",
-      "value": "60"
-    },
-    {
-      "type": "input",
-      "name": "RST",
-      "value": "37"
-    },
-    {
-      "type": "inout",
-      "name": "LED3",
-      "value": "4"
-    },
-    {
-      "type": "inout",
-      "name": "LED2",
-      "value": "3"
-    },
-    {
-      "type": "inout",
-      "name": "LED1",
-      "value": "2"
-    },
-    {
-      "type": "inout",
-      "name": "LED0",
-      "value": "1"
-    },
-    {
-      "type": "input",
-      "name": "DTR",
-      "value": "62"
-    },
-    {
-      "type": "output",
-      "name": "DSR",
-      "value": "63"
-    },
-    {
-      "type": "output",
-      "name": "DCD",
-      "value": "65"
-    },
-    {
-      "type": "output",
-      "name": "CTS",
-      "value": "61"
-    },
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "94"
-    },
-    {
-      "type": "input",
-      "name": "BTN4",
-      "value": "34"
-    },
-    {
-      "type": "input",
-      "name": "BTN3",
-      "value": "33"
-    },
-    {
-      "type": "input",
-      "name": "BTN2",
-      "value": "32"
-    },
-    {
-      "type": "input",
-      "name": "BTN1",
-      "value": "31"
-    },
-    {
-      "type": "inout",
-      "name": "B3_9",
-      "value": "17"
-    },
-    {
-      "type": "inout",
-      "name": "B3_8",
-      "value": "16"
-    },
-    {
-      "type": "inout",
-      "name": "B3_7",
-      "value": "15"
-    },
-    {
-      "type": "inout",
-      "name": "B3_6",
-      "value": "12"
-    },
-    {
-      "type": "inout",
-      "name": "B3_5",
-      "value": "11"
-    },
-    {
-      "type": "inout",
-      "name": "B3_4",
-      "value": "10"
-    },
-    {
-      "type": "inout",
-      "name": "B3_3",
-      "value": "9"
-    },
-    {
-      "type": "inout",
-      "name": "B3_2",
-      "value": "8"
-    },
-    {
-      "type": "inout",
-      "name": "B3_16",
-      "value": "24"
-    },
-    {
-      "type": "inout",
-      "name": "B3_15",
-      "value": "23"
-    },
-    {
-      "type": "inout",
-      "name": "B3_14",
-      "value": "22"
-    },
-    {
-      "type": "inout",
-      "name": "B3_13",
-      "value": "21"
-    },
-    {
-      "type": "inout",
-      "name": "B3_12",
-      "value": "20"
-    },
-    {
-      "type": "inout",
-      "name": "B3_11",
-      "value": "19"
-    },
-    {
-      "type": "inout",
-      "name": "B3_10",
-      "value": "18"
-    },
-    {
-      "type": "inout",
-      "name": "B3_1",
-      "value": "7"
-    },
-    {
-      "type": "inout",
-      "name": "B1_9",
-      "value": "89"
-    },
-    {
-      "type": "inout",
-      "name": "B1_8",
-      "value": "81"
-    },
-    {
-      "type": "inout",
-      "name": "B1_7",
-      "value": "80"
-    },
-    {
-      "type": "inout",
-      "name": "B1_6",
-      "value": "79"
-    },
-    {
-      "type": "inout",
-      "name": "B1_21",
-      "value": "107"
-    },
-    {
-      "type": "inout",
-      "name": "B1_20",
-      "value": "106"
-    },
-    {
-      "type": "inout",
-      "name": "B1_19",
-      "value": "105"
-    },
-    {
-      "type": "inout",
-      "name": "B1_18",
-      "value": "104"
-    },
-    {
-      "type": "inout",
-      "name": "B1_17",
-      "value": "99"
-    },
-    {
-      "type": "inout",
-      "name": "B1_16",
-      "value": "98"
-    },
-    {
-      "type": "inout",
-      "name": "B1_15",
-      "value": "97"
-    },
-    {
-      "type": "inout",
-      "name": "B1_14",
-      "value": "96"
-    },
-    {
-      "type": "inout",
-      "name": "B1_13",
-      "value": "95"
-    },
-    {
-      "type": "inout",
-      "name": "B1_12",
-      "value": "85"
-    },
-    {
-      "type": "inout",
-      "name": "B1_11",
-      "value": "84"
-    },
-    {
-      "type": "inout",
-      "name": "B1_10",
-      "value": "83"
-    },
-    {
-      "type": "inout",
-      "name": "B0_9",
-      "value": "136"
-    },
-    {
-      "type": "inout",
-      "name": "B0_8",
-      "value": "135"
-    },
-    {
-      "type": "inout",
-      "name": "B0_7",
-      "value": "134"
-    },
-    {
-      "type": "inout",
-      "name": "B0_6",
-      "value": "130"
-    },
-    {
-      "type": "inout",
-      "name": "B0_5",
-      "value": "129"
-    },
-    {
-      "type": "inout",
-      "name": "B0_4",
-      "value": "128"
-    },
-    {
-      "type": "inout",
-      "name": "B0_3",
-      "value": "125"
-    },
-    {
-      "type": "inout",
-      "name": "B0_2",
-      "value": "124"
-    },
-    {
-      "type": "inout",
-      "name": "B0_16",
-      "value": "144"
-    },
-    {
-      "type": "inout",
-      "name": "B0_15",
-      "value": "143"
-    },
-    {
-      "type": "inout",
-      "name": "B0_14",
-      "value": "142"
-    },
-    {
-      "type": "inout",
-      "name": "B0_13",
-      "value": "141"
-    },
-    {
-      "type": "inout",
-      "name": "B0_12",
-      "value": "139"
-    },
-    {
-      "type": "inout",
-      "name": "B0_11",
-      "value": "138"
-    },
-    {
-      "type": "inout",
-      "name": "B0_10",
-      "value": "137"
-    },
-    {
-      "type": "inout",
-      "name": "B0_1",
-      "value": "122"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "TX": "56",
+    "RX": "55",
+    "RTS": "60",
+    "RST": "37",
+    "LED3": "4",
+    "LED2": "3",
+    "LED1": "2",
+    "LED0": "1",
+    "DTR": "62",
+    "DSR": "63",
+    "DCD": "65",
+    "CTS": "61",
+    "CLK": "94",
+    "BTN4": "34",
+    "BTN3": "33",
+    "BTN2": "32",
+    "BTN1": "31",
+    "B3_9": "17",
+    "B3_8": "16",
+    "B3_7": "15",
+    "B3_6": "12",
+    "B3_5": "11",
+    "B3_4": "10",
+    "B3_3": "9",
+    "B3_2": "8",
+    "B3_16": "24",
+    "B3_15": "23",
+    "B3_14": "22",
+    "B3_13": "21",
+    "B3_12": "20",
+    "B3_11": "19",
+    "B3_10": "18",
+    "B3_1": "7",
+    "B1_9": "89",
+    "B1_8": "81",
+    "B1_7": "80",
+    "B1_6": "79",
+    "B1_21": "107",
+    "B1_20": "106",
+    "B1_19": "105",
+    "B1_18": "104",
+    "B1_17": "99",
+    "B1_16": "98",
+    "B1_15": "97",
+    "B1_14": "96",
+    "B1_13": "95",
+    "B1_12": "85",
+    "B1_11": "84",
+    "B1_10": "83",
+    "B0_9": "136",
+    "B0_8": "135",
+    "B0_7": "134",
+    "B0_6": "130",
+    "B0_5": "129",
+    "B0_4": "128",
+    "B0_3": "125",
+    "B0_2": "124",
+    "B0_16": "144",
+    "B0_15": "143",
+    "B0_14": "142",
+    "B0_13": "141",
+    "B0_12": "139",
+    "B0_11": "138",
+    "B0_10": "137",
+    "B0_1": "122"
+  }
 }

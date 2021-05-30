@@ -12,516 +12,106 @@
     "plbs": 960,
     "brams": 32
   },
-  "pinout": [
-    {
-      "type": "inout",
-      "name": "P47",
-      "value": "R10"
-    },
-    {
-      "type": "inout",
-      "name": "P46",
-      "value": "R14"
-    },
-    {
-      "type": "inout",
-      "name": "P45",
-      "value": "T13"
-    },
-    {
-      "type": "inout",
-      "name": "P44",
-      "value": "T10"
-    },
-    {
-      "type": "inout",
-      "name": "P43",
-      "value": "T9"
-    },
-    {
-      "type": "inout",
-      "name": "P42",
-      "value": "T15"
-    },
-    {
-      "type": "inout",
-      "name": "P41",
-      "value": "T14"
-    },
-    {
-      "type": "inout",
-      "name": "P40",
-      "value": "T11"
-    },
-    {
-      "type": "inout",
-      "name": "P37",
-      "value": "N9"
-    },
-    {
-      "type": "inout",
-      "name": "P36",
-      "value": "P9"
-    },
-    {
-      "type": "inout",
-      "name": "P35",
-      "value": "M8"
-    },
-    {
-      "type": "inout",
-      "name": "P34",
-      "value": "N7"
-    },
-    {
-      "type": "inout",
-      "name": "P33",
-      "value": "L9"
-    },
-    {
-      "type": "inout",
-      "name": "P32",
-      "value": "G5"
-    },
-    {
-      "type": "inout",
-      "name": "P31",
-      "value": "L7"
-    },
-    {
-      "type": "inout",
-      "name": "P30",
-      "value": "N6"
-    },
-    {
-      "type": "inout",
-      "name": "P27",
-      "value": "B8"
-    },
-    {
-      "type": "inout",
-      "name": "P26",
-      "value": "A9"
-    },
-    {
-      "type": "inout",
-      "name": "P25",
-      "value": "A10"
-    },
-    {
-      "type": "inout",
-      "name": "P24",
-      "value": "A11"
-    },
-    {
-      "type": "inout",
-      "name": "P23",
-      "value": "D8"
-    },
-    {
-      "type": "inout",
-      "name": "P22",
-      "value": "B9"
-    },
-    {
-      "type": "inout",
-      "name": "P21",
-      "value": "B10"
-    },
-    {
-      "type": "inout",
-      "name": "P20",
-      "value": "B11"
-    },
-    {
-      "type": "inout",
-      "name": "P17",
-      "value": "B7"
-    },
-    {
-      "type": "inout",
-      "name": "P16",
-      "value": "B6"
-    },
-    {
-      "type": "inout",
-      "name": "P15",
-      "value": "B3"
-    },
-    {
-      "type": "inout",
-      "name": "P14",
-      "value": "B5"
-    },
-    {
-      "type": "inout",
-      "name": "P13",
-      "value": "A5"
-    },
-    {
-      "type": "inout",
-      "name": "P12",
-      "value": "A2"
-    },
-    {
-      "type": "inout",
-      "name": "P11",
-      "value": "C3"
-    },
-    {
-      "type": "inout",
-      "name": "P10",
-      "value": "B4"
-    },
-    {
-      "type": "output",
-      "name": "LED3",
-      "value": "K9"
-    },
-    {
-      "type": "output",
-      "name": "LED2",
-      "value": "F7"
-    },
-    {
-      "type": "output",
-      "name": "LED1",
-      "value": "C8"
-    },
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "R9"
-    },
-    {
-      "type": "inout",
-      "name": "C63",
-      "value": "L10"
-    },
-    {
-      "type": "inout",
-      "name": "C62",
-      "value": "R15"
-    },
-    {
-      "type": "inout",
-      "name": "C61",
-      "value": "B12"
-    },
-    {
-      "type": "inout",
-      "name": "C60",
-      "value": "C16"
-    },
-    {
-      "type": "inout",
-      "name": "C59",
-      "value": "M14"
-    },
-    {
-      "type": "inout",
-      "name": "C58",
-      "value": "M12"
-    },
-    {
-      "type": "inout",
-      "name": "C57",
-      "value": "C12"
-    },
-    {
-      "type": "inout",
-      "name": "C56",
-      "value": "D14"
-    },
-    {
-      "type": "inout",
-      "name": "C55",
-      "value": "L14"
-    },
-    {
-      "type": "inout",
-      "name": "C54",
-      "value": "N12"
-    },
-    {
-      "type": "inout",
-      "name": "C53",
-      "value": "B13"
-    },
-    {
-      "type": "inout",
-      "name": "C52",
-      "value": "E16"
-    },
-    {
-      "type": "inout",
-      "name": "C51",
-      "value": "M9"
-    },
-    {
-      "type": "inout",
-      "name": "C50",
-      "value": "L11"
-    },
-    {
-      "type": "inout",
-      "name": "C49",
-      "value": "G12"
-    },
-    {
-      "type": "inout",
-      "name": "C48",
-      "value": "F15"
-    },
-    {
-      "type": "inout",
-      "name": "C47",
-      "value": "K14"
-    },
-    {
-      "type": "inout",
-      "name": "C46",
-      "value": "K13"
-    },
-    {
-      "type": "inout",
-      "name": "C45",
-      "value": "F11"
-    },
-    {
-      "type": "inout",
-      "name": "C44",
-      "value": "H16"
-    },
-    {
-      "type": "inout",
-      "name": "C43",
-      "value": "K12"
-    },
-    {
-      "type": "inout",
-      "name": "C42",
-      "value": "J13"
-    },
-    {
-      "type": "inout",
-      "name": "C41",
-      "value": "E14"
-    },
-    {
-      "type": "inout",
-      "name": "C40",
-      "value": "G16"
-    },
-    {
-      "type": "inout",
-      "name": "C39",
-      "value": "R16"
-    },
-    {
-      "type": "inout",
-      "name": "C38",
-      "value": "J11"
-    },
-    {
-      "type": "inout",
-      "name": "C37",
-      "value": "F12"
-    },
-    {
-      "type": "inout",
-      "name": "C36",
-      "value": "J10"
-    },
-    {
-      "type": "inout",
-      "name": "C35",
-      "value": "N16"
-    },
-    {
-      "type": "inout",
-      "name": "C34",
-      "value": "M15"
-    },
-    {
-      "type": "inout",
-      "name": "C33",
-      "value": "E11"
-    },
-    {
-      "type": "inout",
-      "name": "C32",
-      "value": "G10"
-    },
-    {
-      "type": "inout",
-      "name": "C31",
-      "value": "H12"
-    },
-    {
-      "type": "inout",
-      "name": "C30",
-      "value": "M16"
-    },
-    {
-      "type": "inout",
-      "name": "C29",
-      "value": "D11"
-    },
-    {
-      "type": "inout",
-      "name": "C28",
-      "value": "G15"
-    },
-    {
-      "type": "inout",
-      "name": "C27",
-      "value": "H13"
-    },
-    {
-      "type": "inout",
-      "name": "C26",
-      "value": "H14"
-    },
-    {
-      "type": "inout",
-      "name": "C25",
-      "value": "D10"
-    },
-    {
-      "type": "inout",
-      "name": "C24",
-      "value": "F16"
-    },
-    {
-      "type": "inout",
-      "name": "C23",
-      "value": "L16"
-    },
-    {
-      "type": "inout",
-      "name": "C22",
-      "value": "K15"
-    },
-    {
-      "type": "inout",
-      "name": "C21",
-      "value": "G11"
-    },
-    {
-      "type": "inout",
-      "name": "C20",
-      "value": "D16"
-    },
-    {
-      "type": "inout",
-      "name": "C19",
-      "value": "G14"
-    },
-    {
-      "type": "inout",
-      "name": "C18",
-      "value": "G13"
-    },
-    {
-      "type": "inout",
-      "name": "C17",
-      "value": "B16"
-    },
-    {
-      "type": "inout",
-      "name": "C16",
-      "value": "D15"
-    },
-    {
-      "type": "inout",
-      "name": "C15",
-      "value": "K16"
-    },
-    {
-      "type": "inout",
-      "name": "C14",
-      "value": "F14"
-    },
-    {
-      "type": "inout",
-      "name": "C13",
-      "value": "F9"
-    },
-    {
-      "type": "inout",
-      "name": "C12",
-      "value": "A16"
-    },
-    {
-      "type": "inout",
-      "name": "C11",
-      "value": "J14"
-    },
-    {
-      "type": "inout",
-      "name": "C10",
-      "value": "T16"
-    },
-    {
-      "type": "inout",
-      "name": "C09",
-      "value": "E10"
-    },
-    {
-      "type": "inout",
-      "name": "C08",
-      "value": "B14"
-    },
-    {
-      "type": "inout",
-      "name": "C07",
-      "value": "J15"
-    },
-    {
-      "type": "inout",
-      "name": "C06",
-      "value": "P14"
-    },
-    {
-      "type": "inout",
-      "name": "C05",
-      "value": "C11"
-    },
-    {
-      "type": "inout",
-      "name": "C04",
-      "value": "E9"
-    },
-    {
-      "type": "inout",
-      "name": "C03",
-      "value": "J16"
-    },
-    {
-      "type": "inout",
-      "name": "C02",
-      "value": "L12"
-    },
-    {
-      "type": "inout",
-      "name": "C01",
-      "value": "A15"
-    },
-    {
-      "type": "inout",
-      "name": "C00",
-      "value": "C13"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "P47": "R10",
+    "P46": "R14",
+    "P45": "T13",
+    "P44": "T10",
+    "P43": "T9",
+    "P42": "T15",
+    "P41": "T14",
+    "P40": "T11",
+    "P37": "N9",
+    "P36": "P9",
+    "P35": "M8",
+    "P34": "N7",
+    "P33": "L9",
+    "P32": "G5",
+    "P31": "L7",
+    "P30": "N6",
+    "P27": "B8",
+    "P26": "A9",
+    "P25": "A10",
+    "P24": "A11",
+    "P23": "D8",
+    "P22": "B9",
+    "P21": "B10",
+    "P20": "B11",
+    "P17": "B7",
+    "P16": "B6",
+    "P15": "B3",
+    "P14": "B5",
+    "P13": "A5",
+    "P12": "A2",
+    "P11": "C3",
+    "P10": "B4",
+    "LED3": "K9",
+    "LED2": "F7",
+    "LED1": "C8",
+    "CLK": "R9",
+    "C63": "L10",
+    "C62": "R15",
+    "C61": "B12",
+    "C60": "C16",
+    "C59": "M14",
+    "C58": "M12",
+    "C57": "C12",
+    "C56": "D14",
+    "C55": "L14",
+    "C54": "N12",
+    "C53": "B13",
+    "C52": "E16",
+    "C51": "M9",
+    "C50": "L11",
+    "C49": "G12",
+    "C48": "F15",
+    "C47": "K14",
+    "C46": "K13",
+    "C45": "F11",
+    "C44": "H16",
+    "C43": "K12",
+    "C42": "J13",
+    "C41": "E14",
+    "C40": "G16",
+    "C39": "R16",
+    "C38": "J11",
+    "C37": "F12",
+    "C36": "J10",
+    "C35": "N16",
+    "C34": "M15",
+    "C33": "E11",
+    "C32": "G10",
+    "C31": "H12",
+    "C30": "M16",
+    "C29": "D11",
+    "C28": "G15",
+    "C27": "H13",
+    "C26": "H14",
+    "C25": "D10",
+    "C24": "F16",
+    "C23": "L16",
+    "C22": "K15",
+    "C21": "G11",
+    "C20": "D16",
+    "C19": "G14",
+    "C18": "G13",
+    "C17": "B16",
+    "C16": "D15",
+    "C15": "K16",
+    "C14": "F14",
+    "C13": "F9",
+    "C12": "A16",
+    "C11": "J14",
+    "C10": "T16",
+    "C09": "E10",
+    "C08": "B14",
+    "C07": "J15",
+    "C06": "P14",
+    "C05": "C11",
+    "C04": "E9",
+    "C03": "J16",
+    "C02": "L12",
+    "C01": "A15",
+    "C00": "C13"
+  }
 }

@@ -18,22 +18,22 @@
 
 
 # ------------ Red LEDs -------------------------------------------------------
-set_io --warn-no-port D1 99  # output
-set_io --warn-no-port D2 98  # output
-set_io --warn-no-port D3 97  # output
-set_io --warn-no-port D4 96  # output
+set_io --warn-no-port D1 99
+set_io --warn-no-port D2 98
+set_io --warn-no-port D3 97
+set_io --warn-no-port D4 96
 
 
 # ------------ Green LED ------------------------------------------------------
-set_io --warn-no-port D5 95  # output
+set_io --warn-no-port D5 95
 
 
 # ------------ IrDA -----------------------------------------------------------
-set_io --warn-no-port IR_TX 105  # output
-set_io --warn-no-port IR_RX 106  # input
+set_io --warn-no-port IR_TX 105
+set_io --warn-no-port IR_RX 106
 
 #-- IrDA_SD = 0, enable IrDA
-set_io --warn-no-port IR_SD 107  # output
+set_io --warn-no-port IR_SD 107
 
 
 # ------------ PMOD connector -------------------------------------------------
@@ -124,23 +124,23 @@ set_io --warn-no-port BR10 44
 
 
 # ------------ System 12 MHz clock --------------------------------------------
-set_io --warn-no-port CLK 21  # input
+set_io --warn-no-port CLK 21
 
 
 # -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
-set_io --warn-no-port RES  66  # input
-set_io --warn-no-port DONE 65  # output
-set_io --warn-no-port SS   71  # output
-set_io --warn-no-port MISO 68  # input
-set_io --warn-no-port MOSI 67  # output
-set_io --warn-no-port SCK  70  # output
+set_io --warn-no-port RES  66
+set_io --warn-no-port DONE 65
+set_io --warn-no-port SS   71
+set_io --warn-no-port MISO 68
+set_io --warn-no-port MOSI 67
+set_io --warn-no-port SCK  70
 #
 # --- FTDI 1: (Serial port)
-set_io --warn-no-port DCD 1  # output
-set_io --warn-no-port DSR 2  # output
-set_io --warn-no-port DTR 3  # input
-set_io --warn-no-port CTS 4  # output
-set_io --warn-no-port RTS 7  # input
-set_io --warn-no-port TX  8  # output
-set_io --warn-no-port RX  9  # input
+set_io --warn-no-port DCD 1
+set_io --warn-no-port DSR 2
+set_io --warn-no-port DTR 3
+set_io --warn-no-port CTS 4
+set_io --warn-no-port RTS 7
+set_io --warn-no-port TX  8
+set_io --warn-no-port RX  9

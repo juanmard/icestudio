@@ -1,0 +1,6 @@
+{
+  "CLK": "input",
+  "LED[1]": "output",
+  "LED[2]": "output",
+  "LED[3]": "output"
+}

@@ -8,11 +8,11 @@
 
 
 # --- LED pin on bottom of board ----------------------------------------------
-set_io --warn-no-port LED B3  # output
+set_io --warn-no-port LED B3
 
 
 # --- 16MHz clock pin on bottom of board --------------------------------------
-set_io --warn-no-port CLK B2  # input
+set_io --warn-no-port CLK B2
 
 
 # --- Left side of board ------------------------------------------------------

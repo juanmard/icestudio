@@ -8,7 +8,7 @@
 
 
 # ------------ System clock ---------------------------------------------------
-set_io --warn-no-port CLK R9  # input
+set_io --warn-no-port CLK R9
 
 
 # ------------ LEDs map -------------------------------------------------------
@@ -29,11 +29,11 @@ set_io --warn-no-port CLK R9  # input
 # --   LED3: Red led
 
 # ------------| Green leds |---------------------------------------------------
-set_io --warn-no-port LED1 C8  # output
-set_io --warn-no-port LED2 F7  # output
+set_io --warn-no-port LED1 C8
+set_io --warn-no-port LED2 F7
 
 # ------------| Red led |------------------------------------------------------
-set_io --warn-no-port LED3 K9  # output
+set_io --warn-no-port LED3 K9
 
 
 # ------------ PMOD connectors ------------------------------------------------

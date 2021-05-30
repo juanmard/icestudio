@@ -8,20 +8,20 @@
 
 
 # ------------ LEDs -----------------------------------------------------------
-set_io --warn-no-port LED_R 41  # output
-set_io --warn-no-port LED_G 40  # output
-set_io --warn-no-port LED_B 39  # output
+set_io --warn-no-port LED_R 41
+set_io --warn-no-port LED_G 40
+set_io --warn-no-port LED_B 39
 
 
 # ------------ Switch buttons -------------------------------------------------
-set_io --warn-no-port SW1 23  # input
-set_io --warn-no-port SW2 25  # input
-set_io --warn-no-port SW3 34  # input
-set_io --warn-no-port SW4 43  # input
+set_io --warn-no-port SW1 23
+set_io --warn-no-port SW2 25
+set_io --warn-no-port SW3 34
+set_io --warn-no-port SW4 43
 
 
 # ------------ System 12 MHz clock --------------------------------------------
-set_io --warn-no-port CLK 35  # input
+set_io --warn-no-port CLK 35
 
 
 # ------------ Programming jumpers --------------------------------------------
@@ -47,10 +47,10 @@ set_io --warn-no-port CLK 35  # input
 #      |  3V3 3V3 |
 #       ----------
 
-set_io --warn-no-port SS   16  # output
-set_io --warn-no-port MOSI 17  # output
-set_io --warn-no-port MISO 14  # input
-set_io --warn-no-port SCK  15  # output
+set_io --warn-no-port SS   16
+set_io --warn-no-port MOSI 17
+set_io --warn-no-port MISO 14
+set_io --warn-no-port SCK  15
 
 set_io --warn-no-port 38B 27
 set_io --warn-no-port 39A 26
@@ -106,7 +106,7 @@ set_io --warn-no-port 48B  36
 set_io --warn-no-port 51A  42
 set_io --warn-no-port 50B  38
 set_io --warn-no-port 41A  28
-set_io --warn-no-port ICLK 35  # input
+set_io --warn-no-port ICLK 35
 
 
 # ------------ HEADER C -------------------------------------------------------

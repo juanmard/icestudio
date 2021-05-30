@@ -12,236 +12,50 @@
     "plbs": 160,
     "brams": 16
   },
-  "pinout": [
-    {
-      "type": "output",
-      "name": "VGA_VS",
-      "value": "27"
-    },
-    {
-      "type": "output",
-      "name": "VGA_R2",
-      "value": "40"
-    },
-    {
-      "type": "output",
-      "name": "VGA_R1",
-      "value": "37"
-    },
-    {
-      "type": "output",
-      "name": "VGA_R0",
-      "value": "36"
-    },
-    {
-      "type": "output",
-      "name": "VGA_HS",
-      "value": "26"
-    },
-    {
-      "type": "output",
-      "name": "VGA_G2",
-      "value": "33"
-    },
-    {
-      "type": "output",
-      "name": "VGA_G1",
-      "value": "30"
-    },
-    {
-      "type": "output",
-      "name": "VGA_G0",
-      "value": "29"
-    },
-    {
-      "type": "output",
-      "name": "VGA_B2",
-      "value": "42"
-    },
-    {
-      "type": "output",
-      "name": "VGA_B1",
-      "value": "41"
-    },
-    {
-      "type": "output",
-      "name": "VGA_B0",
-      "value": "28"
-    },
-    {
-      "type": "output",
-      "name": "TX",
-      "value": "74"
-    },
-    {
-      "type": "input",
-      "name": "SW4",
-      "value": "52"
-    },
-    {
-      "type": "input",
-      "name": "SW3",
-      "value": "54"
-    },
-    {
-      "type": "input",
-      "name": "SW2",
-      "value": "51"
-    },
-    {
-      "type": "input",
-      "name": "SW1",
-      "value": "53"
-    },
-    {
-      "type": "output",
-      "name": "S2_G",
-      "value": "96"
-    },
-    {
-      "type": "output",
-      "name": "S2_F",
-      "value": "8"
-    },
-    {
-      "type": "output",
-      "name": "S2_E",
-      "value": "94"
-    },
-    {
-      "type": "output",
-      "name": "S2_D",
-      "value": "95"
-    },
-    {
-      "type": "output",
-      "name": "S2_C",
-      "value": "97"
-    },
-    {
-      "type": "output",
-      "name": "S2_B",
-      "value": "99"
-    },
-    {
-      "type": "output",
-      "name": "S2_A",
-      "value": "100"
-    },
-    {
-      "type": "output",
-      "name": "S1_G",
-      "value": "2"
-    },
-    {
-      "type": "output",
-      "name": "S1_F",
-      "value": "1"
-    },
-    {
-      "type": "output",
-      "name": "S1_E",
-      "value": "90"
-    },
-    {
-      "type": "output",
-      "name": "S1_D",
-      "value": "91"
-    },
-    {
-      "type": "output",
-      "name": "S1_C",
-      "value": "93"
-    },
-    {
-      "type": "output",
-      "name": "S1_B",
-      "value": "4"
-    },
-    {
-      "type": "output",
-      "name": "S1_A",
-      "value": "3"
-    },
-    {
-      "type": "input",
-      "name": "RX",
-      "value": "73"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD9",
-      "value": "80"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD8",
-      "value": "79"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD7",
-      "value": "78"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD4",
-      "value": "62"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD3",
-      "value": "63"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD2",
-      "value": "64"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD10",
-      "value": "81"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD1",
-      "value": "65"
-    },
-    {
-      "type": "output",
-      "name": "LED4",
-      "value": "60"
-    },
-    {
-      "type": "output",
-      "name": "LED3",
-      "value": "59"
-    },
-    {
-      "type": "output",
-      "name": "LED2",
-      "value": "57"
-    },
-    {
-      "type": "output",
-      "name": "LED1",
-      "value": "56"
-    },
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "15"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "VGA_VS": "27",
+    "VGA_R2": "40",
+    "VGA_R1": "37",
+    "VGA_R0": "36",
+    "VGA_HS": "26",
+    "VGA_G2": "33",
+    "VGA_G1": "30",
+    "VGA_G0": "29",
+    "VGA_B2": "42",
+    "VGA_B1": "41",
+    "VGA_B0": "28",
+    "TX": "74",
+    "SW4": "52",
+    "SW3": "54",
+    "SW2": "51",
+    "SW1": "53",
+    "S2_G": "96",
+    "S2_F": "8",
+    "S2_E": "94",
+    "S2_D": "95",
+    "S2_C": "97",
+    "S2_B": "99",
+    "S2_A": "100",
+    "S1_G": "2",
+    "S1_F": "1",
+    "S1_E": "90",
+    "S1_D": "91",
+    "S1_C": "93",
+    "S1_B": "4",
+    "S1_A": "3",
+    "RX": "73",
+    "PMOD9": "80",
+    "PMOD8": "79",
+    "PMOD7": "78",
+    "PMOD4": "62",
+    "PMOD3": "63",
+    "PMOD2": "64",
+    "PMOD10": "81",
+    "PMOD1": "65",
+    "LED4": "60",
+    "LED3": "59",
+    "LED2": "57",
+    "LED1": "56",
+    "CLK": "15"
+  }
 }

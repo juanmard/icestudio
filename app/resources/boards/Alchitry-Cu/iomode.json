@@ -1,0 +1,19 @@
+{
+  "TX": "output",
+  "SS": "output",
+  "SCK": "output",
+  "RX": "input",
+  "MOSI": "output",
+  "MISO": "input",
+  "LED7": "output",
+  "LED6": "output",
+  "LED5": "output",
+  "LED4": "output",
+  "LED3": "output",
+  "LED2": "output",
+  "LED1": "output",
+  "LED0": "output",
+  "CRESET": "input",
+  "CLK": "input",
+  "CDONE": "output"
+}

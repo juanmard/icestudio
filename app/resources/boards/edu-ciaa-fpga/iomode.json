@@ -1,0 +1,15 @@
+{
+  "TX": "output",
+  "RX": "input",
+  "RTS": "input",
+  "RST": "input",
+  "DTR": "input",
+  "DSR": "output",
+  "DCD": "output",
+  "CTS": "output",
+  "CLK": "input",
+  "BTN4": "input",
+  "BTN3": "input",
+  "BTN2": "input",
+  "BTN1": "input"
+}

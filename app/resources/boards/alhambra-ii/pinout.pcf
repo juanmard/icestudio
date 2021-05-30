@@ -8,18 +8,18 @@
 
 
 # ------------ User Leds ------------------------------------------------------
-set_io --warn-no-port LED0 45  # output
-set_io --warn-no-port LED1 44  # output
-set_io --warn-no-port LED2 43  # output
-set_io --warn-no-port LED3 42  # output
-set_io --warn-no-port LED4 41  # output
-set_io --warn-no-port LED5 39  # output
-set_io --warn-no-port LED6 38  # output
-set_io --warn-no-port LED7 37  # output
+set_io --warn-no-port LED0 45
+set_io --warn-no-port LED1 44
+set_io --warn-no-port LED2 43
+set_io --warn-no-port LED3 42
+set_io --warn-no-port LED4 41
+set_io --warn-no-port LED5 39
+set_io --warn-no-port LED6 38
+set_io --warn-no-port LED7 37
 
 # ------------ User push buttons ----------------------------------------------
-set_io --warn-no-port SW1 34  # input
-set_io --warn-no-port SW2 33  # input
+set_io --warn-no-port SW1 34
+set_io --warn-no-port SW2 33
 
 # ------------ 5v Digital I/O -------------------------------------------------
 
@@ -72,27 +72,27 @@ set_io --warn-no-port SDA 118
 set_io --warn-no-port SCL 119
 
 # -------------------------- I2C ADC ------------------------------------------
-set_io --warn-no-port ADC_SCL 84  # output
+set_io --warn-no-port ADC_SCL 84
 set_io --warn-no-port ADC_SDA 83
-set_io --warn-no-port ADC_INT 90  # input
+set_io --warn-no-port ADC_INT 90
 
 # -------------------------- SYSTEM CLOCK -------------------------------------
-set_io --warn-no-port CLK 49  # input
+set_io --warn-no-port CLK 49
 
 # -------------------------- FTDI ---------------------------------------------
 # --- FTDI 0:
-set_io --warn-no-port RES  66  # input
-set_io --warn-no-port DONE 65  # output
-set_io --warn-no-port SS   71  # output
-set_io --warn-no-port MISO 68  # input
-set_io --warn-no-port MOSI 67  # output
-set_io --warn-no-port SCK  70  # output
+set_io --warn-no-port RES  66
+set_io --warn-no-port DONE 65
+set_io --warn-no-port SS   71
+set_io --warn-no-port MISO 68
+set_io --warn-no-port MOSI 67
+set_io --warn-no-port SCK  70
 #
 # --- FTDI 1: (Serial port)
-set_io --warn-no-port DCD 47  # output
-set_io --warn-no-port DSR 48  # output
-set_io --warn-no-port DTR 52  # input
-set_io --warn-no-port CTS 56  # output
-set_io --warn-no-port RTS 60  # input
-set_io --warn-no-port TX  61  # output
-set_io --warn-no-port RX  62  # input
+set_io --warn-no-port DCD 47
+set_io --warn-no-port DSR 48
+set_io --warn-no-port DTR 52
+set_io --warn-no-port CTS 56
+set_io --warn-no-port RTS 60
+set_io --warn-no-port TX  61
+set_io --warn-no-port RX  62

@@ -1,0 +1,13 @@
+{
+  "SS": "output",
+  "SCK": "output",
+  "MOSI": "output",
+  "MISO": "input",
+  "LED4": "output",
+  "LED3": "output",
+  "LED2": "output",
+  "LED1": "output",
+  "CLK": "input",
+  "B2": "input",
+  "B1": "input"
+}

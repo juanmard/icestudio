@@ -1,0 +1,12 @@
+{
+  "USB_DP": "input",
+  "USB_DN": "input",
+  "USB_DET": "input",
+  "LED_R": "output",
+  "LED_G": "output",
+  "LED_B": "output",
+  "LEDR": "output",
+  "LEDG": "output",
+  "CLK": "input",
+  "BTN": "input"
+}

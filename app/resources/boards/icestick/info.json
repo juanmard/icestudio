@@ -12,246 +12,52 @@
     "plbs": 160,
     "brams": 16
   },
-  "pinout": [
-    {
-      "type": "output",
-      "name": "TX",
-      "value": "8"
-    },
-    {
-      "type": "inout",
-      "name": "TR9",
-      "value": "118"
-    },
-    {
-      "type": "inout",
-      "name": "TR8",
-      "value": "117"
-    },
-    {
-      "type": "inout",
-      "name": "TR7",
-      "value": "116"
-    },
-    {
-      "type": "inout",
-      "name": "TR6",
-      "value": "115"
-    },
-    {
-      "type": "inout",
-      "name": "TR5",
-      "value": "114"
-    },
-    {
-      "type": "inout",
-      "name": "TR4",
-      "value": "113"
-    },
-    {
-      "type": "inout",
-      "name": "TR3",
-      "value": "112"
-    },
-    {
-      "type": "inout",
-      "name": "TR10",
-      "value": "119"
-    },
-    {
-      "type": "output",
-      "name": "SS",
-      "value": "71"
-    },
-    {
-      "type": "output",
-      "name": "SCK",
-      "value": "70"
-    },
-    {
-      "type": "input",
-      "name": "RX",
-      "value": "9"
-    },
-    {
-      "type": "input",
-      "name": "RTS",
-      "value": "7"
-    },
-    {
-      "type": "input",
-      "name": "RES",
-      "value": "66"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD9",
-      "value": "90"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD8",
-      "value": "88"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD7",
-      "value": "87"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD4",
-      "value": "81"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD3",
-      "value": "80"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD2",
-      "value": "79"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD10",
-      "value": "91"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD1",
-      "value": "78"
-    },
-    {
-      "type": "output",
-      "name": "MOSI",
-      "value": "67"
-    },
-    {
-      "type": "input",
-      "name": "MISO",
-      "value": "68"
-    },
-    {
-      "type": "output",
-      "name": "IR_TX",
-      "value": "105"
-    },
-    {
-      "type": "output",
-      "name": "IR_SD",
-      "value": "107"
-    },
-    {
-      "type": "input",
-      "name": "IR_RX",
-      "value": "106"
-    },
-    {
-      "type": "input",
-      "name": "DTR",
-      "value": "3"
-    },
-    {
-      "type": "output",
-      "name": "DSR",
-      "value": "2"
-    },
-    {
-      "type": "output",
-      "name": "DONE",
-      "value": "65"
-    },
-    {
-      "type": "output",
-      "name": "DCD",
-      "value": "1"
-    },
-    {
-      "type": "output",
-      "name": "D5",
-      "value": "95"
-    },
-    {
-      "type": "output",
-      "name": "D4",
-      "value": "96"
-    },
-    {
-      "type": "output",
-      "name": "D3",
-      "value": "97"
-    },
-    {
-      "type": "output",
-      "name": "D2",
-      "value": "98"
-    },
-    {
-      "type": "output",
-      "name": "D1",
-      "value": "99"
-    },
-    {
-      "type": "output",
-      "name": "CTS",
-      "value": "4"
-    },
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "21"
-    },
-    {
-      "type": "inout",
-      "name": "BR9",
-      "value": "45"
-    },
-    {
-      "type": "inout",
-      "name": "BR8",
-      "value": "47"
-    },
-    {
-      "type": "inout",
-      "name": "BR7",
-      "value": "48"
-    },
-    {
-      "type": "inout",
-      "name": "BR6",
-      "value": "56"
-    },
-    {
-      "type": "inout",
-      "name": "BR5",
-      "value": "60"
-    },
-    {
-      "type": "inout",
-      "name": "BR4",
-      "value": "61"
-    },
-    {
-      "type": "inout",
-      "name": "BR3",
-      "value": "62"
-    },
-    {
-      "type": "inout",
-      "name": "BR10",
-      "value": "44"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "TX": "8",
+    "TR9": "118",
+    "TR8": "117",
+    "TR7": "116",
+    "TR6": "115",
+    "TR5": "114",
+    "TR4": "113",
+    "TR3": "112",
+    "TR10": "119",
+    "SS": "71",
+    "SCK": "70",
+    "RX": "9",
+    "RTS": "7",
+    "RES": "66",
+    "PMOD9": "90",
+    "PMOD8": "88",
+    "PMOD7": "87",
+    "PMOD4": "81",
+    "PMOD3": "80",
+    "PMOD2": "79",
+    "PMOD10": "91",
+    "PMOD1": "78",
+    "MOSI": "67",
+    "MISO": "68",
+    "IR_TX": "105",
+    "IR_SD": "107",
+    "IR_RX": "106",
+    "DTR": "3",
+    "DSR": "2",
+    "DONE": "65",
+    "DCD": "1",
+    "D5": "95",
+    "D4": "96",
+    "D3": "97",
+    "D2": "98",
+    "D1": "99",
+    "CTS": "4",
+    "CLK": "21",
+    "BR9": "45",
+    "BR8": "47",
+    "BR7": "48",
+    "BR6": "56",
+    "BR5": "60",
+    "BR4": "61",
+    "BR3": "62",
+    "BR10": "44"
+  }
 }

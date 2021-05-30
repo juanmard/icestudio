@@ -13,141 +13,31 @@
     "plbs": 660,
     "brams": 30
   },
-  "pinout": [
-    {
-      "type": "input",
-      "name": "CLK",
-      "value": "A9"
-    },
-    {
-      "type": "output",
-      "name": "LED[1]",
-      "value": "K4"
-    },
-    {
-      "type": "output",
-      "name": "LED[2]",
-      "value": "M3"
-    },
-    {
-      "type": "output",
-      "name": "LED[3]",
-      "value": "J3"
-    },
-    {
-      "type": "inout",
-      "name": "RST",
-      "value": "T15"
-    },
-    {
-      "type": "inout",
-      "name": "A[0]",
-      "value": "L4"
-    },
-    {
-      "type": "inout",
-      "name": "A[1]",
-      "value": "N3"
-    },
-    {
-      "type": "inout",
-      "name": "A[2]",
-      "value": "N4"
-    },
-    {
-      "type": "inout",
-      "name": "A[3]",
-      "value": "H4"
-    },
-    {
-      "type": "inout",
-      "name": "A[4]",
-      "value": "G4"
-    },
-    {
-      "type": "inout",
-      "name": "A[5]",
-      "value": "T17"
-    },
-    {
-      "type": "inout",
-      "name": "SCK",
-      "value": "R17"
-    },
-    {
-      "type": "inout",
-      "name": "MOSI",
-      "value": "N16"
-    },
-    {
-      "type": "inout",
-      "name": "MISO",
-      "value": "N15"
-    },
-    {
-      "type": "inout",
-      "name": "G[0]",
-      "value": "N17"
-    },
-    {
-      "type": "inout",
-      "name": "G[1]",
-      "value": "M18"
-    },
-    {
-      "type": "inout",
-      "name": "SDA",
-      "value": "C10"
-    },
-    {
-      "type": "inout",
-      "name": "SCL",
-      "value": "C9"
-    },
-    {
-      "type": "inout",
-      "name": "G[5]",
-      "value": "B10"
-    },
-    {
-      "type": "inout",
-      "name": "G[6]",
-      "value": "B9"
-    },
-    {
-      "type": "inout",
-      "name": "G[9]",
-      "value": "C8"
-    },
-    {
-      "type": "inout",
-      "name": "G[10]",
-      "value": "B8"
-    },
-    {
-      "type": "inout",
-      "name": "G[11]",
-      "value": "A8"
-    },
-    {
-      "type": "inout",
-      "name": "G[12]",
-      "value": "H2"
-    },
-    {
-      "type": "inout",
-      "name": "G[13]",
-      "value": "J2"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "CLK": "A9",
+    "LED[1]": "K4",
+    "LED[2]": "M3",
+    "LED[3]": "J3",
+    "RST": "T15",
+    "A[0]": "L4",
+    "A[1]": "N3",
+    "A[2]": "N4",
+    "A[3]": "H4",
+    "A[4]": "G4",
+    "A[5]": "T17",
+    "SCK": "R17",
+    "MOSI": "N16",
+    "MISO": "N15",
+    "G[0]": "N17",
+    "G[1]": "M18",
+    "SDA": "C10",
+    "SCL": "C9",
+    "G[5]": "B10",
+    "G[6]": "B9",
+    "G[9]": "C8",
+    "G[10]": "B8",
+    "G[11]": "A8",
+    "G[12]": "H2",
+    "G[13]": "J2"
+  }
 }

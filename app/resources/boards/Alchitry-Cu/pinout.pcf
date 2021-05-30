@@ -8,38 +8,38 @@
 
 
 # ------------ LEDs -----------------------------------------------------------
-set_io --warn-no-port LED0 J11  # output
-set_io --warn-no-port LED1 K11  # output
-set_io --warn-no-port LED2 K12  # output
-set_io --warn-no-port LED3 K14  # output
-set_io --warn-no-port LED4 L12  # output
-set_io --warn-no-port LED5 L14  # output
-set_io --warn-no-port LED6 M12  # output
-set_io --warn-no-port LED7 N14  # output
+set_io --warn-no-port LED0 J11
+set_io --warn-no-port LED1 K11
+set_io --warn-no-port LED2 K12
+set_io --warn-no-port LED3 K14
+set_io --warn-no-port LED4 L12
+set_io --warn-no-port LED5 L14
+set_io --warn-no-port LED6 M12
+set_io --warn-no-port LED7 N14
 
 
 # ------------ System 100 MHz clock --------------------------------------------
-set_io --warn-no-port CLK P7  # input
+set_io --warn-no-port CLK P7
 
 
 # ------------ FTDI 0 ---------------------------------------------------------
 # SPI
-set_io --warn-no-port MISO P11  # input
-set_io --warn-no-port MOSI M11  # output
-set_io --warn-no-port SCK  P12  # output
-set_io --warn-no-port SS   P13  # output
+set_io --warn-no-port MISO P11
+set_io --warn-no-port MOSI M11
+set_io --warn-no-port SCK  P12
+set_io --warn-no-port SS   P13
 
-set_io --warn-no-port CRESET L10  # input
-set_io --warn-no-port CDONE  M10  # output
+set_io --warn-no-port CRESET L10
+set_io --warn-no-port CDONE  M10
 
 
 # ------------ FTDI 1 ---------------------------------------------------------
 # UART
-set_io --warn-no-port TX  P14  # output
-set_io --warn-no-port RX  M9  # input
+set_io --warn-no-port TX  P14
+set_io --warn-no-port RX  M9
 
 # ------------ RESET BUTTON ---------------------------------------------------
-set_io --warn-no-port RESET P8 #input
+set_io --warn-no-port RESET P8
 
 # ----------------------------- BANK-A ----------------------------------------
 set_io --warn-no-port A2 M1
@@ -129,8 +129,3 @@ set_io --warn-no-port C49 P2
 # ----------------------------- BANK-D ----------------------------------------
 # Bank D on this board has the LED, SPI, USB TX/RX, CLK, and RESET button
 # They are all configured above
-
-
-
-
-

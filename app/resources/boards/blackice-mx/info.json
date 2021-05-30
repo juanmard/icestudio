@@ -12,561 +12,115 @@
     "plbs": 960,
     "brams": 32
   },
-  "pinout": [
-    {
-      "type": "inout",
-      "name": "yellow_led",
-      "value": "55"
-    },
-    {
-      "type": "inout",
-      "name": "wp",
-      "value": "64"
-    },
-    {
-      "type": "inout",
-      "name": "we",
-      "value": "107"
-    },
-    {
-      "type": "inout",
-      "name": "udqm",
-      "value": "94"
-    },
-    {
-      "type": "inout",
-      "name": "tx",
-      "value": "61"
-    },
-    {
-      "type": "inout",
-      "name": "ss",
-      "value": "71"
-    },
-    {
-      "type": "inout",
-      "name": "sck",
-      "value": "70"
-    },
-    {
-      "type": "inout",
-      "name": "rx",
-      "value": "62"
-    },
-    {
-      "type": "inout",
-      "name": "red_led",
-      "value": "56"
-    },
-    {
-      "type": "inout",
-      "name": "rclk",
-      "value": "129"
-    },
-    {
-      "type": "inout",
-      "name": "ras",
-      "value": "112"
-    },
-    {
-      "type": "inout",
-      "name": "mosi",
-      "value": "67"
-    },
-    {
-      "type": "inout",
-      "name": "miso",
-      "value": "68"
-    },
-    {
-      "type": "inout",
-      "name": "mcs",
-      "value": "113"
-    },
-    {
-      "type": "inout",
-      "name": "ldqm",
-      "value": "93"
-    },
-    {
-      "type": "inout",
-      "name": "io1",
-      "value": "74"
-    },
-    {
-      "type": "inout",
-      "name": "io0",
-      "value": "73"
-    },
-    {
-      "type": "inout",
-      "name": "hold",
-      "value": "63"
-    },
-    {
-      "type": "inout",
-      "name": "dsck",
-      "value": "76"
-    },
-    {
-      "type": "inout",
-      "name": "dcs",
-      "value": "75"
-    },
-    {
-      "type": "inout",
-      "name": "clk",
-      "value": "60"
-    },
-    {
-      "type": "inout",
-      "name": "cke",
-      "value": "128"
-    },
-    {
-      "type": "inout",
-      "name": "cas",
-      "value": "110"
-    },
-    {
-      "type": "inout",
-      "name": "button2",
-      "value": "49"
-    },
-    {
-      "type": "inout",
-      "name": "button1",
-      "value": "52"
-    },
-    {
-      "type": "inout",
-      "name": "TD2P",
-      "value": "48"
-    },
-    {
-      "type": "inout",
-      "name": "TD2M",
-      "value": "47"
-    },
-    {
-      "type": "inout",
-      "name": "TD1P",
-      "value": "45"
-    },
-    {
-      "type": "inout",
-      "name": "TD1M",
-      "value": "44"
-    },
-    {
-      "type": "inout",
-      "name": "TD0P",
-      "value": "43"
-    },
-    {
-      "type": "inout",
-      "name": "TD0M",
-      "value": "42"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[9]",
-      "value": "17"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[8]",
-      "value": "18"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[7]",
-      "value": "28"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[6]",
-      "value": "29"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[5]",
-      "value": "33"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[4]",
-      "value": "34"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[47]",
-      "value": "26"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[46]",
-      "value": "25"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[45]",
-      "value": "22"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[44]",
-      "value": "21"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[43]",
-      "value": "24"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[42]",
-      "value": "23"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[41]",
-      "value": "20"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[40]",
-      "value": "19"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[3]",
-      "value": "31"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[39]",
-      "value": "52"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[38]",
-      "value": "49"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[37]",
-      "value": "102"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[36]",
-      "value": "104"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[35]",
-      "value": "99"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[34]",
-      "value": "101"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[33]",
-      "value": "105"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[32]",
-      "value": "106"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[31]",
-      "value": "4"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[30]",
-      "value": "3"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[2]",
-      "value": "32"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[29]",
-      "value": "144"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[28]",
-      "value": "143"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[27]",
-      "value": "8"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[26]",
-      "value": "7"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[25]",
-      "value": "2"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[24]",
-      "value": "1"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[23]",
-      "value": "139"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[22]",
-      "value": "138"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[21]",
-      "value": "142"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[20]",
-      "value": "141"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[1]",
-      "value": "37"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[19]",
-      "value": "135"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[18]",
-      "value": "134"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[17]",
-      "value": "137"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[16]",
-      "value": "136"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[15]",
-      "value": "9"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[14]",
-      "value": "10"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[13]",
-      "value": "15"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[12]",
-      "value": "16"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[11]",
-      "value": "11"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[10]",
-      "value": "12"
-    },
-    {
-      "type": "inout",
-      "name": "PMOD[0]",
-      "value": "38"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[9]",
-      "value": "88"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[8]",
-      "value": "87"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[7]",
-      "value": "85"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[6]",
-      "value": "84"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[5]",
-      "value": "83"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[4]",
-      "value": "82"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[3]",
-      "value": "81"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[2]",
-      "value": "80"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[1]",
-      "value": "79"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[15]",
-      "value": "98"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[14]",
-      "value": "97"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[13]",
-      "value": "96"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[12]",
-      "value": "95"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[11]",
-      "value": "91"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[10]",
-      "value": "90"
-    },
-    {
-      "type": "inout",
-      "name": "DQ[0]",
-      "value": "78"
-    },
-    {
-      "type": "inout",
-      "name": "CKP",
-      "value": "41"
-    },
-    {
-      "type": "inout",
-      "name": "CKM",
-      "value": "39"
-    },
-    {
-      "type": "inout",
-      "name": "A[9]",
-      "value": "116"
-    },
-    {
-      "type": "inout",
-      "name": "A[8]",
-      "value": "118"
-    },
-    {
-      "type": "inout",
-      "name": "A[7]",
-      "value": "120"
-    },
-    {
-      "type": "inout",
-      "name": "A[6]",
-      "value": "122"
-    },
-    {
-      "type": "inout",
-      "name": "A[5]",
-      "value": "125"
-    },
-    {
-      "type": "inout",
-      "name": "A[4]",
-      "value": "130"
-    },
-    {
-      "type": "inout",
-      "name": "A[3]",
-      "value": "124"
-    },
-    {
-      "type": "inout",
-      "name": "A[2]",
-      "value": "121"
-    },
-    {
-      "type": "inout",
-      "name": "A[1]",
-      "value": "119"
-    },
-    {
-      "type": "inout",
-      "name": "A[11]",
-      "value": "114"
-    },
-    {
-      "type": "inout",
-      "name": "A[10]",
-      "value": "115"
-    },
-    {
-      "type": "inout",
-      "name": "A[0]",
-      "value": "117"
-    },
-    {
-      "type": "output",
-      "name": "NULL",
-      "value": "NULL"
-    },
-    {
-      "type": "input",
-      "name": "NULL",
-      "value": "NULL"
-    }
-  ]
+  "pinout": {
+    "yellow_led": "55",
+    "wp": "64",
+    "we": "107",
+    "udqm": "94",
+    "tx": "61",
+    "ss": "71",
+    "sck": "70",
+    "rx": "62",
+    "red_led": "56",
+    "rclk": "129",
+    "ras": "112",
+    "mosi": "67",
+    "miso": "68",
+    "mcs": "113",
+    "ldqm": "93",
+    "io1": "74",
+    "io0": "73",
+    "hold": "63",
+    "dsck": "76",
+    "dcs": "75",
+    "clk": "60",
+    "cke": "128",
+    "cas": "110",
+    "button2": "49",
+    "button1": "52",
+    "TD2P": "48",
+    "TD2M": "47",
+    "TD1P": "45",
+    "TD1M": "44",
+    "TD0P": "43",
+    "TD0M": "42",
+    "PMOD[9]": "17",
+    "PMOD[8]": "18",
+    "PMOD[7]": "28",
+    "PMOD[6]": "29",
+    "PMOD[5]": "33",
+    "PMOD[4]": "34",
+    "PMOD[47]": "26",
+    "PMOD[46]": "25",
+    "PMOD[45]": "22",
+    "PMOD[44]": "21",
+    "PMOD[43]": "24",
+    "PMOD[42]": "23",
+    "PMOD[41]": "20",
+    "PMOD[40]": "19",
+    "PMOD[3]": "31",
+    "PMOD[39]": "52",
+    "PMOD[38]": "49",
+    "PMOD[37]": "102",
+    "PMOD[36]": "104",
+    "PMOD[35]": "99",
+    "PMOD[34]": "101",
+    "PMOD[33]": "105",
+    "PMOD[32]": "106",
+    "PMOD[31]": "4",
+    "PMOD[30]": "3",
+    "PMOD[2]": "32",
+    "PMOD[29]": "144",
+    "PMOD[28]": "143",
+    "PMOD[27]": "8",
+    "PMOD[26]": "7",
+    "PMOD[25]": "2",
+    "PMOD[24]": "1",
+    "PMOD[23]": "139",
+    "PMOD[22]": "138",
+    "PMOD[21]": "142",
+    "PMOD[20]": "141",
+    "PMOD[1]": "37",
+    "PMOD[19]": "135",
+    "PMOD[18]": "134",
+    "PMOD[17]": "137",
+    "PMOD[16]": "136",
+    "PMOD[15]": "9",
+    "PMOD[14]": "10",
+    "PMOD[13]": "15",
+    "PMOD[12]": "16",
+    "PMOD[11]": "11",
+    "PMOD[10]": "12",
+    "PMOD[0]": "38",
+    "DQ[9]": "88",
+    "DQ[8]": "87",
+    "DQ[7]": "85",
+    "DQ[6]": "84",
+    "DQ[5]": "83",
+    "DQ[4]": "82",
+    "DQ[3]": "81",
+    "DQ[2]": "80",
+    "DQ[1]": "79",
+    "DQ[15]": "98",
+    "DQ[14]": "97",
+    "DQ[13]": "96",
+    "DQ[12]": "95",
+    "DQ[11]": "91",
+    "DQ[10]": "90",
+    "DQ[0]": "78",
+    "CKP": "41",
+    "CKM": "39",
+    "A[9]": "116",
+    "A[8]": "118",
+    "A[7]": "120",
+    "A[6]": "122",
+    "A[5]": "125",
+    "A[4]": "130",
+    "A[3]": "124",
+    "A[2]": "121",
+    "A[1]": "119",
+    "A[11]": "114",
+    "A[10]": "115",
+    "A[0]": "117"
+  }
 }

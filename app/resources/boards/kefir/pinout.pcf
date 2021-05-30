@@ -3,19 +3,19 @@
 # -----------------------------------------------------------------------------
 
 # Clock input
-set_io --warn-no-port CLK 49  # input
+set_io --warn-no-port CLK 49
 
 # Capacitive-sense buttons
-set_io --warn-no-port BTN1 136  # input
-set_io --warn-no-port BTN2 134  # input
-set_io --warn-no-port BTN3 128  # input
-set_io --warn-no-port BTN4 122  # input
+set_io --warn-no-port BTN1 136
+set_io --warn-no-port BTN2 134
+set_io --warn-no-port BTN3 128
+set_io --warn-no-port BTN4 122
 
 # LED outputs
-set_io --warn-no-port LED1 137  # output
-set_io --warn-no-port LED2 135  # output
-set_io --warn-no-port LED3 129  # output
-set_io --warn-no-port LED4 121  # output
+set_io --warn-no-port LED1 137
+set_io --warn-no-port LED2 135
+set_io --warn-no-port LED3 129
+set_io --warn-no-port LED4 121
 
 # Arduido connectors
 set_io --warn-no-port IO0 138
@@ -75,14 +75,14 @@ set_io --warn-no-port PMB7 99
 
 # Milk channel A
 # As an RS-232 port
-set_io --warn-no-port TXD 37  # input
-set_io --warn-no-port RXD 38  # output
-set_io --warn-no-port RTS 39  # input
-set_io --warn-no-port CTS 41  # output
-set_io --warn-no-port DTR 42  # input
-set_io --warn-no-port DSR 43  # output
-set_io --warn-no-port DCD 44  # output
-set_io --warn-no-port RI  45  # output
+set_io --warn-no-port TXD 37
+set_io --warn-no-port RXD 38
+set_io --warn-no-port RTS 39
+set_io --warn-no-port CTS 41
+set_io --warn-no-port DTR 42
+set_io --warn-no-port DSR 43
+set_io --warn-no-port DCD 44
+set_io --warn-no-port RI  45
 # FTDI generic names
 set_io --warn-no-port AD0 37
 set_io --warn-no-port AD1 38
@@ -121,14 +121,14 @@ set_io --warn-no-port MOSI 119
 set_io --warn-no-port MISO 120
 
 # MCP3008 A/D
-set_io --warn-no-port AD_CS 101  # output
-set_io --warn-no-port AD_DI 102  # output
-set_io --warn-no-port AD_DO 104  # input
-set_io --warn-no-port AD_CK 105  # output
+set_io --warn-no-port AD_CS 101
+set_io --warn-no-port AD_DI 102
+set_io --warn-no-port AD_DO 104
+set_io --warn-no-port AD_CK 105
 
 # USB
-set_io --warn-no-port U_VPO 112  # output
-set_io --warn-no-port U_VMO 113  # output
-set_io --warn-no-port U_VMI 114  # input
-set_io --warn-no-port U_VPI 115  # input
-set_io --warn-no-port U_NOE 116  # output
+set_io --warn-no-port U_VPO 112
+set_io --warn-no-port U_VMO 113
+set_io --warn-no-port U_VMI 114
+set_io --warn-no-port U_VPI 115
+set_io --warn-no-port U_NOE 116

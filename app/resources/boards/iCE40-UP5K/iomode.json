@@ -1,0 +1,15 @@
+{
+  "SW4": "input",
+  "SW3": "input",
+  "SW2": "input",
+  "SW1": "input",
+  "SS": "output",
+  "SCK": "output",
+  "MOSI": "output",
+  "MISO": "input",
+  "LED_R": "output",
+  "LED_G": "output",
+  "LED_B": "output",
+  "ICLK": "input",
+  "CLK": "input"
+}

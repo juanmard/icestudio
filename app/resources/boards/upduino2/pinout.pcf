@@ -7,9 +7,9 @@
 
 
 # ------------ RGB LED Driver -------------------------------------------------
-set_io --warn-no-port LED_G 39  # output
-set_io --warn-no-port LED_B 40  # output
-set_io --warn-no-port LED_R 41  # output
+set_io --warn-no-port LED_G 39
+set_io --warn-no-port LED_B 40
+set_io --warn-no-port LED_R 41
 
 
 # ------------ Left side ------------------------------------------------------

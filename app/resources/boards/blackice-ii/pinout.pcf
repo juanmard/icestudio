@@ -31,10 +31,10 @@
 # --   LED3: Yellow
 # --   LED4: Red
 
-set_io --warn-no-port LED1 71  # output
-set_io --warn-no-port LED2 67  # output
-set_io --warn-no-port LED3 68  # output
-set_io --warn-no-port LED4 70  # output
+set_io --warn-no-port LED1 71
+set_io --warn-no-port LED2 67
+set_io --warn-no-port LED3 68
+set_io --warn-no-port LED4 70
 
 # LED1 = SS = P140
 # LED2 = MISO = P141
@@ -63,12 +63,12 @@ set_io --warn-no-port LED4 70  # output
 #           |______|   |______|   |______|
 #
 
-set_io --warn-no-port B1 63  # input
-set_io --warn-no-port B2 64  # input
+set_io --warn-no-port B1 63
+set_io --warn-no-port B2 64
 
 
 # ------------ System 12 MHz clock --------------------------------------------
-set_io --warn-no-port CLK 129  # input
+set_io --warn-no-port CLK 129
 
 
 # ------------ Digital connectors ---------------------------------------------
@@ -435,10 +435,10 @@ set_io --warn-no-port GRESET 128
 # ------------ FTDI -----------------------------------------------------------
 #
 
-set_io --warn-no-port SS   71  # output
-set_io --warn-no-port MISO 67  # input
-set_io --warn-no-port MOSI 68  # output
-set_io --warn-no-port SCK  70  # output
+set_io --warn-no-port SS   71
+set_io --warn-no-port MISO 67
+set_io --warn-no-port MOSI 68
+set_io --warn-no-port SCK  70
 
 # SS = P140 = LED1
 # MISO = P141 = LED2

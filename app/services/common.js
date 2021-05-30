@@ -196,6 +196,18 @@ angular
         if (bdir[0] !== '_' && !nodePath.extname(bdir)) {
           const bpath = nodePath.join(rpath, bdir);
           const idata = _readJSONFile(bpath, 'info.json');
+          const mdata = (nodeFs.existsSync(nodePath.join(bpath, 'iomode.json'))) ?
+          _readJSONFile(bpath, 'iomode.json') : {};
+          var pinout = []
+          for (const [key, value] of Object.entries(idata.pinout)) {
+            const constraint = mdata[key];
+            pinout.push({
+              'name': key,
+              'value': value,
+              'type': ((constraint) ? constraint : 'inout')
+            })
+          }
+          idata.pinout = pinout;
           boards.push({
             name: bdir,
             info: idata,

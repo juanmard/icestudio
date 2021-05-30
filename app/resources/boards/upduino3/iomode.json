@@ -1,0 +1,5 @@
+{
+"led_green": "output",
+"led_red": "output",
+"led_blue": "output"
+}
