@@ -2,9 +2,7 @@
   "label": "ULX3S-12F",
   "device": "ECP5",
   "datasheet": "https://github.com/emard/ulx3s",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "arch": "ecp5",
   "pinout": {
     "clk_25mhz": "G2",

@@ -40,7 +40,10 @@ angular
               pythonEnv: data.pythonEnv || {python: null, pip: null},
             };
 
-            if (self.data.pythonEnv.python && (self.data.pythonEnv.python.length > 0)) {
+            if (
+              self.data.pythonEnv.python &&
+              self.data.pythonEnv.python.length > 0
+            ) {
               common.PYTHON_ENV = self.data.pythonEnv.python;
               console.log('PYTHON', common.PYTHON_ENV);
             }
@@ -83,14 +86,9 @@ angular
         if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
           nodeFs.mkdirSync(common.ICESTUDIO_DIR);
         }
-        utils
-          .saveFile(common.PROFILE_PATH, this.data)
-          .then(function () {
-            // Success
-          })
-          .catch(function (error) {
-            alertify.error(error, 30);
-          });
+        utils.saveFile(common.PROFILE_PATH, this.data).catch(function (error) {
+          alertify.error(error, 30);
+        });
       };
 
       this.setBoard = function (board) {

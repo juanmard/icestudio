@@ -2,9 +2,7 @@
   "label": "EDU-CIAA-FPGA",
   "device": "HX4K",
   "datasheet": "http://www.proyecto-ciaa.com.ar/devwiki/doku.php?id=desarrollo:edu-fpga",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "56",
     "RX": "55",

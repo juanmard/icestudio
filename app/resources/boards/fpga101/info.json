@@ -2,9 +2,7 @@
   "label": "FPGA 101 Workshop Badge Board",
   "device": "UP5K",
   "datasheet": "https://github.com/mmicko/workshop_badge",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "PMOD7": "28",
     "PMOD6": "38",

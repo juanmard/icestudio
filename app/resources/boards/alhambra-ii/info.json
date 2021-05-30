@@ -2,9 +2,7 @@
   "label": "Alhambra II",
   "device": "HX4K",
   "datasheet": "https://github.com/FPGAwars/Alhambra-II-FPGA",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "61",
     "SW2": "33",

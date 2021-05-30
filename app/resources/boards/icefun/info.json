@@ -2,9 +2,7 @@
   "label": "iceFUN",
   "device": "HX8K",
   "datasheet": "https://www.robot-electronics.co.uk/icefun.html",
-  "prog": [
-    "Serial"
-  ],
+  "prog": ["Serial"],
   "pinout": {
     "spkp": "M12",
     "spkm": "M6",

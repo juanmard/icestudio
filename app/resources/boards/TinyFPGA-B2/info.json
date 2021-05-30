@@ -2,9 +2,7 @@
   "label": "TinyFPGA B2",
   "device": "LP8K",
   "datasheet": "http://tinyfpga.com/b-series-guide.html",
-  "prog": [
-    "Serial"
-  ],
+  "prog": ["Serial"],
   "pinout": {
     "USB_DP": "A3",
     "USB_DM": "A4",

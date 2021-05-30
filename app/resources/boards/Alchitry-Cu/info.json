@@ -2,9 +2,7 @@
   "label": "Alchitry",
   "device": "HX8K",
   "datasheet": "https://alchitry.com/products/alchitry-cu-fpga-development-board",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "P14",
     "SS": "P13",

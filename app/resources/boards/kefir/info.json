@@ -2,9 +2,7 @@
   "label": "K\u00e9fir I iCE40-HX4K",
   "device": "HX4K",
   "datasheet": "http://fpgalibre.sourceforge.net/Kefir/",
-  "prog": [
-    ""
-  ],
+  "prog": [""],
   "pinout": {
     "U_VPO": "112",
     "U_VPI": "115",

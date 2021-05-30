@@ -2,9 +2,7 @@
   "label": "TinyFPGA BX",
   "device": "LP8K",
   "datasheet": "https://github.com/tinyfpga/TinyFPGA-BX",
-  "prog": [
-    "Serial"
-  ],
+  "prog": ["Serial"],
   "pinout": {
     "USBPU": "A3",
     "USBP": "B4",

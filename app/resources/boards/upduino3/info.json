@@ -2,9 +2,7 @@
   "label": "UPDuino v3.0",
   "device": "UP5K",
   "datasheet": "https://github.com/tinyvision-ai-inc/UPduino-v3.0",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "spi_ssn": "16",
     "spi_sck": "15",

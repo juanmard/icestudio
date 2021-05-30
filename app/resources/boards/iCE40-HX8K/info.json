@@ -2,9 +2,7 @@
   "label": "iCE40-HX8K Breakout Board",
   "device": "HX8K",
   "datasheet": "http://www.latticesemi.com/Products/DevelopmentBoardsAndKits/iCE40HX8KBreakoutBoard",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "B12",
     "T9": "T9",

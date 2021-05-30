@@ -2,9 +2,7 @@
   "label": "BlackIce",
   "device": "HX8K",
   "datasheet": "https://hackaday.io/project/12930-blackice-low-cost-open-hardware-fpga-dev-board",
-  "prog": [
-    "Serial"
-  ],
+  "prog": ["Serial"],
   "pinout": {
     "SS": "71",
     "SCK": "70",

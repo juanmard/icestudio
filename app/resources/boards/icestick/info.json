@@ -2,9 +2,7 @@
   "label": "iCEstick Evaluation Kit",
   "device": "HX1K",
   "datasheet": "http://www.latticesemi.com/icestick",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "8",
     "TR9": "118",

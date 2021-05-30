@@ -2,9 +2,7 @@
   "label": "icoBOARD 1.0",
   "device": "HX8K",
   "datasheet": "http://icoboard.org/about-icoboard.html",
-  "prog": [
-    "GPIO"
-  ],
+  "prog": ["GPIO"],
   "pinout": {
     "P47": "R10",
     "P46": "R14",

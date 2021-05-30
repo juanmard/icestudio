@@ -2,9 +2,7 @@
   "label": "iCEBreaker bitsy",
   "device": "UP5K",
   "datasheet": "https://github.com/icebreaker-fpga/icebreaker",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "USB_DP": "43",
     "USB_DN": "42",

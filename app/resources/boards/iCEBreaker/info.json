@@ -2,9 +2,7 @@
   "label": "iCEBreaker",
   "device": "UP5K",
   "datasheet": "https://github.com/icebreaker-fpga/icebreaker",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "9",
     "RX": "6",

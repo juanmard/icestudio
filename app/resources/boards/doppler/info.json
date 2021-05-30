@@ -2,9 +2,7 @@
   "label": "doppler",
   "device": "UP5K",
   "datasheet": "https://github.com/dadamachines/doppler/tree/master/hardware",
-  "prog": [
-    "samd51"
-  ],
+  "prog": ["samd51"],
   "pinout": {
     "pinbank2[7]": "34",
     "pinbank2[6]": "35",

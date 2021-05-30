@@ -7,7 +7,7 @@
         ng-click="showBoardOptions()"
         type="button"
         class="btn btn-sm btn-default"
-        uib-tooltip="{{ common.selectedBoard ? (common.selectedBoard.info.label + ' · ' + common.selectedBoard.info.device) : 'unselected' }}"
+        uib-tooltip="{{ common.selectedBoard ? (common.selectedBoard.info.label + ' · ' + common.selectedBoard.info.device + ' · ' + common.selectedProgrammer) : 'unselected' }}"
         tooltip-append-to-body="true"
       >
         <i class="fa fa-fw fa-microchip" aria-hidden="true"></i>

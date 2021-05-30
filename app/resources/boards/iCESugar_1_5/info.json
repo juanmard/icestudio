@@ -2,9 +2,7 @@
   "label": "iCESugar 1.5",
   "device": "UP5K",
   "datasheet": "https://github.com/wuxx/icesugar/blob/master/README_en.md",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "clk": "35",
     "USB_PULLUP": "11",

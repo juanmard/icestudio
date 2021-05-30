@@ -83,7 +83,7 @@ angular
 
       $scope.selectProgrammer = function _selectProgrammer(name) {
         common.selectedProgrammer = name;
-      }
+      };
 
       // Convert the list of boards into a format suitable for 'menutree' directive
       $scope.boardMenu = common.devices.map(function (key) {
@@ -586,8 +586,12 @@ angular
             newPipPath !== pythonEnv.pip
           ) {
             if (
-              (newPythonPath === null || newPythonPath === '' || nodeFs.existsSync(newPythonPath)) &&
-              (newPipPath === null || newPipPath === '' || nodeFs.existsSync(newPipPath))
+              (newPythonPath === null ||
+                newPythonPath === '' ||
+                nodeFs.existsSync(newPythonPath)) &&
+              (newPipPath === null ||
+                newPipPath === '' ||
+                nodeFs.existsSync(newPipPath))
             ) {
               let newPythonEnv = {python: newPythonPath, pip: newPipPath};
               profile.set('pythonEnv', newPythonEnv);
@@ -646,18 +650,21 @@ angular
         if (common.selectedBoard) {
           common.selectedDevice = common.selectedBoard.info.device;
         }
-        alertify.boardWindow($('#boardopts')[0]).setting({
-          frameless: true,
-          autoReset: false,
-          modal: false,
-          pinnable: false,
-          closable: true,
-          closableByDimmer: false,
-          movable: true,
-          moveBounded: true,
-          maximizable: true,
-          resizable: true,
-        }).resizeTo(600,100);
+        alertify
+          .boardWindow($('#boardopts')[0])
+          .setting({
+            frameless: true,
+            autoReset: false,
+            modal: false,
+            pinnable: false,
+            closable: true,
+            closableByDimmer: false,
+            movable: true,
+            moveBounded: true,
+            maximizable: true,
+            resizable: true,
+          })
+          .resizeTo(600, 100);
       }
 
       $scope.toggleBoardWindowSize = function (open) {
@@ -848,7 +855,7 @@ angular
               common.selectedProgrammer = null;
               return;
             }
-            common.selectedProgrammer = prog[0]
+            common.selectedProgrammer = prog[0];
             profile.setProgrammer(common.selectedProgrammer);
           }
         }

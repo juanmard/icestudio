@@ -2,9 +2,7 @@
   "label": "Fomu",
   "device": "UP5K",
   "datasheet": "https://github.com/im-tomu/fomu-hardware",
-  "prog": [
-    "SDU"
-  ],
+  "prog": ["SDU"],
   "pinout": {
     "user_4": "F5",
     "user_3": "E5",

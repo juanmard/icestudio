@@ -2,7 +2,5 @@
   "label": "iCE40HX8K-EVB",
   "device": "HX8K",
   "datasheet": "https://github.com/OLIMEX/iCE40HX8K-EVB/raw/master/HARDWARE/REV-B/iCE40HX8K-EVB_Rev_B.pdf",
-  "prog": [
-    ""
-  ]
+  "prog": [""]
 }

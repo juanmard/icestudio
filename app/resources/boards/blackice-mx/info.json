@@ -2,9 +2,7 @@
   "label": "BlackIce MX",
   "device": "HX8K",
   "datasheet": "https://github.com/folknology/IceCore",
-  "prog": [
-    "Serial"
-  ],
+  "prog": ["Serial"],
   "pinout": {
     "yellow_led": "55",
     "wp": "64",

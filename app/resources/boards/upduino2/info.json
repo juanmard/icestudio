@@ -2,9 +2,7 @@
   "label": "UPDuino v2.0",
   "device": "UP5K",
   "datasheet": "https://github.com/gtjennings1/UPDuino_v1_0",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "PIN_9": "9",
     "PIN_6": "6",

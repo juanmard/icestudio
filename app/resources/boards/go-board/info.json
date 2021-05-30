@@ -2,9 +2,7 @@
   "label": "Nandland Go board",
   "device": "HX1K",
   "datasheet": "https://www.nandland.com/goboard/introduction.html",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "VGA_VS": "27",
     "VGA_R2": "40",

@@ -2,9 +2,7 @@
   "label": "IceZUM Alhambra",
   "device": "HX1K",
   "datasheet": "https://github.com/FPGAwars/icezum",
-  "prog": [
-    "FTDI"
-  ],
+  "prog": ["FTDI"],
   "pinout": {
     "TX": "8",
     "SW2": "11",
