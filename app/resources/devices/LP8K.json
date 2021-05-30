@@ -1,0 +1,10 @@
+{
+  "label": "LP8K",
+  "resources": {
+    "lut": 7680,
+    "ff": 7680,
+    "bram": 32,
+    "plb": 960,
+    "io": 23
+  }
+}

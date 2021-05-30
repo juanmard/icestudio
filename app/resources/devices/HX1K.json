@@ -1,0 +1,10 @@
+{
+  "label": "HX1K",
+  "resources": {
+    "lut": 1280,
+    "ff": 1280,
+    "bram": 16,
+    "plb": 160,
+    "io": 72
+  }
+}

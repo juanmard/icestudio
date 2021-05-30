@@ -5,13 +5,6 @@
   "prog": [
     "FTDI"
   ],
-  "FPGAResources": {
-    "ffs": 1280,
-    "luts": 1280,
-    "pios": 72,
-    "plbs": 160,
-    "brams": 16
-  },
   "pinout": {
     "VGA_VS": "27",
     "VGA_R2": "40",

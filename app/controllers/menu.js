@@ -88,9 +88,9 @@ angular
       // Convert the list of boards into a format suitable for 'menutree' directive
       $scope.boardMenu = common.devices.map(function (key) {
         return {
-          name: key,
+          name: key.name,
           children: common.boards
-            .filter((x) => x.info.device === key)
+            .filter((x) => x.info.device === key.name)
             .map(function (x) {
               return {path: x.name, name: x.info.label};
             }),

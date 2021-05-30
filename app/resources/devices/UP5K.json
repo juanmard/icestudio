@@ -1,0 +1,10 @@
+{
+  "label": "UP5K",
+  "resources": {
+    "lut": 5280,
+    "ff": 5280,
+    "bram": 30,
+    "plb": 660,
+    "io": 39
+  }
+}

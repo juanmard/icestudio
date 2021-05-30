@@ -5,13 +5,6 @@
   "prog": [
     "FTDI"
   ],
-  "FPGAResources": {
-    "ffs": 5280,
-    "luts": 5280,
-    "pios": 39,
-    "plbs": 660,
-    "brams": 30
-  },
   "pinout": {
     "PIN_9": "9",
     "PIN_6": "6",

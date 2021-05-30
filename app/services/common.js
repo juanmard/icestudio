@@ -191,6 +191,14 @@ angular
     try {
       var boards = [];
       var devices = [];
+      var dpath = nodePath.join('resources', 'devices');
+      nodeFs.readdirSync(dpath).forEach((ditem) => {
+        const ddata = _readJSONFile(dpath, ditem);
+        devices.push({
+          'name': ditem.slice(0, -5),
+          'resources': ddata
+        });
+      });
       var rpath = nodePath.join('resources', 'boards');
       nodeFs.readdirSync(rpath).forEach((bdir) => {
         if (bdir[0] !== '_' && !nodePath.extname(bdir)) {
@@ -213,13 +221,14 @@ angular
             info: idata,
             rules: _readJSONFile(bpath, 'rules.json'),
           });
-          if (devices.indexOf(idata.device) < 0) {
-            devices.push(idata.device);
-          }
+          if (devices.filter(obj => { return obj.name === idata.device }).length < 1) {
+            console.log("Resource info of device", idata.device, "not available!");
+            devices.push({'name': idata.device});
+          };
         }
       });
       self.boards = boards;
-      self.devices = devices.sort();
+      self.devices = devices;
     } catch (err) {
       console.error('[srv.boards.loadBoards]', err);
     }
