@@ -171,10 +171,10 @@ module.exports = function (grunt) {
   gruntCfg.watch = {
     scripts: {
       files: [
-        'app/resources/**/*.*',
         'app/**/*.*',
-        'app/styles/**/*.*',
-        'app/views/**/*.*',
+        '!app/bower_components/**',
+        '!app/node_modules/**',
+        '!app/resources/collection/**',
       ],
       tasks: ['wiredep', 'exec:stopNW', 'exec:nw'],
       options: {
