@@ -40,8 +40,8 @@ Submenu **Edit > Preferences > Manage collections** allows to add/remove/reload 
 | Info (i)     | Show basic collection info *(Readme.md)*.              |
 +--------------+--------------------------------------------------------+
 
-.. image:: img/collection_managing.png
-   :width: 400 px
+.. image:: ../_static/img/collection_managing.png
+   :width: 500 px
    :align: center
 
 Internal collections are those installed in ``~/.icestudio/collections``. Zipfiles are used for adding internal collections. A single zipfile can contain at least one or multiple *Collection directories* at the main level.

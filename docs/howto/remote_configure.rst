@@ -21,6 +21,6 @@ I you want to use a RPi (or another computer), e.g. ``pi@192.168.0.22``, first c
 
 3. **Enter the host name in Icestudio, Edit > Remote hostname**
 
-   .. image:: ../img/howto_remotehost.png
+   .. image:: ../_static/img/howto_remotehost.png
 
 4. **Now, Verify, Build and Upload tools will run on the selected host**

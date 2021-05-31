@@ -2,7 +2,7 @@
 Icestudio v1 (nightly)
 ======================
 
-.. image:: resources/images/logo/icestudio-logo-label-nightly.png
+.. image:: _static/logo.png
    :width: 400 px
    :align: center
    :target: https://github.com/juanmard/icestudio
@@ -10,29 +10,53 @@ Icestudio v1 (nightly)
 .. centered::
    Icestudio is a visual editor for Verilog designs, built on top of `yosys <http://www.clifford.at/yosys/>`_, `nextpnr <https://github.com/YosysHQ/nextpnr>`_ and `icestorm <http://www.clifford.at/icestorm/>`_.
 
-.. image:: img/main.png
-   :width: 550 px
+.. image:: _static/img/main.png
    :align: center
 
 .. toctree::
-    :maxdepth: 2
+    :caption: Quick Start
     :hidden:
 
-    installation
-    quickstart
-    menu
-    collections
-    design
-    board
-    preferences
-    howto/index
+    quickstart/installation
+    quickstart/selectboard
+    quickstart/toolchain
+    quickstart/drivers
+    quickstart/test
+    quickstart/project
+
+.. toctree::
+    :caption: Reference
+    :hidden:
+
+    reference/menu
+    reference/collections
+    reference/design
+    reference/board
+    reference/preferences
 
 .. toctree::
     :caption: Development
-    :maxdepth: 2
     :hidden:
 
-    source/project
-    source/blocks
-    source/rules
-    source/compiler
+    development/tooling
+    development/project
+    development/blocks
+    development/rules
+    development/compiler
+
+.. toctree::
+    :caption: How To
+    :hidden:
+
+    howto/snapshot
+    howto/toolchain_install
+    howto/toolchain_update
+    howto/drivers_install
+    howto/project_create
+    howto/bitstream_upload
+    howto/block_create
+    howto/project_add
+    howto/collection_create
+    howto/include_list
+    howto/include_header
+    howto/remote_configure

@@ -11,7 +11,7 @@ Select
 
 Block selection is performed with the **mouse left button**. Blocks can be **selected/unselected** individually using **Shift+left-click**. In addition, several blocks can be selected by a **selection box**. A selection is canceled when the background is **left-clicked**.
 
-.. image:: img/design_select.png
+.. image:: ../_static/img/design_select.png
    :width: 400 px
    :align: center
 
@@ -20,7 +20,7 @@ Move blocks
 
 Any block or blocks selection can be moved in the design using the **mouse left button** over the block or the selection. The selection can also be moved with the **arrow keys**.
 
-.. image:: img/design_move.png
+.. image:: ../_static/img/design_move.png
    :width: 400 px
    :align: center
 
@@ -34,7 +34,7 @@ Block examination
 
 Non-basic blocks can be examined by **double clicking** the block using the **mouse left button**. This is a recursive action. A navigation menu is shown on the bottom left corner, to easily jump back/up in the design. Pan, zoom and code browsing are enabled during navigation. *Edit > Fit content* is also supported. However, other menus are disabled.
 
-.. image:: img/design_submodule.png
+.. image:: ../_static/img/design_submodule.png
    :width: 400 px
    :align: center
 
@@ -42,7 +42,7 @@ Verilog error detection
 ```````````````````````
 The Verify, Build and Upload errors are captured and showed in the design with a notification.
 
-.. image:: img/design_error-notification.png
+.. image:: ../_static/img/design_error-notification.png
    :width: 400 px
    :align: center
 
@@ -50,7 +50,7 @@ The Verify, Build and Upload errors are captured and showed in the design with a
 
 If the error comes from a Code block it is marked in red an inline annotation is set:
 
-.. image:: img/design_error-code-block.png
+.. image:: ../_static/img/design_error-code-block.png
    :width: 400 px
    :align: center
 
@@ -58,13 +58,13 @@ If the error comes from a Code block it is marked in red an inline annotation is
 
 If the error comes from a Constant block it is marked in red.
 
-.. image:: img/design_error-constant-block.png
+.. image:: ../_static/img/design_error-constant-block.png
    :width: 400 px
    :align: center
 
 If the error comes from a Generic block it is marked in red.
 
-.. image:: img/design_error-generic-block.png
+.. image:: ../_static/img/design_error-generic-block.png
    :width: 400 px
    :align: center
 

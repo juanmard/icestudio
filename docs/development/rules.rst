@@ -45,7 +45,7 @@ Input rules define default connections between not connected ports with the name
 
 With the rules enabled, these three designs are equivalent:
 
-.. image:: ../resources/images/rules/input-rules-crop.png
+.. image:: ../_static/img/rules/input-rules-crop.png
 
 .. note::
 
@@ -59,4 +59,4 @@ Output rules define default **bit** values for unused output FPGA I/O **pins**. 
 
 With the rules enabled, these two designs are equivalent:
 
-.. image:: ../resources/images/rules/output-rules-crop.png
+.. image:: ../_static/img/rules/output-rules-crop.png

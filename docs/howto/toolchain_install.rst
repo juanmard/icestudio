@@ -7,7 +7,7 @@ Install the toolchain
 
   Go to **Edit > Preferences > Manage toolchain > Install**. Be patient for the toolchain installation.
 
-  .. image:: ../img/howto_installtoolchain.png
+  .. image:: ../_static/img/howto_installtoolchain.png
      :width: 400 px
      :align: center
 

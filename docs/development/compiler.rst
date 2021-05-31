@@ -19,7 +19,7 @@ Sample
 Counter
 ```````
 
-.. image:: ../resources/images/compiler/counter.png
+.. image:: ../_static/img/compiler/counter.png
 
 .. container:: toggle
 
@@ -29,7 +29,7 @@ Counter
 
     |
 
-    .. literalinclude:: ../resources/samples/compiler/counter.ice
+    .. literalinclude:: ../_static/samples/compiler/counter.ice
        :language: json
 
 |
@@ -42,7 +42,7 @@ Counter
 
     |
 
-    .. literalinclude:: ../resources/samples/compiler/div.v
+    .. literalinclude:: ../_static/samples/compiler/div.v
 
 |
 
@@ -57,7 +57,7 @@ Generates
 
     |
 
-    .. literalinclude:: ../resources/samples/compiler/counter.v
+    .. literalinclude:: ../_static/samples/compiler/counter.v
        :language: verilog
 
 |
@@ -70,7 +70,7 @@ Generates
 
    |
 
-   .. literalinclude:: ../resources/samples/compiler/counter.pcf
+   .. literalinclude:: ../_static/samples/compiler/counter.pcf
 
 |
 
@@ -82,7 +82,7 @@ Generates
 
    |
 
-   .. literalinclude:: ../resources/samples/compiler/counter_tb.v
+   .. literalinclude:: ../_static/samples/compiler/counter_tb.v
 
 |
 
@@ -94,6 +94,6 @@ Generates
 
    |
 
-   .. literalinclude:: ../resources/samples/compiler/counter_tb.gtkw
+   .. literalinclude:: ../_static/samples/compiler/counter_tb.gtkw
 
 |

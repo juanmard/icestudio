@@ -5,7 +5,7 @@ Create a block
 
    Go to **Edit > Open project** and select an **.ice** file. It is recommended to set all the I/O ports non-FPGA ports (green) to create a block.
 
-.. image:: ../img/howto_project.png
+.. image:: ../_static/img/howto_project.png
    :width: 400 px
    :align: center
 
@@ -17,7 +17,7 @@ Create a block
 
    Go to **Edit > Preferences > Project information**.
 
-   .. image:: ../img/project-info.png
+   .. image:: ../_static/img/project-info.png
       :width: 400 px
       :align: center
 
@@ -25,6 +25,6 @@ Create a block
 
    Go to **Edit > Save**.
 
-   .. image:: ../img/howto_save.png
+   .. image:: ../_static/img/howto_save.png
       :width: 400 px
       :align: center

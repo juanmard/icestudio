@@ -1,24 +1,24 @@
 from pathlib import Path
-from json import dump, loads
+from json import loads
 
 # -- General configuration ------------------------------------------------
 
 extensions = []
 
-templates_path = ['source/_templates']
+templates_path = ['_templates']
 
 source_suffix = '.rst'
 
 master_doc = 'index'
 
 project = u'Icestudio'
-copyright = u'2016-2020, Icestudio contributors'
+copyright = u'2016-2021, Icestudio Nightly contributors'
 author = u'Icestudio contributors'
 
-title = u'Icestudio v1 (nightly)'
+title = u'Icestudio Nightly'
 
-version = u'0.5.1' # The short X.Y version.
-release = u'0.5.1dev' # The full version, including alpha/beta/rc tags.
+version = u'0.5.1-dev' # The short X.Y version.
+release = version # The full version, including alpha/beta/rc tags.
 
 language = 'None'
 
@@ -43,7 +43,10 @@ if ctx.is_file():
 html_theme_path = ["."]
 html_theme = "_theme"
 
-html_static_path = ['source/_static']
+html_static_path = ['_static']
+
+html_logo = str(Path(html_static_path[0]) / 'logo.png')
+html_favicon = str(Path(html_static_path[0]) / 'icon.png')
 
 htmlhelp_basename = 'icestudiodoc'
 

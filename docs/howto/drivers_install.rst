@@ -11,7 +11,7 @@ Install the drivers
 
     On Windows, an external application (`Zadig <https://zadig.akeo.ie/>`_) is used. It replaces the existing FTDI driver of the **Interface 0** with **libusbK**.
 
-    .. image:: ../img/zadig.png
+    .. image:: ../_static/img/zadig.png
         :align: center
         :width: 400 px
 

@@ -7,11 +7,11 @@ Add a project as block
 
    Go to **Edit > Add as block...** and select an **.ice** file.
 
-   .. image:: ../img/howto_addasblock.png
+   .. image:: ../_static/img/howto_addasblock.png
       :width: 400 px
       :align: center
 
-   .. image:: ../img/howto_customblock.png
+   .. image:: ../_static/img/howto_customblock.png
       :width: 400 px
       :align: center
 
@@ -19,6 +19,6 @@ Add a project as block
 
    Complex blocks can be examined by double clicking the block.
 
-   .. image:: ../img/howto_examine.png
+   .. image:: ../_static/img/howto_examine.png
       :width: 400 px
       :align: center

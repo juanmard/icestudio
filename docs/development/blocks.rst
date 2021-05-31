@@ -8,7 +8,7 @@ Definition
 
 A block is an entity with *input* and *output* ports, parameters and some content.
 
-  .. image:: ../resources/images/blocks/definition.png
+  .. image:: ../_static/img/blocks/definition.png
 
 Basic blocks
 ------------
@@ -29,7 +29,7 @@ Wire
 
 E.g.: basic FPGA input block with name *Button*.
 
-.. image:: ../resources/images/blocks/basic-fpga-input.png
+.. image:: ../_static/img/blocks/basic-fpga-input.png
 
 .. code-block:: json
 
@@ -51,7 +51,7 @@ E.g.: basic FPGA input block with name *Button*.
 
 E.g.: basic Virtual input block with no name and the clock symbol.
 
-.. image:: ../resources/images/blocks/basic-virtual-input.png
+.. image:: ../_static/img/blocks/basic-virtual-input.png
 
 .. code-block:: json
 
@@ -75,7 +75,7 @@ Bus
 
 E.g.: basic FPGA input block with name *in[1:0]*.
 
-.. image:: ../resources/images/blocks/basic-fpga-input-bus.png
+.. image:: ../_static/img/blocks/basic-fpga-input-bus.png
 
 .. code-block:: json
 
@@ -102,7 +102,7 @@ E.g.: basic FPGA input block with name *in[1:0]*.
 
 E.g.: basic Virtual input block with name *in[1:0]*.
 
-.. image:: ../resources/images/blocks/basic-virtual-input-bus.png
+.. image:: ../_static/img/blocks/basic-virtual-input-bus.png
 
 .. code-block:: json
 
@@ -141,7 +141,7 @@ Wire
 
 E.g.: basic FPGA output block with no name.
 
-.. image:: ../resources/images/blocks/basic-fpga-output.png
+.. image:: ../_static/img/blocks/basic-fpga-output.png
 
 .. code-block:: json
 
@@ -161,7 +161,7 @@ E.g.: basic FPGA output block with no name.
 
 E.g.: basic Virtual output block with name "out".
 
-.. image:: ../resources/images/blocks/basic-virtual-output.png
+.. image:: ../_static/img/blocks/basic-virtual-output.png
 
 .. code-block:: json
 
@@ -184,7 +184,7 @@ Bus
 
 E.g.: basic FPGA output block with name *out[1:0]*.
 
-.. image:: ../resources/images/blocks/basic-fpga-output-bus.png
+.. image:: ../_static/img/blocks/basic-fpga-output-bus.png
 
 .. code-block:: json
 
@@ -210,7 +210,7 @@ E.g.: basic FPGA output block with name *out[1:0]*.
 
 E.g.: basic Virtual output block with name *[1:0]*.
 
-.. image:: ../resources/images/blocks/basic-virtual-output-bus.png
+.. image:: ../_static/img/blocks/basic-virtual-output-bus.png
 
 .. code-block:: json
 
@@ -244,7 +244,7 @@ Constant block
 
 E.g.: basic constant block with name *value* and the local flag.
 
-.. image:: ../resources/images/blocks/basic-constant-local.png
+.. image:: ../_static/img/blocks/basic-constant-local.png
 
 .. code-block:: json
 
@@ -258,7 +258,7 @@ E.g.: basic constant block with name *value* and the local flag.
 
 E.g.: basic constant block with no name and no local flag.
 
-.. image:: ../resources/images/blocks/basic-constant.png
+.. image:: ../_static/img/blocks/basic-constant.png
 
 .. code-block:: json
 
@@ -286,7 +286,7 @@ Memory block
 
 E.g.: basic memory block with name *code*, binary address format and the local flag.
 
-.. image:: ../resources/images/blocks/basic-memory-local.png
+.. image:: ../_static/img/blocks/basic-memory-local.png
 
 .. code-block:: json
 
@@ -301,7 +301,7 @@ E.g.: basic memory block with name *code*, binary address format and the local f
 
 E.g.: basic memory block with no name, decimal address format and no local flag.
 
-.. image:: ../resources/images/blocks/basic-memory.png
+.. image:: ../_static/img/blocks/basic-memory.png
 
 .. code-block:: json
 
@@ -321,7 +321,7 @@ Code block
 
 E.g.: basic code block with input port *a*, output port *b[3:0]* and parameters *C* and *D*.
 
-.. image:: ../resources/images/blocks/basic-code.png
+.. image:: ../_static/img/blocks/basic-code.png
 
 .. code-block:: json
 
@@ -363,7 +363,7 @@ Information block
 
 E.g.: basic information block in editor mode.
 
-.. image:: ../resources/images/blocks/basic-info-editor.png
+.. image:: ../_static/img/blocks/basic-info-editor.png
 
 .. code-block:: json
 
@@ -376,7 +376,7 @@ E.g.: basic information block in editor mode.
 
 E.g.: basic information block in render mode.
 
-.. image:: ../resources/images/blocks/basic-info-render.png
+.. image:: ../_static/img/blocks/basic-info-render.png
 
 .. code-block:: json
 
@@ -406,11 +406,11 @@ The block information is stored in **dependencies**, without the unnecessary inf
 
 E.g.: this project *block.ice*.
 
-.. image:: ../resources/images/blocks/generic-project.png
+.. image:: ../_static/img/blocks/generic-project.png
 
 becomes this block:
 
-.. image:: ../resources/images/blocks/generic-block.png
+.. image:: ../_static/img/blocks/generic-block.png
 
 .. container:: toggle
 
@@ -420,7 +420,7 @@ becomes this block:
 
     |
 
-    .. literalinclude:: ../resources/samples/blocks/block.ice
+    .. literalinclude:: ../_static/samples/blocks/block.ice
        :language: json
 
 |

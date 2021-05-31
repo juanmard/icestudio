@@ -5,13 +5,13 @@ Create a project
 
    Go to **Edit > New**. A new window will be opened.
 
-   .. image:: ../img/howto_new.png
+   .. image:: ../_static/img/howto_new.png
      :width: 400 px
      :align: center
 
 2. **Add blocks**
 
-.. image:: ../img/howto_demo.gif
+.. image:: ../_static/img/howto_demo.gif
      :width: 400 px
      :align: center
 
@@ -23,13 +23,13 @@ There are different types of blocks:
 
     Also, it can be configured as **buses** using the ``[x:y]`` notation (``x`` is the most significant bit).
 
-    .. image:: ../img/howto_io-fpga.png
+    .. image:: ../_static/img/howto_io-fpga.png
        :width: 400 px
        :align: center
 
     If these blocks are used to build generic blocks, they should be configured as **virtual** (green). Then, the FPGA pin selector won't be shown.
 
-    .. image:: ../img/howto_io-virtual.png
+    .. image:: ../_static/img/howto_io-virtual.png
        :width: 400 px
        :align: center
 
@@ -39,7 +39,7 @@ There are different types of blocks:
 
     These blocks can be configures as **local**. Then, this parameter won't be exported.
 
-    .. image:: ../img/howto_constant.png
+    .. image:: ../_static/img/howto_constant.png
        :width: 400 px
        :align: center
 
@@ -49,7 +49,7 @@ There are different types of blocks:
 
     These blocks can be configures as **local**. Then, this parameter won't be exported. Also you can update the **address format** of the memory to be *binary*, *decimal* or *hexadecimal*.
 
-    .. image:: ../img/howto_memory.png
+    .. image:: ../_static/img/howto_memory.png
        :width: 400 px
        :align: center
 
@@ -57,13 +57,13 @@ There are different types of blocks:
 
     Click on **Basic > Code**, add the code ports. Port names are separated by a comma. E.g.: ``a, b``.
 
-    .. image:: ../img/howto_code-prompt.png
+    .. image:: ../_static/img/howto_code-prompt.png
        :width: 400 px
        :align: center
 
     This block contains a text editor to write your module in verilog code. Module header and footer are not required.
 
-    .. image:: ../img/howto_code.png
+    .. image:: ../_static/img/howto_code.png
        :width: 400 px
        :align: center
 
@@ -73,13 +73,13 @@ There are different types of blocks:
 
     This block contains a text editor to add comments about the project in **Markdown** or **HTML**.
 
-    .. image:: ../img/howto_info.png
+    .. image:: ../_static/img/howto_info.png
        :width: 400 px
        :align: center
 
     It can be rendered simply by double-clicking the block.
 
-    .. image:: ../img/howto_info-render.png
+    .. image:: ../_static/img/howto_info-render.png
        :width: 400 px
        :align: center
 
@@ -89,7 +89,7 @@ There are different types of blocks:
 
     These blocks are low and high logic drivers.
 
-    .. image:: ../img/howto_bit.png
+    .. image:: ../_static/img/howto_bit.png
        :width: 400 px
        :align: center
 
@@ -97,7 +97,7 @@ There are different types of blocks:
 
     Go to the **Logic** menu and select a block. This menu contains **Gates**, **Combinational blocks** and **Sequential blocks**.
 
-    .. image:: ../img/howto_logic.png
+    .. image:: ../_static/img/howto_logic.png
        :width: 400 px
        :align: center
 
@@ -107,19 +107,19 @@ There are different types of blocks:
 
     The *Pull up* block must be connected to input ports in order to configure a pull up in the FPGA.
 
-    .. image:: ../img/howto_setup.png
+    .. image:: ../_static/img/howto_setup.png
        :width: 400 px
        :align: center
 
 In this example we are going to implement an AND logic gate with its input/output pins connected to the FPGA I/O.
 
-.. image:: ../img/howto_bwire.png
+.. image:: ../_static/img/howto_bwire.png
    :width: 400 px
    :align: center
 
 3. **Connect the blocks**
 
-.. image:: ../img/howto_wire.png
+.. image:: ../_static/img/howto_wire.png
    :width: 400 px
    :align: center
 
@@ -127,7 +127,7 @@ In this example we are going to implement an AND logic gate with its input/outpu
 
    Go to **Select > Board** and select the board from the list.
 
-   .. image:: ../img/howto_board.png
+   .. image:: ../_static/img/howto_board.png
      :width: 400 px
      :align: center
 
@@ -135,7 +135,7 @@ In this example we are going to implement an AND logic gate with its input/outpu
 
    Select all Input/Output blocks' pins.
 
-   .. image:: ../img/howto_fpgapin.png
+   .. image:: ../_static/img/howto_fpgapin.png
      :width: 400 px
      :align: center
 
@@ -145,6 +145,6 @@ In this example we are going to implement an AND logic gate with its input/outpu
 
    It will be saved as an **.ice** file.
 
-   .. image:: ../img/howto_saveas.png
+   .. image:: ../_static/img/howto_saveas.png
      :width: 400 px
      :align: center

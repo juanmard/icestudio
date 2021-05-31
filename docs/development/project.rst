@@ -111,7 +111,7 @@ Package
 * Author
 * Image (SVG)
 
-.. image:: ../resources/images/project/information.png
+.. image:: ../_static/img/project/information.png
 
 Samples
 -------
@@ -119,7 +119,7 @@ Samples
 1. in-out
 '''''''''
 
-.. image:: ../resources/images/project/in-out.png
+.. image:: ../_static/img/project/in-out.png
 
 |
 
@@ -141,7 +141,7 @@ File: **in-out.ice**
 2. not
 ''''''
 
-.. image:: ../resources/images/project/not.png
+.. image:: ../_static/img/project/not.png
 
 |
 
@@ -163,7 +163,7 @@ File: **not.ice**
 3. mux
 ''''''
 
-.. image:: ../resources/images/project/mux.png
+.. image:: ../_static/img/project/mux.png
 
 |
 
@@ -185,7 +185,7 @@ File: **mux.ice**
 4. assign
 '''''''''
 
-.. image:: ../resources/images/project/assign.png
+.. image:: ../_static/img/project/assign.png
 
 |
 
@@ -207,7 +207,7 @@ File: **assign.ice**
 5. complex
 ''''''''''
 
-.. image:: ../resources/images/project/complex.png
+.. image:: ../_static/img/project/complex.png
 
 |
 
