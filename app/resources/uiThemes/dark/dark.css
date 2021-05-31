@@ -140,7 +140,6 @@ html,
 
 .select2-container--default .select2-selection--single {
   border: 0px solid #aaa;
-  border-radius: 4px;
   background-color: #7bc5ff;
 }
 
@@ -284,7 +283,6 @@ html,
 .markdown-body pre {
   background: #222;
   border-color: white;
-  border-radius: 5px;
 }
 
 .modal-content {

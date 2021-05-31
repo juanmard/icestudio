@@ -82,9 +82,6 @@ body {
 }
 
 .alertify .ajs-body .ajs-content .ajs-input {
-  border-radius: 4px;
-}
-.alertify .ajs-body .ajs-content .ajs-input {
   width: 100%;
 }
 
@@ -118,7 +115,6 @@ body {
 .form-group select {
   height: 38px;
   margin: 4px;
-  border-radius: 4px;
   color: inherit;
   box-shadow: none !important;
   border: 1px solid #ccc !important;

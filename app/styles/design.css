@@ -42,7 +42,6 @@ g {
 .generic-block .generic-content {
   position: absolute;
   background: #c0dfeb;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -57,7 +56,6 @@ g {
   background-color: white;
   border: 1px solid #777;
   text-align: center;
-  border-radius: 5px;
   padding: 5px 5px;
   position: absolute;
   bottom: 100%;
@@ -134,7 +132,6 @@ g {
 .io-block .io-virtual-content {
   position: absolute;
   background: #e2fbc9;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -168,7 +165,6 @@ g {
   position: absolute;
   width: 100%;
   background: #fbfbc9;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -226,12 +222,8 @@ g {
   border: 1px solid #aaa;
 }
 
-.select2-dropdown {
-}
-
 .select2-dropdown .select2-search__field {
   outline: none;
-  border-radius: 3px;
   border: 1px solid #777;
 }
 
@@ -250,7 +242,6 @@ g {
 .constant-block .constant-content {
   position: absolute;
   background: #fbf0c9;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -291,7 +282,6 @@ g {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro',
     monospace;
   line-height: 15px;
-  border-radius: 4px;
   border: 1px solid #aaa;
   pointer-events: auto;
 }
@@ -310,7 +300,6 @@ g {
 .memory-block .memory-content {
   position: absolute;
   background: #fbf0c9;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -347,7 +336,6 @@ g {
   right: 0;
   bottom: 0;
   margin: 7px;
-  border-radius: 5px;
   border: 1px solid #aaa;
   pointer-events: auto;
 }
@@ -362,7 +350,6 @@ g {
 .code-block .code-content {
   position: absolute;
   background: #c0dfeb;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -373,7 +360,6 @@ g {
   right: 0;
   bottom: 0;
   margin: 7px;
-  border-radius: 5px;
   border: 1px solid #aaa;
   pointer-events: auto;
 }
@@ -388,7 +374,6 @@ g {
 .info-block .info-content {
   position: absolute;
   background: #ddd;
-  border-radius: 5px;
   border: 1px solid #777;
 }
 
@@ -399,7 +384,6 @@ g {
   right: 0;
   bottom: 0;
   margin: 6px;
-  border-radius: 5px;
   border: 1px solid #aaa;
   pointer-events: auto;
 }
@@ -505,13 +489,11 @@ g {
   position: absolute;
   border: 1px dotted rgba(42, 118, 198, 1);
   background-color: rgba(42, 118, 198, 0.2);
-  border-radius: 5px;
   z-index: 1500;
 }
 
 .selection-box-transparent {
   position: absolute;
-  border-radius: 5px;
   z-index: 1500;
 }
 
