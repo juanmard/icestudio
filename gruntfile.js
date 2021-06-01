@@ -120,8 +120,8 @@ module.exports = function (grunt) {
       flavor: 'sdk', // 'normal' (stable) | 'sdk' (development)
       zip: false,
       buildDir: 'dist/',
-      winIco: 'docs/resources/images/logo/icestudio-logo.ico',
-      macIcns: 'docs/resources/images/logo/nw.icns',
+      winIco: 'docs/_static/img/logo/icestudio-logo.ico',
+      macIcns: 'docs/_static/img/logo/nw.icns',
       macPlist: {CFBundleIconFile: 'app'},
       platforms: platforms,
     },
