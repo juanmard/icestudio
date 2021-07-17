@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="None" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Collections &mdash; Icestudio 0.5.1-dev documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Design" href="design.html" />
+    <link rel="prev" title="Menus" href="menu.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1-dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/selectboard.html">Select board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/toolchain.html">Install/configure the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/drivers.html">Install/configure the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/test.html">Test 'One LED' example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/project.html">Project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="menu.html">Menus</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Collections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#managing-collections">Managing collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic">Basic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="board.html">Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preferences</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/tooling.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/project.html">ICE format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/blocks.html">Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/rules.html">Board Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/compiler.html">Compilers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../howto/snapshot.html">Take a snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_install.html">Install the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_update.html">Update the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/drivers_install.html">Install the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/bitstream_upload.html">Upload a bitstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/block_create.html">Create a block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_add.html">Add a project as block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/collection_create.html">Create a collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_list.html">Include a list file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_header.html">Include a verilog (header) file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/remote_configure.html">Configure a remote host</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Icestudio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Collections</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/juanmard/icestudio/blob/moon/docs/reference/collections.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="collections">
+<span id="id1"></span><h1>Collections<a class="headerlink" href="#collections" title="Permalink to this headline">¶</a></h1>
+<p>A collection is a directory containing multiple ICE projects. Projects are organized as <strong>blocks</strong> (to be added as sub-blocks in other projects) or <strong>examples</strong> (to use, analyze and learn). Projects in each group are sorted by categories (subdirectories).</p>
+<p>Each collection MUST have a <strong>package.json</strong> file in the root, which contains information about the collection. An optional directory, <strong>locale</strong>, can contain translations. A collection has the following structure:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Collection/
+├── blocks/
+├── examples/
+├── locale/
+├── LICENSE
+├── package.json
+└── README.md
+</pre></div>
+</div>
+</div></blockquote>
+<p>Unlike <a class="reference external" href="https://github.com/FPGAwars/icestudio">FPGAwars/icestudio</a>, this variant of Icestudio allows to have multiple collections enabled at the same time. Menu <strong>File &gt; Collections</strong> shows the list of available/installed collections (either built-in, internal or external). Examples, blocks and information about the collection can be opened from there.</p>
+<p>Moreover, checkboxes allow to enable/disable each of collections. Enabled collections are shown on the top right corner, for easy instantiation of reusable blocks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Collection <em>Basic</em> is always available, and contains blocks and examples distributed with the application.</p>
+</div>
+<div class="section" id="managing-collections">
+<h2>Managing collections<a class="headerlink" href="#managing-collections" title="Permalink to this headline">¶</a></h2>
+<p>Submenu <strong>Edit &gt; Preferences &gt; Manage collections</strong> allows to add/remove/reload internal or external collections.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Add (+)</p></td>
+<td><p>Add a zipfile with one or more collections.</p></td>
+</tr>
+<tr class="row-even"><td><p>Reload</p></td>
+<td><p>Reload all the collections from sources.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Add external</p></td>
+<td><p>Set path to <em>external collections</em> dir in your system.</p></td>
+</tr>
+<tr class="row-even"><td><p>Remove (x)</p></td>
+<td><p>Remove some or all the collections.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Info (i)</p></td>
+<td><p>Show basic collection info <em>(Readme.md)</em>.</p></td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../_images/collection_managing.png"><img alt="../_images/collection_managing.png" class="align-center" src="../_images/collection_managing.png" style="width: 500px;" /></a>
+<p>Internal collections are those installed in <code class="docutils literal notranslate"><span class="pre">~/.icestudio/collections</span></code>. Zipfiles are used for adding internal collections. A single zipfile can contain at least one or multiple <em>Collection directories</em> at the main level.</p>
+<p>As a complement, the <em>external</em> path can be configured. It is the absolute path to a directory on the system, which is expected to contain additional collections or symbolic links to collections.</p>
+</div>
+<div class="section" id="basic">
+<h2>Basic<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h2>
+<p>Contains the basic blocks:</p>
+<ul class="simple">
+<li><p><strong>Input</strong>:  Show a dialog to insert the name and type of the input block.</p></li>
+<li><p><strong>Output</strong>:  Show a dialog to insert the name and type of the output block.</p></li>
+<li><p><strong>Constant</strong>:  Show a dialog to insert the name and type of the constant block.</p></li>
+<li><p><strong>Memory</strong>:  Show a dialog to insert the name and type of the memory block.</p></li>
+<li><p><strong>Code</strong>:  Show a dialog to insert the ports and parameters of the code block.</p></li>
+<li><p><strong>Information</strong>:  Create an empty text box block.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Input</strong> and <strong>Output</strong> ports can be set to <strong>virtual</strong>. Virtual ports are used to independent-FPGA
+projects. Also, they can be configured as a <strong>bus</strong> by adding the notation <code class="docutils literal notranslate"><span class="pre">[x:y]</span></code> to the port name.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Constant</strong> and <strong>Memory</strong> blocks can be set to <strong>local</strong>. Local parameters are not exposed when the project
+is added as a block.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Multiple <strong>Input</strong>, <strong>Output</strong>, <strong>Constant</strong> and <strong>Memory</strong> blocks can be created using the <cite>comma</cite> separator.
+For example: <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span></code> will create 3 blocks with those names. FPGA I/O ports values are set in the block combo box.
+These values can be set by searching and also unset by doing click on the cross.</p>
+<p>Double clicking over <strong>Input</strong>, <strong>Output</strong>, <strong>Constant</strong> or <strong>Memory</strong> block allows to modify the block name and type.
+In <strong>Code</strong> block ports definition, multiple <em>input</em> and <em>output</em> ports, and <em>parameters</em>, can be created also using
+the <cite>comma</cite> separator.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="design.html" class="btn btn-neutral float-right" title="Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="menu.html" class="btn btn-neutral float-left" title="Menus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2016-2021, Icestudio Nightly contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.toggle > *').hide();
+    $('.toggle .header').show();
+    $('.toggle .header').click(function () {
+      $(this).parent().children().not('.header').toggle(400);
+      $(this).parent().children('.header').toggleClass('open');
+    });
+  });
+</script>
+
+
+</body>
+</html>

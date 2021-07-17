@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="None" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Blocks &mdash; Icestudio 0.5.1-dev documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Board Rules" href="rules.html" />
+    <link rel="prev" title="ICE format" href="project.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1-dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/selectboard.html">Select board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/toolchain.html">Install/configure the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/drivers.html">Install/configure the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/test.html">Test 'One LED' example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/project.html">Project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/menu.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/board.html">Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/preferences.html">Preferences</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tooling.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">ICE format</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Blocks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-blocks">Basic blocks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input-block">Input block</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wire">Wire</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bus">Bus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#output-block">Output block</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Wire</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Bus</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#constant-block">Constant block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-block">Memory block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-block">Code block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#information-block">Information block</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-blocks">Generic blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rules.html">Board Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compiler.html">Compilers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../howto/snapshot.html">Take a snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_install.html">Install the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_update.html">Update the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/drivers_install.html">Install the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/bitstream_upload.html">Upload a bitstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/block_create.html">Create a block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_add.html">Add a project as block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/collection_create.html">Create a collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_list.html">Include a list file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_header.html">Include a verilog (header) file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/remote_configure.html">Configure a remote host</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Icestudio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Blocks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/juanmard/icestudio/blob/moon/docs/development/blocks.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="blocks">
+<span id="id1"></span><h1>Blocks<a class="headerlink" href="#blocks" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>A block is an entity with <em>input</em> and <em>output</em> ports, parameters and some content.</p>
+<blockquote>
+<div><img alt="../_images/definition.png" src="../_images/definition.png" />
+</div></blockquote>
+</div>
+<div class="section" id="basic-blocks">
+<h2>Basic blocks<a class="headerlink" href="#basic-blocks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="input-block">
+<h3>Input block<a class="headerlink" href="#input-block" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">basic.input</span></code></p></li>
+<li><p>States:</p>
+<ul>
+<li><p>FPGA pin: <em>yellow</em></p></li>
+<li><p>Virtual: <em>green</em></p></li>
+</ul>
+</li>
+<li><p>Show clock</p></li>
+</ul>
+<div class="section" id="wire">
+<h4>Wire<a class="headerlink" href="#wire" title="Permalink to this headline">¶</a></h4>
+<p>E.g.: basic FPGA input block with name <em>Button</em>.</p>
+<img alt="../_images/basic-fpga-input.png" src="../_images/basic-fpga-input.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Button&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SW1&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;10&quot;</span>
+     <span class="p">}</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+   <span class="nt">&quot;clock&quot;</span><span class="p">:</span> <span class="kc">false</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic Virtual input block with no name and the clock symbol.</p>
+<img alt="../_images/basic-virtual-input.png" src="../_images/basic-virtual-input.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+ <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+     <span class="p">{</span>
+       <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+     <span class="p">}</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+   <span class="nt">&quot;clock&quot;</span><span class="p">:</span> <span class="kc">true</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bus">
+<h4>Bus<a class="headerlink" href="#bus" title="Permalink to this headline">¶</a></h4>
+<p>E.g.: basic FPGA input block with name <em>in[1:0]</em>.</p>
+<img alt="../_images/basic-fpga-input-bus.png" src="../_images/basic-fpga-input-bus.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[1:0]&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SW1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;10&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SW2&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;11&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;clock&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic Virtual input block with name <em>in[1:0]</em>.</p>
+<img alt="../_images/basic-virtual-input-bus.png" src="../_images/basic-virtual-input-bus.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[1:0]&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;clock&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="output-block">
+<h3>Output block<a class="headerlink" href="#output-block" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">basic.output</span></code></p></li>
+<li><p>States:</p>
+<ul>
+<li><p>FPGA pin: <em>yellow</em></p></li>
+<li><p>Virtual: <em>green</em></p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="id2">
+<h4>Wire<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>E.g.: basic FPGA output block with no name.</p>
+<img alt="../_images/basic-fpga-output.png" src="../_images/basic-fpga-output.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;95&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic Virtual output block with name &quot;out&quot;.</p>
+<img alt="../_images/basic-virtual-output.png" src="../_images/basic-virtual-output.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>Bus<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>E.g.: basic FPGA output block with name <em>out[1:0]</em>.</p>
+<img alt="../_images/basic-fpga-output-bus.png" src="../_images/basic-fpga-output-bus.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[1:0]&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;95&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;96&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic Virtual output block with name <em>[1:0]</em>.</p>
+<img alt="../_images/basic-virtual-output-bus.png" src="../_images/basic-virtual-output-bus.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[1:0]&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="constant-block">
+<h3>Constant block<a class="headerlink" href="#constant-block" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">basic.constant</span></code></p></li>
+<li><p>States:</p>
+<ul>
+<li><p>Local parameter (lock)</p></li>
+</ul>
+</li>
+</ul>
+<p>E.g.: basic constant block with name <em>value</em> and the local flag.</p>
+<img alt="../_images/basic-constant-local.png" src="../_images/basic-constant-local.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;4&#39;b1001&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic constant block with no name and no local flag.</p>
+<img alt="../_images/basic-constant.png" src="../_images/basic-constant.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="memory-block">
+<h3>Memory block<a class="headerlink" href="#memory-block" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">basic.memory</span></code></p></li>
+<li><p>Address format:</p>
+<ul>
+<li><p>Binary</p></li>
+<li><p>Decimal</p></li>
+<li><p>Hexadecimal</p></li>
+</ul>
+</li>
+<li><p>States:</p>
+<ul>
+<li><p>Local parameter (lock)</p></li>
+</ul>
+</li>
+</ul>
+<p>E.g.: basic memory block with name <em>code</em>, binary address format and the local flag.</p>
+<img alt="../_images/basic-memory-local.png" src="../_images/basic-memory-local.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="s2">&quot;A \nB\nC\nD\nE\nF\n0 // off\n0 // off&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;format&quot;</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic memory block with no name, decimal address format and no local flag.</p>
+<img alt="../_images/basic-memory.png" src="../_images/basic-memory.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="s2">&quot;00\n01\n10\n11&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;format&quot;</span><span class="p">:</span> <span class="mi">10</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-block">
+<h3>Code block<a class="headerlink" href="#code-block" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">basic.code</span></code></p></li>
+</ul>
+<p>E.g.: basic code block with input port <em>a</em>, output port <em>b[3:0]</em> and parameters <em>C</em> and <em>D</em>.</p>
+<img alt="../_images/basic-code.png" src="../_images/basic-code.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span> <span class="p">{</span>
+   <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;reg [3:0] b_aux;\n\nalways @(a)\nbegin\n  if (a == 1)\n    b_aux = C;\n  else\n    b_aux = D;\nend\n\nassign b = b_aux;\n&quot;</span><span class="p">,</span>
+     <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+       <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span>
+       <span class="p">},</span>
+       <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span>
+       <span class="p">}</span>
+     <span class="p">],</span>
+    <span class="nt">&quot;ports&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;in&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;out&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[3:0]&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">4</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="information-block">
+<h3>Information block<a class="headerlink" href="#information-block" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Type: <code class="docutils literal notranslate"><span class="pre">basic.info</span></code></p></li>
+<li><p>States:</p>
+<ul>
+<li><p>Readonly</p></li>
+</ul>
+</li>
+</ul>
+<p>E.g.: basic information block in editor mode.</p>
+<img alt="../_images/basic-info-editor.png" src="../_images/basic-info-editor.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="s2">&quot;## Title :smile:\nLorem ipsum...\n&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;readonly&quot;</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>E.g.: basic information block in render mode.</p>
+<img alt="../_images/basic-info-render.png" src="../_images/basic-info-render.png" />
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="s2">&quot;## Title :smile:\nLorem ipsum...\n&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;readonly&quot;</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="generic-blocks">
+<h2>Generic blocks<a class="headerlink" href="#generic-blocks" title="Permalink to this headline">¶</a></h2>
+<p>Any project can be added as a read-only <strong>generic block</strong>:</p>
+<ul class="simple">
+<li><p>The <em>input blocks</em> become <em>input ports</em>.</p></li>
+<li><p>The <em>output blocks</em> become <em>output ports</em>.</p></li>
+<li><p>The <em>constant blocks</em> become <em>parameters</em>.</p></li>
+</ul>
+<p>The block information is stored in <strong>dependencies</strong>, without the unnecessary information:</p>
+<ul class="simple">
+<li><p>The version number is removed.</p></li>
+<li><p>The FPGA <em>board</em> is removed.</p></li>
+<li><p>The FPGA <em>data.pins</em> are removed.</p></li>
+<li><p>An additional field <em>data.size</em> with the pins.length is created if greatter than 1.</p></li>
+<li><p>The <em>data.virtual</em> flag is removed.</p></li>
+</ul>
+<p>E.g.: this project <em>block.ice</em>.</p>
+<img alt="../_images/generic-project.png" src="../_images/generic-project.png" />
+<p>becomes this block:</p>
+<img alt="../_images/generic-block.png" src="../_images/generic-block.png" />
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>Show/Hide code</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.2&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Block&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;out = in ? C : D; p = q;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Jesús Arroyo&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;design&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;board&quot;</span><span class="p">:</span> <span class="s2">&quot;icezum&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;blocks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;4aa2ce96-a449-42f1-b612-2c852dc50da8&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.input&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">680</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">64</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;7f5654cf-4591-4a66-9147-d0cbdcb95f79&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.output&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;q&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">896</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">64</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;cbd336da-6d61-4c71-90e1-e11bbe6817fc&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.input&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">48</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">272</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;15e91005-34e6-4ce9-80b4-8c33c6c1e5a0&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.output&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[3:0]&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">true</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">760</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">272</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;deddfc29-7bf1-4ac4-a24e-e91b4cc14335&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.constant&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;4&#39;b1111&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">296</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">32</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;a9f85080-6523-428b-966c-359be16be956&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.constant&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;4&#39;b0000&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">true</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">488</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">32</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;fecaab8e-c7d4-4823-81fb-2b0d42f38026&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.code&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;reg [3:0] b_aux;\n\nalways @(a)\nbegin\n  if (a == 1)\n    b_aux = C;\n  else\n    b_aux = D;\nend\n\nassign b = b_aux;\n&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;ports&quot;</span><span class="p">:</span> <span class="p">{</span>
+              <span class="nt">&quot;in&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span>
+                <span class="p">}</span>
+              <span class="p">],</span>
+              <span class="nt">&quot;out&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[3:0]&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">4</span>
+                <span class="p">}</span>
+              <span class="p">]</span>
+            <span class="p">}</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">248</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">176</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+            <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">256</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;wires&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;a9f85080-6523-428b-966c-359be16be956&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;constant-out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;fecaab8e-c7d4-4823-81fb-2b0d42f38026&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;deddfc29-7bf1-4ac4-a24e-e91b4cc14335&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;constant-out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;fecaab8e-c7d4-4823-81fb-2b0d42f38026&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;cbd336da-6d61-4c71-90e1-e11bbe6817fc&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;fecaab8e-c7d4-4823-81fb-2b0d42f38026&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;fecaab8e-c7d4-4823-81fb-2b0d42f38026&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;15e91005-34e6-4ce9-80b4-8c33c6c1e5a0&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">4</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;4aa2ce96-a449-42f1-b612-2c852dc50da8&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;7f5654cf-4591-4a66-9147-d0cbdcb95f79&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rules.html" class="btn btn-neutral float-right" title="Board Rules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="project.html" class="btn btn-neutral float-left" title="ICE format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2016-2021, Icestudio Nightly contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.toggle > *').hide();
+    $('.toggle .header').show();
+    $('.toggle .header').click(function () {
+      $(this).parent().children().not('.header').toggle(400);
+      $(this).parent().children('.header').toggleClass('open');
+    });
+  });
+</script>
+
+
+</body>
+</html>

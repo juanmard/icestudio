@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="None" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Menus &mdash; Icestudio 0.5.1-dev documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Collections" href="collections.html" />
+    <link rel="prev" title="Project" href="../quickstart/project.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1-dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/selectboard.html">Select board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/toolchain.html">Install/configure the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/drivers.html">Install/configure the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/test.html">Test 'One LED' example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/project.html">Project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Menus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#file">File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#edit">Edit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#footer">Footer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="board.html">Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preferences</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/tooling.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/project.html">ICE format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/blocks.html">Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/rules.html">Board Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/compiler.html">Compilers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../howto/snapshot.html">Take a snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_install.html">Install the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_update.html">Update the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/drivers_install.html">Install the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/bitstream_upload.html">Upload a bitstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/block_create.html">Create a block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_add.html">Add a project as block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/collection_create.html">Create a collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_list.html">Include a list file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_header.html">Include a verilog (header) file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/remote_configure.html">Configure a remote host</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Icestudio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Menus</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/juanmard/icestudio/blob/moon/docs/reference/menu.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="menus">
+<h1>Menus<a class="headerlink" href="#menus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="file">
+<h2>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 13%" />
+<col style="width: 59%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>Ctrl+ | ⌘+</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>File &gt; New</p></td>
+<td><p>N</p></td>
+<td><p>Create a new window.</p></td>
+</tr>
+<tr class="row-odd"><td><p>File &gt; Open...</p></td>
+<td><p>O</p></td>
+<td><p>Open a <a class="reference internal" href="../quickstart/project.html#quickstart-project"><span class="std std-ref">Project</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>File &gt; Add as block...</p></td>
+<td></td>
+<td><p>Add a <a class="reference internal" href="../quickstart/project.html#quickstart-project"><span class="std std-ref">Project</span></a> as a block.</p></td>
+</tr>
+<tr class="row-odd"><td><p>File &gt; Collections</p></td>
+<td></td>
+<td><p>See <a class="reference internal" href="collections.html#collections"><span class="std std-ref">Collections</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>File &gt; Plugins</p></td>
+<td></td>
+<td><p>List of available plugins.</p></td>
+</tr>
+<tr class="row-odd"><td><p>File &gt; Save</p></td>
+<td><p>S</p></td>
+<td><p>Save the current <a class="reference internal" href="../quickstart/project.html#quickstart-project"><span class="std std-ref">Project</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p>File &gt; Save as...</p></td>
+<td><p>Shift+S</p></td>
+<td><p>Save the current <a class="reference internal" href="../quickstart/project.html#quickstart-project"><span class="std std-ref">Project</span></a> in a new file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>File &gt; Export...</p></td>
+<td></td>
+<td><p>Export multiple output files.</p></td>
+</tr>
+<tr class="row-even"><td><p>File &gt; Documentation.</p></td>
+<td></td>
+<td><p>View built-in documentation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>File &gt; About</p></td>
+<td></td>
+<td><p>Information about the application.</p></td>
+</tr>
+<tr class="row-even"><td><p>File &gt; Quit</p></td>
+<td><p>Q</p></td>
+<td><p>Exit the application.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edit">
+<h2>Edit<a class="headerlink" href="#edit" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 13%" />
+<col style="width: 59%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>Ctrl+ | ⌘+</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Edit &gt; Undo</p></td>
+<td><p>Z</p></td>
+<td><p>Undo the last change.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edit &gt; Redo</p></td>
+<td><p>Y | Shift+Z</p></td>
+<td><p>Revert the last undo.</p></td>
+</tr>
+<tr class="row-even"><td><p>Edit &gt; Cut</p></td>
+<td><p>X</p></td>
+<td><p>Cut selected blocks.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edit &gt; Copy</p></td>
+<td><p>C</p></td>
+<td><p>Copy selected blocks.</p></td>
+</tr>
+<tr class="row-even"><td><p>Edit &gt; Paste</p></td>
+<td><p>V</p></td>
+<td><p>Paste copied blocks.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edit &gt; Clone</p></td>
+<td><p>Shift+V</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Edit &gt; Select all</p></td>
+<td><p>A</p></td>
+<td><p>Select all the blocks.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edit &gt; Fit content</p></td>
+<td><p>1</p></td>
+<td><p>Fit the content into the screen.</p></td>
+</tr>
+<tr class="row-even"><td><p>Edit &gt; Preferences</p></td>
+<td></td>
+<td><p>See <a class="reference internal" href="preferences.html#preferences"><span class="std std-ref">Preferences</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edit &gt; Project information</p></td>
+<td></td>
+<td><p>View/edit <a class="reference internal" href="../quickstart/project.html#quickstart-project"><span class="std std-ref">Project</span></a> metadata.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Export files/formats are: Verilog, PCF, Testbench, GTKWave, BLIF, ASC and Bitstream.</p>
+</div>
+</div>
+<div class="section" id="footer">
+<h2>Footer<a class="headerlink" href="#footer" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 15%" />
+<col style="width: 54%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>Ctrl+ | ⌘+</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Boards</p></td>
+<td></td>
+<td><p>Change the current <a class="reference internal" href="board.html#board"><span class="std std-ref">Board</span></a> and settings.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Verify</p></td>
+<td><p>R</p></td>
+<td><p>Check the generated verilog code.</p></td>
+</tr>
+<tr class="row-even"><td><p>Build</p></td>
+<td><p>B</p></td>
+<td><p>Synthesize the bitstream from the design.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Upload</p></td>
+<td><p>U</p></td>
+<td><p>Upload the bitstream to the FPGA.</p></td>
+</tr>
+<tr class="row-even"><td><p>View command output</p></td>
+<td></td>
+<td><p>Show output of the latest executed command.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Device resource usage</p></td>
+<td></td>
+<td><p>Figures provided by synthesis and P&amp;R tools.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>Upload</em> will trigger <em>Synthesize</em>, if required.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="collections.html" class="btn btn-neutral float-right" title="Collections" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../quickstart/project.html" class="btn btn-neutral float-left" title="Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2016-2021, Icestudio Nightly contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.toggle > *').hide();
+    $('.toggle .header').show();
+    $('.toggle .header').click(function () {
+      $(this).parent().children().not('.header').toggle(400);
+      $(this).parent().children('.header').toggleClass('open');
+    });
+  });
+</script>
+
+
+</body>
+</html>

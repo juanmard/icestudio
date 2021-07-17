@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="None" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Create a project &mdash; Icestudio 0.5.1-dev documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Upload a bitstream" href="bitstream_upload.html" />
+    <link rel="prev" title="Install the drivers" href="drivers_install.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1-dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/selectboard.html">Select board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/toolchain.html">Install/configure the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/drivers.html">Install/configure the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/test.html">Test 'One LED' example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/project.html">Project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/menu.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/board.html">Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/preferences.html">Preferences</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/tooling.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/project.html">ICE format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/blocks.html">Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/rules.html">Board Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/compiler.html">Compilers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="snapshot.html">Take a snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolchain_install.html">Install the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolchain_update.html">Update the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drivers_install.html">Install the drivers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitstream_upload.html">Upload a bitstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="block_create.html">Create a block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_add.html">Add a project as block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collection_create.html">Create a collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="include_list.html">Include a list file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="include_header.html">Include a verilog (header) file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="remote_configure.html">Configure a remote host</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Icestudio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Create a project</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/juanmard/icestudio/blob/moon/docs/howto/project_create.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="create-a-project">
+<h1>Create a project<a class="headerlink" href="#create-a-project" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p><strong>Create a new project</strong></p>
+<p>Go to <strong>Edit &gt; New</strong>. A new window will be opened.</p>
+<a class="reference internal image-reference" href="../_images/howto_new.png"><img alt="../_images/howto_new.png" class="align-center" src="../_images/howto_new.png" style="width: 400px;" /></a>
+</li>
+<li><p><strong>Add blocks</strong></p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/howto_demo.gif"><img alt="../_images/howto_demo.gif" class="align-center" src="../_images/howto_demo.gif" style="width: 400px;" /></a>
+<p>There are different types of blocks:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p><em>Input/Output blocks</em></p>
+<p>Click on <strong>Basic &gt; Input</strong> or <strong>Basic &gt; Output</strong>, write the block's name and press OK or Enter.</p>
+<p>Also, it can be configured as <strong>buses</strong> using the <code class="docutils literal notranslate"><span class="pre">[x:y]</span></code> notation (<code class="docutils literal notranslate"><span class="pre">x</span></code> is the most significant bit).</p>
+<a class="reference internal image-reference" href="../_images/howto_io-fpga.png"><img alt="../_images/howto_io-fpga.png" class="align-center" src="../_images/howto_io-fpga.png" style="width: 400px;" /></a>
+<p>If these blocks are used to build generic blocks, they should be configured as <strong>virtual</strong> (green). Then, the FPGA pin selector won't be shown.</p>
+<a class="reference internal image-reference" href="../_images/howto_io-virtual.png"><img alt="../_images/howto_io-virtual.png" class="align-center" src="../_images/howto_io-virtual.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Constant blocks</em></p>
+<p>Click on <strong>Basic &gt; Constant</strong>, write the block's name and press OK or Enter.</p>
+<p>These blocks can be configures as <strong>local</strong>. Then, this parameter won't be exported.</p>
+<a class="reference internal image-reference" href="../_images/howto_constant.png"><img alt="../_images/howto_constant.png" class="align-center" src="../_images/howto_constant.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Memory blocks</em></p>
+<p>Click on <strong>Basic &gt; Memory</strong>, write the block's name and press OK or Enter.</p>
+<p>These blocks can be configures as <strong>local</strong>. Then, this parameter won't be exported. Also you can update the <strong>address format</strong> of the memory to be <em>binary</em>, <em>decimal</em> or <em>hexadecimal</em>.</p>
+<a class="reference internal image-reference" href="../_images/howto_memory.png"><img alt="../_images/howto_memory.png" class="align-center" src="../_images/howto_memory.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Code blocks</em></p>
+<p>Click on <strong>Basic &gt; Code</strong>, add the code ports. Port names are separated by a comma. E.g.: <code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span></code>.</p>
+<a class="reference internal image-reference" href="../_images/howto_code-prompt.png"><img alt="../_images/howto_code-prompt.png" class="align-center" src="../_images/howto_code-prompt.png" style="width: 400px;" /></a>
+<p>This block contains a text editor to write your module in verilog code. Module header and footer are not required.</p>
+<a class="reference internal image-reference" href="../_images/howto_code.png"><img alt="../_images/howto_code.png" class="align-center" src="../_images/howto_code.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Info blocks</em></p>
+<p>Click on <strong>Basic &gt; Info</strong>.</p>
+<p>This block contains a text editor to add comments about the project in <strong>Markdown</strong> or <strong>HTML</strong>.</p>
+<a class="reference internal image-reference" href="../_images/howto_info.png"><img alt="../_images/howto_info.png" class="align-center" src="../_images/howto_info.png" style="width: 400px;" /></a>
+<p>It can be rendered simply by double-clicking the block.</p>
+<a class="reference internal image-reference" href="../_images/howto_info-render.png"><img alt="../_images/howto_info-render.png" class="align-center" src="../_images/howto_info-render.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Bit blocks</em></p>
+<p>Click on <strong>Bit &gt; 0</strong> or <strong>Bit &gt; 1</strong>.</p>
+<p>These blocks are low and high logic drivers.</p>
+<a class="reference internal image-reference" href="../_images/howto_bit.png"><img alt="../_images/howto_bit.png" class="align-center" src="../_images/howto_bit.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Logic blocks</em></p>
+<p>Go to the <strong>Logic</strong> menu and select a block. This menu contains <strong>Gates</strong>, <strong>Combinational blocks</strong> and <strong>Sequential blocks</strong>.</p>
+<a class="reference internal image-reference" href="../_images/howto_logic.png"><img alt="../_images/howto_logic.png" class="align-center" src="../_images/howto_logic.png" style="width: 400px;" /></a>
+</li>
+<li><p><em>Setup blocks</em></p>
+<p>Click on <strong>Setup &gt; Pull up</strong> or <strong>Setup &gt; Tri-state</strong>.</p>
+<p>The <em>Pull up</em> block must be connected to input ports in order to configure a pull up in the FPGA.</p>
+<a class="reference internal image-reference" href="../_images/howto_setup.png"><img alt="../_images/howto_setup.png" class="align-center" src="../_images/howto_setup.png" style="width: 400px;" /></a>
+</li>
+</ol>
+</div></blockquote>
+<p>In this example we are going to implement an AND logic gate with its input/output pins connected to the FPGA I/O.</p>
+<a class="reference internal image-reference" href="../_images/howto_bwire.png"><img alt="../_images/howto_bwire.png" class="align-center" src="../_images/howto_bwire.png" style="width: 400px;" /></a>
+<ol class="arabic simple" start="3">
+<li><p><strong>Connect the blocks</strong></p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/howto_wire.png"><img alt="../_images/howto_wire.png" class="align-center" src="../_images/howto_wire.png" style="width: 400px;" /></a>
+<ol class="arabic" start="4">
+<li><p><strong>Select your board</strong></p>
+<p>Go to <strong>Select &gt; Board</strong> and select the board from the list.</p>
+<a class="reference internal image-reference" href="../_images/howto_board.png"><img alt="../_images/howto_board.png" class="align-center" src="../_images/howto_board.png" style="width: 400px;" /></a>
+</li>
+<li><p><strong>Set FPGA I/O pins</strong></p>
+<p>Select all Input/Output blocks' pins.</p>
+<a class="reference internal image-reference" href="../_images/howto_fpgapin.png"><img alt="../_images/howto_fpgapin.png" class="align-center" src="../_images/howto_fpgapin.png" style="width: 400px;" /></a>
+</li>
+<li><p><strong>Save the project</strong></p>
+<p>Go to <strong>Edit &gt; Save as</strong> and select the project name, for example <em>myProject</em>.</p>
+<p>It will be saved as an <strong>.ice</strong> file.</p>
+<a class="reference internal image-reference" href="../_images/howto_saveas.png"><img alt="../_images/howto_saveas.png" class="align-center" src="../_images/howto_saveas.png" style="width: 400px;" /></a>
+</li>
+</ol>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bitstream_upload.html" class="btn btn-neutral float-right" title="Upload a bitstream" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="drivers_install.html" class="btn btn-neutral float-left" title="Install the drivers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2016-2021, Icestudio Nightly contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.toggle > *').hide();
+    $('.toggle .header').show();
+    $('.toggle .header').click(function () {
+      $(this).parent().children().not('.header').toggle(400);
+      $(this).parent().children('.header').toggleClass('open');
+    });
+  });
+</script>
+
+
+</body>
+</html>

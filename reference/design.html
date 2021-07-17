@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="None" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Design &mdash; Icestudio 0.5.1-dev documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Board" href="board.html" />
+    <link rel="prev" title="Collections" href="collections.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1-dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/selectboard.html">Select board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/toolchain.html">Install/configure the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/drivers.html">Install/configure the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/test.html">Test 'One LED' example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/project.html">Project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="menu.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collections.html">Collections</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pan-zoom">Pan &amp; Zoom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#select">Select</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#move-blocks">Move blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resize-text-blocks">Resize text blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#block-examination">Block examination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verilog-error-detection">Verilog error detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undo-redo">Undo/Redo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="board.html">Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preferences</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/tooling.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/project.html">ICE format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/blocks.html">Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/rules.html">Board Rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/compiler.html">Compilers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../howto/snapshot.html">Take a snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_install.html">Install the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_update.html">Update the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/drivers_install.html">Install the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/bitstream_upload.html">Upload a bitstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/block_create.html">Create a block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_add.html">Add a project as block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/collection_create.html">Create a collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_list.html">Include a list file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_header.html">Include a verilog (header) file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/remote_configure.html">Configure a remote host</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Icestudio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Design</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/juanmard/icestudio/blob/moon/docs/reference/design.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="design">
+<h1>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pan-zoom">
+<h2>Pan &amp; Zoom<a class="headerlink" href="#pan-zoom" title="Permalink to this headline">¶</a></h2>
+<p>Pan is performed using the <strong>Ctrl + mouse left button</strong> or <strong>mouse right button</strong> over the background. Zoom is performed using <strong>mouse wheel</strong>.</p>
+</div>
+<div class="section" id="select">
+<h2>Select<a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h2>
+<p>Block selection is performed with the <strong>mouse left button</strong>. Blocks can be <strong>selected/unselected</strong> individually using <strong>Shift+left-click</strong>. In addition, several blocks can be selected by a <strong>selection box</strong>. A selection is canceled when the background is <strong>left-clicked</strong>.</p>
+<a class="reference internal image-reference" href="../_images/design_select.png"><img alt="../_images/design_select.png" class="align-center" src="../_images/design_select.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="move-blocks">
+<h2>Move blocks<a class="headerlink" href="#move-blocks" title="Permalink to this headline">¶</a></h2>
+<p>Any block or blocks selection can be moved in the design using the <strong>mouse left button</strong> over the block or the selection. The selection can also be moved with the <strong>arrow keys</strong>.</p>
+<a class="reference internal image-reference" href="../_images/design_move.png"><img alt="../_images/design_move.png" class="align-center" src="../_images/design_move.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="resize-text-blocks">
+<h2>Resize text blocks<a class="headerlink" href="#resize-text-blocks" title="Permalink to this headline">¶</a></h2>
+<p><strong>Memory</strong>, <strong>Code</strong>, and <strong>Information</strong> blocks can be resized with the resize tool in the <strong>bottom-right corner</strong> of the block.</p>
+</div>
+<div class="section" id="block-examination">
+<h2>Block examination<a class="headerlink" href="#block-examination" title="Permalink to this headline">¶</a></h2>
+<p>Non-basic blocks can be examined by <strong>double clicking</strong> the block using the <strong>mouse left button</strong>. This is a recursive action. A navigation menu is shown on the bottom left corner, to easily jump back/up in the design. Pan, zoom and code browsing are enabled during navigation. <em>Edit &gt; Fit content</em> is also supported. However, other menus are disabled.</p>
+<a class="reference internal image-reference" href="../_images/design_submodule.png"><img alt="../_images/design_submodule.png" class="align-center" src="../_images/design_submodule.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="verilog-error-detection">
+<h2>Verilog error detection<a class="headerlink" href="#verilog-error-detection" title="Permalink to this headline">¶</a></h2>
+<p>The Verify, Build and Upload errors are captured and showed in the design with a notification.</p>
+<a class="reference internal image-reference" href="../_images/design_error-notification.png"><img alt="../_images/design_error-notification.png" class="align-center" src="../_images/design_error-notification.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>If the error comes from a Code block it is marked in red an inline annotation is set:</p>
+<a class="reference internal image-reference" href="../_images/design_error-code-block.png"><img alt="../_images/design_error-code-block.png" class="align-center" src="../_images/design_error-code-block.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>If the error comes from a Constant block it is marked in red.</p>
+<a class="reference internal image-reference" href="../_images/design_error-constant-block.png"><img alt="../_images/design_error-constant-block.png" class="align-center" src="../_images/design_error-constant-block.png" style="width: 400px;" /></a>
+<p>If the error comes from a Generic block it is marked in red.</p>
+<a class="reference internal image-reference" href="../_images/design_error-generic-block.png"><img alt="../_images/design_error-generic-block.png" class="align-center" src="../_images/design_error-generic-block.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="undo-redo">
+<h2>Undo/Redo<a class="headerlink" href="#undo-redo" title="Permalink to this headline">¶</a></h2>
+<p>Icestudio allows to undo/redo the following actions:</p>
+<ul class="simple">
+<li><p>Add or remove a block.</p></li>
+<li><p>Add or remove a wire.</p></li>
+<li><p>Move a block or a blocks selection.</p></li>
+<li><p>Edit an I/O block: name, type and value.</p></li>
+<li><p>Edit a Constant block: name, type and value.</p></li>
+<li><p>Edit a Memory block: name, type, format and value.</p></li>
+<li><p>Edit a Code block: ports, parameters and content.</p></li>
+<li><p>Edit an Information block: type and content.</p></li>
+<li><p>Change the board.</p></li>
+<li><p>Change the language.</p></li>
+<li><p>Change the Project information: when undo/redo a Project information change, a clickable notification will appear to access the Project information section.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="board.html" class="btn btn-neutral float-right" title="Board" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="collections.html" class="btn btn-neutral float-left" title="Collections" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2016-2021, Icestudio Nightly contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.toggle > *').hide();
+    $('.toggle .header').show();
+    $('.toggle .header').click(function () {
+      $(this).parent().children().not('.header').toggle(400);
+      $(this).parent().children('.header').toggleClass('open');
+    });
+  });
+</script>
+
+
+</body>
+</html>

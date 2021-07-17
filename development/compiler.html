@@ -1,0 +1,893 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="None" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Compilers &mdash; Icestudio 0.5.1-dev documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Take a snapshot" href="../howto/snapshot.html" />
+    <link rel="prev" title="Board Rules" href="rules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.1-dev
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Quick Start</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/selectboard.html">Select board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/toolchain.html">Install/configure the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/drivers.html">Install/configure the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/test.html">Test 'One LED' example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/project.html">Project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/menu.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/board.html">Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/preferences.html">Preferences</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tooling.html">Tooling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">ICE format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blocks.html">Blocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rules.html">Board Rules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Compilers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sample">Sample</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#counter">Counter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generates">Generates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../howto/snapshot.html">Take a snapshot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_install.html">Install the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/toolchain_update.html">Update the toolchain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/drivers_install.html">Install the drivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/bitstream_upload.html">Upload a bitstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/block_create.html">Create a block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/project_add.html">Add a project as block</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/collection_create.html">Create a collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_list.html">Include a list file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/include_header.html">Include a verilog (header) file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/remote_configure.html">Configure a remote host</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Icestudio</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Compilers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/juanmard/icestudio/blob/moon/docs/development/compiler.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="compilers">
+<span id="compiler"></span><h1>Compilers<a class="headerlink" href="#compilers" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>Verilog</p></li>
+<li><p>PCF</p></li>
+<li><p>Testbench</p></li>
+<li><p>GTKWave</p></li>
+</ol>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>Compiler <a class="reference external" href="https://github.com/FPGAwars/icestudio/blob/develop/app/services/compiler.js">source code</a>.</p>
+</div>
+<div class="section" id="sample">
+<h2>Sample<a class="headerlink" href="#sample" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="counter">
+<h3>Counter<a class="headerlink" href="#counter" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/counter.png" src="../_images/counter.png" />
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>counter.ice</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.2&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;counter&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;4-bit counter. N is the number of bits to count.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Jesús Arroyo&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;design&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;board&quot;</span><span class="p">:</span> <span class="s2">&quot;icezum&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;blocks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1a49c635-92d6-4641-bd3b-dbd7604a76bf&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.output&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED5&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;101&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">760</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">56</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1f3764d6-7db2-4e5a-912d-a25aad6459e2&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.output&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED4&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;99&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">760</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">136</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;4c30cdb0-f1af-4af1-bb4b-12e443b84a17&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.output&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LEDs&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[3:0]&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED3&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;98&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED2&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;97&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED1&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;96&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;LED0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;95&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">760</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">248</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;9803de82-f844-48f0-9f6a-b428395073b4&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.input&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Enable&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SW1&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;10&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">296</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;4caf869e-5202-4aa0-acbf-14fac565eaf1&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.input&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Reset&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;pins&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SW2&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;11&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;virtual&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">392</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;02460189-14a0-48d0-ad87-74faf9a1177e&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.constant&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;20&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;local&quot;</span><span class="p">:</span> <span class="kc">false</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">376</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">56</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;976c6f41-7ed1-41b5-953b-cd4a5709c701&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;3e6c249e205080168c1bf4ee8dbc33b50653d5f4&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">608</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">56</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">96</span><span class="p">,</span>
+            <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">64</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;e38831b6-fd92-4e35-9fea-17b439002721&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.code&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;// Counter 4 bits\n// @include div.v\n\nwire trig; reg out;\n\nDIV #(N) div (\n  .clk(clk),\n  .out(trig)\n);\n\nalways @(posedge trig) begin\n  if (rst == 1)\n    out &lt;= 0;\n  else if (ena == 1)\n    out &lt;= out + 1;\nend\n&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span>
+              <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;ports&quot;</span><span class="p">:</span> <span class="p">{</span>
+              <span class="nt">&quot;in&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;clk&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ena&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rst&quot;</span>
+                <span class="p">}</span>
+              <span class="p">],</span>
+              <span class="nt">&quot;out&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="s2">&quot;[3:0]&quot;</span><span class="p">,</span>
+                  <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">4</span>
+                <span class="p">}</span>
+              <span class="p">]</span>
+            <span class="p">}</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">248</span><span class="p">,</span>
+            <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">184</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">352</span><span class="p">,</span>
+            <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">288</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;wires&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;02460189-14a0-48d0-ad87-74faf9a1177e&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;constant-out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;e38831b6-fd92-4e35-9fea-17b439002721&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;9803de82-f844-48f0-9f6a-b428395073b4&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;e38831b6-fd92-4e35-9fea-17b439002721&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;ena&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;4caf869e-5202-4aa0-acbf-14fac565eaf1&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;e38831b6-fd92-4e35-9fea-17b439002721&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;rst&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;976c6f41-7ed1-41b5-953b-cd4a5709c701&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;19c8f68d-5022-487f-9ab0-f0a3cd58bead&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;1a49c635-92d6-4641-bd3b-dbd7604a76bf&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;976c6f41-7ed1-41b5-953b-cd4a5709c701&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;19c8f68d-5022-487f-9ab0-f0a3cd58bead&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;1f3764d6-7db2-4e5a-912d-a25aad6459e2&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span>
+          <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;e38831b6-fd92-4e35-9fea-17b439002721&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;out&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;4c30cdb0-f1af-4af1-bb4b-12e443b84a17&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span>
+          <span class="p">},</span>
+          <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">4</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;3e6c249e205080168c1bf4ee8dbc33b50653d5f4&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;package&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Bit 1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Assign 1 to the output wire&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Jesús Arroyo&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="s2">&quot;%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2247.303%22%20height=%2227.648%22%20viewBox=%220%200%2044.346456%2025.919999%22%3E%3Ctext%20style=%22line-height:125%25%22%20x=%22325.218%22%20y=%22315.455%22%20font-weight=%22400%22%20font-size=%2212.669%22%20font-family=%22sans-serif%22%20letter-spacing=%220%22%20word-spacing=%220%22%20transform=%22translate(-307.01%20-298.51)%22%3E%3Ctspan%20x=%22325.218%22%20y=%22315.455%22%20style=%22-inkscape-font-specification:&#39;Courier%2010%20Pitch&#39;%22%20font-family=%22Courier%2010%20Pitch%22%3E1%3C/tspan%3E%3C/text%3E%3C/svg%3E&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;design&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;graph&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;blocks&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;b959fb96-ac67-4aea-90b3-ed35a4c17bf5&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.code&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;// Bit 1\n\nassign v = 1&#39;b1;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="nt">&quot;ports&quot;</span><span class="p">:</span> <span class="p">{</span>
+                  <span class="nt">&quot;in&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                  <span class="nt">&quot;out&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;v&quot;</span>
+                    <span class="p">}</span>
+                  <span class="p">]</span>
+                <span class="p">}</span>
+              <span class="p">},</span>
+              <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">96</span><span class="p">,</span>
+                <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">96</span>
+              <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;19c8f68d-5022-487f-9ab0-f0a3cd58bead&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic.output&quot;</span><span class="p">,</span>
+              <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+              <span class="p">},</span>
+              <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;x&quot;</span><span class="p">:</span> <span class="mi">608</span><span class="p">,</span>
+                <span class="nt">&quot;y&quot;</span><span class="p">:</span> <span class="mi">192</span>
+              <span class="p">}</span>
+            <span class="p">}</span>
+          <span class="p">],</span>
+          <span class="nt">&quot;wires&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="nt">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;b959fb96-ac67-4aea-90b3-ed35a4c17bf5&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;v&quot;</span>
+              <span class="p">},</span>
+              <span class="nt">&quot;target&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;block&quot;</span><span class="p">:</span> <span class="s2">&quot;19c8f68d-5022-487f-9ab0-f0a3cd58bead&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span>
+              <span class="p">}</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>div.v</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>module DIV (input clk, output out);
+
+ parameter N = 22;
+ localparam M = $pow(2, N); // 2**N
+
+ wire clk_temp;
+ reg [N - 1:0] c = 0;
+ reg dout;
+
+ assign out = dout;
+
+ always @(posedge clk)
+  if (M == 0)
+   c &lt;= 0;
+  else if (c == M - 1)
+   c &lt;= 0;
+  else
+   c &lt;= c + 1;
+
+ assign clk_temp = (c == 0) ? 1 : 0;
+
+ always @(posedge clk)
+  if (N == 0)
+   out &lt;= 0;
+  else if (clk_temp == 1)
+
+ dout &lt;= ~dout;
+ 
+endmodule
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="generates">
+<h4>Generates<a class="headerlink" href="#generates" title="Permalink to this headline">¶</a></h4>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>counter.v</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// Code generated by Icestudio 0.3.3-rc</span>
+<span class="c1">// Tue, 24 Jul 2018 16:04:48 GMT</span>
+
+<span class="no">`default_nettype</span> <span class="n">none</span>
+
+<span class="k">module</span> <span class="n">main</span> <span class="p">#(</span>
+ <span class="k">parameter</span> <span class="n">v30f40a</span> <span class="o">=</span> <span class="mh">20</span>
+<span class="p">)</span> <span class="p">(</span>
+ <span class="k">input</span> <span class="n">vb8a806</span><span class="p">,</span>
+ <span class="k">input</span> <span class="n">ve0befb</span><span class="p">,</span>
+ <span class="k">input</span> <span class="n">vclk</span><span class="p">,</span>
+ <span class="k">output</span> <span class="n">v32232e</span><span class="p">,</span>
+ <span class="k">output</span> <span class="n">v1d1af8</span><span class="p">,</span>
+ <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">v6a65cd</span><span class="p">,</span>
+ <span class="k">output</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">1</span><span class="p">]</span> <span class="n">vinit</span>
+<span class="p">);</span>
+ <span class="k">localparam</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">v30f40a</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="n">w1</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="n">w2</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="n">w3</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="n">w4</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">3</span><span class="p">]</span> <span class="n">w5</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="n">w6</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">w1</span> <span class="o">=</span> <span class="n">vb8a806</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">ve0befb</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">v32232e</span> <span class="o">=</span> <span class="n">w3</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">v1d1af8</span> <span class="o">=</span> <span class="n">w4</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">v6a65cd</span> <span class="o">=</span> <span class="n">w5</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">w6</span> <span class="o">=</span> <span class="n">vclk</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">w4</span> <span class="o">=</span> <span class="n">w3</span><span class="p">;</span>
+ <span class="n">v3e6c24</span> <span class="n">vc4b1b9</span> <span class="p">(</span>
+  <span class="p">.</span><span class="n">v608bd9</span><span class="p">(</span><span class="n">w3</span><span class="p">)</span>
+ <span class="p">);</span>
+ <span class="n">main_v4549a6</span> <span class="p">#(</span>
+  <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span>
+ <span class="p">)</span> <span class="n">v4549a6</span> <span class="p">(</span>
+  <span class="p">.</span><span class="n">ena</span><span class="p">(</span><span class="n">w1</span><span class="p">),</span>
+  <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">w2</span><span class="p">),</span>
+  <span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">w5</span><span class="p">),</span>
+  <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">w6</span><span class="p">)</span>
+ <span class="p">);</span>
+ <span class="k">assign</span> <span class="n">vinit</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">;</span>
+<span class="k">endmodule</span>
+
+<span class="k">module</span> <span class="n">v3e6c24</span> <span class="p">(</span>
+ <span class="k">output</span> <span class="n">v608bd9</span>
+<span class="p">);</span>
+ <span class="kt">wire</span> <span class="n">w0</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">v608bd9</span> <span class="o">=</span> <span class="n">w0</span><span class="p">;</span>
+ <span class="n">v3e6c24_v68c173</span> <span class="n">v68c173</span> <span class="p">(</span>
+  <span class="p">.</span><span class="n">v</span><span class="p">(</span><span class="n">w0</span><span class="p">)</span>
+ <span class="p">);</span>
+<span class="k">endmodule</span>
+
+<span class="k">module</span> <span class="n">v3e6c24_v68c173</span> <span class="p">(</span>
+ <span class="k">output</span> <span class="n">v</span>
+<span class="p">);</span>
+ <span class="c1">// Bit 1</span>
+ 
+ <span class="k">assign</span> <span class="n">v</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="k">endmodule</span>
+
+<span class="k">module</span> <span class="n">main_v4549a6</span> <span class="p">#(</span>
+ <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mh">0</span>
+<span class="p">)</span> <span class="p">(</span>
+ <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+ <span class="k">input</span> <span class="n">ena</span><span class="p">,</span>
+ <span class="k">input</span> <span class="n">rst</span><span class="p">,</span>
+ <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span>
+<span class="p">);</span>
+ <span class="c1">// Counter 4 bits</span>
+ <span class="c1">// @include div.v</span>
+ 
+ <span class="kt">wire</span> <span class="n">trig</span><span class="p">;</span> <span class="kt">reg</span> <span class="n">out</span><span class="p">;</span>
+ 
+ <span class="n">DIV</span> <span class="p">#(</span><span class="n">N</span><span class="p">)</span> <span class="n">div</span> <span class="p">(</span>
+   <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+   <span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">trig</span><span class="p">)</span>
+ <span class="p">);</span>
+ 
+ <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">trig</span><span class="p">)</span> <span class="k">begin</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">rst</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span>
+     <span class="n">out</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+   <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ena</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span>
+     <span class="n">out</span> <span class="o">&lt;=</span> <span class="n">out</span> <span class="o">+</span> <span class="mh">1</span><span class="p">;</span>
+ <span class="k">end</span>
+ 
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>counter.pcf</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Code generated by Icestudio 0.3.3-rc</span>
+<span class="c1"># Tue, 24 Jul 2018 16:04:52 GMT</span>
+
+<span class="n">set_io</span> <span class="n">v32232e</span> <span class="mi">101</span>
+<span class="n">set_io</span> <span class="n">v1d1af8</span> <span class="mi">99</span>
+<span class="n">set_io</span> <span class="n">v6a65cd</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="mi">98</span>
+<span class="n">set_io</span> <span class="n">v6a65cd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="mi">97</span>
+<span class="n">set_io</span> <span class="n">v6a65cd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="mi">96</span>
+<span class="n">set_io</span> <span class="n">v6a65cd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="mi">95</span>
+<span class="n">set_io</span> <span class="n">vb8a806</span> <span class="mi">10</span>
+<span class="n">set_io</span> <span class="n">ve0befb</span> <span class="mi">11</span>
+<span class="n">set_io</span> <span class="n">vclk</span> <span class="mi">21</span>
+<span class="n">set_io</span> <span class="n">vinit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="mi">102</span>
+<span class="n">set_io</span> <span class="n">vinit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="mi">104</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>counter_tb.v</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Code generated by Icestudio 0.3.3-rc
+// Tue, 24 Jul 2018 16:04:57 GMT
+
+// Testbench template
+
+`default_nettype none
+`define DUMPSTR(x) `&quot;x.vcd`&quot;
+`timescale 10 ns / 1 ns
+
+
+module main_tb
+;
+ 
+ // Simulation time: 100ns (10 * 10ns)
+ parameter DURATION = 10;
+ 
+ // TODO: edit the module parameters here
+ // e.g. localparam constant_value = 1;
+ localparam constant_N = 20;
+ 
+ // Input/Output
+ reg Enable;
+ reg Reset;
+ wire 0;
+ wire 1;
+ wire [3:0] LEDs;
+ 
+ // Module instance
+ main #(
+  .v30f40a(constant_N)
+ ) MAIN (
+  .vb8a806(Enable),
+  .ve0befb(Reset),
+  .v32232e(0),
+  .v1d1af8(1),
+  .v6a65cd(LEDs)
+ );
+ 
+ initial begin
+  // File were to store the simulation results
+  $dumpfile(`DUMPSTR(`VCD_OUTPUT));
+  $dumpvars(0, main_tb);
+ 
+  // TODO: initialize the registers here
+  // e.g. value = 1;
+  // e.g. #2 value = 0;
+  Enable = 0;
+  Reset = 0;
+ 
+  #(DURATION) $display(&quot;End of simulation&quot;);
+  $finish;
+ end
+ 
+endmodule
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="toggle docutils container">
+<div class="header docutils container">
+<p><strong>counter_tb.gtkw</strong></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Code</span> <span class="n">generated</span> <span class="n">by</span> <span class="n">Icestudio</span> <span class="mf">0.3.3</span><span class="o">-</span><span class="n">rc</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Tue</span><span class="p">,</span> <span class="mi">24</span> <span class="n">Jul</span> <span class="mi">2018</span> <span class="mi">16</span><span class="p">:</span><span class="mi">05</span><span class="p">:</span><span class="mi">02</span> <span class="n">GMT</span>
+
+<span class="n">main_tb</span><span class="o">.</span><span class="n">Enable</span>
+<span class="n">main_tb</span><span class="o">.</span><span class="n">Reset</span>
+<span class="n">main_tb</span><span class="mf">.0</span>
+<span class="n">main_tb</span><span class="mf">.1</span>
+<span class="n">main_tb</span><span class="o">.</span><span class="n">LEDs</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../howto/snapshot.html" class="btn btn-neutral float-right" title="Take a snapshot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rules.html" class="btn btn-neutral float-left" title="Board Rules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2016-2021, Icestudio Nightly contributors
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.toggle > *').hide();
+    $('.toggle .header').show();
+    $('.toggle .header').click(function () {
+      $(this).parent().children().not('.header').toggle(400);
+      $(this).parent().children('.header').toggleClass('open');
+    });
+  });
+</script>
+
+
+</body>
+</html>
