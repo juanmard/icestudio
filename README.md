@@ -13,6 +13,8 @@ Visual editor for Verilog designs, built on top of [Icestorm](http://www.cliffor
 Find installation guidelines, user guide and further information at
 [juanmard.github.io/icestudio](https://juanmard.github.io/icestudio).
 
+**IMPORTANT: Since June 2021, several enhancements available in this variant are being applied [upstream](https://github.com/FPGAwars/icestudio). Therefore, the development of this fork is on hold until the dependencies are stabilized. Find further details in the [WIKI](https://github.com/juanmard/icestudio/wiki).**
+
 <p align="center">
 <a href="http://juanmard.github.io/icestudio"><img src="./docs/_static/img/main.png" align="center"></a>
 </p>
