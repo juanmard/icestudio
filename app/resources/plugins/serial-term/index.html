@@ -17,17 +17,43 @@
     <div id="panel-config" class="panel">
       <div
         id="device-info"
-        class="hidden bg-white rounded-t-lg overflow-hidden border-b border-t border-l border-r border-gray-400 p-4"
+        class="
+          hidden
+          bg-white
+          rounded-t-lg
+          overflow-hidden
+          border-b border-t border-l border-r border-gray-400
+          p-4
+        "
       ></div>
       <button
-        class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="
+          m-2
+          bg-blue-500
+          hover:bg-blue-700
+          text-white
+          font-bold
+          py-2
+          px-4
+          rounded
+        "
         data-action="serial-getdevices"
       >
         Reload serial devices
       </button>
       <button
         id="bt-connect"
-        class="m-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded hidden"
+        class="
+          m-2
+          bg-green-500
+          hover:bg-green-700
+          text-white
+          font-bold
+          py-2
+          px-4
+          rounded
+          hidden
+        "
         data-action="serial-connect"
       >
         🔌 Connect
@@ -38,14 +64,34 @@
           <div class="flex flex-wrap -mx-3 mb-2">
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
               <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
                 for="grid-state"
               >
                 bps
               </label>
               <div class="relative">
                 <select
-                  class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  class="
+                    block
+                    appearance-none
+                    w-full
+                    bg-gray-200
+                    border border-gray-200
+                    text-gray-700
+                    py-3
+                    px-4
+                    pr-8
+                    rounded
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
+                  "
                   id="sconf-bps"
                 >
                   <option value="1200">1200</option>
@@ -59,7 +105,16 @@
                   <option value="-1">Custom</option>
                 </select>
                 <div
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  class="
+                    pointer-events-none
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    px-2
+                    text-gray-700
+                  "
                 >
                   <svg
                     class="fill-current h-4 w-4"
@@ -76,13 +131,32 @@
 
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
               <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
                 for="sconf-cbps"
               >
                 Custom bps
               </label>
               <input
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                class="
+                  appearance-none
+                  block
+                  w-full
+                  bg-gray-200
+                  text-gray-700
+                  border border-gray-200
+                  rounded
+                  py-3
+                  px-4
+                  leading-tight
+                  focus:outline-none focus:bg-white focus:border-gray-500
+                "
                 id="sconf-cbps"
                 type="text"
                 placeholder="Your custom bps"
@@ -91,21 +165,50 @@
 
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
               <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
                 for="sconf-databits"
               >
                 Data bits
               </label>
               <div class="relative">
                 <select
-                  class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  class="
+                    block
+                    appearance-none
+                    w-full
+                    bg-gray-200
+                    border border-gray-200
+                    text-gray-700
+                    py-3
+                    px-4
+                    pr-8
+                    rounded
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
+                  "
                   id="sconf-databits"
                 >
                   <option value="seven">7</option>
                   <option value="eight" selected>8</option>
                 </select>
                 <div
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  class="
+                    pointer-events-none
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    px-2
+                    text-gray-700
+                  "
                 >
                   <svg
                     class="fill-current h-4 w-4"
@@ -122,14 +225,34 @@
 
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
               <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
                 for="sconf-paritybit"
               >
                 Parity bit
               </label>
               <div class="relative">
                 <select
-                  class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  class="
+                    block
+                    appearance-none
+                    w-full
+                    bg-gray-200
+                    border border-gray-200
+                    text-gray-700
+                    py-3
+                    px-4
+                    pr-8
+                    rounded
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
+                  "
                   id="sconf-paritybit"
                 >
                   <option value="no" selected>No</option>
@@ -137,7 +260,16 @@
                   <option value="even">Even</option>
                 </select>
                 <div
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  class="
+                    pointer-events-none
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    px-2
+                    text-gray-700
+                  "
                 >
                   <svg
                     class="fill-current h-4 w-4"
@@ -154,21 +286,50 @@
 
             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
               <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
                 for="sconf-stopbits"
               >
                 Stop bits
               </label>
               <div class="relative">
                 <select
-                  class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  class="
+                    block
+                    appearance-none
+                    w-full
+                    bg-gray-200
+                    border border-gray-200
+                    text-gray-700
+                    py-3
+                    px-4
+                    pr-8
+                    rounded
+                    leading-tight
+                    focus:outline-none focus:bg-white focus:border-gray-500
+                  "
                   id="sconf-stopbits"
                 >
                   <option value="one" selected>1</option>
                   <option value="two">2</option>
                 </select>
                 <div
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  class="
+                    pointer-events-none
+                    absolute
+                    inset-y-0
+                    right-0
+                    flex
+                    items-center
+                    px-2
+                    text-gray-700
+                  "
                 >
                   <svg
                     class="fill-current h-4 w-4"
@@ -191,14 +352,32 @@
       <div id="terminal"></div>
       <button
         id="bt-clean"
-        class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="
+          m-2
+          bg-blue-500
+          hover:bg-blue-700
+          text-white
+          font-bold
+          py-2
+          px-4
+          rounded
+        "
         data-action="serial-clean"
       >
         ⎚ Clean
       </button>
       <button
         id="bt-disconnect"
-        class="m-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        class="
+          m-2
+          bg-red-500
+          hover:bg-red-700
+          text-white
+          font-bold
+          py-2
+          px-4
+          rounded
+        "
         data-action="serial-disconnect"
       >
         🔌 Disconnect

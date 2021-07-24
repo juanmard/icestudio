@@ -199,22 +199,24 @@ angular
       function configureLinuxDrivers(commands, callback) {
         var command = 'sh -c "' + commands.join('; ') + '"';
         utils.startWait();
-        nodeSudo.exec(command, {name: 'Icestudio'}, function (
-          error /*, stdout, stderr*/
-        ) {
-          utils.endWait();
-          if (!error) {
-            if (callback) {
-              callback();
+        nodeSudo.exec(
+          command,
+          {name: 'Icestudio'},
+          function (error /*, stdout, stderr*/) {
+            utils.endWait();
+            if (!error) {
+              if (callback) {
+                callback();
+              }
+              setTimeout(function () {
+                alertify.message(
+                  _tcStr('<b>Unplug</b> and <b>reconnect</b> the board'),
+                  5
+                );
+              }, 1000);
             }
-            setTimeout(function () {
-              alertify.message(
-                _tcStr('<b>Unplug</b> and <b>reconnect</b> the board'),
-                5
-              );
-            }, 1000);
           }
-        });
+        );
       }
 
       /*
