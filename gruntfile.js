@@ -58,24 +58,27 @@ module.exports = function (grunt) {
 
   var gruntCfg = {};
 
+  const sources = [
+    'controllers/**',
+    'fonts/Lato2OFLWeb/Lato/**',
+    'graphics/**',
+    'libs/**',
+    'node_modules/**/*.*',
+    'resources/**/*.*',
+    'services/*.js',
+    'styles/*.css',
+    'views/*.html',
+    '*.js',
+    'index.html',
+    'package.json',
+  ];
+
   var copyArgs = [
     {
       expand: true,
       cwd: 'app',
       dest: 'dist/tmp',
-      src: [
-        'index.html',
-        'package.json',
-        'node_modules/**',
-        'resources/**',
-        'views/*.html',
-      ],
-    },
-    {
-      expand: true,
-      dest: 'dist/tmp/styles/fonts',
-      src: ['**'],
-      cwd: 'app/fonts/Lato2OFLWeb/Lato/fonts',
+      src: sources,
     },
     {
       expand: true,
@@ -87,7 +90,6 @@ module.exports = function (grunt) {
 
   for (var font of [
     'app/fonts/freefont/',
-    'app/bower_components/bootstrap/fonts',
     'app/node_modules/font-awesome/fonts',
   ]) {
     copyArgs.push({
@@ -101,16 +103,6 @@ module.exports = function (grunt) {
   gruntCfg.copy = {
     dist: {
       files: copyArgs,
-    },
-  };
-
-  gruntCfg.toolchain = {
-    options: {
-      apioMin: '<%=pkg.apio.min%>',
-      apioMax: '<%=pkg.apio.max%>',
-      buildDir: 'dist/',
-      extraPackages: '<%=pkg.apio.extras%>',
-      platforms: platforms,
     },
   };
 
@@ -137,16 +129,7 @@ module.exports = function (grunt) {
         {
           expand: true,
           cwd: 'dist/icestudio/' + os + bits + '/',
-          src: ['**'].concat([
-            'index.html',
-            'package.json',
-            'fonts/**/*.*',
-            'node_modules/**/*.*',
-            'resources/**/*.*',
-            'scripts/**/*.*',
-            'styles/**/*.*',
-            'views/**/*.*',
-          ]),
+          src: ['**'].concat(sources),
           dest: '<%=pkg.name%>-<%=pkg.version%>-' + os + bits,
         },
       ],
@@ -172,11 +155,10 @@ module.exports = function (grunt) {
     scripts: {
       files: [
         'app/**/*.*',
-        '!app/bower_components/**',
         '!app/node_modules/**',
         '!app/resources/collection/**',
       ],
-      tasks: ['wiredep', 'exec:stopNW', 'exec:nw'],
+      tasks: ['exec:stopNW', 'exec:nw'],
       options: {
         atBegin: true,
         interrupt: true,
@@ -197,8 +179,7 @@ module.exports = function (grunt) {
     },
     collection: {
       options: {overwrite: false},
-      src:
-        'https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip',
+      src: 'https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip',
       dest: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
     },
   };
@@ -209,27 +190,14 @@ module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt, options);
 
-  // Load custom tasks
-  grunt.loadTasks('tasks');
-
   // Project configuration
   grunt.initConfig({
     pkg: pkg,
     compress: gruntCfg.compress, // Compress packages usin zip
     copy: gruntCfg.copy, // Copy dist files
     nwjs: gruntCfg.nwjs, // Execute nw-build packaging
-    toolchain: gruntCfg.toolchain, // Create standalone toolchains for each platform
     watch: gruntCfg.watch, // Watch files for changes and runs tasks based on the changed files
     wget: gruntCfg.wget, // Wget: Python installer and Default collection
-
-    // Automatically inject Bower components into the app
-    wiredep: {
-      task: {
-        directory: 'app/bower_components',
-        bowerJson: grunt.file.readJSON('app/bower.json'),
-        src: ['index.html'],
-      },
-    },
 
     // Execute nw application
     exec: {
@@ -245,25 +213,11 @@ module.exports = function (grunt) {
         'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
     },
 
-    // Reads HTML for usemin blocks to enable smart builds that automatically
-    // concat, minify and revision files. Creates configurations in memory so
-    // additional tasks can operate on them
-    useminPrepare: {
-      html: 'app/index.html',
-      options: {dest: 'dist/tmp'},
-    },
-
     // JSON minification plugin without concatination
     'json-minify': {
       json: {files: 'dist/tmp/resources/**/*.json'},
       ice: {files: 'dist/tmp/resources/**/*.ice'},
     },
-
-    // Uglify configuration options:
-    uglify: {options: {mangle: false}},
-
-    // Rewrite based on filerev and the useminPrepare configuration
-    usemin: {html: ['dist/tmp/index.html']},
 
     // Unzip Default collection
     unzip: {
@@ -280,15 +234,9 @@ module.exports = function (grunt) {
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
-      toolchain: [
-        'cache/toolchain/default-python-packages',
-        'cache/toolchain/default-apio',
-        'cache/toolchain/*.zip',
-      ],
       collection: ['app/resources/collection'],
       // node: ['node_modules'],
       // appnode: ['app/node_modules'],
-      // appbower: ['app/bower_components'],
       // cache: ['cache']
     },
 
@@ -337,28 +285,13 @@ module.exports = function (grunt) {
   grunt.registerTask(
     'dist',
     [
-      'checksettings',
       'clean:dist',
-      'clean:toolchain',
       'nggettext_compile',
-      'useminPrepare',
-      'concat',
       'copy:dist',
       'json-minify',
-      'uglify',
-      'cssmin',
-      'usemin',
       'nwjs',
-      'toolchain',
-    ]
-      .concat(distCommands)
-      .concat(['clean:tmp'])
+    ].concat(distCommands)
   );
-  grunt.registerTask('checksettings', function () {
-    //    if (pkg.apio.external !== '' || pkg.apio.branch !== '') {
-    //      grunt.fail.fatal('Apio settings are in debug mode');
-    //   }
-  });
 };
 
 // Disable Deprecation Warnings

@@ -291,47 +291,47 @@ angular
 
       function checkToolchain(callback) {
         var apio = utils.getApioExecutable();
-        nodeChildProcess.exec([apio, '--version'].join(' '), function (
-          error,
-          stdout /*, stderr*/
-        ) {
-          if (error) {
-            toolchain.apio = '';
-            toolchain.installed = false;
-            // Apio not installed
-            _toolchainNotInstalledAlert('Toolchain not installed');
-            if (callback) {
-              callback();
-            }
-          } else {
-            toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-            toolchain.installed =
-              toolchain.apio >= _package.apio.min &&
-              toolchain.apio < _package.apio.max;
-            if (toolchain.installed) {
-              nodeChildProcess.exec(
-                [apio, 'clean', '-p', common.SAMPLE_DIR].join(' '),
-                function (error /*, stdout, stderr*/) {
-                  toolchain.installed = !error;
-                  if (error) {
-                    toolchain.apio = '';
-                    // Toolchain not properly installed
-                    _toolchainNotInstalledAlert('Toolchain not installed');
-                  }
-                  if (callback) {
-                    callback();
-                  }
-                }
-              );
-            } else {
-              // An old version is installed
-              _toolchainNotInstalledAlert('Toolchain version does not match');
+        nodeChildProcess.exec(
+          [apio, '--version'].join(' '),
+          function (error, stdout /*, stderr*/) {
+            if (error) {
+              toolchain.apio = '';
+              toolchain.installed = false;
+              // Apio not installed
+              _toolchainNotInstalledAlert('Toolchain not installed');
               if (callback) {
                 callback();
               }
+            } else {
+              toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+              toolchain.installed =
+                toolchain.apio >= _package.apio.min &&
+                toolchain.apio < _package.apio.max;
+              if (toolchain.installed) {
+                nodeChildProcess.exec(
+                  [apio, 'clean', '-p', common.SAMPLE_DIR].join(' '),
+                  function (error /*, stdout, stderr*/) {
+                    toolchain.installed = !error;
+                    if (error) {
+                      toolchain.apio = '';
+                      // Toolchain not properly installed
+                      _toolchainNotInstalledAlert('Toolchain not installed');
+                    }
+                    if (callback) {
+                      callback();
+                    }
+                  }
+                );
+              } else {
+                // An old version is installed
+                _toolchainNotInstalledAlert('Toolchain version does not match');
+                if (callback) {
+                  callback();
+                }
+              }
             }
           }
-        });
+        );
       }
 
       function _toolchainNotInstalledAlert(message) {
@@ -707,10 +707,12 @@ angular
                     re = /hardware\.blif:([0-9]+):\sfatal\serror:\s(.*)/g;
 
                     // ERROR: Cell xxx cannot be bound to ..... since it is already bound
-                    var re2 = /ERROR:\s(.*)\scannot\sbe\sbound\sto\s(.*)since\sit\sis\salready\sbound/g;
+                    var re2 =
+                      /ERROR:\s(.*)\scannot\sbe\sbound\sto\s(.*)since\sit\sis\salready\sbound/g;
 
                     // ERROR: package does not have a pin named 'NULL' (on line 3)
-                    var re3 = /ERROR:\spackage\sdoes\snot\shave\sa\spin\snamed\s'NULL/g;
+                    var re3 =
+                      /ERROR:\spackage\sdoes\snot\shave\sa\spin\snamed\s'NULL/g;
 
                     if ((matchError = re.exec(stdoutError[0]))) {
                       error = matchError[2];

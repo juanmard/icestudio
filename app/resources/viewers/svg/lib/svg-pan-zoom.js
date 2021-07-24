@@ -703,9 +703,8 @@
           this.state = 'none';
 
           // Get dimensions
-          var boundingClientRectNormalized = SvgUtils.getBoundingClientRectNormalized(
-            svg
-          );
+          var boundingClientRectNormalized =
+            SvgUtils.getBoundingClientRectNormalized(svg);
           this.width = boundingClientRectNormalized.width;
           this.height = boundingClientRectNormalized.height;
 
@@ -818,8 +817,8 @@
             });
 
             // Custom event handler may halt builtin listeners
-            var haltEventListeners = this.options.customEventsHandler
-              .haltEventListeners;
+            var haltEventListeners =
+              this.options.customEventsHandler.haltEventListeners;
             if (haltEventListeners && haltEventListeners.length) {
               for (var i = haltEventListeners.length - 1; i >= 0; i--) {
                 if (this.eventListeners.hasOwnProperty(haltEventListeners[i])) {
@@ -1308,9 +1307,8 @@
          */
         SvgPanZoom.prototype.resize = function () {
           // Get dimensions
-          var boundingClientRectNormalized = SvgUtils.getBoundingClientRectNormalized(
-            this.svg
-          );
+          var boundingClientRectNormalized =
+            SvgUtils.getBoundingClientRectNormalized(this.svg);
           this.width = boundingClientRectNormalized.width;
           this.height = boundingClientRectNormalized.height;
 

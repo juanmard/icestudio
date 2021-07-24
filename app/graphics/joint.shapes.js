@@ -2881,7 +2881,6 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
     'use strict';
 
     // No operation required
-
   },
 
   render: function () {

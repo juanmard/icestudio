@@ -133,7 +133,8 @@ angular
     this.BUILD_DIR = this.BUILD_DIR_OBJ.name;
     this.BUILD_DIR_TMP = this.BUILD_DIR_OBJ.name;
 
-    this.PATTERN_PORT_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
+    this.PATTERN_PORT_LABEL =
+      /^([A-Za-z_][A-Za-z_$0-9]*)?(\[([0-9]+):([0-9]+)\])?$/;
     this.PATTERN_PARAM_LABEL = /^([A-Za-z_][A-Za-z_$0-9]*)?$/;
 
     this.PATTERN_GLOBAL_PORT_LABEL = /^([^\[\]]+)?(\[([0-9]+):([0-9]+)\])?$/;

@@ -17,7 +17,7 @@ author = u'Icestudio contributors'
 
 title = u'Icestudio Nightly'
 
-version = u'0.5.1-dev' # The short X.Y version.
+version = u'0.7.0-dev' # The short X.Y version.
 release = version # The full version, including alpha/beta/rc tags.
 
 language = 'None'
