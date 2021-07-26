@@ -85,6 +85,8 @@ angular
         ['light', 'Light'],
       ];
 
+      $scope.saveCollectionsToProfile = tools.saveCollections;
+
       $scope.addCollections = () => {
         utils.openDialog('#input-add-collection', '.zip', (filepaths) => {
           filepaths = filepaths.split(';');
@@ -195,7 +197,7 @@ angular
           return;
         }
         _openWindow(
-          'resources/viewers/markdown/readme.html?readme=' + escape(readme),
+          'viewers/markdown/readme.html?readme=' + escape(readme),
           'Collection: ' + cname
         );
       };
@@ -211,7 +213,7 @@ angular
           height: 400,
           min_width: 300,
           min_height: 300,
-          icon: 'resources/images/icestudio-logo.png',
+          icon: 'images/icestudio-logo.png',
         });
       }
 

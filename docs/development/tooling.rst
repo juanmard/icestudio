@@ -41,8 +41,8 @@ Localisation
 
 Basque, Catalan, Chinese, Czech, Dutch, English, French, Galician, German, Greek, Italian, Korean, Russian, Spanish...
 
-``*.po`` sources for localisation are located in ``app/resources/locale``.
-For contributing, add or update the `app translations <https://github.com/juanmard/icestudio/tree/develop/app/resources/locale>`__
+``*.po`` sources for localisation are located in ``locale``.
+For contributing, add or update the `app translations <https://github.com/juanmard/icestudio/tree/develop/locale>`__
 using `Poedit <https://poedit.net/>`__.
 
 Package for distribution

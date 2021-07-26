@@ -1,0 +1,3 @@
+[submodule "collection"]
+	path = collection
+	url = https://github.com/FPGAwars/collection-default

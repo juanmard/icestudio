@@ -29,6 +29,16 @@ angular
         common.internalCollections = loadCollections(
           utils.findCollections(common.INTERNAL_COLLECTIONS_DIR)
         );
+        const data = profile.get('collections');
+        if (data) {
+          data.forEach(function (item) {
+            common.internalCollections.forEach((x) => {
+              if (x.name === item.name) {
+                x.disabled = item.disabled;
+              }
+            });
+          });
+        }
       };
 
       this.loadExternalCollections = function () {

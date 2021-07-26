@@ -60,6 +60,23 @@ jobs:
         with:
           node-version: '10.x'
 
+      - name: '🟦 Setup MSYS2'
+        if: matrix.os == 'windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git
+
+      - name: '▶️ submodule'
+        if: matrix.os == 'windows'
+        shell: msys2 {0}
+        run: git submodule update --init --recursive
+
+      - name: '▶️ submodule'
+        if: matrix.os == 'ubuntu'
+        run: git submodule update --init --recursive
+
       - name: '▶️ yarn'
         run: yarn
 
@@ -101,6 +118,8 @@ jobs:
     steps:
       - name: '🧰 Checkout'
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: '⚙️ Setup Node.js'
         uses: actions/setup-node@v1
@@ -162,11 +181,3 @@ jobs:
             win64/*
             osx64-Catalina/*
             osx64-BigSur/*
-
-#---
-
-# Generated artifacts (depending on the platform) are:
-# - dist/*.zip
-# - dist/*.AppImage
-# - dist/*.exe
-# - dist/*.dmg

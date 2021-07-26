@@ -11,13 +11,12 @@
 
 *.swp
 *~
-icerok.capture.raw
-.tmp
-.vscode
-resources/collection
-resources/locale/**/*.json
-bower_components
-cache
-dist
-docs/_build
-node_modules
+/icerok.capture.raw
+/.tmp/
+/.vscode/
+/locale/**/*.json
+/cache/
+/dist/
+/docs/_build/
+/docs/_theme/
+/node_modules/

@@ -559,7 +559,6 @@ angular
         });
 
         function processReplaceBlock(upperBlock) {
-          debounceDisableReplacedBlock.flush();
           var lowerBlock = findLowerBlock(upperBlock);
           replaceBlock(upperBlock, lowerBlock);
         }

@@ -48,7 +48,7 @@ echo "Exec=${PWD}/icestudio %f" >> ${APP}
 echo "Icon=${ICON}" >> ${APP}
 
 mkdir -p ${ICON_DIR}
-cp "${PWD}/resources/images/icestudio-logo.png" ${ICON}
+cp "${PWD}/images/icestudio-logo.png" ${ICON}
 
 update-desktop-database ${APP_DIR}
 
