@@ -11,12 +11,11 @@
 
 *.swp
 *~
-app/icerok.capture.raw
+icerok.capture.raw
 .tmp
 .vscode
-app/docs
-app/resources/collection
-app/resources/locale/**/*.json
+resources/collection
+resources/locale/**/*.json
 bower_components
 cache
 dist

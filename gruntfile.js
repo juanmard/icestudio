@@ -76,7 +76,7 @@ module.exports = function (grunt) {
   var copyArgs = [
     {
       expand: true,
-      cwd: 'app',
+      cwd: '.',
       dest: 'dist/tmp',
       src: sources,
     },
@@ -88,10 +88,7 @@ module.exports = function (grunt) {
     },
   ];
 
-  for (var font of [
-    'app/fonts/freefont/',
-    'app/node_modules/font-awesome/fonts',
-  ]) {
+  for (var font of ['fonts/freefont/', 'node_modules/font-awesome/fonts']) {
     copyArgs.push({
       expand: true,
       dest: 'dist/tmp/fonts',
@@ -153,11 +150,7 @@ module.exports = function (grunt) {
 
   gruntCfg.watch = {
     scripts: {
-      files: [
-        'app/**/*.*',
-        '!app/node_modules/**',
-        '!app/resources/collection/**',
-      ],
+      files: ['**/*.*', '!node_modules/**', '!resources/collection/**'],
       tasks: ['exec:stopNW', 'exec:nw'],
       options: {
         atBegin: true,
@@ -186,7 +179,7 @@ module.exports = function (grunt) {
 
   const WIN32 = process.platform === 'win32';
 
-  var pkg = grunt.file.readJSON('app/package.json');
+  var pkg = grunt.file.readJSON('package.json');
 
   require('load-grunt-tasks')(grunt, options);
 
@@ -201,7 +194,7 @@ module.exports = function (grunt) {
 
     // Execute nw application
     exec: {
-      nw: 'nw app 0x0' + (WIN32 ? '' : ' 2>/dev/null'),
+      nw: 'nw . 0x0' + (WIN32 ? '' : ' 2>/dev/null'),
       stopNW:
         (WIN32
           ? 'taskkill /F /IM nw.exe >NUL 2>&1'
@@ -226,7 +219,7 @@ module.exports = function (grunt) {
           return filepath.replace(/^collection-default-.*?\//g, 'collection/');
         },
         src: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
-        dest: 'app/resources/',
+        dest: 'resources/',
       },
     },
 
@@ -234,9 +227,8 @@ module.exports = function (grunt) {
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
-      collection: ['app/resources/collection'],
+      collection: ['resources/collection'],
       // node: ['node_modules'],
-      // appnode: ['app/node_modules'],
       // cache: ['cache']
     },
 
@@ -244,10 +236,7 @@ module.exports = function (grunt) {
     nggettext_extract: {
       pot: {
         files: {
-          'app/resources/locale/template.pot': [
-            'app/views/*.html',
-            'app/**/*.js',
-          ],
+          'resources/locale/template.pot': ['views/*.html', '**/*.js'],
         },
       },
     },
@@ -259,15 +248,15 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'app/resources/locale',
-            dest: 'app/resources/locale',
+            cwd: 'resources/locale',
+            dest: 'resources/locale',
             src: ['**/*.po'],
             ext: '.json',
           },
           {
             expand: true,
-            cwd: 'app/resources/collection/locale',
-            dest: 'app/resources/collection/locale',
+            cwd: 'resources/collection/locale',
+            dest: 'resources/collection/locale',
             src: ['**/*.po'],
             ext: '.json',
           },
