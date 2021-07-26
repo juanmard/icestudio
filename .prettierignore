@@ -1,10 +1,8 @@
 .vscode
-app/docs
-app/fonts
-app/resources/collection
-app/resources/plugins/serial-term/js/xterm
-app/resources/plugins/serial-term/css/tailwind.css
-bower_components
+docs
+fonts
+resources/collection
+resources/plugins/serial-term
 cache
 dist
 docs/_build

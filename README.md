@@ -22,7 +22,7 @@ Find installation guidelines, user guide and further information at
 <p align="center">
   <a title="DevDependency Status" href="https://david-dm.org/juanmard/icestudio/moon?type=dev"><img src="https://img.shields.io/david/dev/juanmard/icestudio.svg?longCache=true&style=flat-square&label=devdeps&logo=npm"></a><!--
   -->
-  <a title="Dependency Status" href="https://david-dm.org/juanmard/icestudio/moon?path=app"><img src="https://img.shields.io/david/juanmard/icestudio.svg?path=app&longCache=true&style=flat-square&label=app%20deps&logo=npm"></a><!--
+  <a title="Dependency Status" href="https://david-dm.org/juanmard/icestudio/moon"><img src="https://img.shields.io/david/juanmard/icestudio.svg?longCache=true&style=flat-square&label=app%20deps&logo=npm"></a><!--
   -->
   <a title="Code Climate maintainability" href="https://codeclimate.com/github/juanmard/icestudio"><img src="https://img.shields.io/codeclimate/maintainability/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a><!--
   -->

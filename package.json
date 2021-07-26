@@ -1,4 +1,49 @@
 {
+  "name": "icestudio",
+  "version": "0.7.0dev",
+  "sha": "00000000",
+  "description": "Visual editor for Verilog designs",
+  "repository": "https://github.com/juanmard/icestudio",
+  "license": "GPL-2.0",
+  "main": "index.html",
+  "chromium-args": "--enable-experimental-web-platform-features",
+  "development": false,
+  "window": {
+    "width": 1024,
+    "height": 700,
+    "min_width": 800,
+    "min_height": 200,
+    "resizable": true,
+    "position": "center",
+    "icon": "resources/images/icestudio-logo.png"
+  },
+  "collection": "0.3.3",
+  "apio": {
+    "min": "0.6.0",
+    "max": "1.0.0",
+    "extras": [
+      "blackiceprog",
+      "tinyfpgab",
+      "tinyprog",
+      "icefunprog",
+      "icesprog",
+      "fujprog"
+    ],
+    "external": "",
+    "branch": ""
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "readme": "../README.md",
+  "keywords": [
+    "FPGA",
+    "FOSS",
+    "hardware",
+    "HDL",
+    "ICE",
+    "verilog"
+  ],
   "prettier": {
     "bracketSpacing": false,
     "trailingComma": "es5",
@@ -9,12 +54,12 @@
   "scripts": {
     "prettify": "prettier --write .",
     "check": "prettier --check .",
-    "lint": "eslint app/**/*.js tasks/*.js gruntfile.js",
-    "fix": "eslint --fix app/**/*.js tasks/*.js gruntfile.js",
+    "lint": "eslint **/*.js gruntfile.js",
+    "fix": "eslint --fix **/*.js gruntfile.js",
     "start": "grunt serve",
     "dist": "grunt dist",
     "gettext": "grunt nggettext_extract",
-    "postinstall": "npmpd && cd app && yarn && cd .. && grunt getcollection"
+    "postinstall": "npmpd && grunt getcollection"
   },
   "devDependencies": {
     "eslint": "^7.3.1",
@@ -34,5 +79,48 @@
     "npm-platform-dependencies": "0.1.0",
     "nw": "0.35.5-sdk",
     "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "ace-builds": "~1.4.12",
+    "adm-zip": "0.4.7",
+    "alertifyjs": "~1.13.1",
+    "angular": "~1.6.9",
+    "angular-route": "~1.6.9",
+    "angular-ui-bootstrap": "~1.3.3",
+    "angular-gettext": "https://github.com/Jesus89/angular-gettext.git#master",
+    "angular-gettext-tools": "2.3.5",
+    "async": "~1.5.2",
+    "backbone": "~1.3.3",
+    "bootstrap": "~3.3.7",
+    "copy-paste": "~1.3.0",
+    "extract-zip": "~1.6.5",
+    "fast-copy": "^2.0.3",
+    "font-awesome": "~4.7.0",
+    "fs-extra": "~1.0.0",
+    "getos": "~3.0.1",
+    "glob": "^7.1.4",
+    "is-online": "~5.2.0",
+    "jexcel": "^3.9.1",
+    "jointjs": "~1.1.0",
+    "jquery": "~3.0.0",
+    "cos-jquery-resize": "~1.1.0",
+    "jsuites": "^2.7.1",
+    "lodash.debounce": "~3.1.1",
+    "lodash": "~3.10.1",
+    "marked": "~0.3.19",
+    "mustache": "^4.0.0",
+    "node-emoji": "~1.8.1",
+    "node-lang-info": "~0.2.1",
+    "openurl": "~1.1.1",
+    "rmdir": "~1.2.0",
+    "rsyncwrapper": "~2.0.1",
+    "select2": "~4.0.5",
+    "sha1": "~1.1.1",
+    "snapsvg": "~0.5.1",
+    "ssh-exec": "~2.0.0",
+    "sudo-prompt": "~8.2.0",
+    "svg-pan-zoom": "~3.4.1",
+    "svgo": "~0.7.2",
+    "tmp": "0.0.33"
   }
 }
