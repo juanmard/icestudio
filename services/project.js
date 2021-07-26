@@ -17,9 +17,9 @@ angular
     ) {
       'use strict';
 
-      const _tcStr = function (str, args) {
+      function _tcStr(str, args) {
         return gettextCatalog.getString(str, args);
-      };
+      }
 
       this.name = ''; // Used in File dialogs
       this.path = ''; // Used in Save / Save as
@@ -70,7 +70,8 @@ angular
             self.dirname = utils.dirname(filepath);
             self.load(name, data);
           })
-          .catch(function () {
+          .catch((error) => {
+            console.debug('[srv.project.open] catch:', error);
             alertify.error(_tcStr('Invalid project format'), 30);
           });
       };
@@ -117,6 +118,15 @@ angular
           _load();
         }
 
+        function _filepath2buildpath(filepath) {
+          let b = nodePath.basename(filepath);
+          let localdir = filepath.substr(0, filepath.lastIndexOf(b));
+          let dname = b.substr(0, b.lastIndexOf('.'));
+          let path = nodePath.join(localdir, 'ice-build');
+          //If we want to remove spaces return nodePath.join(path,dname).replace(/ /g, '_');
+          return nodePath.join(path, dname);
+        }
+
         function _load(reset, originalBoard) {
           common.allDependencies = project.dependencies;
           var opt = {reset: reset || false, disabled: false};
@@ -146,7 +156,7 @@ angular
             utils.selectBoard(project.design.board);
             profile.set('board', common.selectedBoard.name);
             self.updateTitle(name);
-            let bdir = utils.filepath2buildpath(self.filepath);
+            let bdir = _filepath2buildpath(self.filepath);
             common.setBuildDir(bdir);
           } else {
             alertify.error(
@@ -420,7 +430,7 @@ angular
               if (callback) {
                 callback();
               }
-              let bdir = utils.filepath2buildpath(self.filepath);
+              let bdir = _filepath2buildpath(self.filepath);
               common.setBuildDir(bdir);
               alertify.success(
                 _tcStr('Project {{name}} saved', {

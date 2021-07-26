@@ -2,7 +2,7 @@ angular
   .module('icestudio')
   .service(
     'collections',
-    function (utils, common, profile, gettextCatalog, nodePath) {
+    function (utils, common, profile, gettextCatalog, nodeFs, nodePath) {
       'use strict';
 
       const DEFAULT = 'Basic';
@@ -14,20 +14,91 @@ angular
         this.loadExternalCollections();
       };
 
+      function _getFilesRecursive(folder, level) {
+        var fileTree = [];
+        try {
+          level--;
+          nodeFs.readdirSync(folder).forEach((name) => {
+            var path = nodePath.join(folder, name);
+            if (_isDirectory(path)) {
+              fileTree.push({
+                name: name,
+                path: path,
+                children: level >= 0 ? _getFilesRecursive(path, level) : [],
+              });
+            } else if (/.*\.(ice|json|md)$/.test(name)) {
+              fileTree.push({
+                name: utils.basename(name),
+                path: path,
+              });
+            }
+          });
+        } catch (e) {
+          console.warn(e);
+        }
+        return fileTree;
+      }
+
       this.loadDefaultCollection = function () {
         common.defaultCollection = _newCollection(
           DEFAULT,
           common.DEFAULT_COLLECTION_DIR,
-          utils.getFilesRecursive(
-            common.DEFAULT_COLLECTION_DIR,
-            MAX_LEVEL_SEARCH
-          )
+          _getFilesRecursive(common.DEFAULT_COLLECTION_DIR, MAX_LEVEL_SEARCH)
         );
       };
 
+      function _isDirectory(path) {
+        return nodeFs.lstatSync(path).isDirectory();
+      }
+
+      function _contains(array, item) {
+        return array.indexOf(item) !== -1;
+      }
+
+      function isCollectionPath(path) {
+        var result = false;
+        try {
+          var content = nodeFs.readdirSync(path);
+          result =
+            content &&
+            _contains(content, 'package.json') &&
+            nodeFs.lstatSync(nodePath.join(path, 'package.json')).isFile() &&
+            ((_contains(content, 'blocks') &&
+              _isDirectory(nodePath.join(path, 'blocks'))) ||
+              (_contains(content, 'examples') &&
+                _isDirectory(nodePath.join(path, 'examples'))));
+        } catch (e) {
+          // console.warn(e);
+        }
+        return result;
+      }
+
+      function _findCollections(folder) {
+        var collectionsPaths = [];
+        try {
+          if (folder) {
+            collectionsPaths = nodeFs
+              .readdirSync(folder)
+              .map(function (name) {
+                return nodePath.join(folder, name);
+              })
+              .filter(function (path) {
+                return (
+                  (_isDirectory(path) ||
+                    nodeFs.lstatSync(path).isSymbolicLink()) &&
+                  isCollectionPath(path)
+                );
+              });
+          }
+        } catch (e) {
+          // console.warn(e);
+        }
+        return collectionsPaths;
+      }
+
       this.loadInternalCollections = function () {
         common.internalCollections = loadCollections(
-          utils.findCollections(common.INTERNAL_COLLECTIONS_DIR)
+          _findCollections(common.INTERNAL_COLLECTIONS_DIR)
         );
         const data = profile.get('collections');
         if (data) {
@@ -46,9 +117,7 @@ angular
         if (edir === common.INTERNAL_COLLECTIONS_DIR) {
           return;
         }
-        common.externalCollections = loadCollections(
-          utils.findCollections(edir)
-        );
+        common.externalCollections = loadCollections(_findCollections(edir));
       };
 
       function loadCollections(paths) {
@@ -58,7 +127,7 @@ angular
             _newCollection(
               nodePath.basename(path),
               path,
-              utils.getFilesRecursive(path, MAX_LEVEL_SEARCH)
+              _getFilesRecursive(path, MAX_LEVEL_SEARCH)
             )
           );
         });

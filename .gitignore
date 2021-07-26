@@ -19,4 +19,5 @@
 /dist/
 /docs/_build/
 /docs/_theme/
+/nmodules/
 /node_modules/

@@ -13,118 +13,14 @@ angular
       nodeFse,
       nodePath,
       nodeChildProcess,
-      nodeExtract,
-      nodeZlib,
-      nodeOnline,
-      nodeGlob,
-      nodeSha1,
-      nodeCP,
-      nodeGetOS,
-      nodeLangInfo,
       gui,
-      SVGO,
-      fastCopy
+      SVGO
     ) {
       'use strict';
 
-      const _tcStr = function (str, args) {
+      function _tcStr(str, args) {
         return gettextCatalog.getString(str, args);
-      };
-
-      var _pythonExecutableCached = null;
-      // Get the system executable
-      this.getPythonExecutable = function () {
-        if (!_pythonExecutableCached) {
-          const possibleExecutables = [];
-          if (common.PYTHON_ENV && common.PYTHON_ENV.length > 0) {
-            possibleExecutables.push(common.PYTHON_ENV);
-          } else if (common.WIN32) {
-            possibleExecutables.push('C:\\Python39\\python.exe');
-            possibleExecutables.push('C:\\Python38\\python.exe');
-            possibleExecutables.push('C:\\Python37\\python.exe');
-            possibleExecutables.push('C:\\Python36\\python.exe');
-            possibleExecutables.push('C:\\Python35\\python.exe');
-            possibleExecutables.push('py.exe -3');
-            possibleExecutables.push('python.exe');
-          } else {
-            possibleExecutables.push(
-              '/usr/local/Cellar/python/3.8.2/bin/python3'
-            );
-            possibleExecutables.push(
-              '/usr/local/Cellar/python/3.7.7/bin/python3'
-            );
-
-            possibleExecutables.push('/usr/bin/python3.9');
-            possibleExecutables.push('/usr/bin/python3.8');
-            possibleExecutables.push('/usr/bin/python3.7');
-            possibleExecutables.push('/usr/bin/python3.6');
-            possibleExecutables.push('/usr/bin/python3.5');
-            possibleExecutables.push('/usr/bin/python3');
-            possibleExecutables.push('/usr/bin/python');
-
-            possibleExecutables.push('/usr/local/bin/python3.9');
-            possibleExecutables.push('/usr/local/bin/python3.8');
-            possibleExecutables.push('/usr/local/bin/python3.7');
-            possibleExecutables.push('/usr/local/bin/python3.6');
-            possibleExecutables.push('/usr/local/bin/python3.5');
-            possibleExecutables.push('/usr/local/bin/python3');
-            possibleExecutables.push('/usr/local/bin/python');
-
-            possibleExecutables.push('python3.9');
-            possibleExecutables.push('python3.8');
-            possibleExecutables.push('python3.7');
-            possibleExecutables.push('python3.6');
-            possibleExecutables.push('python3.5');
-            possibleExecutables.push('python3');
-            possibleExecutables.push('python');
-          }
-          console.log('possible python', possibleExecutables);
-          for (var i in possibleExecutables) {
-            var executable = possibleExecutables[i];
-            if (isPython3(executable)) {
-              _pythonExecutableCached = executable;
-              break;
-            }
-          }
-        }
-        return _pythonExecutableCached;
-      };
-
-      function isPython3(executable) {
-        console.log('Python test', executable);
-        executable += ' -V';
-        try {
-          const result = nodeChildProcess.execSync(executable);
-          console.log('==>', result.toString());
-          return (
-            result !== false &&
-            result !== null &&
-            (result.toString().indexOf('3.5') >= 0 ||
-              result.toString().indexOf('3.6') >= 0 ||
-              result.toString().indexOf('3.7') >= 0 ||
-              result.toString().indexOf('3.8') >= 0 ||
-              result.toString().indexOf('3.9') >= 0)
-          );
-        } catch (e) {
-          return false;
-        }
       }
-
-      this.extractZip = function (source, destination, callback) {
-        nodeExtract(
-          source,
-          {
-            dir: destination,
-          },
-          function (error) {
-            if (error) {
-              callback(true);
-            } else {
-              callback();
-            }
-          }
-        );
-      };
 
       function disableEvent(event) {
         event.stopPropagation();
@@ -151,215 +47,6 @@ angular
         document.addEventListener('keypress', disableEvent, true);
       };
 
-      this.executeCommand = function (command, callback) {
-        var cmd = command.join(' ');
-        //const fs = require('fs');
-        if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
-          nodeFs.appendFileSync(
-            common.LOGFILE,
-            'utils.executeCommand=>' + cmd + '\n'
-          );
-        }
-        nodeChildProcess.exec(
-          cmd,
-          function (error, stdout, stderr) {
-            common.commandOutput = command.join(' ') + '\n\n' + stdout + stderr;
-            $(document).trigger('commandOutputChanged', [common.commandOutput]);
-            if (error) {
-              this.enableKeyEvents();
-              this.enableClickEvents();
-              callback(true);
-              alertify.error(error.message, 30);
-            } else {
-              callback();
-            }
-          }.bind(this)
-        );
-      };
-
-      this.createVirtualenv = function (callback) {
-        //-- Check if the .icestudio folder exist
-        if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
-          //-- Create the .icestudio folder
-          nodeFs.mkdirSync(common.ICESTUDIO_DIR);
-        }
-        //-- Check if the venv folder exist
-        if (!nodeFs.existsSync(common.ENV_DIR)) {
-          //-- Construct the command for creating the virtual env:
-          //-- python -m venv venv
-          var command = [
-            this.getPythonExecutable(),
-            '-m venv',
-            coverPath(common.ENV_DIR),
-          ];
-          //-- Debug
-          console.log(command);
-          //-- Check if extra parameter is needed for windows...
-          if (common.WIN32) {
-            //command.push('--always-copy');
-          }
-          this.executeCommand(command, callback);
-        } else {
-          //-- The virtual environmente already existed
-          callback();
-        }
-      };
-
-      this.checkDefaultToolchain = function () {
-        console.log('Toolchain start', common.TOOLCHAIN_DIR);
-        try {
-          // TODO: use zip with sha1
-          return nodeFs.statSync(common.TOOLCHAIN_DIR).isDirectory();
-        } catch (err) {
-          return false;
-        }
-      };
-
-      this.installDefaultPythonPackagesDir = function (defaultDir, callback) {
-        var self = this;
-        nodeGlob(nodePath.join(defaultDir, '*.*'), {}, function (error, files) {
-          if (!error) {
-            files = files.map(function (item) {
-              return coverPath(item);
-            });
-            self.executeCommand(
-              [coverPath(common.ENV_PIP), 'install', '-U', '--no-deps'].concat(
-                files
-              ),
-              callback
-            );
-          }
-        });
-      };
-
-      this.extractDefaultPythonPackages = function (callback) {
-        this.extractZip(
-          common.DEFAULT_PYTHON_PACKAGES_ZIP,
-          common.DEFAULT_PYTHON_PACKAGES_DIR,
-          callback
-        );
-      };
-
-      this.installDefaultPythonPackages = function (callback) {
-        this.installDefaultPythonPackagesDir(
-          common.DEFAULT_PYTHON_PACKAGES_DIR,
-          callback
-        );
-      };
-
-      this.extractDefaultApio = function (callback) {
-        this.extractZip(
-          common.DEFAULT_APIO_ZIP,
-          common.DEFAULT_APIO_DIR,
-          callback
-        );
-      };
-
-      this.installDefaultApio = function (callback) {
-        this.installDefaultPythonPackagesDir(common.DEFAULT_APIO_DIR, callback);
-      };
-
-      this.extractDefaultApioPackages = function (callback) {
-        this.extractZip(
-          common.DEFAULT_APIO_PACKAGES_ZIP,
-          common.APIO_HOME_DIR,
-          callback
-        );
-      };
-
-      this.isOnline = function (callback, error) {
-        nodeOnline({timeout: 5000}, function (err, online) {
-          if (online) {
-            callback();
-            return;
-          }
-          error();
-          callback(true);
-        });
-      };
-
-      this.installOnlinePythonPackages = function (callback) {
-        var pythonPackages = [];
-        this.executeCommand(
-          [coverPath(common.ENV_PIP), 'install', '-U'] + pythonPackages,
-          callback
-        );
-      };
-
-      this.installOnlineApio = function (callback) {
-        var versionRange =
-          '">=' + _package.apio.min + ',<' + _package.apio.max + '"';
-        var extraPackages = _package.apio.extras || [];
-        var apio = this.getApioInstallable();
-        this.executeCommand(
-          [
-            coverPath(common.ENV_PIP),
-            'install',
-            '-U',
-            apio + '[' + extraPackages.toString() + ']' + versionRange,
-          ],
-          callback
-        );
-      };
-
-      this.getApioInstallable = function () {
-        return _package.apio.branch
-          ? common.APIO_PIP_VCS.replace('%BRANCH%', _package.apio.branch)
-          : 'apio';
-      };
-
-      this.apioInstall = function (pkg, callback) {
-        this.executeCommand([common.APIO_CMD, 'install', pkg], callback);
-      };
-
-      this.toolchainDisabled = false;
-
-      this.getApioExecutable = function () {
-        var candidateApio = process.env.ICESTUDIO_APIO
-          ? process.env.ICESTUDIO_APIO
-          : _package.apio.external;
-        if (nodeFs.existsSync(candidateApio)) {
-          if (!this.toolchainDisabled) {
-            // Show message only on start
-            alertify.message('Using external apio: ' + candidateApio, 5);
-          }
-          this.toolchainDisabled = true;
-          return coverPath(candidateApio);
-        }
-        this.toolchainDisabled = false;
-        return common.APIO_CMD;
-      };
-
-      this.removeToolchain = function () {
-        this.deleteFolderRecursive(common.ENV_DIR);
-        this.deleteFolderRecursive(common.CACHE_DIR);
-        this.deleteFolderRecursive(common.APIO_HOME_DIR);
-      };
-
-      this.removeCollections = function () {
-        this.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
-      };
-
-      this.deleteFolderRecursive = function (path) {
-        if (nodeFs.existsSync(path)) {
-          nodeFs.readdirSync(path).forEach(
-            function (file /*, index*/) {
-              var curPath = nodePath.join(path, file);
-              if (nodeFs.lstatSync(curPath).isDirectory()) {
-                // recursive
-                this.deleteFolderRecursive(curPath);
-              } else {
-                // delete file
-                nodeFs.unlinkSync(curPath);
-              }
-            }.bind(this)
-          );
-          nodeFs.rmdirSync(path);
-        }
-      };
-
-      this.sep = nodePath.sep;
-
       this.basename = basename;
 
       function basename(filepath) {
@@ -367,206 +54,79 @@ angular
         return b.substr(0, b.lastIndexOf('.'));
       }
 
-      this.dirname = function (filepath) {
+      this.dirname = (filepath) => {
         return nodePath.dirname(filepath);
-      };
-
-      this.filepath2buildpath = function (filepath) {
-        let b = nodePath.basename(filepath);
-        let localdir = filepath.substr(0, filepath.lastIndexOf(b));
-        let dirname = b.substr(0, b.lastIndexOf('.'));
-        let path = nodePath.join(localdir, 'ice-build');
-        //If we want to remove spaces return nodePath.join(path,dirname).replace(/ /g, '_');
-        return nodePath.join(path, dirname);
       };
 
       this.readFile = function (filepath) {
         return new Promise(function (resolve, reject) {
-          if (nodeFs.existsSync(common.PROFILE_PATH)) {
-            nodeFs.readFile(filepath, 'utf8', function (err, content) {
-              if (err) {
-                reject(err.toString());
-              } else {
-                var data = false;
-
-                let name = basename(filepath);
-                let test = true;
-                if (
-                  test &&
-                  typeof ICEpm !== 'undefined' &&
-                  ICEpm.isFactory(name)
-                ) {
-                  ICEpm.factory(name, content, function (data) {
-                    if (data) {
-                      // JSON data
-                      resolve(data);
-                    } else {
-                      reject();
-                    }
-                  });
-                } else {
-                  data = isJSON(content);
-
-                  if (data) {
-                    // JSON data
-                    resolve(data);
-                  } else {
-                    reject();
-                  }
-                }
-              }
-            });
-          } else {
+          if (!nodeFs.existsSync(common.PROFILE_PATH)) {
             resolve({});
+            return;
           }
-        });
-      };
-
-      this.saveFile = function (filepath, data) {
-        return new Promise(function (resolve, reject) {
-          var content = data;
-          if (typeof data !== 'string') {
-            content = JSON.stringify(data, null, 2);
-          }
-          nodeFs.writeFile(filepath, content, function (err) {
+          nodeFs.readFile(filepath, 'utf8', function (err, content) {
             if (err) {
               reject(err.toString());
-            } else {
-              resolve();
+              return;
+            }
+            let name = basename(filepath);
+            if (ICEpm && ICEpm.isFactory(name)) {
+              ICEpm.factory(name, content, (data) => {
+                data ? resolve(data) : reject();
+              });
+              return;
+            }
+            try {
+              resolve(JSON.parse(content));
+            } catch (e) {
+              reject();
             }
           });
         });
       };
 
-      /*function compressJSON(data, callback) {
+      this.saveFile = function (filepath, data) {
+        return new Promise(function (resolve, reject) {
+          nodeFs.writeFile(
+            filepath,
+            typeof data !== 'string' ? JSON.stringify(data, null, 2) : data,
+            function (err) {
+              err ? reject(err.toString()) : resolve();
+            }
+          );
+        });
+      };
+
+      /*
+    const nodeZlib = require('zlib');
+
+    function compressJSON(data, callback) {
       var content = JSON.stringify(data);
       nodeZlib.gzip(content, function (_, compressed) {
         if (callback) {
           callback(compressed);
         }
       });
-    }*/
+    }
 
-      /*function decompressJSON(content, callback) {
+    function decompressJSON(content, callback) {
       nodeZlib.gunzip(content, function(_, uncompressed) {
         var data = JSON.parse(uncompressed);
         if (callback) {
           callback(data);
         }
       });
-    }*/
-
-      function isJSON(content) {
-        try {
-          return JSON.parse(content);
-        } catch (e) {
-          return false;
-        }
-      }
-
-      this.findCollections = function (folder) {
-        var collectionsPaths = [];
-        try {
-          if (folder) {
-            collectionsPaths = nodeFs
-              .readdirSync(folder)
-              .map(function (name) {
-                return nodePath.join(folder, name);
-              })
-              .filter(function (path) {
-                return (
-                  (isDirectory(path) || isSymbolicLink(path)) &&
-                  isCollectionPath(path)
-                );
-              });
-          }
-        } catch (e) {
-          // console.warn(e);
-        }
-        return collectionsPaths;
-      };
-
-      function isCollectionPath(path) {
-        var result = false;
-        try {
-          var content = nodeFs.readdirSync(path);
-          result =
-            content &&
-            contains(content, 'package.json') &&
-            isFile(nodePath.join(path, 'package.json')) &&
-            ((contains(content, 'blocks') &&
-              isDirectory(nodePath.join(path, 'blocks'))) ||
-              (contains(content, 'examples') &&
-                isDirectory(nodePath.join(path, 'examples'))));
-        } catch (e) {
-          // console.warn(e);
-        }
-        return result;
-      }
-
-      function isFile(path) {
-        return nodeFs.lstatSync(path).isFile();
-      }
-
-      function isDirectory(path) {
-        return nodeFs.lstatSync(path).isDirectory();
-      }
-
-      function isSymbolicLink(path) {
-        return nodeFs.lstatSync(path).isSymbolicLink();
-      }
-
-      function contains(array, item) {
-        return array.indexOf(item) !== -1;
-      }
-
-      function getFilesRecursive(folder, level) {
-        var fileTree = [];
-        var validator = /.*\.(ice|json|md)$/;
-
-        try {
-          var content = nodeFs.readdirSync(folder);
-
-          level--;
-
-          content.forEach(function (name) {
-            var path = nodePath.join(folder, name);
-
-            if (isDirectory(path)) {
-              fileTree.push({
-                name: name,
-                path: path,
-                children: level >= 0 ? getFilesRecursive(path, level) : [],
-              });
-            } else if (validator.test(name)) {
-              fileTree.push({
-                name: basename(name),
-                path: path,
-              });
-            }
-          });
-        } catch (e) {
-          console.warn(e);
-        }
-
-        return fileTree;
-      }
-
-      this.getFilesRecursive = getFilesRecursive;
+    }
+*/
 
       this.setLocale = function (locale, callback) {
-        // Update current locale format
         locale = splitLocale(locale);
-        // Load supported languages
         var supported = getSupportedLanguages();
-        // Set the best matching language
         var bestLang = bestLocale(locale, supported);
         gettextCatalog.setCurrentLanguage(bestLang);
-        // Application strings
         gettextCatalog.loadRemote(
           nodePath.join(common.LOCALE_DIR, bestLang, bestLang + '.json')
         );
-        // Collections strings
         var collections = [common.defaultCollection]
           .concat(common.internalCollections)
           .concat(common.externalCollections);
@@ -585,7 +145,6 @@ angular
         if (callback) {
           callback();
         }
-        // Return the best language
         return bestLang;
       };
 
@@ -603,14 +162,15 @@ angular
 
       function getSupportedLanguages() {
         var supported = [];
-        nodeFs
-          .readdirSync(common.LOCALE_DIR)
-          .forEach(function (element /*, index*/) {
-            var curPath = nodePath.join(common.LOCALE_DIR, element);
-            if (nodeFs.lstatSync(curPath).isDirectory()) {
-              supported.push(splitLocale(element));
-            }
-          });
+        nodeFs.readdirSync(common.LOCALE_DIR).forEach((element) => {
+          if (
+            nodeFs
+              .lstatSync(nodePath.join(common.LOCALE_DIR, element))
+              .isDirectory()
+          ) {
+            supported.push(splitLocale(element));
+          }
+        });
         return supported;
       }
 
@@ -642,11 +202,14 @@ angular
 
       this.renderForm = function (specs, callback) {
         var content = [];
-        content.push('<div>');
+        content.push('<form><fieldset>');
         for (var i in specs) {
           var spec = specs[i];
           switch (spec.type) {
             case 'text':
+              if (spec.label) {
+                content.push(`<label>${spec.label}</label>`);
+              }
               content.push(
                 `<input class="ajs-input" type="text" id="form${i}"/>`
               );
@@ -675,10 +238,10 @@ angular
               break;
           }
         }
-        content.push('</div>');
+        content.push('</fieldset></form>');
         alerts.confirm({
-          icon: 'question-circle',
-          title: specs[0].type === 'text' ? specs[0].title : 'Form',
+          icon: specs[0].icon || 'question-circle',
+          title: specs[0].title || 'Form',
           body: content.join('\n'),
           onok: (evt) => {
             var values = [];
@@ -699,7 +262,7 @@ angular
             }
           },
         });
-        // Restore input values
+        // Set default input values
         $('#form0').select();
         for (var i in specs) {
           var spec = specs[i];
@@ -728,17 +291,19 @@ angular
         var image = values[4];
         var blankImage =
           'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-        content.push('<div>');
+        content.push('<form><fieldset>');
         for (i in messages) {
-          content.push(`<p>${messages[i]}</p>
+          content.push(`<label>${messages[i]}</label>
 <input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
         }
         const img = image ? 'data:image/svg+xml,' + image : blankImage;
-        content.push(`<p>${_tcStr('Image')}</p>
+        content.push(`<label>${_tcStr('Image')}</label>
         <input id="input-open-svg" type="file" accept=".svg" class="hidden">
         <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
         <div>
-          <img id="preview-svg" class="ajs-input" src="${img}" height="68" style="pointer-events:none">
+          <center>
+            <img id="preview-svg" class="ajs-input" src="${img}" height="68" style="pointer-events:none">
+          </center>
         </div>
         <div>
           <label
@@ -755,7 +320,7 @@ angular
             class="btn"
           >${_tcStr('Reset SVG')}</label>
         </div>
-      </div>`);
+      </fieldset></form>`);
         // Restore values
         for (i = 0; i < n; i++) {
           $('#input' + i).val(values[i]);
@@ -931,13 +496,10 @@ angular
       this.openDialog = function (inputID, ext, callback) {
         var chooser = $(inputID);
         chooser.unbind('change');
-        chooser.change(function (/*evt*/) {
-          var filepath = $(this).val();
-          //if (filepath.endsWith(ext)) {
+        chooser.change(function () {
           if (callback) {
-            callback(filepath);
+            callback($(this).val());
           }
-          //}
           $(this).val('');
         });
         chooser.trigger('click');
@@ -946,7 +508,7 @@ angular
       this.saveDialog = function (inputID, ext, callback) {
         var chooser = $(inputID);
         chooser.unbind('change');
-        chooser.change(function (/*evt*/) {
+        chooser.change(function () {
           var filepath = $(this).val();
           if (!filepath.endsWith(ext)) {
             filepath += ext;
@@ -1009,6 +571,8 @@ angular
         return null;
       };
 
+      const fastCopy = require('fast-copy');
+
       this.clone = function (data) {
         // Very slow in comparison but more stable for all types
         // of objects, if fails, rollback to JSON method or try strict
@@ -1016,6 +580,8 @@ angular
         //return  JSON.parse(JSON.stringify(data));
         return fastCopy(data);
       };
+
+      const nodeSha1 = require('sha1');
 
       this.dependencyID = function (dependency) {
         if (dependency.package && dependency.design) {
@@ -1091,6 +657,8 @@ angular
         common.allDependencies[type] = block;
       };
 
+      const nodeCP = require('copy-paste');
+
       this.copyToClipboard = function (selection, graph) {
         var cells = selectionToCells(selection, graph);
         var clipboard = {
@@ -1102,6 +670,8 @@ angular
           // Success
         });
       };
+
+      const nodeGetOS = require('getos');
 
       this.pasteFromClipboard = function (callback) {
         nodeCP.paste(function (err, text) {
@@ -1324,6 +894,8 @@ angular
           }
         });
       };
+
+      const nodeLangInfo = require('node-lang-info');
 
       this.loadLanguage = function (profile, callback) {
         var lang = profile.get('language');

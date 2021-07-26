@@ -8,16 +8,15 @@ angular
       common,
       gettextCatalog,
       gui,
-      nodeSudo,
       nodeChildProcess,
       profile,
       utils
     ) {
       'use strict';
 
-      const _tcStr = function (str, args) {
+      function _tcStr(str, args) {
         return gettextCatalog.getString(str, args);
-      };
+      }
 
       this.enable = function () {
         switch (common.selectedProgrammer) {
@@ -196,6 +195,8 @@ angular
         ];
       }
 
+      const nodeSudo = require('sudo-prompt');
+
       function configureLinuxDrivers(commands, callback) {
         var command = 'sh -c "' + commands.join('; ') + '"';
         utils.startWait();
@@ -239,6 +240,8 @@ angular
         disableDarwinDrivers();
       }
 
+      const fs = require('fs');
+
       function enableDarwinDrivers(brewPackages, profileSetting) {
         var brewCommands = ['/usr/local/bin/brew update'];
         for (var i in brewPackages) {
@@ -246,7 +249,6 @@ angular
         }
         utils.startWait();
         if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
-          const fs = require('fs');
           fs.appendFileSync(
             common.LOGFILE,
             'drivers.enableDarwinDrivers' + '\n'
@@ -259,10 +261,8 @@ angular
               typeof common.DEBUGMODE !== 'undefined' &&
               common.DEBUGMODE === 1
             ) {
-              const fs = require('fs');
               fs.appendFileSync(common.LOGFILE, 'STDERR ' + stderr + '\n');
-
-              fs.appendFileSync(common.LOGFILE, 'STDERR ' + stdout + '\n');
+              fs.appendFileSync(common.LOGFILE, 'STDOUT ' + stdout + '\n');
             }
             if (error) {
               if (
@@ -298,7 +298,6 @@ angular
           }
         );
         if (typeof common.DEBUGMODE !== 'undefined' && common.DEBUGMODE === 1) {
-          const fs = require('fs');
           fs.appendFileSync(
             common.LOGFILE,
             '/drivers.enableDarwinDrivers' + '\n'

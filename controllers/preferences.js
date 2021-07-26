@@ -32,7 +32,6 @@ angular
       $scope.tabs = {
         collections: {icon: 'cubes', title: 'Collections'},
         plugins: {icon: 'exchange', title: 'Plugins', headonly: true},
-        remote: {icon: 'at', title: 'Remote', headonly: true},
         language: {
           icon: 'language',
           title: 'Language',
@@ -45,7 +44,6 @@ angular
         toolchain: {
           icon: 'gear',
           title: 'Toolchain',
-          disabled: !common.showToolchain(),
         },
       };
 
@@ -107,7 +105,13 @@ angular
             'All the (modified) projects in the collection will be deleted.'
           ),
           onok: () => {
-            tools.removeCollection(collection);
+            tools.deleteFolderRecursive(collection.path);
+            collections.loadInternalCollections();
+            alertify.success(
+              _tcStr('Collection {{name}} removed', {
+                name: utils.bold(collection.name),
+              })
+            );
             utils.rootScopeSafeApply();
           },
         });
@@ -121,7 +125,9 @@ angular
               'All the (modified) projects stored in them will be deleted.'
             ),
             onok: () => {
-              tools.removeAllCollections();
+              tools.deleteFolderRecursive(common.INTERNAL_COLLECTIONS_DIR);
+              collections.loadInternalCollections();
+              alertify.success(_tcStr('All collections removed'));
               utils.rootScopeSafeApply();
             },
           });
@@ -136,6 +142,7 @@ angular
           [
             {
               type: 'text',
+              icon: 'cubes',
               title: _tcStr('Enter the external collections path'),
               value: externalCollections || '',
             },
@@ -223,6 +230,7 @@ angular
           [
             {
               type: 'text',
+              icon: 'exchange',
               title: _tcStr('Enter the external plugins path'),
               value: externalPlugins || '',
             },
@@ -252,19 +260,6 @@ angular
               }
             }
           }
-        );
-      };
-
-      $scope.setRemoteHostname = () => {
-        var current = profile.get('remoteHostname');
-        alertify.prompt(
-          _tcStr('Enter the remote hostname user@host'),
-          '',
-          current ? current : '',
-          (evt, remoteHostname) => {
-            profile.set('remoteHostname', remoteHostname);
-          },
-          () => {}
         );
       };
 
@@ -302,6 +297,85 @@ angular
             15
           );
         }
+      };
+
+      // Apio repository and reference
+      $scope.setApioRepo = () => {
+        var apioRepo = profile.get('apioRepo');
+        var apioRef = profile.get('apioRef');
+        utils.renderForm(
+          [
+            {
+              type: 'text',
+              icon: 'gear',
+              title: _tcStr('Source for installing the toolchain'),
+              label: _tcStr('Repository'),
+              value: apioRepo || 'juanmard/icestudio',
+            },
+            {
+              type: 'text',
+              label: _tcStr('Reference'),
+              value: apioRef || 'apio-dev',
+            },
+          ],
+          (evt, values) => {
+            const apioRepo = values[0];
+            const apioRef = values[1];
+            var updated = false;
+            if (apioRepo != profile.get('apioRepo')) {
+              profile.set('apioRepo', apioRepo);
+              updated = true;
+            }
+            if (apioRef != profile.get('apioRef')) {
+              profile.set('apioRef', apioRef);
+              updated = true;
+            }
+            if (updated) {
+              alertify.success(
+                _tcStr('Toolchain source repository/reference updated')
+              );
+            }
+          }
+        );
+      };
+
+      // Custom Python environment
+      $scope.setPythonEnv = function () {
+        let pythonEnv = profile.get('pythonEnv');
+        let formSpecs = [
+          {
+            type: 'text',
+            icon: 'terminal',
+            title: 'Python environment',
+            label: _tcStr('Python executable'),
+            value: pythonEnv || '',
+          },
+        ];
+        utils.renderForm(formSpecs, function (evt, values) {
+          let newPythonPath = values[0];
+
+          if (resultAlert) {
+            resultAlert.dismiss(false);
+          }
+          if (newPythonPath !== pythonEnv) {
+            if (!nodeFs.existsSync(newPythonPath)) {
+              evt.cancel = true;
+              resultAlert = alertify.error(
+                _tcStr(
+                  'Custom Python path {{path}} does not exist',
+                  {
+                    path: newPythonPath,
+                  },
+                  5
+                )
+              );
+              return;
+            }
+            let newPythonEnv = newPythonPath;
+            profile.set('pythonEnv', newPythonEnv);
+            alertify.success(_tcStr('Python environment updated'));
+          }
+        });
       };
     }
   );

@@ -78,7 +78,8 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: '▶️ yarn'
-        run: yarn
+        shell: bash
+        run: ./getdeps.sh
 
       - name: '▶️ check'
         run: yarn run check
@@ -127,7 +128,7 @@ jobs:
           node-version: '10.x'
 
       - name: '▶️ yarn'
-        run: yarn
+        run: ./getdeps.sh
 
       - name: '▶️ check'
         run: yarn run check

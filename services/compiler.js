@@ -1,6 +1,6 @@
 angular
   .module('icestudio')
-  .service('compiler', function (common, utils, nodeSha1, _package) {
+  .service('compiler', function (common, utils, _package) {
     'use strict';
 
     this.generate = function (target, project, opt) {

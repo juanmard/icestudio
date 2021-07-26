@@ -47,13 +47,10 @@
 
   <body ng-app="icestudio">
     <div ng-view></div>
-    <script>
-      window.$ = window.JQuery = window.jQuery = require('jquery');
-    </script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/angular/angular.js"></script>
     <script src="node_modules/angular-route/angular-route.js"></script>
     <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/cos-jquery-resize/jquery.ba-resize.min.js"></script>
     <script src="node_modules/underscore/underscore.js"></script>
     <script src="node_modules/backbone/backbone.js"></script>
@@ -83,8 +80,6 @@
     <script src="controllers/main.js"></script>
     <script src="controllers/menu.js"></script>
     <script src="controllers/preferences.js"></script>
-    <script src="directives.js"></script>
-    <script src="factories.js"></script>
     <script src="graphics/joint.command.js"></script>
     <script src="graphics/joint.connectors.js"></script>
     <script src="graphics/joint.routers.js"></script>

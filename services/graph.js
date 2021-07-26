@@ -12,14 +12,13 @@ angular
       utils,
       common,
       gettextCatalog,
-      nodeDebounce,
       window
     ) {
       'use strict';
 
-      const _tcStr = function (str, args) {
+      function _tcStr(str, args) {
         return gettextCatalog.getString(str, args);
-      };
+      }
 
       var z = {index: 100};
       var graph = null;
@@ -769,6 +768,8 @@ angular
           }
           prevLowerBlock = lowerBlock;
         }
+
+        const nodeDebounce = require('lodash.debounce');
 
         // Debounce `pointermove` handler to improve the performance
         var debounceDisableReplacedBlock = nodeDebounce(function (upperBlock) {

@@ -198,10 +198,6 @@
   padding-bottom: 0 !important;
 }
 
-.ajs-input {
-  margin: 0 !important;
-}
-
 .ajs-button {
   font-size: 12px !important;
   text-transform: none !important;
@@ -290,8 +286,26 @@
   opacity: 1 !important;
 }
 
+.no-btn-100 {
+  min-width: 100px;
+}
+
+.no-btn-150 {
+  min-width: 150px;
+}
+
 .no-btn-200 {
   min-width: 200px;
+}
+
+form label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+form > fieldset {
+  text-align: center;
 }
 
 .pointer {
@@ -318,4 +332,12 @@
   .modal-dialog {
     margin: 40px auto;
   }
+}
+
+.italic {
+  font-style: italic;
+}
+
+.list-group {
+  margin-bottom: 0;
 }
