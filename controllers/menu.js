@@ -422,7 +422,7 @@ angular
       }
 
       function updateWorkingdir(filepath) {
-        $scope.workingdir = utils.dirname(filepath) + utils.sep;
+        $scope.workingdir = utils.dirname(filepath) + nodePath.sep;
       }
 
       function equalWorkingFilepath(filepath) {
@@ -556,63 +556,6 @@ angular
               (profile.get('boardRules') ? 'enabled' : 'disabled')
           )
         );
-      };
-
-      $scope.setPythonEnv = function () {
-        let pythonEnv = profile.get('pythonEnv');
-        let formSpecs = [
-          {
-            type: 'text',
-            title: gettextCatalog.getString(
-              'Enter the python version > 3.8 path'
-            ),
-            value: pythonEnv.python || '',
-          },
-          {
-            type: 'text',
-            title: gettextCatalog.getString('Enter the pip version > 3.8 path'),
-            value: pythonEnv.pip || '',
-          },
-        ];
-        utils.renderForm(formSpecs, function (evt, values) {
-          let newPythonPath = values[0];
-          let newPipPath = values[1];
-
-          if (resultAlert) {
-            resultAlert.dismiss(false);
-          }
-          if (
-            newPythonPath !== pythonEnv.python ||
-            newPipPath !== pythonEnv.pip
-          ) {
-            if (
-              (newPythonPath === null ||
-                newPythonPath === '' ||
-                nodeFs.existsSync(newPythonPath)) &&
-              (newPipPath === null ||
-                newPipPath === '' ||
-                nodeFs.existsSync(newPipPath))
-            ) {
-              let newPythonEnv = {python: newPythonPath, pip: newPipPath};
-              profile.set('pythonEnv', newPythonEnv);
-
-              alertify.success(
-                gettextCatalog.getString('Python Environment updated')
-              );
-            } else {
-              evt.cancel = true;
-              resultAlert = alertify.error(
-                gettextCatalog.getString(
-                  'Path {{path}} does not exist',
-                  {
-                    path: 'of python or pip',
-                  },
-                  5
-                )
-              );
-            }
-          }
-        });
       };
 
       //-- Board options
@@ -935,17 +878,52 @@ angular
         return false;
       };
 
+      const canCheckVersion =
+        _package.repository !== undefined && _package.sha !== undefined;
+
       $scope.about = function () {
         alerts.alert({
           icon: 'heart-o',
           title: 'Icestudio, visual editor for Verilog designs',
           body: $('#about')[0],
           onok: function () {
-            if (tools.canCheckVersion) {
-              tools.checkForNewVersion();
+            if (canCheckVersion) {
+              // checkForNewVersion
+              $.getJSON(
+                _package.repository.replace(
+                  'github.com',
+                  'api.github.com/repos'
+                ) +
+                  '/tags' +
+                  '?_tsi=' +
+                  new Date().getTime(),
+                function (result) {
+                  if (result) {
+                    const latest = result
+                      .find((x) => x.name === 'nightly')
+                      .commit.sha.substring(0, 8);
+                    const msg =
+                      latest === _package.sha
+                        ? 'Icestudio is up to date!'
+                        : `Current: ${_package.sha}
+                    <br/>
+                    Latest: ${latest}<br/>
+                    <a class="action-open-url-external-browser" href="${_package.repository}/releases" target="_blank">Go to GitHub Releases</a>`;
+                    alertify.notify(
+                      `<div class="new-version-notifier-box">
+                      <div class="new-version-notifier-box--text">
+                        ${msg}
+                      </div>
+                    </div>`,
+                      'notify',
+                      10
+                    );
+                  }
+                }
+              );
             }
           },
-          label: tools.canCheckVersion
+          label: canCheckVersion
             ? _tcStr('Check for updates...')
             : _tcStr('Close'),
           invokeOnCloseOff: false,
@@ -1002,7 +980,7 @@ angular
       function saveSnapshot(base64Data) {
         utils.saveDialog('#input-save-snapshot', '.png', function (filepath) {
           nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
-            $scope.snapshotdir = utils.dirname(filepath) + utils.sep;
+            $scope.snapshotdir = utils.dirname(filepath) + nodePath.sep;
             $scope.$apply();
             if (!err) {
               alertify.success(

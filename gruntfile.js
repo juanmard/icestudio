@@ -55,34 +55,31 @@ module.exports = function (grunt) {
 
   var gruntCfg = {};
 
-  const sources = [
-    'collection/**',
-    'controllers/**',
-    'fonts/Lato2OFLWeb/Lato/**',
-    'graphics/**',
-    'libs/**',
-    'node_modules/**/*.*',
-    'constraints/**/*.*',
-    'images/**/*.*',
-    'locale/**/*.*',
-    'plugins/**/*.*',
-    'sample/**/*.*',
-    'services/*.js',
-    'styles/*.css',
-    'uiThemes/**/*.*',
-    'viewers/**/*.*',
-    'views/*.html',
-    '*.js',
-    'index.html',
-    'package.json',
-  ];
-
   var copyArgs = [
     {
       expand: true,
       cwd: '.',
       dest: 'dist/tmp',
-      src: sources,
+      src: [
+        'collection/**',
+        'controllers/**',
+        'fonts/Lato2OFLWeb/Lato/**',
+        'graphics/**',
+        'libs/**',
+        'constraints/**/*.*',
+        'images/**/*.*',
+        'locale/**/*.*',
+        'plugins/**/*.*',
+        'sample/**/*.*',
+        'services/*.js',
+        'styles/*.css',
+        'uiThemes/**/*.*',
+        'viewers/**/*.*',
+        'views/*.html',
+        'app.js',
+        'index.html',
+        'package.json',
+      ],
     },
     {
       expand: true,
@@ -90,9 +87,15 @@ module.exports = function (grunt) {
       src: '**',
       cwd: 'docs/_build/html',
     },
+    {
+      expand: true,
+      cwd: 'nmodules',
+      dest: 'dist/tmp/node_modules',
+      src: '**/*.*',
+    },
   ];
 
-  for (var font of ['fonts/freefont/', 'node_modules/font-awesome/fonts']) {
+  for (var font of ['fonts/freefont/', 'nmodules/font-awesome/fonts']) {
     copyArgs.push({
       expand: true,
       dest: 'dist/tmp/fonts',
@@ -130,7 +133,7 @@ module.exports = function (grunt) {
         {
           expand: true,
           cwd: 'dist/icestudio/' + os + bits + '/',
-          src: ['**'].concat(sources),
+          src: '**',
           dest: '<%=pkg.name%>-<%=pkg.version%>-' + os + bits,
         },
       ],
@@ -183,7 +186,8 @@ module.exports = function (grunt) {
           'uiThemes/**/*.css',
           'viewers/**/*.*',
           'views/*.html',
-          '*.js',
+          'app.js',
+          'gruntfile.js',
           'index.html',
           'package.json',
           '!cache/**',
@@ -213,7 +217,7 @@ module.exports = function (grunt) {
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
-      modules: ['node_modules'],
+      modules: ['nmodules', 'node_modules'],
       cache: ['cache'],
     },
 

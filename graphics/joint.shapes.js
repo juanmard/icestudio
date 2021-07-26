@@ -534,8 +534,8 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   template: `<div class="generic-block">
     <div class="generic-content">
-      <div class="img-container"><img></div>
       <label></label>
+      <div class="img-container"></div>
       <span class="tooltiptext"></span>
     </div>
   </div>`,
@@ -608,8 +608,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
     this.tooltip = this.model.get('tooltip');
     this.tooltiptext = this.$box.find('.tooltiptext');
-
-    this.tooltiptext.text(this.tooltip);
+    this.tooltiptext.text(`[${this.model.get('label')}] ${this.tooltip}`);
 
     if (this.tooltip.length > 13) {
       this.tooltiptext.addClass('tooltip-medium');
@@ -626,38 +625,21 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.$box.find('.generic-content').addClass('config-block');
     }
 
-    // Initialize content
     this.initializeContent();
   },
 
   initializeContent: function () {
     'use strict';
-
-    var image = this.model.get('image');
-    var label = this.model.get('label');
-    var ports = this.model.get('leftPorts');
-
-    var imageSelector = this.$box.find('img');
-    var labelSelector = this.$box.find('label');
-
+    const labelSelector = this.$box.find('label');
+    labelSelector.html(this.model.get('label'));
+    const image = this.model.get('image');
     if (image) {
-      // Render img
-      imageSelector.attr('src', 'data:image/svg+xml,' + image);
-
-      // Render SVG
-      //imageSelector.append(decodeURI(image));
-
-      imageSelector.removeClass('hidden');
+      this.$box.find('.img-container').html(decodeURI(image));
       labelSelector.addClass('hidden');
-    } else {
-      // Render label
-      labelSelector.html(label);
-      labelSelector.removeClass('hidden');
-      imageSelector.addClass('hidden');
     }
-
     // Render clocks
     this.$box.find('.clock').remove();
+    var ports = this.model.get('leftPorts');
     var n = ports.length;
     var gridsize = 8;
     var height = this.model.get('size').height;
@@ -674,6 +656,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       }
     }
   },
+
   updateBox: function () {
     'use strict';
 
@@ -1661,8 +1644,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     this.editor = ace.edit(this.editorSelector[0]);
     this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
-    this.editor.commands.removeCommand('undo');
-    this.editor.commands.removeCommand('redo');
     this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function (delta) {
       if (!self.updating) {
@@ -1761,36 +1742,9 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
   applyValue: function (opt) {
     'use strict';
-
     this.updating = true;
-
-    var dontselect = false;
     var data = this.model.get('data');
-    var deltas = this.model.get('deltas');
-
     opt = opt || {};
-
-    switch (opt.attribute) {
-      case 'deltas':
-        if (deltas) {
-          var changes = [
-            {
-              group: 'doc',
-              deltas: deltas,
-            },
-          ];
-          if (opt.undo) {
-            this.editor.session.undoChanges(changes, dontselect);
-          } else {
-            this.editor.session.redoChanges(changes, dontselect);
-          }
-        }
-        break;
-      case 'data':
-        break;
-      default:
-        break;
-    }
     if (opt.ini) {
       this.editor.session.setValue(data.list);
     } else {
@@ -1985,8 +1939,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     this.editor = ace.edit(this.editorSelector[0]);
     this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
-    this.editor.commands.removeCommand('undo');
-    this.editor.commands.removeCommand('redo');
     this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function (delta) {
       if (!self.updating) {
@@ -2056,36 +2008,9 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
 
   applyValue: function (opt) {
     'use strict';
-
     this.updating = true;
-
-    var dontselect = false;
     var data = this.model.get('data');
-    var deltas = this.model.get('deltas');
-
     opt = opt || {};
-
-    switch (opt.attribute) {
-      case 'deltas':
-        if (deltas) {
-          var changes = [
-            {
-              group: 'doc',
-              deltas: deltas,
-            },
-          ];
-          if (opt.undo) {
-            this.editor.session.undoChanges(changes, dontselect);
-          } else {
-            this.editor.session.redoChanges(changes, dontselect);
-          }
-        }
-        break;
-      case 'data':
-        break;
-      default:
-        break;
-    }
     if (opt.ini) {
       this.editor.session.setValue(data.code);
     } else {
@@ -2459,8 +2384,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     this.editor = ace.edit(this.editorSelector[0]);
     this.updateScrollStatus(false);
     this.editor.$blockScrolling = Infinity;
-    this.editor.commands.removeCommand('undo');
-    this.editor.commands.removeCommand('redo');
     this.editor.commands.removeCommand('touppercase');
     this.editor.session.on('change', function (delta) {
       if (!self.updating) {
@@ -2528,36 +2451,9 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
 
   applyValue: function (opt) {
     'use strict';
-
     this.updating = true;
-
-    var dontselect = false;
     var data = this.model.get('data');
-    var deltas = this.model.get('deltas');
-
     opt = opt || {};
-
-    switch (opt.attribute) {
-      case 'deltas':
-        if (deltas) {
-          var changes = [
-            {
-              group: 'doc',
-              deltas: deltas,
-            },
-          ];
-          if (opt.undo) {
-            this.editor.session.undoChanges(changes, dontselect);
-          } else {
-            this.editor.session.redoChanges(changes, dontselect);
-          }
-        }
-        break;
-      case 'data':
-        break;
-      default:
-        break;
-    }
     if (opt.ini) {
       this.editor.session.setValue(data.info);
     } else {

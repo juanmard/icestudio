@@ -42,7 +42,6 @@ g {
 .generic-block .generic-content {
   position: absolute;
   background: #c0dfeb;
-  border: 1px solid #777;
 }
 
 .generic-block .generic-content .clock {
@@ -90,36 +89,27 @@ g {
 }
 
 .generic-block .generic-content .img-container {
+  padding: 4px 12px;
   position: absolute;
-  margin: auto;
-  top: 8px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
+  top: 0;
+  bottom: 0;
 }
 
-.generic-block .generic-content img {
-  width: auto;
+.generic-block .generic-content .img-container svg {
   max-width: 100%;
-  height: auto;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: absolute;
   max-height: 100%;
 }
 
 .generic-block .generic-content label {
   display: block;
-  margin-top: 20px;
   text-align: center;
   font-size: 14px;
   color: #333;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  padding: 5px;
+  margin-bottom: 0;
 }
 
 .io-block {

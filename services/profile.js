@@ -5,7 +5,9 @@ angular
     function (utils, common, gettextCatalog, _package, nodeFs) {
       'use strict';
 
-      this.data = {
+      const defaultData = {
+        apioRepo: 'juanmard/icestudio',
+        apioRef: 'apio-dev',
         board: null,
         prog: null,
         boardRules: true,
@@ -15,43 +17,37 @@ angular
         collections: null,
         externalCollections: null,
         externalPlugins: null,
-        remoteHostname: null,
-        pythonEnv: {python: null, pip: null},
+        pythonEnv: null,
       };
 
       if (common.DARWIN) {
-        this.data['macosFTDIDrivers'] = false;
+        defaultData['macosFTDIDrivers'] = false;
       }
 
+      this.data = defaultData;
+
       this.load = function (callback) {
-        var self = this;
         utils
           .readFile(common.PROFILE_PATH)
-          .then(function (data) {
-            self.data = {
-              board: data.board || null,
-              prog: data.prog || null,
-              boardRules: data.boardRules !== false,
-              language: data.language || null,
-              uiTheme: data.uiTheme || 'dark',
-              collection: data.collection || null,
-              collections: data.collections || null,
-              externalCollections: data.externalCollections || null,
-              externalPlugins: data.externalPlugins || null,
-              remoteHostname: data.remoteHostname || null,
-              pythonEnv: data.pythonEnv || {python: null, pip: null},
-            };
-
-            if (
-              self.data.pythonEnv.python &&
-              self.data.pythonEnv.python.length > 0
-            ) {
-              common.PYTHON_ENV = self.data.pythonEnv.python;
-              console.log('PYTHON', common.PYTHON_ENV);
+          .then((data) => {
+            for (var item of [
+              'apioRepo',
+              'apioRef',
+              'board',
+              'prog',
+              'boardRules',
+              'language',
+              'uiTheme',
+              'collection',
+              'collections',
+              'externalCollections',
+              'externalPlugins',
+              'pythonEnv',
+            ]) {
+              this.data[item] = data[item] || defaultData[item];
             }
-
             //-- Custom Theme support
-            if (self.data.uiTheme !== 'light') {
+            if (this.data.uiTheme !== 'light') {
               let cssFile =
                 '<link  rel="stylesheet" href="uiThemes/dark/dark.css">';
               let pHead = document.getElementsByTagName('head')[0];
@@ -59,7 +55,8 @@ angular
             }
             //-- End Custom Theme support
             if (common.DARWIN) {
-              self.data['macosFTDIDrivers'] = data.macosFTDIDrivers || false;
+              this.data['macosFTDIDrivers'] =
+                data.macosFTDIDrivers || defaultData['macosFTDIDrivers'];
             }
             if (callback) {
               callback();
@@ -71,7 +68,7 @@ angular
               callback();
             }
           });
-      };
+      }.bind(this);
 
       this.set = function (key, value) {
         if (this.data.hasOwnProperty(key)) {

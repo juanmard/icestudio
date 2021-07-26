@@ -13,22 +13,18 @@ angular
       utils,
       common,
       gettextCatalog,
-      nodeGettext,
       nodeFs,
       nodeFse,
       nodePath,
       nodeChildProcess,
-      nodeSSHexec,
-      nodeRSync,
-      nodeAdmZip,
       _package,
       $rootScope
     ) {
       'use strict';
 
-      const _tcStr = function (str, args) {
+      function _tcStr(str, args) {
         return gettextCatalog.getString(str, args);
-      };
+      }
 
       var taskRunning = false;
       var resources = [];
@@ -42,9 +38,6 @@ angular
       };
 
       this.toolchain = toolchain;
-
-      // Remove old build directory on start
-      nodeFse.removeSync(common.OLD_BUILD_DIR);
 
       this.verifyCode = function (startMessage, endMessage) {
         return apioRun(
@@ -88,10 +81,10 @@ angular
               .resetCodeErrors()
               .then(function () {
                 return new Promise(function (resolve, reject) {
-                  if (toolchain.installed) {
+                  if (toolchain.apio != '-') {
                     resolve();
                   } else {
-                    _toolchainNotInstalledAlert('Toolchain not installed');
+                    _toolchainAlert(true);
                     reject();
                   }
                 });
@@ -110,17 +103,12 @@ angular
                 return syncResources(output.code, output.internalResources);
               })
               .then(function () {
-                var hostname = profile.get('remoteHostname');
                 var command = commands[0];
                 if (command === 'build' || command === 'upload') {
                   commands = commands.concat('--verbose-pnr');
                 }
                 console.log('APIO', commands);
-                if (hostname) {
-                  return executeRemote(commands, hostname);
-                } else {
-                  return executeLocal(commands);
-                }
+                return executeLocal(commands);
               })
               .then(function (result) {
                 return processResult(result, sourceCode);
@@ -287,122 +275,6 @@ angular
         });
       }
 
-      this.checkToolchain = checkToolchain;
-
-      function checkToolchain(callback) {
-        var apio = utils.getApioExecutable();
-        nodeChildProcess.exec(
-          [apio, '--version'].join(' '),
-          function (error, stdout /*, stderr*/) {
-            if (error) {
-              toolchain.apio = '';
-              toolchain.installed = false;
-              // Apio not installed
-              _toolchainNotInstalledAlert('Toolchain not installed');
-              if (callback) {
-                callback();
-              }
-            } else {
-              toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-              toolchain.installed =
-                toolchain.apio >= _package.apio.min &&
-                toolchain.apio < _package.apio.max;
-              if (toolchain.installed) {
-                nodeChildProcess.exec(
-                  [apio, 'clean', '-p', common.SAMPLE_DIR].join(' '),
-                  function (error /*, stdout, stderr*/) {
-                    toolchain.installed = !error;
-                    if (error) {
-                      toolchain.apio = '';
-                      // Toolchain not properly installed
-                      _toolchainNotInstalledAlert('Toolchain not installed');
-                    }
-                    if (callback) {
-                      callback();
-                    }
-                  }
-                );
-              } else {
-                // An old version is installed
-                _toolchainNotInstalledAlert('Toolchain version does not match');
-                if (callback) {
-                  callback();
-                }
-              }
-            }
-          }
-        );
-      }
-
-      function _toolchainNotInstalledAlert(message) {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        resultAlert = alertify.warning(
-          `${_tcStr(message)}.<br>` + _tcStr('Click here to install it'),
-          100000,
-          function (isClicked) {
-            if (isClicked) {
-              $rootScope.$broadcast('installToolchain');
-            }
-          }
-        );
-      }
-
-      function executeRemote(commands, hostname) {
-        return new Promise(function (resolve) {
-          startAlert.setContent(_tcStr('Synchronize remote files ...'));
-          nodeRSync(
-            {
-              src: common.BUILD_DIR + '/',
-              dest: hostname + ':.build/',
-              ssh: true,
-              recursive: true,
-              delete: true,
-              include: ['*.v', '*.pcf', '*.lpf', '*.list'],
-              exclude: [
-                '.sconsign.dblite',
-                '*.out',
-                '*.blif',
-                '*.asc',
-                '*.bin',
-                '*.config',
-                '*.json',
-              ],
-            },
-            function (error, stdout, stderr /*, cmd*/) {
-              if (!error) {
-                startAlert.setContent(
-                  _tcStr('Execute remote {{label}} ...', {
-                    label: '',
-                  })
-                );
-                nodeSSHexec(
-                  ['apio']
-                    .concat(commands)
-                    .concat(['--project-dir', '.build'])
-                    .join(' '),
-                  hostname,
-                  function (error, stdout, stderr) {
-                    resolve({
-                      error: error,
-                      stdout: stdout,
-                      stderr: stderr,
-                    });
-                  }
-                );
-              } else {
-                resolve({
-                  error: error,
-                  stdout: stdout,
-                  stderr: stderr,
-                });
-              }
-            }
-          );
-        });
-      }
-
       function executeLocal(commands) {
         return new Promise(function (resolve) {
           if (commands[0] === 'upload') {
@@ -416,10 +288,10 @@ angular
           }
 
           function _executeLocal() {
-            var apio = utils.getApioExecutable();
+            var apio = getApioExecutable();
             var command = [apio]
               .concat(commands)
-              .concat(['-p', utils.coverPath(common.BUILD_DIR)])
+              .concat(['-p', `"${common.BUILD_DIR}"`])
               .join(' ');
             console.log('APIO COMMAND', command);
             if (
@@ -730,27 +602,7 @@ angular
                 }
               }
             } else if (stderr) {
-              // Remote hostname errors
-              if (
-                stderr.indexOf('Could not resolve hostname') !== -1 ||
-                stderr.indexOf('Connection refused') !== -1
-              ) {
-                resultAlert = alertify.error(
-                  _tcStr('Wrong remote hostname {{name}}', {
-                    name: profile.get('remoteHostname'),
-                  }),
-                  30
-                );
-              } else if (stderr.indexOf('No route to host') !== -1) {
-                resultAlert = alertify.error(
-                  _tcStr('Remote host {{name}} not connected', {
-                    name: profile.get('remoteHostname'),
-                  }),
-                  30
-                );
-              } else {
-                resultAlert = alertify.error(stderr, 30);
-              }
+              resultAlert = alertify.error(stderr, 30);
             }
           } else {
             //-- Process output
@@ -973,322 +825,370 @@ angular
         return newCodeError;
       }
 
+      function deleteFolderRecursive(path) {
+        if (nodeFs.existsSync(path)) {
+          nodeFs.readdirSync(path).forEach((file) => {
+            var curPath = nodePath.join(path, file);
+            if (nodeFs.lstatSync(curPath).isDirectory()) {
+              deleteFolderRecursive(curPath);
+            } else {
+              nodeFs.unlinkSync(curPath);
+            }
+          });
+          nodeFs.rmdirSync(path);
+        }
+      }
+
       // Toolchain methods
 
-      $rootScope.$on(
-        'installToolchain',
-        function (/*event*/) {
-          this.installToolchain();
-        }.bind(this)
-      );
+      this.PythonExecutable = getPythonExecutable();
 
-      this.installToolchain = function () {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
+      function getPythonExecutable(envdir) {
+        const pythonEnv = profile.get('pythonEnv');
+        if (pythonEnv && !envdir) {
+          return pythonEnv;
         }
-        if (utils.checkDefaultToolchain()) {
-          utils.removeToolchain();
-          installDefaultToolchain();
-        } else {
-          alerts.confirm({
-            title: _tcStr('Default toolchain not found!'),
-            body: _tcStr(
-              'The toolchain will be downloaded. This operation requires Internet connection.'
-            ),
-            onok: () => {
-              utils.removeToolchain();
-              installOnlineToolchain();
-            },
-          });
+        for (var executable of common.WIN32
+          ? ['py.exe -3', 'python3.exe', 'python.exe']
+          : ['python3', 'python']) {
+          const _ex = envdir ? nodePath.join(envdir, executable) : executable;
+          if (isPython3(_ex)) {
+            return _ex;
+          }
         }
-      };
+      }
 
-      this.updateToolchain = function () {
+      function isPython3(executable) {
+        const cmd = `${executable} -V`;
+        try {
+          const result = nodeChildProcess.execSync(cmd);
+          const str = result.toString();
+          console.log(`[srv.tools.isPython3] ${cmd} : ${str}`);
+          return !result
+            ? false
+            : str.indexOf('3.5') >= 0 ||
+                str.indexOf('3.6') >= 0 ||
+                str.indexOf('3.7') >= 0 ||
+                str.indexOf('3.8') >= 0 ||
+                str.indexOf('3.9') >= 0;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      this.checkToolchain = _checkToolchain;
+
+      function getApioExecutable() {
+        const apio = process.env.ICESTUDIO_APIO;
+        if (nodeFs.existsSync(apio)) {
+          alertify.message('Using external apio: ' + apio, 5);
+          return `"${apio}"`;
+        }
+        return common.APIO_CMD;
+      }
+
+      function _checkToolchain(callback) {
+        var apio = getApioExecutable();
+        console.log('[srv.tools.checkToolchain] apio:', apio);
+        nodeChildProcess.exec(`${apio} --version`, function (error, stdout) {
+          console.log('[srv.tools.checkToolchain] version:', stdout);
+          if (error) {
+            console.log('[srv.tools.checkToolchain] version error:', error);
+            toolchain.apio = '-';
+            _toolchainAlert(true);
+            if (callback) {
+              callback();
+            }
+            return;
+          }
+          toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
+          console.log(
+            '[srv.tools.checkToolchain] toolchain.apio:',
+            toolchain.apio
+          );
+          if (toolchain.apio && toolchain.apio != '') {
+            _toolchainAlert(
+              false,
+              `${_tcStr('Apio version')} v${toolchain.apio}`
+            );
+            // TODO: We should run some minimal test for ensuring that apio was correctly installed.
+            //  nodeChildProcess.exec(
+            //    `${apio} clean -p`,
+            //    (error, stdout, stderr) => {
+            //      console.log('[srv.tools.checkToolchain] clean sample:', error, stdout, stderr);
+            //      if (error) {
+            //        toolchain.apio = '-';
+            //        _toolchainAlert(false, _tcStr('Toolchain failed executing sample project!'));
+            //      }
+            //      if (callback) {
+            //        callback();
+            //      }
+            //    }
+            //  );
+            if (callback) {
+              callback();
+            }
+            return;
+          }
+          _toolchainAlert(false, _tcStr('Could not retrieve apio version!'));
+          if (callback) {
+            callback();
+          }
+        });
+      }
+
+      function executeCommand(command, callback) {
+        var cmd = command.join(' ');
+        nodeChildProcess.exec(cmd, (error, stdout, stderr) => {
+          console.log(
+            `[srv.tools.executeCommand] cmd: ${cmd}\nstdout: ${stdout}\nstderr: ${stderr}\nerror: ${error}`
+          );
+          common.commandOutput = `${cmd}\n\n${stdout}${stderr}`;
+          $(document).trigger('commandOutputChanged', [common.commandOutput]);
+          if (error) {
+            alertify.error(error.message, 30);
+            callback(true);
+          } else {
+            callback(false);
+          }
+        });
+      }
+
+      function _removeToolchain() {
+        deleteFolderRecursive(common.ENV_DIR);
+        deleteFolderRecursive(common.APIO_HOME_DIR);
+      }
+
+      $rootScope.$on('installToolchain', () => {
+        _installToolchain();
+      });
+
+      this.installToolchain = _installToolchain;
+
+      const nodeOnline = require('is-online');
+
+      function _installToolchain() {
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
         alerts.confirm({
-          title: _tcStr('The toolchain will be updated'),
-          body: _tcStr('This operation requires Internet connection.'),
-          onok: installOnlineToolchain,
-        });
-      };
+          title: _tcStr('Toolchain installation'),
+          body: _tcStr(
+            'The toolchain will be downloaded. This operation requires Internet connection.'
+          ),
+          onok: () => {
+            _removeToolchain();
+            alerts.alert({
+              title: _tcStr('Installing toolchain'),
+              body: `<div>
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                </div>
+              </div>
+              <div id="progress-message" class="progress-message"></div>
+            </div>`,
+            });
+            toolchain.apio = '-';
 
-      this.resetToolchain = function () {
+            const _py = getPythonExecutable();
+            var _epip = null;
+
+            async.series(
+              [
+                // checkInternetConnection
+                (callback) => {
+                  updateProgress(_tcStr('Check Internet connection...'), 0);
+                  nodeOnline({timeout: 5000}, function (err, online) {
+                    if (online) {
+                      callback(false);
+                      return;
+                    }
+                    resultAlert = alertify.error(
+                      _tcStr('Internet connection required'),
+                      30
+                    );
+                    callback(true);
+                  });
+                },
+                // ensurePythonIsAvailable
+                (callback) => {
+                  updateProgress(_tcStr('Check Python...'), 10);
+                  if (_py) {
+                    callback(false);
+                    return;
+                  }
+                  resultAlert = alertify.error(
+                    _tcStr('At least Python 3.5 is required'),
+                    30
+                  );
+                  callback(true);
+                },
+                // createVirtualenv
+                (callback) => {
+                  updateProgress(_tcStr('Create virtualenv...'), 20);
+                  if (nodeFs.existsSync(common.ENV_DIR)) {
+                    callback(false);
+                    return;
+                  }
+                  if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
+                    nodeFs.mkdirSync(common.ICESTUDIO_DIR);
+                  }
+                  executeCommand(
+                    [_py, '-m', 'venv', `"${common.ENV_DIR}"`],
+                    callback
+                  );
+                },
+                // setupVirtualenv
+                // see: https://bugs.python.org/issue30628 and https://stackoverflow.com/a/61553959
+                (callback) => {
+                  updateProgress(_tcStr('Setup virtualenv...'), 25);
+                  if (!nodeFs.existsSync(common.ENV_DIR)) {
+                    callback(true);
+                    return;
+                  }
+                  if (!nodeFs.existsSync(common.ENV_BIN_DIR)) {
+                    callback(true);
+                    return;
+                  }
+                  _epip = [
+                    getPythonExecutable(common.ENV_BIN_DIR),
+                    '-m',
+                    'pip',
+                  ];
+
+                  if (common.MSYSTEM) {
+                    callback(false);
+                    return;
+                  }
+                  executeCommand(
+                    _epip.concat([
+                      'install',
+                      '-U',
+                      'pip',
+                      'setuptools',
+                      'wheel',
+                    ]),
+                    callback
+                  );
+                },
+                // installOnlineApio
+                (callback) => {
+                  updateProgress('Install apio', 50);
+                  const pkgs = '[blackiceprog,tinyfpgab,tinyprog,icefunprog]'; //icesprog,fujprog
+                  executeCommand(
+                    _epip.concat([
+                      'install',
+                      '-U',
+                      `apio${pkgs}@https://github.com/${profile.get(
+                        'apioRepo'
+                      )}/archive/${profile.get('apioRef')}.zip`,
+                    ]),
+                    callback
+                  );
+                },
+                // apioinstallPackages
+                (callback) => {
+                  const pkgs =
+                    'oss-cad-suite yosys ice40 ecp5 fujprog icesprog dfu iverilog drivers scons';
+                  updateProgress(`apio install ${pkgs}`, 75);
+                  apioInstall(pkgs, callback);
+                },
+              ],
+              // installationCompleted
+              (err, results) => {
+                console.log(
+                  `[srv.tools.installationCompleted] err: ${err}\nresults: ${results}`
+                );
+                _checkToolchain(() => {
+                  if (toolchain.apio != '-') {
+                    updateProgress(_tcStr('Installation completed'), 100);
+                    alertify.success(_tcStr('Toolchain installed'));
+                  } else {
+                    alertify.failure(_tcStr('Toolchain installation failed'));
+                  }
+                });
+              }
+            );
+          },
+        });
+      }
+
+      function _toolchainAlert(install, message) {
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
-        if (utils.checkDefaultToolchain()) {
-          alerts.confirm({
-            title: _tcStr('The toolchain will be restored to default'),
-            body: _tcStr('Do you want to continue?'),
-            onok: () => {
-              utils.removeToolchain();
-              installDefaultToolchain();
-            },
-          });
-        } else {
-          alerts.alert({
-            icon: 'bell-o',
-            title: _tcStr('Default toolchain not found!'),
-            body: _tcStr("Search location: '{{dir}}'", {
-              dir: common.TOOLCHAIN_DIR,
-            }),
-          });
-        }
-      };
+        resultAlert = alertify.warning(
+          !message
+            ? `${_tcStr('Toolchain not found')}.<br>${_tcStr(
+                'Click here to install it'
+              )}`
+            : message,
+          100000,
+          function (isClicked) {
+            if (install && isClicked) {
+              _installToolchain();
+            }
+          }
+        );
+      }
 
       this.removeToolchain = function () {
         if (resultAlert) {
           resultAlert.dismiss(false);
         }
         alerts.confirm({
-          title: _tcStr('The toolchain will be removed.'),
+          title: _tcStr('The toolchain will be removed'),
           body: _tcStr('Do you want to continue?'),
           onok: () => {
-            utils.removeToolchain();
-            toolchain.apio = '';
-            toolchain.installed = false;
+            _removeToolchain();
+            toolchain.apio = '-';
             alertify.success(_tcStr('Toolchain removed'));
           },
         });
       };
 
-      $rootScope.$on(
-        'enableDrivers',
-        function (/*event*/) {
-          this.enableDrivers();
-        }.bind(this)
-      );
-
-      this.enableDrivers = function () {
-        checkToolchain(function () {
-          if (toolchain.installed) {
+      this.enableDrivers = () => {
+        _checkToolchain(() => {
+          if (toolchain.apio != '-') {
             drivers.enable();
           }
         });
       };
 
-      this.disableDrivers = function () {
-        checkToolchain(function () {
-          if (toolchain.installed) {
+      this.disableDrivers = () => {
+        _checkToolchain(() => {
+          if (toolchain.apio != '-') {
             drivers.disable();
           }
         });
       };
 
-      function installDefaultToolchain() {
-        installationStatus();
-        alerts.alert({
-          title: _tcStr('Installing toolchain'),
-          body: `<div>
-          <div class="progress">
-            <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
-            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-            </div>
-          </div>
-          <div id="progress-message" class="progress-message"></div>
-      </div>`,
-          onok: utils.endWait,
-        });
-        toolchain.installed = false;
-
-        // Reset toolchain
-        async.series([
-          ensurePythonIsAvailable,
-          createVirtualenv,
-          extractDefaultApio,
-          installDefaultApio,
-          extractDefaultApioPackages,
-          installationCompleted,
-        ]);
-      }
-
-      function installOnlineToolchain() {
-        installationStatus();
-        alerts.alert({
-          title: _tcStr('Installing toolchain'),
-          body: `<div>
-          <div class="progress">
-            <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
-            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-            </div>
-          </div>
-          <div id="progress-message" class="progress-message"></div>
-        </div>`,
-          onok: utils.endWait,
-        });
-        toolchain.installed = false;
-
-        // Install toolchain
-        async.series([
-          checkInternetConnection,
-          ensurePythonIsAvailable,
-          createVirtualenv,
-          installOnlineApio,
-          apioInstallSystem,
-          apioInstallYosys,
-          apioInstallIce40,
-          apioInstallECP5,
-          apioInstallFujprog,
-          apioInstallIcesprog,
-          apioInstallDfu,
-          apioInstallIverilog,
-          apioInstallDrivers,
-          apioInstallScons,
-          installationCompleted,
-        ]);
-      }
-
-      function checkInternetConnection(callback) {
-        updateProgress(_tcStr('Check Internet connection...'), 0);
-        utils.isOnline(callback, function () {
-          restoreStatus();
-          resultAlert = alertify.error(
-            _tcStr('Internet connection required'),
-            30
-          );
-          callback(true);
-        });
-      }
-
-      function ensurePythonIsAvailable(callback) {
-        updateProgress(_tcStr('Check Python...'), 1);
-        if (utils.getPythonExecutable()) {
-          callback();
-        } else {
-          restoreStatus();
-          resultAlert = alertify.error(
-            _tcStr('At least Python 3.5 is required'),
-            30
-          );
-          callback(true);
-        }
-      }
-
-      function createVirtualenv(callback) {
-        updateProgress(_tcStr('Create virtualenv...'), 10);
-        utils.createVirtualenv(callback);
-      }
-
-      // Local installation
-
-      function extractDefaultApio(callback) {
-        updateProgress(_tcStr('Extract default apio files...'), 30);
-        utils.extractDefaultApio(callback);
-      }
-
-      function installDefaultApio(callback) {
-        updateProgress(_tcStr('Install default apio...'), 50);
-        utils.installDefaultApio(callback);
-      }
-
-      function extractDefaultApioPackages(callback) {
-        updateProgress(_tcStr('Extract default apio packages...'), 70);
-        utils.extractDefaultApioPackages(callback);
-      }
-
-      // Remote installation
-
-      function installOnlineApio(callback) {
-        var extraPackages = _package.apio.extras || [];
-        var apio = utils.getApioInstallable();
-
-        updateProgress(
-          'pip install -U ' + apio + '[' + extraPackages.toString() + ']',
-          30
-        );
-        utils.installOnlineApio(callback);
-      }
-
-      function apioInstallSystem(callback) {
-        updateProgress('apio install system', 35);
-        utils.apioInstall('system', callback);
-      }
-
-      function apioInstallYosys(callback) {
-        updateProgress('apio install yosys', 40);
-        utils.apioInstall('yosys', callback);
-      }
-
-      function apioInstallIce40(callback) {
-        updateProgress('apio install ice40', 45);
-        utils.apioInstall('ice40', callback);
-      }
-
-      function apioInstallECP5(callback) {
-        updateProgress('apio install ecp5', 50);
-        utils.apioInstall('ecp5', callback);
-      }
-
-      function apioInstallFujprog(callback) {
-        updateProgress('apio install fujprog', 55);
-        utils.apioInstall('fujprog', callback);
-      }
-
-      function apioInstallIcesprog(callback) {
-        updateProgress('apio install icesprog', 60);
-        utils.apioInstall('icesprog', callback);
-      }
-
-      function apioInstallDfu(callback) {
-        updateProgress('apio install dfu', 65);
-        utils.apioInstall('dfu', callback);
-      }
-
-      function apioInstallIverilog(callback) {
-        updateProgress('apio install iverilog', 70);
-        utils.apioInstall('iverilog', callback);
-      }
-
-      function apioInstallDrivers(callback) {
-        if (common.WIN32) {
-          updateProgress('apio install drivers', 80);
-          utils.apioInstall('drivers', callback);
-        } else {
-          callback();
-        }
-      }
-
-      function apioInstallScons(callback) {
-        updateProgress('apio install scons', 90);
-        utils.apioInstall('scons', callback);
-      }
-
-      function installationCompleted(callback) {
-        checkToolchain(function () {
-          if (toolchain.installed) {
-            updateProgress(_tcStr('Installation completed'), 100);
-            alertify.success(_tcStr('Toolchain installed'));
-            setupDriversAlert();
-          }
-          restoreStatus();
-          callback();
-        });
+      function apioInstall(pkg, callback) {
+        executeCommand([common.APIO_CMD, 'install', pkg], callback);
       }
 
       function setupDriversAlert() {
-        if (common.showDrivers()) {
-          var message = _tcStr('Click here to <b>setup the drivers</b>');
-          if (!infoAlert) {
-            setTimeout(function () {
-              infoAlert = alertify.message(message, 30);
-              infoAlert.callback = function (isClicked) {
-                infoAlert = null;
-                if (isClicked) {
-                  if (resultAlert) {
-                    resultAlert.dismiss(false);
-                  }
-                  $rootScope.$broadcast('enableDrivers');
+        if (!infoAlert) {
+          setTimeout(function () {
+            infoAlert = alertify.message(
+              _tcStr('Click here to <b>setup the drivers</b>'),
+              30
+            );
+            infoAlert.callback = function (isClicked) {
+              infoAlert = null;
+              if (isClicked) {
+                if (resultAlert) {
+                  resultAlert.dismiss(false);
                 }
-              };
-            }, 1000);
-          }
+                $rootScope.$broadcast('enableDrivers');
+              }
+            };
+          }, 1000);
         }
       }
 
       function updateProgress(message, value) {
-        $('#progress-message').text(message);
         var bar = $('#progress-bar');
         if (value === 100) {
           bar.removeClass('progress-bar-striped active');
@@ -1296,20 +1196,7 @@ angular
         bar.text(value + '%');
         bar.attr('aria-valuenow', value);
         bar.css('width', value + '%');
-      }
-
-      function installationStatus() {
-        // Disable user events
-        utils.disableKeyEvents();
-        utils.disableClickEvents();
-        utils.startWait();
-      }
-
-      function restoreStatus() {
-        // Enable user events
-        utils.enableKeyEvents();
-        utils.enableClickEvents();
-        utils.endWait();
+        $('#progress-message').text(message);
       }
 
       // Collections management
@@ -1325,6 +1212,8 @@ angular
           })
         );
       };
+
+      const nodeAdmZip = require('adm-zip');
 
       this.addCollections = function (filepaths) {
         // Load zip file
@@ -1363,7 +1252,7 @@ angular
                           ),
                           body: _tcStr('Do you want to replace it?'),
                           onok: () => {
-                            utils.deleteFolderRecursive(destPath);
+                            deleteFolderRecursive(destPath);
                             installCollection(collection, zipData);
                             alertify.success(
                               _tcStr('Collection {{name}} replaced', {
@@ -1461,6 +1350,8 @@ angular
         }
       }
 
+      const nodeGettext = require('angular-gettext-tools');
+
       function installCollection(collection, zip) {
         var i,
           dest = '';
@@ -1511,67 +1402,6 @@ angular
           );
         } catch (e) {}
       }
-
-      this.removeCollection = function (collection) {
-        utils.deleteFolderRecursive(collection.path);
-        collections.loadInternalCollections();
-        alertify.success(
-          _tcStr('Collection {{name}} removed', {
-            name: utils.bold(collection.name),
-          })
-        );
-      };
-
-      this.removeAllCollections = function () {
-        utils.removeCollections();
-        collections.loadInternalCollections();
-        alertify.success(_tcStr('All collections removed'));
-      };
-
-      this.canCheckVersion =
-        _package.repository !== undefined && _package.sha !== undefined;
-
-      this.checkForNewVersion = function () {
-        $.getJSON(
-          _package.repository.replace('github.com', 'api.github.com/repos') +
-            '/tags' +
-            '?_tsi=' +
-            new Date().getTime(),
-          function (result) {
-            if (result) {
-              const latest = result
-                .find((x) => x.name === 'nightly')
-                .commit.sha.substring(0, 8);
-              const msg =
-                latest === _package.sha
-                  ? 'Icestudio is up to date!'
-                  : `Current: ${_package.sha}
-              <br/>
-              Latest: ${latest}<br/>
-              <a class="action-open-url-external-browser" href="${_package.repository}/releases" target="_blank">Go to GitHub Releases</a>`;
-              alertify.notify(
-                `<div class="new-version-notifier-box">
-                <div class="new-version-notifier-box--text">
-                  ${msg}
-                </div>
-              </div>`,
-                'notify',
-                10
-              );
-            }
-          }
-        );
-      };
-
-      this.ifDevelopmentMode = function () {
-        if (
-          typeof _package.development !== 'undefined' &&
-          typeof _package.development.mode !== 'undefined' &&
-          _package.development.mode === true
-        ) {
-          utils.openDevToolsUI();
-        }
-      };
 
       this.initializePluginManager = function (callbackOnRun) {
         if (typeof ICEpm !== 'undefined') {

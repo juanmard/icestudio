@@ -7,7 +7,6 @@
   "license": "GPL-2.0",
   "main": "index.html",
   "chromium-args": "--enable-experimental-web-platform-features",
-  "development": false,
   "window": {
     "width": 1024,
     "height": 700,
@@ -18,20 +17,6 @@
     "icon": "images/icestudio-logo.png"
   },
   "collection": "0.3.3",
-  "apio": {
-    "min": "0.6.0",
-    "max": "1.0.0",
-    "extras": [
-      "blackiceprog",
-      "tinyfpgab",
-      "tinyprog",
-      "icefunprog",
-      "icesprog",
-      "fujprog"
-    ],
-    "external": "",
-    "branch": ""
-  },
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -58,8 +43,7 @@
     "fix": "eslint --fix **/*.js gruntfile.js",
     "start": "grunt serve",
     "dist": "grunt dist",
-    "gettext": "grunt nggettext_extract",
-    "postinstall": "npmpd"
+    "gettext": "grunt nggettext_extract"
   },
   "devDependencies": {
     "eslint": "^7.3.1",
