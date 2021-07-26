@@ -16,12 +16,6 @@ module.exports = function (grunt) {
     platforms.push('win' + bits);
     distCommands.push('compress:win' + bits);
   }
-  function targetOSX() {
-    nwjsVersion = '0.21.6';
-    platforms.push('osx64');
-    options.scope.push('darwinDependencies');
-    distCommands.push('compress:osx64');
-  }
   var targets = process.env.DIST_TARGET;
   if (targets === undefined) {
     targets = process.platform === 'darwin' ? 'osx' : 'lin,win';
@@ -49,7 +43,10 @@ module.exports = function (grunt) {
         targetWin('32');
         break;
       case 'osx':
-        targetOSX();
+        nwjsVersion = '0.21.6';
+        platforms.push('osx64');
+        options.scope.push('darwinDependencies');
+        distCommands.push('compress:osx64');
         break;
       default:
         grunt.log.errorlns('Unknown target <' + item + '>');
@@ -59,14 +56,21 @@ module.exports = function (grunt) {
   var gruntCfg = {};
 
   const sources = [
+    'collection/**',
     'controllers/**',
     'fonts/Lato2OFLWeb/Lato/**',
     'graphics/**',
     'libs/**',
     'node_modules/**/*.*',
-    'resources/**/*.*',
+    'constraints/**/*.*',
+    'images/**/*.*',
+    'locale/**/*.*',
+    'plugins/**/*.*',
+    'sample/**/*.*',
     'services/*.js',
     'styles/*.css',
+    'uiThemes/**/*.*',
+    'viewers/**/*.*',
     'views/*.html',
     '*.js',
     'index.html',
@@ -148,35 +152,6 @@ module.exports = function (grunt) {
     osx64: _compressOSX('64'),
   };
 
-  gruntCfg.watch = {
-    scripts: {
-      files: ['**/*.*', '!node_modules/**', '!resources/collection/**'],
-      tasks: ['exec:stopNW', 'exec:nw'],
-      options: {
-        atBegin: true,
-        interrupt: true,
-      },
-    },
-  };
-
-  gruntCfg.wget = {
-    python32: {
-      options: {overwrite: false},
-      src: 'https://www.python.org/ftp/python/3.8.2/python-3.8.2.exe',
-      dest: 'cache/python/python-3.8.2.exe',
-    },
-    python64: {
-      options: {overwrite: false},
-      src: 'https://www.python.org/ftp/python/3.8.2/python-3.8.2-amd64.exe',
-      dest: 'cache/python/python-3.8.2-amd64.exe',
-    },
-    collection: {
-      options: {overwrite: false},
-      src: 'https://github.com/FPGAwars/collection-default/archive/v<%=pkg.collection%>.zip',
-      dest: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
-    },
-  };
-
   const WIN32 = process.platform === 'win32';
 
   var pkg = grunt.file.readJSON('package.json');
@@ -189,8 +164,40 @@ module.exports = function (grunt) {
     compress: gruntCfg.compress, // Compress packages usin zip
     copy: gruntCfg.copy, // Copy dist files
     nwjs: gruntCfg.nwjs, // Execute nw-build packaging
-    watch: gruntCfg.watch, // Watch files for changes and runs tasks based on the changed files
-    wget: gruntCfg.wget, // Wget: Python installer and Default collection
+
+    // Watch files for changes and runs tasks based on the changed files
+    watch: {
+      scripts: {
+        files: [
+          'constraints/**/*.*',
+          'controllers/*.js',
+          'fonts/**',
+          'graphics/*.js',
+          'images/**/*.*',
+          'libs/*.js',
+          'locale/**/*.*',
+          'plugins/**/*.*',
+          'samples/**/*.*',
+          'services/*.js',
+          'styles/*.css',
+          'uiThemes/**/*.css',
+          'viewers/**/*.*',
+          'views/*.html',
+          '*.js',
+          'index.html',
+          'package.json',
+          '!cache/**',
+          '!collection/**',
+          '!dist/**',
+          '!node_modules/**',
+        ],
+        tasks: ['exec:stopNW', 'exec:nw'],
+        options: {
+          atBegin: true,
+          interrupt: true,
+        },
+      },
+    },
 
     // Execute nw application
     exec: {
@@ -200,43 +207,21 @@ module.exports = function (grunt) {
           ? 'taskkill /F /IM nw.exe >NUL 2>&1'
           : 'killall nw 2>/dev/null || killall nwjs 2>/dev/null') +
         ' || (exit 0)',
-      nsis32:
-        'makensis -DARCH=win32 -DPYTHON="python-3.8.2.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-      nsis64:
-        'makensis -DARCH=win64 -DPYTHON="python-3.8.2-amd64.exe" -DVERSION=<%=pkg.version%> -V3 scripts/windows_installer.nsi',
-    },
-
-    // JSON minification plugin without concatination
-    'json-minify': {
-      json: {files: 'dist/tmp/resources/**/*.json'},
-      ice: {files: 'dist/tmp/resources/**/*.ice'},
-    },
-
-    // Unzip Default collection
-    unzip: {
-      'using-router': {
-        router: function (filepath) {
-          return filepath.replace(/^collection-default-.*?\//g, 'collection/');
-        },
-        src: 'cache/collection/collection-default-v<%=pkg.collection%>.zip',
-        dest: 'resources/',
-      },
     },
 
     // Empty folders to start fresh
     clean: {
       tmp: ['.tmp', 'dist/tmp'],
       dist: ['dist'],
-      collection: ['resources/collection'],
-      // node: ['node_modules'],
-      // cache: ['cache']
+      modules: ['node_modules'],
+      cache: ['cache'],
     },
 
     // Generate POT file
     nggettext_extract: {
       pot: {
         files: {
-          'resources/locale/template.pot': ['views/*.html', '**/*.js'],
+          'locale/template.pot': ['views/*.html', '**/*.js'],
         },
       },
     },
@@ -248,15 +233,15 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: 'resources/locale',
-            dest: 'resources/locale',
+            cwd: 'locale',
+            dest: 'locale',
             src: ['**/*.po'],
             ext: '.json',
           },
           {
             expand: true,
-            cwd: 'resources/collection/locale',
-            dest: 'resources/collection/locale',
+            cwd: 'collection/locale',
+            dest: 'collection/locale',
             src: ['**/*.po'],
             ext: '.json',
           },
@@ -265,21 +250,12 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('getcollection', [
-    'clean:collection',
-    'wget:collection',
-    'unzip',
-  ]);
   grunt.registerTask('serve', ['nggettext_compile', 'watch:scripts']);
   grunt.registerTask(
     'dist',
-    [
-      'clean:dist',
-      'nggettext_compile',
-      'copy:dist',
-      'json-minify',
-      'nwjs',
-    ].concat(distCommands)
+    ['clean:dist', 'nggettext_compile', 'copy:dist', 'nwjs'].concat(
+      distCommands
+    )
   );
 };
 

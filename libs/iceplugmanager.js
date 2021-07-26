@@ -24,8 +24,7 @@ var IcePlugManager = function () {
 
   this.setPluginDir = function (dir, callback) {
     this.pluginDir = dir;
-    let tu = dir.indexOf('resources');
-    this.pluginUri = dir.substr(tu);
+    this.pluginUri = dir.substr(dir.indexOf('.'));
     this.load(callback);
   };
 

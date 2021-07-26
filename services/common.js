@@ -56,14 +56,10 @@ angular
     this.DARWIN = Boolean(process.platform.indexOf('darwin') > -1);
 
     // Paths
-    this.LOCALE_DIR = nodePath.join('resources', 'locale');
-    this.SAMPLE_DIR = nodePath.join('resources', 'sample');
-    this.DEFAULT_COLLECTION_DIR = nodePath.resolve(
-      nodePath.join('resources', 'collection')
-    );
-    this.DEFAULT_PLUGIN_DIR = nodePath.resolve(
-      nodePath.join('resources', 'plugins')
-    );
+    this.LOCALE_DIR = nodePath.join('locale');
+    this.SAMPLE_DIR = nodePath.join('sample');
+    this.DEFAULT_COLLECTION_DIR = nodePath.resolve('collection');
+    this.DEFAULT_PLUGIN_DIR = nodePath.resolve('plugins');
 
     this.BASE_DIR = process.env.HOME || process.env.USERPROFILE;
     this.LOGFILE = nodePath.join(this.BASE_DIR, 'icestudio.log');
@@ -189,13 +185,13 @@ angular
     };
     this.isEditingSubmodule = false;
 
-    // Read list of subdirs of 'resources/boards' which do not start with '_';
+    // Read list of subdirs of 'constraints' which do not start with '_';
     // for each, read 'info.json' and 'rules'.json'.
     // Generate list of boards and list of devices.
     try {
       var boards = [];
       var devices = [];
-      var dpath = nodePath.join('resources', 'devices');
+      var dpath = nodePath.join('constraints', 'devices');
       nodeFs.readdirSync(dpath).forEach((ditem) => {
         const ddata = _readJSONFile(dpath, ditem);
         devices.push({
@@ -203,7 +199,7 @@ angular
           resources: ddata,
         });
       });
-      var rpath = nodePath.join('resources', 'boards');
+      var rpath = nodePath.join('constraints', 'boards');
       nodeFs.readdirSync(rpath).forEach((bdir) => {
         if (bdir[0] !== '_' && !nodePath.extname(bdir)) {
           const bpath = nodePath.join(rpath, bdir);

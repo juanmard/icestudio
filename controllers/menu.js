@@ -677,7 +677,7 @@ angular
 
       $scope.showPCF = function () {
         gui.Window.open(
-          'resources/viewers/plain/pcf.html?board=' + common.selectedBoard.name,
+          'viewers/plain/pcf.html?board=' + common.selectedBoard.name,
           {
             title: common.selectedBoard.info.label + ' - PCF',
             focus: true,
@@ -687,7 +687,7 @@ angular
             height: 700,
             min_width: 300,
             min_height: 300,
-            icon: 'resources/images/icestudio-logo.png',
+            icon: 'images/icestudio-logo.png',
           }
         );
       };
@@ -696,7 +696,7 @@ angular
         if (common.selectedBoard) {
           return nodeFs.existsSync(
             nodePath.join(
-              'resources',
+              'constraints',
               'boards',
               common.selectedBoard.name,
               'pinout.svg'
@@ -708,20 +708,17 @@ angular
       $scope.showSvgPinout = function () {
         var board = common.selectedBoard;
         if (this.svgPinoutAvailable()) {
-          gui.Window.open(
-            'resources/viewers/svg/pinout.html?board=' + board.name,
-            {
-              title: common.selectedBoard.info.label + ' - Pinout',
-              focus: true,
-              //toolbar: false,
-              resizable: true,
-              width: 500,
-              height: 700,
-              min_width: 300,
-              min_height: 300,
-              icon: 'resources/images/icestudio-logo.png',
-            }
-          );
+          gui.Window.open('viewers/svg/pinout.html?board=' + board.name, {
+            title: common.selectedBoard.info.label + ' - Pinout',
+            focus: true,
+            //toolbar: false,
+            resizable: true,
+            width: 500,
+            height: 700,
+            min_width: 300,
+            min_height: 300,
+            icon: 'images/icestudio-logo.png',
+          });
         } else {
           alertify.warning(
             _tcStr('{{board}} pinout not defined', {
@@ -751,20 +748,17 @@ angular
         var rules = JSON.stringify(board.rules);
         if (rules !== '{}') {
           var encRules = encodeURIComponent(rules);
-          gui.Window.open(
-            'resources/viewers/table/rules.html?rules=' + encRules,
-            {
-              title: common.selectedBoard.info.label + ' - Rules',
-              focus: true,
-              // toolbar: false,
-              resizable: false,
-              width: 500,
-              height: 500,
-              min_width: 300,
-              min_height: 300,
-              icon: 'resources/images/icestudio-logo.png',
-            }
-          );
+          gui.Window.open('viewers/table/rules.html?rules=' + encRules, {
+            title: common.selectedBoard.info.label + ' - Rules',
+            focus: true,
+            // toolbar: false,
+            resizable: false,
+            width: 500,
+            height: 500,
+            min_width: 300,
+            min_height: 300,
+            icon: 'images/icestudio-logo.png',
+          });
         } else {
           alertify.error(
             _tcStr('{{board}} rules not defined', {
@@ -786,13 +780,13 @@ angular
           height: 400,
           min_width: 300,
           min_height: 300,
-          icon: 'resources/images/icestudio-logo.png',
+          icon: 'images/icestudio-logo.png',
         });
       }
 
       $scope.showCommandOutput = function () {
         winCommandOutput = _openWindow(
-          'resources/viewers/plain/output.html?content=' +
+          'viewers/plain/output.html?content=' +
             encodeURIComponent(common.commandOutput),
           _tcStr('Command output')
         );
@@ -802,7 +796,7 @@ angular
         if (winCommandOutput) {
           try {
             winCommandOutput.window.location.href =
-              'resources/viewers/plain/output.html?content=' +
+              'viewers/plain/output.html?content=' +
               encodeURIComponent(commandOutput);
           } catch (e) {
             winCommandOutput = null;

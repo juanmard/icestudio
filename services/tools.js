@@ -1314,6 +1314,18 @@ angular
 
       // Collections management
 
+      this.saveCollections = () => {
+        profile.set(
+          'collections',
+          common.internalCollections.map((item) => {
+            return {
+              name: item.name,
+              disabled: item.disabled,
+            };
+          })
+        );
+      };
+
       this.addCollections = function (filepaths) {
         // Load zip file
         async.eachSeries(filepaths, function (filepath, nextzip) {

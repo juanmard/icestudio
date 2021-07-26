@@ -28,4 +28,8 @@ Board rules (see :ref:`rules`) allow to automate tasks such as default port conn
 
 When a board is selected, all I/O blocks are updated and the values are reset.
 
-.. hint:: The configuration sources of board are stored in ``app/resources/boards``. In order to support a new board, create a new directory with the ``info.json``, ``pinout.*`` and ``pinout.*`` (optional) files. ``pinout.json`` MUST be generated from the ``pinout.*`` using the ``generator.py`` script.
+.. HINT::
+  The configuration sources of board are stored in ``constraints``.
+  In order to support a new board, create a new directory with the ``info.json``, ``pinout.*`` and ``pinout.*``
+  (optional) files.
+  ``pinout.json`` MUST be generated from the ``pinout.*`` using the ``generator.py`` script.

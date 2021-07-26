@@ -72,11 +72,11 @@
       <li>
         <a
           ng-repeat="(key, val) in plugins"
-          ng-href="resources/plugins/{{ val.manifest.id }}/index.html"
+          ng-href="plugins/{{ val.manifest.id }}/index.html"
           target="_blank"
           ><img
             width="18px"
-            ng-src="resources/plugins/{{ val.manifest.id }}/{{ val.manifest.icon }}"
+            ng-src="plugins/{{ val.manifest.id }}/{{ val.manifest.icon }}"
           />
           {{ val.manifest.name }}</a
         >

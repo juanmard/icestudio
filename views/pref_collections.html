@@ -7,7 +7,7 @@
       <td>
         <span
           href
-          ng-click="collection.disabled = !collection.disabled && collection.name!='Basic'"
+          ng-click="collection.disabled = !collection.disabled && collection.name!='Basic'; saveCollectionsToProfile()"
           ng-class="{'pointer':collection.name !== 'Basic'}"
           style="white-space: nowrap"
           ><i

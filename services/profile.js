@@ -9,11 +9,12 @@ angular
         board: null,
         prog: null,
         boardRules: true,
-        collection: null,
-        externalCollections: null,
-        externalPlugins: null,
         language: null,
         uiTheme: 'light',
+        collection: null,
+        collections: null,
+        externalCollections: null,
+        externalPlugins: null,
         remoteHostname: null,
         pythonEnv: {python: null, pip: null},
       };
@@ -31,9 +32,10 @@ angular
               board: data.board || null,
               prog: data.prog || null,
               boardRules: data.boardRules !== false,
-              collection: data.collection || null,
               language: data.language || null,
               uiTheme: data.uiTheme || 'dark',
+              collection: data.collection || null,
+              collections: data.collections || null,
               externalCollections: data.externalCollections || null,
               externalPlugins: data.externalPlugins || null,
               remoteHostname: data.remoteHostname || null,
@@ -51,7 +53,7 @@ angular
             //-- Custom Theme support
             if (self.data.uiTheme !== 'light') {
               let cssFile =
-                '<link  rel="stylesheet" href="resources/uiThemes/dark/dark.css">';
+                '<link  rel="stylesheet" href="uiThemes/dark/dark.css">';
               let pHead = document.getElementsByTagName('head')[0];
               pHead.innerHTML = pHead.innerHTML + cssFile;
             }

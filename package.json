@@ -15,7 +15,7 @@
     "min_height": 200,
     "resizable": true,
     "position": "center",
-    "icon": "resources/images/icestudio-logo.png"
+    "icon": "images/icestudio-logo.png"
   },
   "collection": "0.3.3",
   "apio": {
@@ -35,7 +35,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "readme": "../README.md",
+  "readme": "README.md",
   "keywords": [
     "FPGA",
     "FOSS",
@@ -59,7 +59,7 @@
     "start": "grunt serve",
     "dist": "grunt dist",
     "gettext": "grunt nggettext_extract",
-    "postinstall": "npmpd && grunt getcollection"
+    "postinstall": "npmpd"
   },
   "devDependencies": {
     "eslint": "^7.3.1",
@@ -71,10 +71,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-exec": "^3.0.0",
-    "grunt-json-minify": "^1.1.0",
     "grunt-nw-builder": "^3.1.0",
-    "grunt-wget": "^0.1.3",
-    "grunt-zip": "^0.18.2",
     "load-grunt-tasks": "^5.1.0",
     "npm-platform-dependencies": "0.1.0",
     "nw": "0.35.5-sdk",
