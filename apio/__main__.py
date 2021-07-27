@@ -1,13 +1,9 @@
 """DOC:TODO"""
 # -*- coding: utf-8 -*-
 # -- This file is part of the Apio project
-# -- (C) 2016-2019 FPGAwars
+# -- (C) 2016-2021 FPGAwars
 # -- Author Jesús Arroyo
 # -- Licence GPLv2
-
-# --------------------------------------------
-# -- Apio ENTRY POINT!!!
-# --------------------------------------------
 
 
 from os import listdir
@@ -18,8 +14,6 @@ import click
 from apio import util
 
 
-# -- The commands are python modules located in the commands folder
-# -- Get the absolute path to all the commands
 commands_folder = util.get_folder("commands")
 
 
@@ -112,6 +106,8 @@ def cli(ctx):
         _help += "\n\nUtility commands:\n"
         _help += "\n".join(util_help)
         _help += "\n"
+
+        _help += '\nhttps://github.com/juanmard/icestudio/tree/apio-dev\n'
 
         click.secho(_help)
 

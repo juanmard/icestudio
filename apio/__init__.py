@@ -1,23 +1,17 @@
 """Open source ecosystem for open FPGA boards"""
 # -*- coding: utf-8 -*-
 # -- This file is part of the Apio project
-# -- (C) 2016-2019 FPGAwars
-# -- Author Jesús Arroyo
+# -- (C) 2016-2021 FPGAwars contributors
 # -- Licence GPLv2
 
-# --------------------------------------------
-# - Information for the Distribution package
-# --------------------------------------------
-
-VERSION = (0, 7, 7)
+VERSION = (0, 9, 0)
 __version__ = ".".join([str(s) for s in VERSION])
 
 __title__ = "apio"
-__description__ = "Open source ecosystem for open FPGA boards"
+__description__ = "Open source ecosystem for FPGA development boards"
 __url__ = "https://github.com/FPGAwars/apio"
 
-__author__ = "Jesús Arroyo Torrens"
-__email__ = "jesus.arroyo.torrens@gmail.com"
+__author__ = "FPGAwars contributors"
 
 __license__ = "GPLv2"
 

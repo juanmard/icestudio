@@ -71,7 +71,7 @@ a few options here:
 .. _install_drivers:
 
 Install FTDI drivers
--------------------------
+--------------------
 
 For boards with a FTDI interface.
 
@@ -87,7 +87,7 @@ To revert the FTDI drivers configuration.
 
 
 Install Serial drivers
--------------------------
+----------------------
 
 For boards with a Serial interface.
 
@@ -100,3 +100,10 @@ To revert the Serial drivers configuration.
 .. code::
 
     $ apio drivers --serial-disable
+
+Debian packaging
+----------------
+
+Also you can find the debian scripts to package the full application and all the packages here: https://github.com/set-soft/apio-debian.
+
+Thanks Salvador E. Tropea!
