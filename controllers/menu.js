@@ -149,7 +149,7 @@ angular
       $log.debug('[cnt.menu] window.location.search:', window.location.search);
       $log.debug('[cnt.menu] queryStr:', queryStr);
 
-      var argv = window.opener.opener ? [] : gui.App.argv;
+      var argv = window.opener && window.opener.opener ? [] : gui.App.argv;
 
       var val = queryStr.replace(/.*?[&\\?]icestudio_argv=(.*?)&.*/, '$1');
       if (val !== queryStr) {
@@ -531,7 +531,13 @@ angular
           content.push(`<label>${messages[i]}</label>
   <input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
         }
-        const img = image ? 'data:image/svg+xml,' + image : blankImage;
+        const img = image
+          ? `data:image/svg+xml${
+              !image.includes('viewBox') || !image.includes('base64')
+                ? `;base64,${btoa(decodeURI(image))}`
+                : `,${image}`
+            }`
+          : blankImage;
         content.push(`<label>${_tcStr('Image')}</label>
           <div class="btn-group btn-group-sm" role="group" aria-label="Image buttons" style="display: inline-flex;">
             <label
@@ -611,7 +617,14 @@ angular
                 SVGO.optimize(data, function (result) {
                   image = encodeURI(result.data);
                   registerSave();
-                  $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
+                  $('#preview-svg').attr(
+                    'src',
+                    `data:image/svg+xml${
+                      !image.includes('viewBox') || !image.includes('base64')
+                        ? `;base64,${btoa(result.data)}`
+                        : `,${image}`
+                    }`
+                  );
                 });
               });
               $(this).val('');

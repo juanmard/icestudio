@@ -6,7 +6,7 @@ module.exports = function (grunt) {
   var platforms = [];
   var distCommands = [];
   var options = {scope: ['devDependencies']};
-  var nwjsVersion = '0.35.5';
+  var nwjsVersion = '0.54.1';
 
   function targetLin(bits) {
     platforms.push('linux' + bits);

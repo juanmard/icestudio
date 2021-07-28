@@ -634,7 +634,16 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     this.$box.find('label').html(this.model.get('label'));
     const image = this.model.get('image');
     if (image) {
-      this.$box.find('img').attr('src', `data:image/svg+xml,${image}`);
+      this.$box
+        .find('img')
+        .attr(
+          'src',
+          `data:image/svg+xml${
+            !image.includes('viewBox') || !image.includes('base64')
+              ? `;base64,${btoa(decodeURI(image))}`
+              : `,${image}`
+          }`
+        );
     }
     // Render clocks
     this.$box.find('.clock').remove();
