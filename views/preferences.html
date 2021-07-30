@@ -150,7 +150,7 @@
       class="btn btn-default disabled no-btn no-btn-200"
       uib-tooltip="{{ 'External plugin path' | translate }}"
       tooltip-append-to-body="true"
-    ><span ng-class="{'italic': !profile.data.externalPlugins}">{{ profile.data.externalPlugins || 'unset' }}</span>
+    ><span ng-class="{'italic': !common.data.externalPlugins}">{{ common.data.externalPlugins || 'unset' }}</span>
     </span>
         <button
           type="button"
@@ -161,7 +161,7 @@
         ><i
           class="fa fa-fw"
           aria-hidden="true"
-          ng-class="'fa-' + (profile.data.externalPlugins?'check':'pencil')"></i
+          ng-class="'fa-' + (common.data.externalPlugins?'check':'pencil')"></i
           ></button>
       </div>
   </span>
@@ -169,7 +169,7 @@
 
 <script type="text/ng-template" id="views/pref_head_language.html">
   <span class="pull-right" ng-click="val.isopen = !val.isopen">
-    {{ languages[profile.data.language] }} <span class="badge" style="margin-left: 5px; min-width: 50px">{{profile.data.language | translate}}</span>
+    {{ languages[common.data.language] }} <span class="badge" style="margin-left: 5px; min-width: 50px">{{common.data.language | translate}}</span>
   </span>
 </script>
 
@@ -179,10 +179,10 @@
       class="list-group-item"
       ng-repeat="(key, val) in languages"
       ng-click="selectLanguage(key)"
-      ng-class="{'active': profile.data.language == key}"
+      ng-class="{'active': common.data.language == key}"
     ><i
     class="fa fa-fw"
-    ng-class="'fa-'+(profile.data.language == key?'check-':'')+'square-o'"
+    ng-class="'fa-'+(common.data.language == key?'check-':'')+'square-o'"
     aria-hidden="true"
   ></i> {{ val | translate }} <span class="badge" style="min-width: 50px">{{key}}</span></button>
   </div>
@@ -197,21 +197,21 @@
           ng-click="selectTheme(theme[0])"
           ng-repeat="theme in themes"
           ng-class="{
-            'disabled no-btn': profile.data.uiTheme == theme[0]
+            'disabled no-btn': common.data.uiTheme == theme[0]
           }"
         ><i
-        ng-if="profile.data.uiTheme == theme[0]"
+        ng-if="common.data.uiTheme == theme[0]"
         class="fa fa-fw fa-check"
         aria-hidden="true"
       ></i> {{ theme[1] | translate }}</button>
       </div>
 
-  <!-- TODO: use 'uib-btn-radio'; needs reworking profile.data.uiTheme
+  <!-- TODO: use 'uib-btn-radio'; needs reworking common.data.uiTheme
 
       <div class="btn-group">
         <label
           class="btn btn-xs btn-default"
-          ng-model="profile.data.uiTheme"
+          ng-model="common.data.uiTheme"
           uib-btn-radio="theme[0]"
           uib-btn-checkbox
           ng-click="selectTheme(theme[0])"
@@ -253,14 +253,14 @@
           class="btn btn-default disabled no-btn no-btn-150"
           uib-tooltip="{{ 'Source repository' | translate }}"
           tooltip-append-to-body="true"
-        ><span >{{ profile.data.apioRepo }}</span>
+        ><span >{{ common.data.apioRepo }}</span>
         </span>
 
         <span
           class="btn btn-default disabled no-btn no-btn-100"
           uib-tooltip="{{ 'Reference (branch or tag)' | translate }}"
           tooltip-append-to-body="true"
-        ><span>{{ profile.data.apioRef }}</span>
+        ><span>{{ common.data.apioRef }}</span>
         </span>
 
           <button
@@ -310,7 +310,7 @@
           class="btn btn-default disabled no-btn no-btn-150"
           uib-tooltip="{{ 'Custom Python executable' | translate }}"
           tooltip-append-to-body="true"
-        ><span ng-class="{'italic': !profile.data.pythonEnv}">{{ profile.data.pythonEnv || 'unset' }}</span>
+        ><span ng-class="{'italic': !common.data.pythonEnv}">{{ common.data.pythonEnv || 'unset' }}</span>
         </span>
             <button
               type="button"

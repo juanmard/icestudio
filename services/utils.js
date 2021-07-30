@@ -12,7 +12,6 @@ angular
       nodeFs,
       nodeFse,
       nodePath,
-      nodeChildProcess,
       gui,
       SVGO
     ) {
@@ -45,56 +44,6 @@ angular
         document.addEventListener('keyup', disableEvent, true);
         document.addEventListener('keydown', disableEvent, true);
         document.addEventListener('keypress', disableEvent, true);
-      };
-
-      this.basename = basename;
-
-      function basename(filepath) {
-        let b = nodePath.basename(filepath);
-        return b.substr(0, b.lastIndexOf('.'));
-      }
-
-      this.dirname = (filepath) => {
-        return nodePath.dirname(filepath);
-      };
-
-      this.readFile = function (filepath) {
-        return new Promise(function (resolve, reject) {
-          if (!nodeFs.existsSync(common.PROFILE_PATH)) {
-            resolve({});
-            return;
-          }
-          nodeFs.readFile(filepath, 'utf8', function (err, content) {
-            if (err) {
-              reject(err.toString());
-              return;
-            }
-            let name = basename(filepath);
-            if (ICEpm && ICEpm.isFactory(name)) {
-              ICEpm.factory(name, content, (data) => {
-                data ? resolve(data) : reject();
-              });
-              return;
-            }
-            try {
-              resolve(JSON.parse(content));
-            } catch (e) {
-              reject();
-            }
-          });
-        });
-      };
-
-      this.saveFile = function (filepath, data) {
-        return new Promise(function (resolve, reject) {
-          nodeFs.writeFile(
-            filepath,
-            typeof data !== 'string' ? JSON.stringify(data, null, 2) : data,
-            function (err) {
-              err ? reject(err.toString()) : resolve();
-            }
-          );
-        });
       };
 
       /*
@@ -487,10 +436,6 @@ angular
           }
         }
         return ret;
-      };
-
-      this.bold = function (text) {
-        return '<b>' + text + '</b>';
       };
 
       this.openDialog = function (inputID, ext, callback) {
@@ -887,18 +832,10 @@ angular
         return evt.ctrlKey;
       };
 
-      this.loadProfile = function (profile, callback) {
-        profile.load(function () {
-          if (callback) {
-            callback();
-          }
-        });
-      };
-
       const nodeLangInfo = require('node-lang-info');
 
-      this.loadLanguage = function (profile, callback) {
-        var lang = profile.get('language');
+      this.loadLanguage = function (common, callback) {
+        var lang = common.get('language');
         if (lang) {
           this.setLocale(lang, callback);
         } else {
@@ -906,7 +843,7 @@ angular
           nodeLangInfo(
             function (err, sysLang) {
               if (!err) {
-                profile.set('language', this.setLocale(sysLang, callback));
+                common.set('language', this.setLocale(sysLang, callback));
               }
             }.bind(this)
           );

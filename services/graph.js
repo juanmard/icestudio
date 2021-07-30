@@ -8,7 +8,6 @@ angular
       $rootScope,
       joint,
       blocks,
-      profile,
       utils,
       common,
       gettextCatalog,
@@ -840,7 +839,7 @@ angular
 
       this.setBoardRules = function (rules) {
         var cells = graph.getCells();
-        profile.set('boardRules', rules);
+        common.set('boardRules', rules);
 
         for (var i = 0, n = cells.length; i < n; i++) {
           if (!cells[i].isLink()) {
@@ -1084,7 +1083,7 @@ angular
         graph.startBatch('change');
         // Trigger lang event
         var data = {
-          previous: profile.get('language'),
+          previous: common.get('language'),
           next: language,
         };
         graph.trigger('lang', {data: data});
@@ -1651,7 +1650,7 @@ angular
 
       function updateCellAttributes(cell) {
         cell.attributes.state = state;
-        cell.attributes.rules = profile.get('boardRules');
+        cell.attributes.rules = common.get('boardRules');
         //cell.attributes.zindex = z.index;
       }
 

@@ -2,7 +2,7 @@ angular
   .module('icestudio')
   .service(
     'collections',
-    function (utils, common, profile, gettextCatalog, nodeFs, nodePath) {
+    function (utils, common, gettextCatalog, nodeFs, nodePath) {
       'use strict';
 
       const DEFAULT = 'Basic';
@@ -28,7 +28,7 @@ angular
               });
             } else if (/.*\.(ice|json|md)$/.test(name)) {
               fileTree.push({
-                name: utils.basename(name),
+                name: common.basename(name),
                 path: path,
               });
             }
@@ -100,7 +100,7 @@ angular
         common.internalCollections = loadCollections(
           _findCollections(common.INTERNAL_COLLECTIONS_DIR)
         );
-        const data = profile.get('collections');
+        const data = common.get('collections');
         if (data) {
           data.forEach(function (item) {
             common.internalCollections.forEach((x) => {
@@ -113,7 +113,7 @@ angular
       };
 
       this.loadExternalCollections = function () {
-        var edir = profile.get('externalCollections');
+        var edir = common.get('externalCollections');
         if (edir === common.INTERNAL_COLLECTIONS_DIR) {
           return;
         }

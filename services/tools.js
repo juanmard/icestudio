@@ -6,7 +6,6 @@ angular
       alerts,
       project,
       compiler,
-      profile,
       collections,
       drivers,
       graph,
@@ -147,7 +146,7 @@ angular
           project.update();
           var opt = {
             datetime: false,
-            boardRules: profile.get('boardRules'),
+            boardRules: common.get('boardRules'),
           };
           if (opt.boardRules) {
             opt.initPorts = compiler.getInitPorts(project.get());
@@ -259,7 +258,10 @@ angular
       function syncFiles(files, reject) {
         _.each(files, function (file) {
           var destPath = nodePath.join(common.BUILD_DIR, file);
-          var origPath = nodePath.join(utils.dirname(project.filepath), file);
+          var origPath = nodePath.join(
+            nodePath.dirname(project.filepath),
+            file
+          );
 
           // Copy file
           var copySuccess = utils.copySync(origPath, destPath);
@@ -351,7 +353,7 @@ angular
                 stdout.indexOf('Activate bootloader') !== -1
               ) {
                 var errorMessage = _tcStr('Board {{name}} not connected', {
-                  name: utils.bold(boardLabel),
+                  name: `<b>${boardLabel}</b>`,
                 });
                 if (stdout.indexOf('Activate bootloader') !== -1) {
                   if (common.selectedBoard.name.startsWith('TinyFPGA-B')) {
@@ -368,7 +370,7 @@ angular
               ) {
                 resultAlert = alertify.error(
                   _tcStr('Board {{name}} not available', {
-                    name: utils.bold(boardLabel),
+                    name: `<b>${boardLabel}</b>`,
                   }),
                   30
                 );
@@ -391,7 +393,7 @@ angular
                     ) {
                       resultAlert = alertify.error(
                         _tcStr('Board {{name}} not available', {
-                          name: utils.bold(boardLabel),
+                          name: `<b>${boardLabel}</b>`,
                         }),
                         30
                       );
@@ -403,7 +405,7 @@ angular
                     ) {
                       resultAlert = alertify.error(
                         _tcStr('Board {{name}} disconnected', {
-                          name: utils.bold(boardLabel),
+                          name: `<b>${boardLabel}</b>`,
                         }),
                         30
                       );
@@ -844,7 +846,7 @@ angular
       this.PythonExecutable = getPythonExecutable();
 
       function getPythonExecutable(envdir) {
-        const pythonEnv = profile.get('pythonEnv');
+        const pythonEnv = common.get('pythonEnv');
         if (pythonEnv && !envdir) {
           return pythonEnv;
         }
@@ -1080,9 +1082,9 @@ angular
                     _epip.concat([
                       'install',
                       '-U',
-                      `apio${pkgs}@https://github.com/${profile.get(
+                      `apio${pkgs}@https://github.com/${common.get(
                         'apioRepo'
-                      )}/archive/${profile.get('apioRef')}.zip`,
+                      )}/archive/${common.get('apioRef')}.zip`,
                     ]),
                     callback
                   );
@@ -1202,7 +1204,7 @@ angular
       // Collections management
 
       this.saveCollections = () => {
-        profile.set(
+        common.set(
           'collections',
           common.internalCollections.map((item) => {
             return {
@@ -1218,7 +1220,7 @@ angular
       this.addCollections = function (filepaths) {
         // Load zip file
         async.eachSeries(filepaths, function (filepath, nextzip) {
-          //alertify.message(_tcStr('Load {{name}} ...', { name: utils.bold(utils.basename(filepath)) }));
+          //alertify.message(_tcStr('Load {{name}} ...', { name: `<b>${common.basename(filepath)}</b>` }));
           var zipData = nodeAdmZip(filepath);
           var _collections = getCollections(zipData);
 
@@ -1248,7 +1250,7 @@ angular
                         alerts.confirm({
                           title: _tcStr(
                             'The collection {{name}} already exists.',
-                            {name: utils.bold(name)}
+                            {name: `<b>${name}</b>`}
                           ),
                           body: _tcStr('Do you want to replace it?'),
                           onok: () => {
@@ -1256,7 +1258,7 @@ angular
                             installCollection(collection, zipData);
                             alertify.success(
                               _tcStr('Collection {{name}} replaced', {
-                                name: utils.bold(name),
+                                name: `<b>${name}</b>`,
                               })
                             );
                             next(name);
@@ -1264,7 +1266,7 @@ angular
                           oncancel: () => {
                             alertify.warning(
                               _tcStr('Collection {{name}} not replaced', {
-                                name: utils.bold(name),
+                                name: `<b>${name}</b>`,
                               })
                             );
                             next(name);
@@ -1274,7 +1276,7 @@ angular
                         installCollection(collection, zipData);
                         alertify.success(
                           _tcStr('Collection {{name}} added', {
-                            name: utils.bold(name),
+                            name: `<b>${name}</b>`,
                           })
                         );
                         next(name);
@@ -1285,7 +1287,7 @@ angular
                 } else {
                   alertify.warning(
                     _tcStr('Invalid collection {{name}}', {
-                      name: utils.bold(name),
+                      name: `<b>${name}</b>`,
                     })
                   );
                 }
@@ -1397,7 +1399,7 @@ angular
           var newPath = nodePath.join(common.INTERNAL_COLLECTIONS_DIR, dest);
           zip.extractEntryTo(
             entry,
-            utils.dirname(newPath),
+            nodePath.dirname(newPath),
             /*maintainEntryPath*/ false
           );
         } catch (e) {}

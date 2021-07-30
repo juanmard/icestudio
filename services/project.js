@@ -12,7 +12,6 @@ angular
       gui,
       nodeFs,
       nodePath,
-      profile,
       utils
     ) {
       'use strict';
@@ -62,12 +61,12 @@ angular
         var self = this;
         this.path = emptyPath ? '' : filepath;
         this.filepath = filepath;
-        utils
+        common
           .readFile(filepath)
           .then(function (data) {
-            var name = utils.basename(filepath);
+            var name = common.basename(filepath);
             self.filename = name;
-            self.dirname = utils.dirname(filepath);
+            self.dirname = nodePath.dirname(filepath);
             self.load(name, data);
           })
           .catch((error) => {
@@ -147,21 +146,21 @@ angular
             graph.fitContent();
             alertify.success(
               _tcStr('Project {{name}} loaded', {
-                name: utils.bold(name),
+                name: `<b>${name}</b>`,
               })
             );
             common.hasChangesSinceBuild = true;
           });
           if (ret) {
             utils.selectBoard(project.design.board);
-            profile.set('board', common.selectedBoard.name);
+            common.set('board', common.selectedBoard.name);
             self.updateTitle(name);
             let bdir = _filepath2buildpath(self.filepath);
             common.setBuildDir(bdir);
           } else {
             alertify.error(
               _tcStr('Wrong project format: {{name}}', {
-                name: utils.bold(name),
+                name: `<b>${name}</b>`,
               }),
               30
             );
@@ -369,7 +368,7 @@ angular
 
       this.save = function (filepath, callback) {
         var backupProject = false;
-        var name = utils.basename(filepath);
+        var name = common.basename(filepath);
         if (common.isEditingSubmodule) {
           backupProject = utils.clone(project);
         } else {
@@ -382,8 +381,8 @@ angular
         // Copy included files if the previous filepath
         // is different from the new filepath
         if (this.filepath !== filepath) {
-          var origPath = utils.dirname(this.filepath);
-          var destPath = utils.dirname(filepath);
+          var origPath = nodePath.dirname(this.filepath);
+          var destPath = nodePath.dirname(filepath);
           // 1. Parse and find included files
           var code = compiler.generate('verilog', project)[0].content;
           var listFiles = compiler.generate('list', project);
@@ -424,7 +423,7 @@ angular
         }
         let self = this;
         function doSaveProject() {
-          utils
+          common
             .saveFile(filepath, pruneProject(project))
             .then(function () {
               if (callback) {
@@ -434,7 +433,7 @@ angular
               common.setBuildDir(bdir);
               alertify.success(
                 _tcStr('Project {{name}} saved', {
-                  name: utils.bold(name),
+                  name: `<b>${name}</b>`,
                 })
               );
             })
@@ -476,7 +475,7 @@ angular
           if (notify) {
             alertify.success(
               _tcStr('Block {{name}} imported', {
-                name: utils.bold(block.package.name),
+                name: `<b>${block.package.name}</b>`,
               })
             );
           }
@@ -500,7 +499,7 @@ angular
           copyIncludedFiles(
             files,
             orig,
-            utils.dirname(self.path),
+            nodePath.dirname(self.path),
             function (success) {
               if (success) {
                 _importBlock();
@@ -536,7 +535,7 @@ angular
 
       this.addBlockFile = function (filepath, notify) {
         var self = this;
-        utils
+        common
           .readFile(filepath)
           .then(function (data) {
             if (!checkVersion(data.version)) {
@@ -544,8 +543,8 @@ angular
             } // FIXME: should produce a meaningful error
             _addBlockFile(
               self,
-              utils.dirname(filepath),
-              utils.basename(filepath),
+              nodePath.dirname(filepath),
+              common.basename(filepath),
               data,
               notify
             );
@@ -575,7 +574,7 @@ angular
                     title: _tcStr(
                       'File {{file}} already exists in the project path',
                       {
-                        file: utils.bold(filename),
+                        file: `<b>${filename}</b>`,
                       }
                     ),
                     body: _tcStr('Do you want to replace it?'),
@@ -603,14 +602,14 @@ angular
         if (success) {
           alertify.message(
             _tcStr('File {{file}} imported', {
-              file: utils.bold(filename),
+              file: `<b>${filename}</b>`,
             }),
             5
           );
         } else {
           alertify.error(
             _tcStr('Original file {{file}} does not exist', {
-              file: utils.bold(filename),
+              file: `<b>${filename}</b>`,
             }),
             30
           );
@@ -703,7 +702,7 @@ angular
 
       this.compile = function (target) {
         this.update();
-        var opt = {boardRules: profile.get('boardRules')};
+        var opt = {boardRules: common.get('boardRules')};
         return compiler.generate(target, project, opt);
       };
 

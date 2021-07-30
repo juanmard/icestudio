@@ -2,22 +2,11 @@ angular
   .module('icestudio')
   .controller(
     'DesignCtrl',
-    function (
-      $log,
-      $rootScope,
-      $scope,
-      common,
-      gettextCatalog,
-      graph,
-      project,
-      profile,
-      utils
-    ) {
+    function ($log, $rootScope, $scope, common, graph, project, utils) {
       'use strict';
 
       $scope.graph = graph;
       $scope.common = common;
-      $scope.profile = profile;
       $scope.information = {};
       $scope.backup = {};
       $scope.toRestore = false;
