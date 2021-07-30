@@ -281,6 +281,10 @@
   outline: none !important;
 }
 
+.panel-body {
+  padding: 0;
+}
+
 .no-btn {
   cursor: default !important;
   opacity: 1 !important;
@@ -331,6 +335,7 @@ form > fieldset {
 @media (min-width: 768px) {
   .modal-dialog {
     margin: 40px auto;
+    width: 668px;
   }
 }
 

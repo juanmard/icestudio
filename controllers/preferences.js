@@ -18,7 +18,6 @@ angular
       graph,
       gui,
       nodeFs,
-      profile,
       project,
       tools,
       utils
@@ -56,10 +55,9 @@ angular
       var resultAlert = null;
 
       $scope.common = common;
-      $scope.profile = profile;
       $scope.tools = tools;
 
-      $scope.externalPath = profile.get('externalCollections');
+      $scope.externalPath = common.get('externalCollections');
 
       $scope.languages = {
         ca_ES: 'Catalan',
@@ -99,7 +97,7 @@ angular
       $scope.removeCollection = (collection) => {
         alerts.confirm({
           title: _tcStr('Do you want to remove the {{name}} collection?', {
-            name: utils.bold(collection.name),
+            name: `<b>${collection.name}</b>`,
           }),
           body: _tcStr(
             'All the (modified) projects in the collection will be deleted.'
@@ -109,7 +107,7 @@ angular
             collections.loadInternalCollections();
             alertify.success(
               _tcStr('Collection {{name}} removed', {
-                name: utils.bold(collection.name),
+                name: `<b>${collection.name}</b>`,
               })
             );
             utils.rootScopeSafeApply();
@@ -137,7 +135,7 @@ angular
       };
 
       $scope.setExternalCollections = () => {
-        var externalCollections = profile.get('externalCollections');
+        var externalCollections = common.get('externalCollections');
         utils.renderForm(
           [
             {
@@ -158,7 +156,7 @@ angular
                 newExternalCollections === '' ||
                 nodeFs.existsSync(newExternalCollections)
               ) {
-                profile.set('externalCollections', newExternalCollections);
+                common.set('externalCollections', newExternalCollections);
                 collections.loadExternalCollections();
                 utils.rootScopeSafeApply();
                 alertify.success(_tcStr('External collections updated'));
@@ -225,7 +223,7 @@ angular
       }
 
       $scope.setExternalPlugins = () => {
-        var externalPlugins = profile.get('externalPlugins');
+        var externalPlugins = common.get('externalPlugins');
         utils.renderForm(
           [
             {
@@ -246,7 +244,7 @@ angular
                 newExternalPlugins === '' ||
                 nodeFs.existsSync(newExternalPlugins)
               ) {
-                profile.set('externalPlugins', newExternalPlugins);
+                common.set('externalPlugins', newExternalPlugins);
                 alertify.success(_tcStr('External plugins updated'));
               } else {
                 evt.cancel = true;
@@ -268,8 +266,8 @@ angular
       });
 
       $scope.selectLanguage = (language) => {
-        if (profile.get('language') !== language) {
-          profile.set('language', graph.selectLanguage(language));
+        if (common.get('language') !== language) {
+          common.set('language', graph.selectLanguage(language));
           // Reload the project
           project.update(
             {
@@ -288,8 +286,8 @@ angular
 
       // Theme support
       $scope.selectTheme = (theme) => {
-        if (profile.get('uiTheme') !== theme) {
-          profile.set('uiTheme', theme);
+        if (common.get('uiTheme') !== theme) {
+          common.set('uiTheme', theme);
           alertify.warning(
             _tcStr(
               'Icestudio needs to be restarted to switch the new UI Theme.'
@@ -301,8 +299,8 @@ angular
 
       // Apio repository and reference
       $scope.setApioRepo = () => {
-        var apioRepo = profile.get('apioRepo');
-        var apioRef = profile.get('apioRef');
+        var apioRepo = common.get('apioRepo');
+        var apioRef = common.get('apioRef');
         utils.renderForm(
           [
             {
@@ -322,12 +320,12 @@ angular
             const apioRepo = values[0];
             const apioRef = values[1];
             var updated = false;
-            if (apioRepo != profile.get('apioRepo')) {
-              profile.set('apioRepo', apioRepo);
+            if (apioRepo != common.get('apioRepo')) {
+              common.set('apioRepo', apioRepo);
               updated = true;
             }
-            if (apioRef != profile.get('apioRef')) {
-              profile.set('apioRef', apioRef);
+            if (apioRef != common.get('apioRef')) {
+              common.set('apioRef', apioRef);
               updated = true;
             }
             if (updated) {
@@ -341,7 +339,7 @@ angular
 
       // Custom Python environment
       $scope.setPythonEnv = function () {
-        let pythonEnv = profile.get('pythonEnv');
+        let pythonEnv = common.get('pythonEnv');
         let formSpecs = [
           {
             type: 'text',
@@ -372,7 +370,7 @@ angular
               return;
             }
             let newPythonEnv = newPythonPath;
-            profile.set('pythonEnv', newPythonEnv);
+            common.set('pythonEnv', newPythonEnv);
             alertify.success(_tcStr('Python environment updated'));
           }
         });

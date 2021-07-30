@@ -16,7 +16,6 @@ angular
       gettextCatalog,
       graph,
       gui,
-      profile,
       project,
       shortcuts,
       tools,
@@ -35,7 +34,6 @@ angular
       }
 
       $scope.common = common;
-      $scope.profile = profile;
       $scope.project = project;
       $scope.tools = tools;
       $scope.toolchain = tools.toolchain;
@@ -228,7 +226,7 @@ angular
       }
 
       function _isInExternal(fpath) {
-        return _isInCollection(fpath, name, profile.get('externalCollections'));
+        return _isInCollection(fpath, name, common.get('externalCollections'));
       }
 
       //-- File
@@ -372,7 +370,7 @@ angular
             utils.saveDialog('#input-export-' + id, ext, function (filepath) {
               // Save the compiler result
               var data = project.compile(id)[0].content;
-              utils
+              common
                 .saveFile(filepath, data)
                 .then(function () {
                   alertify.success(
@@ -422,7 +420,7 @@ angular
       }
 
       function updateWorkingdir(filepath) {
-        $scope.workingdir = utils.dirname(filepath) + nodePath.sep;
+        $scope.workingdir = nodePath.dirname(filepath) + nodePath.sep;
       }
 
       function equalWorkingFilepath(filepath) {
@@ -549,11 +547,10 @@ angular
       }
 
       $scope.toggleBoardRules = function () {
-        graph.setBoardRules(!profile.get('boardRules'));
+        graph.setBoardRules(!common.get('boardRules'));
         alertify.success(
           _tcStr(
-            'Board rules ' +
-              (profile.get('boardRules') ? 'enabled' : 'disabled')
+            'Board rules ' + (common.get('boardRules') ? 'enabled' : 'disabled')
           )
         );
       };
@@ -665,7 +662,7 @@ angular
         } else {
           alertify.warning(
             _tcStr('{{board}} pinout not defined', {
-              board: utils.bold(board.info.label),
+              board: `<b>${board.info.label}</b>`,
             }),
             5
           );
@@ -679,7 +676,7 @@ angular
         } else {
           alertify.error(
             _tcStr('{{board}} datasheet not defined', {
-              board: utils.bold(board.info.label),
+              board: `<b>${board.info.label}</b>`,
             }),
             5
           );
@@ -705,7 +702,7 @@ angular
         } else {
           alertify.error(
             _tcStr('{{board}} rules not defined', {
-              board: utils.bold(board.info.label),
+              board: `<b>${board.info.label}</b>`,
             }),
             5
           );
@@ -752,7 +749,7 @@ angular
       $(document).on('boardChanged', function (evt, board) {
         if (common.selectedBoard.name !== board.name) {
           graph.selectBoard(board);
-          profile.set('board', common.selectedBoard.name);
+          common.set('board', common.selectedBoard.name);
         }
       });
 
@@ -774,7 +771,7 @@ angular
           alerts.confirm({
             icon: 'microchip',
             title: _tcStr('Do you want to change to {{name}} board?', {
-              name: utils.bold(board.info.label),
+              name: `<b>${board.info.label}</b>`,
             }),
             body: _tcStr('The current FPGA I/O configuration will be lost.'),
             onok: function () {
@@ -785,7 +782,7 @@ angular
 
         function _selectBoardNotify(board) {
           graph.selectBoard(board, true);
-          profile.setBoard(common.selectedBoard);
+          common.setBoard(common.selectedBoard);
           var prog = board.info.prog;
           if (!prog.includes(common.selectedProgrammer)) {
             if (!prog.length === 1) {
@@ -793,7 +790,7 @@ angular
               return;
             }
             common.selectedProgrammer = prog[0];
-            profile.setProgrammer(common.selectedProgrammer);
+            common.setProgrammer(common.selectedProgrammer);
           }
         }
       }
@@ -980,12 +977,12 @@ angular
       function saveSnapshot(base64Data) {
         utils.saveDialog('#input-save-snapshot', '.png', function (filepath) {
           nodeFs.writeFile(filepath, base64Data, 'base64', function (err) {
-            $scope.snapshotdir = utils.dirname(filepath) + nodePath.sep;
+            $scope.snapshotdir = nodePath.dirname(filepath) + nodePath.sep;
             $scope.$apply();
             if (!err) {
               alertify.success(
                 _tcStr('Image {{name}} saved', {
-                  name: utils.bold(utils.basename(filepath)),
+                  name: `<b>${common.basename(filepath)}</b>`,
                 })
               );
             } else {

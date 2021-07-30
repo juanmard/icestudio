@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 
-var ICEpm = new IcePlugManager();
-
 angular
   .module('icestudio', ['ui.bootstrap', 'ngRoute', 'gettext'])
   .config([
@@ -18,40 +16,34 @@ angular
         });
     },
   ])
-  .run(function (
-    collections,
-    common,
-    gettextCatalog,
-    profile,
-    project,
-    tools,
-    utils
-  ) {
+  .run(function (collections, common, gettextCatalog, project, tools, utils) {
     'use strict';
 
-    $('html').attr('lang', profile.get('language'));
-    utils.startWait();
-    utils.loadProfile(profile, function () {
+    //utils.startWait();
+
+    function selectBoard(selectedBoard) {
+      utils.selectBoard(selectedBoard);
+      common.set('board', common.selectedBoard.name);
+      tools.checkToolchain();
+    }
+
+    common.load(function () {
       collections.loadAllCollections();
-      utils.loadLanguage(profile, function () {
-        var prog = profile.get('prog');
+      utils.loadLanguage(common, function () {
+        $('html').attr('lang', common.get('language'));
+        const prog = common.get('prog');
         if (prog != null) {
           common.selectedProgrammer = prog;
         }
-        if (profile.get('board') === null) {
-          utils.selectBoardPrompt(function (selectedBoard) {
-            utils.selectBoard(selectedBoard);
-            profile.set('board', common.selectedBoard.name);
-            tools.checkToolchain();
-          });
+        const _board = common.get('board');
+        if (_board === null) {
+          utils.selectBoardPrompt(selectBoard);
         } else {
-          utils.selectBoard(profile.get('board'));
-          profile.set('board', common.selectedBoard.name);
-          tools.checkToolchain();
+          selectBoard(_board);
         }
         collections.sort();
         project.updateTitle(gettextCatalog.getString('Untitled'));
-        utils.endWait();
+        //utils.endWait();
       });
     });
   })

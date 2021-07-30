@@ -9,7 +9,6 @@ angular
       gettextCatalog,
       gui,
       nodeChildProcess,
-      profile,
       utils
     ) {
       'use strict';
@@ -290,7 +289,7 @@ angular
               }
             } else {
               if (profileSetting) {
-                profile.set(profileSetting, true);
+                common.set(profileSetting, true);
               }
               alertify.success(_tcStr('Drivers enabled'));
             }
@@ -307,7 +306,7 @@ angular
 
       function disableDarwinDrivers(profileSetting) {
         if (profileSetting) {
-          profile.set(profileSetting, false);
+          common.set(profileSetting, false);
         }
         alertify.warning(_tcStr('Drivers disabled'));
       }
@@ -323,7 +322,7 @@ angular
       var driverC = '';
 
       function preUploadDarwin(callback) {
-        if (profile.get('macosFTDIDrivers')) {
+        if (common.get('macosFTDIDrivers')) {
           // Check and unload the Drivers
           var driverA = 'com.FTDI.driver.FTDIUSBSerialDriver';
           var driverB = 'com.apple.driver.AppleUSBFTDI';
@@ -345,7 +344,7 @@ angular
       }
 
       function postUploadDarwin() {
-        if (profile.get('macosFTDIDrivers')) {
+        if (common.get('macosFTDIDrivers')) {
           processDriverDarwin(driverC, true);
         }
       }
