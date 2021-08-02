@@ -288,12 +288,6 @@ angular
       $scope.selectTheme = (theme) => {
         if (common.get('uiTheme') !== theme) {
           common.set('uiTheme', theme);
-          alertify.warning(
-            _tcStr(
-              'Icestudio needs to be restarted to switch the new UI Theme.'
-            ),
-            15
-          );
         }
       };
 

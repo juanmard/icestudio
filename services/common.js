@@ -218,52 +218,6 @@ angular
 
       this.data = _data;
 
-      this.load = function (callback) {
-        this.readFile(_PROFILE_PATH)
-          .then((data) => {
-            console.log('[srv.common.load] data:', data);
-            for (var item of [
-              'apioRepo',
-              'apioRef',
-              'board',
-              'prog',
-              'boardRules',
-              'language',
-              'uiTheme',
-              'collection',
-              'collections',
-              'externalCollections',
-              'externalPlugins',
-              'pythonEnv',
-            ]) {
-              _data[item] = data[item] || _data[item];
-            }
-            console.log('[srv.common.load] _data:', _data);
-            //-- Custom Theme support
-            if (_data.uiTheme !== 'light') {
-              let cssFile =
-                '<link  rel="stylesheet" href="uiThemes/dark/dark.css">';
-              let pHead = document.getElementsByTagName('head')[0];
-              pHead.innerHTML = pHead.innerHTML + cssFile;
-            }
-            //-- End Custom Theme support
-            if (this.DARWIN) {
-              _data['macosFTDIDrivers'] =
-                data.macosFTDIDrivers || _data['macosFTDIDrivers'];
-            }
-            if (callback) {
-              callback();
-            }
-          })
-          .catch(function (error) {
-            console.log('[srv.common.load] catch:', error);
-            console.warn(error);
-            if (callback) {
-              callback();
-            }
-          });
-      }.bind(this);
-
       this.set = function (key, value) {
         if (_data.hasOwnProperty(key)) {
           _data[key] = value;
@@ -291,7 +245,7 @@ angular
 
       this.readFile = function (filepath) {
         return new Promise(function (resolve, reject) {
-          if (!nodeFs.existsSync(_PROFILE_PATH)) {
+          if (!nodeFs.existsSync(filepath)) {
             resolve({});
             return;
           }

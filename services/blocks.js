@@ -1037,45 +1037,33 @@ angular
         }
       }
 
-      //      var size = instance.size;
-      var size = false;
-      if (!size) {
-        var numPortsHeight = Math.max(leftPorts.length, rightPorts.length);
-        var numPortsWidth = Math.max(topPorts.length, bottomPorts.length);
-
-        size = {
-          width: Math.max(4 * gridsize * numPortsWidth, 12 * gridsize),
-          height: Math.max(4 * gridsize * numPortsHeight, 8 * gridsize),
-        };
-      }
-
-      var blockLabel = block.package.name;
-      var blockImage = '';
-      if (block.package.image) {
-        if (block.package.image.startsWith('%3Csvg')) {
-          blockImage = block.package.image;
-        } else if (block.package.image.startsWith('<svg')) {
-          blockImage = encodeURI(block.package.image);
-        }
-      }
-
-      var cell = new joint.shapes.ice.Generic({
+      const _img = block.package.image;
+      return new joint.shapes.ice.Generic({
         id: instance.id,
         blockType: instance.type,
         data: instance.data,
         config: block.design.config,
         pullup: block.design.pullup,
-        image: blockImage,
-        label: blockLabel,
+        image: !_img ? '' : _img.startsWith('%3Csvg') ? _img : encodeURI(_img),
+        label: block.package.name,
         tooltip: _tcStr(block.package.description),
         position: instance.position,
-        size: size,
+        // instance.size ? instance.size :
+        size: {
+          width: Math.max(
+            4 * gridsize * Math.max(topPorts.length, bottomPorts.length),
+            12 * gridsize
+          ),
+          height: Math.max(
+            4 * gridsize * Math.max(leftPorts.length, rightPorts.length),
+            8 * gridsize
+          ),
+        },
         disabled: disabled,
         leftPorts: leftPorts,
         rightPorts: rightPorts,
         topPorts: topPorts,
       });
-      return cell;
     }
 
     function loadWire(instance, source, target) {

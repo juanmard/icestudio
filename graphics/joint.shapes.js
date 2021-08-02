@@ -1,7 +1,5 @@
 /* eslint-disable new-cap */
 
-var subModuleActive = false;
-
 var os = require('os');
 var sha1 = require('sha1');
 var marked = require('marked');
@@ -535,7 +533,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
   template: `<div class="generic-block">
     <div class="generic-content">
       <label></label>
-      <div class="img-container"></div>
+      <div class="img-container"><img></div>
       <span class="tooltiptext"></span>
     </div>
   </div>`,
@@ -634,7 +632,7 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
     labelSelector.html(this.model.get('label'));
     const image = this.model.get('image');
     if (image) {
-      this.$box.find('.img-container').html(decodeURI(image));
+      this.$box.find('img').attr('src', `data:image/svg+xml,${image}`);
       labelSelector.addClass('hidden');
     }
     // Render clocks
@@ -1059,7 +1057,7 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
     var data = this.model.get('data');
     var name = data.name + (data.range || '');
-    var virtual = data.virtual || this.model.get('disabled') || subModuleActive;
+    var virtual = data.virtual || this.model.get('disabled') || false;
     var $label = this.$box.find('label');
 
     $label.text(name || '');

@@ -38,15 +38,26 @@
       type="text/css"
     />
 
-    <link rel="stylesheet" href="fonts/Lato2OFLWeb/Lato/latofonts.css" />
+    <link rel="stylesheet" href="node_modules/lato-font/css/lato-font.css" />
+    <!---->
     <link rel="stylesheet" href="styles/design.css" />
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/menu.css" />
     <link rel="stylesheet" href="viewers/markdown/css/github-markdown.css" />
   </head>
 
-  <body ng-app="icestudio">
-    <div ng-view></div>
+  <body ng-app="icestudio" class="waiting">
+    <div class="spinner-wrapper">
+      <img
+        class="center-block"
+        width="300"
+        src="images/icestudio-logo-label-nightly.png"
+      />
+      <i
+        class="fa fa-spinner fa-pulse fa-3x fa-fw"
+        style="margin-top: 20px"
+      ></i>
+    </div>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/angular/angular.js"></script>
     <script src="node_modules/angular-route/angular-route.js"></script>
@@ -92,5 +103,7 @@
     <script src="services/shortcuts.js"></script>
     <script src="services/tools.js"></script>
     <script src="services/utils.js"></script>
+
+    <div ng-view></div>
   </body>
 </html>

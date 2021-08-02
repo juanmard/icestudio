@@ -39,11 +39,12 @@ g {
   transition: opacity 0.2s;
 }
 
+form > fieldset > .project-img-container,
 .generic-block .generic-content {
-  position: absolute;
   background: #c0dfeb;
 }
 
+.generic-block .generic-content,
 .generic-block .generic-content .clock {
   position: absolute;
 }
@@ -93,11 +94,17 @@ g {
   position: absolute;
   top: 0;
   bottom: 0;
+  text-align: center;
+  width: 100%;
 }
 
-.generic-block .generic-content .img-container svg {
+form > fieldset > .project-img-container img,
+.generic-block .generic-content .img-container img {
   max-width: 100%;
   max-height: 100%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .generic-block .generic-content label {

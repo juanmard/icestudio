@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <div>
-  <div class="spinner-wrapper">
-    <div class="spinner">
-      <div>
-        <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-      </div>
-    </div>
-  </div>
   <div ng-controller="DesignCtrl">
+    <link
+      rel="stylesheet"
+      ng-if="common.data.uiTheme === 'dark'"
+      href="uiThemes/dark.css"
+    />
     <div id="mainpaper" class="paper"></div>
     <div ng-include="'views/menu_submodule.html'"></div>
   </div>
@@ -32,7 +30,8 @@
             <a
               class="action-open-url-external-browser"
               href="{{ version_url }}"
-              > {{ version_str }}</a
+            >
+              {{ version_str }}</a
             >
           </p>
           <p>

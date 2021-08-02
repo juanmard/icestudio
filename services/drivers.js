@@ -133,9 +133,7 @@ angular
           [
             "echo '" + rules + "' > /etc/udev/rules.d/80-fpga-ftdi.rules",
           ].concat(reloadRules()),
-          function () {
-            alertify.success(_tcStr('Drivers enabled'));
-          }
+          true
         );
       }
 
@@ -145,9 +143,7 @@ angular
             'rm -f /etc/udev/rules.d/80-icestick.rules',
             'rm -f /etc/udev/rules.d/80-fpga-ftdi.rules',
           ].concat(reloadRules()),
-          function () {
-            alertify.warning(_tcStr('Drivers disabled'));
-          }
+          false
         );
       }
 
@@ -169,9 +165,7 @@ angular
           [
             "echo '" + rules + "' > /etc/udev/rules.d/80-fpga-serial.rules",
           ].concat(reloadRules()),
-          function () {
-            alertify.success(_tcStr('Drivers enabled'));
-          }
+          true
         );
       }
 
@@ -180,9 +174,7 @@ angular
           ['rm -f /etc/udev/rules.d/80-fpga-serial.rules'].concat(
             reloadRules()
           ),
-          function () {
-            alertify.warning(_tcStr('Drivers disabled'));
-          }
+          false
         );
       }
 
@@ -196,27 +188,25 @@ angular
 
       const nodeSudo = require('sudo-prompt');
 
-      function configureLinuxDrivers(commands, callback) {
+      function configureLinuxDrivers(commands, enable) {
         var command = 'sh -c "' + commands.join('; ') + '"';
         utils.startWait();
-        nodeSudo.exec(
-          command,
-          {name: 'Icestudio'},
-          function (error /*, stdout, stderr*/) {
-            utils.endWait();
-            if (!error) {
-              if (callback) {
-                callback();
-              }
-              setTimeout(function () {
-                alertify.message(
-                  _tcStr('<b>Unplug</b> and <b>reconnect</b> the board'),
-                  5
-                );
-              }, 1000);
-            }
+        nodeSudo.exec(command, {name: 'Icestudio'}, function (err) {
+          utils.endWait();
+          if (err) {
+            alertify.error(_tcStr('Command failed!'));
+            return;
           }
-        );
+          if (enable) {
+            alertify.success(_tcStr('Drivers enabled'));
+            alertify.message(
+              _tcStr('<b>Unplug</b> and <b>reconnect</b> the board'),
+              5
+            );
+          } else {
+            alertify.warning(_tcStr('Drivers disabled'));
+          }
+        });
       }
 
       /*

@@ -9,37 +9,32 @@
     </style>
   </head>
   <body>
+    <embed id="pinout" width="100%" height="100%" type="image/svg+xml" />
     <script>
       'use strict';
-      function getURLParameter(name) {
-        return (
-          decodeURIComponent(
-            (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(
-              location.search
-            ) || [null, ''])[1].replace(/\+/g, '%20')
-          ) || null
+
+      window.onload = function () {
+        function getURLParameter(name) {
+          return (
+            decodeURIComponent(
+              (new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(
+                location.search
+              ) || [null, ''])[1].replace(/\+/g, '%20')
+            ) || null
+          );
+        }
+        var elem = document.getElementById('pinout');
+        elem.setAttribute(
+          'src',
+          `../../constraints/boards/${getURLParameter('board')}/pinout.svg`
         );
-      }
-      function loadEmbedSVG() {
-        var board = getURLParameter('board');
-        var data = '../../constraints/boards/' + board + '/pinout.svg';
-        var embed = document.createElement('embed');
-        embed.setAttribute('id', 'pinout');
-        embed.setAttribute('width', '100%');
-        embed.setAttribute('height', '100%');
-        embed.setAttribute('type', 'image/svg+xml');
-        embed.setAttribute('src', data);
-        document.body.appendChild(embed);
         setTimeout(function () {
-          svgPanZoom('#pinout', {
+          svgPanZoom(elem, {
             controlIconsEnabled: true,
             minZoom: 1,
             maxZoom: 5,
           });
-        }, 300);
-      }
-      window.onload = function () {
-        loadEmbedSVG();
+        }, 50);
       };
     </script>
   </body>

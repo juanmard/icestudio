@@ -27,7 +27,7 @@ body {
   overflow: hidden;
   margin: 0;
   height: 100%;
-  font-family: 'LatoWeb';
+  font-family: 'Lato';
 }
 
 .hidden {
@@ -143,14 +143,17 @@ button:focus {
 }
 
 .spinner-wrapper {
-  background: #fff;
-  width: 100%;
-  height: 100vh;
-  position: fixed;
   overflow: hidden;
+  display: none;
+  position: absolute;
   top: 0;
   left: 0;
-  display: none;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 500px;
+  height: 200px;
+  text-align: center;
 }
 
 body.waiting #mainpaper {
@@ -159,17 +162,6 @@ body.waiting #mainpaper {
 
 body.waiting .spinner-wrapper {
   display: block;
-}
-
-.spinner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 80px;
-  height: 80px;
 }
 
 .video-responsive {
@@ -219,4 +211,14 @@ body.waiting .spinner-wrapper {
 #heart {
   color: red;
   animation: heartbeat 1s infinite;
+}
+
+form > fieldset > .project-img-container {
+  width: 85px;
+  height: 85px;
+  max-width: 85px;
+  max-height: 85px;
+  padding: 5px;
+  margin: auto;
+  margin-top: 15px;
 }

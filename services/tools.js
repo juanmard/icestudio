@@ -1126,7 +1126,7 @@ angular
                 'Click here to install it'
               )}`
             : message,
-          100000,
+          10,
           function (isClicked) {
             if (install && isClicked) {
               _installToolchain();
@@ -1172,21 +1172,19 @@ angular
 
       function setupDriversAlert() {
         if (!infoAlert) {
-          setTimeout(function () {
-            infoAlert = alertify.message(
-              _tcStr('Click here to <b>setup the drivers</b>'),
-              30
-            );
-            infoAlert.callback = function (isClicked) {
-              infoAlert = null;
-              if (isClicked) {
-                if (resultAlert) {
-                  resultAlert.dismiss(false);
-                }
-                $rootScope.$broadcast('enableDrivers');
+          infoAlert = alertify.message(
+            _tcStr('Click here to <b>setup the drivers</b>'),
+            30
+          );
+          infoAlert.callback = function (isClicked) {
+            infoAlert = null;
+            if (isClicked) {
+              if (resultAlert) {
+                resultAlert.dismiss(false);
               }
-            };
-          }, 1000);
+              $rootScope.$broadcast('enableDrivers');
+            }
+          };
         }
       }
 
