@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <div
-  ng-show="!common.topModule"
+  ng-show="common.submoduleId"
   style="position: absolute; bottom: 5px; left: 5px; z-index: 1750"
   class="dropup"
 >
@@ -17,7 +17,7 @@
       id="split-button"
       type="button"
       class="btn btn-sm btn-info"
-      ng-click="breadcrumbsBack()"
+      ng-click="breadcrumbsJump()"
       ng-disabled="common.isEditingSubmodule"
     >
       <i class="fa fa-fw fa-level-up" aria-hidden="true"></i> {{ 'Up' |
@@ -49,7 +49,7 @@
     <button
       type="button"
       class="btn btn-sm btn-info"
-      ng-click="breadcrumbsBack()"
+      ng-click="breadcrumbsJump()"
       ng-disabled="common.isEditingSubmodule"
     >
       <i class="fa fa-fw fa-level-up" aria-hidden="true"></i> {{ 'Up' |

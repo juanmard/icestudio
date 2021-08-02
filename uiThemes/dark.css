@@ -1,5 +1,4 @@
-html,
-.spinner-wrapper {
+html {
   background: #222;
 }
 
@@ -128,6 +127,7 @@ html,
   border: 1px solid #666 !important;
 }
 
+form > fieldset > .project-img-container,
 .generic-block .generic-content {
   background: #e4e4e4;
   border: 0px solid #777;

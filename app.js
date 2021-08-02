@@ -16,37 +16,6 @@ angular
         });
     },
   ])
-  .run(function (collections, common, gettextCatalog, project, tools, utils) {
-    'use strict';
-
-    //utils.startWait();
-
-    function selectBoard(selectedBoard) {
-      utils.selectBoard(selectedBoard);
-      common.set('board', common.selectedBoard.name);
-      tools.checkToolchain();
-    }
-
-    common.load(function () {
-      collections.loadAllCollections();
-      utils.loadLanguage(common, function () {
-        $('html').attr('lang', common.get('language'));
-        const prog = common.get('prog');
-        if (prog != null) {
-          common.selectedProgrammer = prog;
-        }
-        const _board = common.get('board');
-        if (_board === null) {
-          utils.selectBoardPrompt(selectBoard);
-        } else {
-          selectBoard(_board);
-        }
-        collections.sort();
-        project.updateTitle(gettextCatalog.getString('Untitled'));
-        //utils.endWait();
-      });
-    });
-  })
   .config([
     '$compileProvider',
     function ($compileProvider) {
@@ -58,7 +27,121 @@ angular
         /^\s*(https?|local|data|chrome-extension):/
       );
     },
-  ]);
+  ])
+  .run(function (
+    collections,
+    common,
+    gettextCatalog,
+    project,
+    tools,
+    utils,
+    nodeFs
+  ) {
+    'use strict';
+
+    function _tcStr(str, args) {
+      return gettextCatalog.getString(str, args);
+    }
+
+    utils.startWait();
+
+    project.updateTitle(gettextCatalog.getString('Untitled'));
+
+    if (nodeFs.existsSync(common.PROFILE_PATH)) {
+      try {
+        const data = JSON.parse(
+          nodeFs.readFileSync(common.PROFILE_PATH, {
+            encoding: 'utf8',
+            flag: 'r',
+          })
+        );
+        for (var item of [
+          'apioRepo',
+          'apioRef',
+          'board',
+          'prog',
+          'boardRules',
+          'language',
+          'uiTheme',
+          'collection',
+          'collections',
+          'externalCollections',
+          'externalPlugins',
+          'pythonEnv',
+        ]) {
+          common.data[item] = data[item] || common.data[item];
+        }
+        if (common.DARWIN) {
+          common.data['macosFTDIDrivers'] =
+            data.macosFTDIDrivers || common.data['macosFTDIDrivers'];
+        }
+      } catch (err) {
+        console.warn('Profile config parse error:', err);
+      }
+    }
+
+    collections.loadAllCollections();
+    collections.sort();
+
+    function loadLanguage(lang) {
+      const blang = utils.setLocale(lang);
+      common.set('language', blang);
+      $('html').attr('lang', blang);
+    }
+
+    var lang = common.get('language');
+    if (lang) {
+      loadLanguage(lang);
+    } else {
+      require('node-lang-info')((err, sysLang) => {
+        if (!err) {
+          loadLanguage(sysLang);
+        }
+      });
+    }
+
+    const _prog = common.get('prog');
+    if (_prog != null) {
+      common.selectedProgrammer = _prog;
+    }
+
+    const _board = common.get('board');
+    if (_board === null) {
+      utils.disableKeyEvents();
+      $('.ajs-cancel').addClass('hidden');
+      utils.renderForm(
+        [
+          {
+            type: 'combobox',
+            label: _tcStr('Select your board'),
+            value: '',
+            options: common.boards.map(function (board) {
+              return {
+                value: board.name,
+                label: board.info.label,
+              };
+            }),
+          },
+        ],
+        function (evt, values) {
+          var selectedBoard = values[0];
+          if (selectedBoard) {
+            evt.cancel = false;
+            utils.selectBoard(selectedBoard);
+            utils.enableKeyEvents();
+            $('.ajs-cancel').removeClass('hidden');
+          } else {
+            evt.cancel = true;
+          }
+        }
+      );
+    } else {
+      utils.selectBoard(_board);
+    }
+
+    tools.checkToolchain();
+    setTimeout(utils.endWait, 1500);
+  });
 
 /*
   Factories

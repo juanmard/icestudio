@@ -560,61 +560,63 @@ angular
         async.eachSeries(
           files,
           function (filename, next) {
-            setTimeout(function () {
-              if (origPath !== destPath) {
-                function _ok() {
-                  if (!(success && doCopySync(origPath, destPath, filename))) {
-                    return next();
-                  } // break
-                  next();
-                }
-                if (nodeFs.existsSync(nodePath.join(destPath, filename))) {
-                  alerts.confirm({
-                    icon: 'question-circle',
-                    title: _tcStr(
-                      'File {{file}} already exists in the project path',
-                      {
-                        file: `<b>${filename}</b>`,
-                      }
-                    ),
-                    body: _tcStr('Do you want to replace it?'),
-                    onok: _ok,
-                    oncancel: next,
-                  });
-                } else {
-                  _ok();
-                }
-              } else {
-                return next(); // break
+            if (origPath === destPath) {
+              return next();
+            }
+
+            function _ok() {
+              if (!doCopySync(origPath, destPath, filename)) {
+                success = false;
+                return next();
               }
-            }, 0);
+              next();
+            }
+
+            if (!nodeFs.existsSync(nodePath.join(destPath, filename))) {
+              _ok();
+            }
+
+            alerts.confirm({
+              icon: 'question-circle',
+              title: _tcStr(
+                'File {{file}} already exists in the project path',
+                {
+                  file: `<b>${filename}</b>`,
+                }
+              ),
+              body: _tcStr('Do you want to replace it?'),
+              onok: _ok,
+              oncancel: next,
+            });
           },
-          function (/*result*/) {
+          function () {
             return callback(success);
           }
         );
       }
 
       function doCopySync(origPath, destPath, filename) {
-        var orig = nodePath.join(origPath, filename);
-        var dest = nodePath.join(destPath, filename);
-        var success = utils.copySync(orig, dest);
-        if (success) {
+        if (
+          utils.copySync(
+            nodePath.join(origPath, filename),
+            nodePath.join(destPath, filename)
+          )
+        ) {
           alertify.message(
             _tcStr('File {{file}} imported', {
               file: `<b>${filename}</b>`,
             }),
             5
           );
-        } else {
-          alertify.error(
-            _tcStr('Original file {{file}} does not exist', {
-              file: `<b>${filename}</b>`,
-            }),
-            30
-          );
+          return true;
         }
-        return success;
+        alertify.error(
+          _tcStr('Original file {{file}} does not exist', {
+            file: `<b>${filename}</b>`,
+          }),
+          30
+        );
+        return false;
       }
 
       function pruneProject(project) {
@@ -749,10 +751,6 @@ angular
         }
         return block;
       }
-
-      this.removeSelected = function () {
-        graph.removeSelected();
-      };
 
       this.clear = function () {
         project = _default();

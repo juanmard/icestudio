@@ -21,7 +21,8 @@ angular
       tools,
       utils,
       nodeFs,
-      nodePath
+      nodePath,
+      SVGO
     ) {
       'use strict';
 
@@ -172,14 +173,9 @@ angular
         if (nodeFs.existsSync(arg)) {
           project.open(arg);
         } else {
-          switch (arg) {
-            case 'local':
-              local = true;
-              break;
-            default:
-              // Move window
-              var data = arg.split('x');
-              win.moveTo(parseInt(data[0], 10), parseInt(data[1], 10));
+          if (arg === 'local') {
+            local = true;
+            break;
           }
         }
       }
@@ -520,27 +516,149 @@ angular
 
       function _setProjectInformation() {
         var values = getProjectInformation();
-        utils.projectinfoprompt(values, function (evt, newValues) {
-          if (!_.isEqual(values, newValues)) {
-            if (
-              common.isEditingSubmodule &&
-              common.submoduleId &&
-              common.allDependencies[common.submoduleId]
-            ) {
-              graph.setBlockInfo(values, newValues, common.submoduleId);
-            } else {
-              graph.setInfo(values, newValues, project);
-            }
-            alertify.success(_tcStr('Project information updated'));
+
+        var i;
+        var content = [];
+        var messages = [
+          _tcStr('Name'),
+          _tcStr('Version'),
+          _tcStr('Description'),
+          _tcStr('Author'),
+        ];
+        var n = messages.length;
+        var image = values[4];
+        var blankImage =
+          'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+        content.push('<form><fieldset>');
+        for (i in messages) {
+          content.push(`<label>${messages[i]}</label>
+  <input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
+        }
+        const img = image ? 'data:image/svg+xml,' + image : blankImage;
+        content.push(`<label>${_tcStr('Image')}</label>
+          <div class="btn-group btn-group-sm" role="group" aria-label="Image buttons" style="display: inline-flex;">
+            <label
+            for="input-open-svg"
+            type="button" class="btn btn-default"
+          ><i class="fa fa-fw fa-folder-open-o" aria-hidden="true"></i> ${_tcStr(
+            'Load...'
+          )}</label>
+          ${
+            image
+              ? `<label
+              id="save-svg"
+              for="input-save-svg"
+              type="button" class="btn btn-default"
+            ><i class="fa fa-fw fa-hdd-o" aria-hidden="true"></i> ${_tcStr(
+              'Save as...'
+            )}</label>
+            <label
+              id="reset-svg"
+              type="button" class="btn btn-default"
+            ><i class="fa fa-fw fa-trash" aria-hidden="true"></i> ${_tcStr(
+              'Reset'
+            )}</label>`
+              : ''
           }
+          </div>
+          <div class="project-img-container"><img id="preview-svg" src="${img}" style="pointer-events:none"></div>
+          <input id="input-open-svg" type="file" accept=".svg" class="hidden">
+          <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
+        </fieldset></form>`);
+        // Restore values
+        for (i in messages) {
+          $('#input' + i).val(values[i]);
+        }
+        $('#preview-svg').attr('src', img);
+
+        function registerSave() {
+          // Save SVG
+          var label = $('#save-svg');
+          if (!image) {
+            label.addClass('disabled');
+            label.attr('for', '');
+            return;
+          }
+          label.removeClass('disabled');
+          label.attr('for', 'input-save-svg');
+          $('#input-save-svg')
+            .unbind('change')
+            .change(function () {
+              var filepath = $(this).val();
+              if (!filepath.endsWith('.svg')) {
+                filepath += '.svg';
+              }
+              nodeFs.writeFile(filepath, decodeURI(image), function (err) {
+                if (err) {
+                  throw err;
+                }
+              });
+              $(this).val('');
+            });
+        }
+
+        // Restore onshow
+        var prevOnshow = alertify.confirm().get('onshow') || function () {};
+
+        alertify.confirm().set('onshow', function () {
+          prevOnshow();
+
+          // Open SVG
+          $('#input-open-svg')
+            .unbind('change')
+            .change(function () {
+              nodeFs.readFile($(this).val(), 'utf8', function (err, data) {
+                if (err) {
+                  throw err;
+                }
+                SVGO.optimize(data, function (result) {
+                  image = encodeURI(result.data);
+                  registerSave();
+                  $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
+                });
+              });
+              $(this).val('');
+            });
+
+          registerSave();
+
+          // Reset SVG
+          $('#reset-svg').click(function () {
+            image = '';
+            registerSave();
+            $('#preview-svg').attr('src', blankImage);
+          });
+        });
+
+        alerts.confirm({
+          icon: 'tag',
+          title: _tcStr('Project Information'),
+          body: content.join('\n'),
+          onok: function () {
+            var newValues = [];
+            for (var i = 0; i < n; i++) {
+              newValues.push($('#input' + i).val());
+            }
+            newValues.push(image);
+            if (!_.isEqual(values, newValues)) {
+              if (
+                common.isEditingSubmodule &&
+                common.submoduleId &&
+                common.allDependencies[common.submoduleId]
+              ) {
+                graph.setBlockInfo(values, newValues, common.submoduleId);
+              } else {
+                graph.setInfo(values, newValues, project);
+              }
+              alertify.success(_tcStr('Project information updated'));
+            }
+          },
         });
       }
 
       function getProjectInformation() {
         var p =
-          subModuleActive &&
-          common.submoduleId &&
-          common.allDependencies[common.submoduleId]
+          common.submoduleId && common.allDependencies[common.submoduleId]
             ? common.allDependencies[common.submoduleId].package
             : project.get('package');
         return [p.name, p.version, p.description, p.author, p.image];
@@ -1005,10 +1123,10 @@ angular
       shortcuts.method('stepLeft', graph.stepLeft);
       shortcuts.method('stepRight', graph.stepRight);
 
-      shortcuts.method('removeSelected', project.removeSelected);
+      shortcuts.method('removeSelected', graph.removeSelected);
       shortcuts.method('back', function () {
         if (graph.isEnabled()) {
-          project.removeSelected();
+          graph.removeSelected();
         } else {
           $rootScope.breadcrumbsBack();
         }

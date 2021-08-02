@@ -55,58 +55,52 @@ module.exports = function (grunt) {
 
   var gruntCfg = {};
 
-  var copyArgs = [
-    {
-      expand: true,
-      cwd: '.',
-      dest: 'dist/tmp',
-      src: [
-        'collection/**',
-        'controllers/**',
-        'fonts/Lato2OFLWeb/Lato/**',
-        'graphics/**',
-        'constraints/**/*.*',
-        'images/**/*.*',
-        'locale/**/*.*',
-        'plugins/**/*.*',
-        'sample/**/*.*',
-        'services/*.js',
-        'styles/*.css',
-        'uiThemes/**/*.*',
-        'viewers/**/*.*',
-        'views/*.html',
-        'app.js',
-        'iceplugmanager.js',
-        'index.html',
-        'package.json',
-      ],
-    },
-    {
-      expand: true,
-      dest: 'dist/tmp/docs',
-      src: '**',
-      cwd: 'docs/_build/html',
-    },
-    {
-      expand: true,
-      cwd: 'nmodules',
-      dest: 'dist/tmp/node_modules',
-      src: '**/*.*',
-    },
-  ];
-
-  for (var font of ['fonts/freefont/', 'nmodules/font-awesome/fonts']) {
-    copyArgs.push({
-      expand: true,
-      dest: 'dist/tmp/fonts',
-      src: '*.*',
-      cwd: font,
-    });
-  }
-
   gruntCfg.copy = {
     dist: {
-      files: copyArgs,
+      files: [
+        {
+          expand: true,
+          cwd: '.',
+          dest: 'dist/tmp',
+          src: [
+            'collection/**',
+            'controllers/**',
+            'graphics/**',
+            'constraints/**/*.*',
+            'images/**/*.*',
+            'locale/**/*.*',
+            'plugins/**/*.*',
+            'sample/**/*.*',
+            'services/*.js',
+            'styles/*.css',
+            'uiThemes/**/*.*',
+            'viewers/**/*.*',
+            'views/*.html',
+            'app.js',
+            'iceplugmanager.js',
+            'index.html',
+            'package.json',
+          ],
+        },
+        {
+          expand: true,
+          dest: 'dist/tmp/docs',
+          src: '**',
+          cwd: 'docs/_build/html',
+        },
+        {
+          expand: true,
+          cwd: 'nmodules',
+          dest: 'dist/tmp/node_modules',
+          src: '**/*.*',
+        },
+        {
+          expand: true,
+          dest: 'dist/tmp/fonts',
+          src: '*.*',
+          cwd: 'freefont/',
+        },
+      ],
     },
   };
 

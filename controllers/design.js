@@ -10,7 +10,6 @@ angular
       $scope.information = {};
       $scope.backup = {};
       $scope.toRestore = false;
-      $scope.breadcrumbsBack = _breadcrumbsBack;
       $scope.breadcrumbsJump = _breadcrumbsJump;
       $scope.editModeToggle = _editModeToggle;
 
@@ -27,11 +26,7 @@ angular
 
       function _updateDesign(dsgn, blocks) {
         const dblocks = dsgn.graph.blocks;
-        if (
-          $scope.toRestore !== false &&
-          common.submoduleId !== false &&
-          dblocks.length > 0
-        ) {
+        if ($scope.toRestore && common.submoduleId && dblocks.length > 0) {
           for (var i = 0; i < dblocks.length; i++) {
             if (common.submoduleUID === dblocks[i].id) {
               blocks[i].type = $scope.toRestore;
@@ -42,49 +37,43 @@ angular
         return blocks;
       }
 
-      function _loadSelectedGraph() {
-        const n = graph.breadcrumbs.length - 1;
-        if (n === 0) {
-          var dsgn = project.get('design');
-          dsgn.graph.blocks = _updateDesign(dsgn, dsgn.graph.blocks);
-          _resetViewAndLoadDesign(dsgn, {disabled: false});
-          common.topModule = true;
-        } else {
-          var type = graph.breadcrumbs[n].type;
-          var dependency = common.allDependencies[type];
-          var dsgn = dependency.design;
-          common.allDependencies[type].design.graph.blocks = _updateDesign(
-            dsgn,
-            common.allDependencies[type].design.graph.blocks
-          );
-          _resetViewAndLoadDesign(dsgn, {disabled: true});
-          $scope.information = dependency.package;
-        }
-        utils.rootScopeSafeApply();
-      }
-
       function _breadcrumbsJump(selectedItem) {
         if (common.isEditingSubmodule) {
           $log.error('Navigation while editing is not supported!');
           return;
         }
-        var item;
-        do {
-          item = graph.popTitle();
-        } while (selectedItem !== item);
-        _loadSelectedGraph();
-      }
-
-      function _breadcrumbsBack() {
-        graph.popTitle();
-        _loadSelectedGraph();
+        if (!selectedItem) {
+          graph.popTitle();
+        } else {
+          while (selectedItem !== graph.popTitle()) {}
+        }
+        const n = graph.breadcrumbs.length - 1;
+        if (n === 0) {
+          var dsgn = project.get('design');
+          dsgn.graph.blocks = _updateDesign(dsgn, dsgn.graph.blocks);
+          _resetViewAndLoadDesign(dsgn, {disabled: false});
+          common.submoduleId = undefined;
+          common.submoduleUID = undefined;
+        } else {
+          const item = graph.breadcrumbs[n];
+          var dependency = common.allDependencies[item.type];
+          const dsgn = dependency.design;
+          dependency.design.graph.blocks = _updateDesign(
+            dsgn,
+            dependency.design.graph.blocks
+          );
+          _resetViewAndLoadDesign(dsgn, {disabled: true});
+          $scope.information = dependency.package;
+          common.submoduleId = item.type;
+          common.submoduleUID = item.id;
+        }
+        utils.rootScopeSafeApply();
       }
 
       function _editModeToggle() {
         var block = graph.breadcrumbs[graph.breadcrumbs.length - 1];
         var tmp = false;
         const rw = common.isEditingSubmodule;
-        subModuleActive = !rw;
         common.isEditingSubmodule = !rw;
 
         if (rw) {
@@ -128,13 +117,8 @@ angular
       }
 
       function _navigateProject(update, prj, submodule, submoduleId, editMode) {
-        if (submodule !== undefined) {
-          common.submoduleId = submodule;
-        }
-        if (submoduleId !== undefined) {
-          common.submoduleUID = submoduleId;
-        }
-
+        common.submoduleId = submodule || common.submoduleId;
+        common.submoduleUID = submoduleId || common.submoduleUID;
         function _loadDesign() {
           graph.loadDesign(
             prj.design,
@@ -147,11 +131,10 @@ angular
         graph.resetView();
         !update ? _loadDesign() : project.update({deps: false}, _loadDesign);
 
-        common.topModule = false;
         $scope.information = prj.package;
         if (common.forceBack) {
           common.forceBack = false;
-          _breadcrumbsBack();
+          _breadcrumbsJump();
         }
       }
     }

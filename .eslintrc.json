@@ -6,7 +6,6 @@
   },
   "globals": {
     "iprof": false,
-    "subModuleActive": false,
     "ICEpm": false,
     "Mustache": false,
     "jexcel": false,

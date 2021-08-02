@@ -12,8 +12,7 @@ angular
       nodeFs,
       nodeFse,
       nodePath,
-      gui,
-      SVGO
+      gui
     ) {
       'use strict';
 
@@ -46,29 +45,7 @@ angular
         document.addEventListener('keypress', disableEvent, true);
       };
 
-      /*
-    const nodeZlib = require('zlib');
-
-    function compressJSON(data, callback) {
-      var content = JSON.stringify(data);
-      nodeZlib.gzip(content, function (_, compressed) {
-        if (callback) {
-          callback(compressed);
-        }
-      });
-    }
-
-    function decompressJSON(content, callback) {
-      nodeZlib.gunzip(content, function(_, uncompressed) {
-        var data = JSON.parse(uncompressed);
-        if (callback) {
-          callback(data);
-        }
-      });
-    }
-*/
-
-      this.setLocale = function (locale, callback) {
+      this.setLocale = function (locale) {
         locale = splitLocale(locale);
         var supported = getSupportedLanguages();
         var bestLang = bestLocale(locale, supported);
@@ -90,9 +67,6 @@ angular
           if (nodeFs.existsSync(filepath)) {
             gettextCatalog.loadRemote('file://' + filepath);
           }
-        }
-        if (callback) {
-          callback();
         }
         return bestLang;
       };
@@ -225,181 +199,6 @@ angular
               break;
           }
         }
-      };
-
-      this.projectinfoprompt = function (values, callback) {
-        var i;
-        var content = [];
-        var messages = [
-          _tcStr('Name'),
-          _tcStr('Version'),
-          _tcStr('Description'),
-          _tcStr('Author'),
-        ];
-        var n = messages.length;
-        var image = values[4];
-        var blankImage =
-          'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-        content.push('<form><fieldset>');
-        for (i in messages) {
-          content.push(`<label>${messages[i]}</label>
-<input class="ajs-input" id="input${i}" type="text" value="${values[i]}">`);
-        }
-        const img = image ? 'data:image/svg+xml,' + image : blankImage;
-        content.push(`<label>${_tcStr('Image')}</label>
-        <input id="input-open-svg" type="file" accept=".svg" class="hidden">
-        <input id="input-save-svg" type="file" accept=".svg" class="hidden" nwsaveas="image.svg">
-        <div>
-          <center>
-            <img id="preview-svg" class="ajs-input" src="${img}" height="68" style="pointer-events:none">
-          </center>
-        </div>
-        <div>
-          <label
-            for="input-open-svg"
-            class="btn"
-          >${_tcStr('Open SVG')}</label>
-          <label
-            id="save-svg"
-            for="input-save-svg"
-            class="btn"
-          >${_tcStr('Save SVG')}</label>
-          <label
-            id="reset-svg"
-            class="btn"
-          >${_tcStr('Reset SVG')}</label>
-        </div>
-      </fieldset></form>`);
-        // Restore values
-        for (i = 0; i < n; i++) {
-          $('#input' + i).val(values[i]);
-        }
-        $('#preview-svg').attr(
-          'src',
-          image ? 'data:image/svg+xml,' + image : blankImage
-        );
-
-        function registerSave() {
-          // Save SVG
-          var label = $('#save-svg');
-          if (image) {
-            label.removeClass('disabled');
-            label.attr('for', 'input-save-svg');
-            var chooserSave = $('#input-save-svg');
-            chooserSave.unbind('change');
-            chooserSave.change(function (/*evt*/) {
-              if (image) {
-                var filepath = $(this).val();
-                if (!filepath.endsWith('.svg')) {
-                  filepath += '.svg';
-                }
-                nodeFs.writeFile(filepath, decodeURI(image), function (err) {
-                  if (err) {
-                    throw err;
-                  }
-                });
-                $(this).val('');
-              }
-            });
-          } else {
-            label.addClass('disabled');
-            label.attr('for', '');
-          }
-        }
-
-        // Restore onshow
-        var prevOnshow = alertify.confirm().get('onshow') || function () {};
-
-        alertify.confirm().set('onshow', function () {
-          prevOnshow();
-
-          // Open SVG
-          var chooserOpen = $('#input-open-svg');
-          chooserOpen.unbind('change');
-          chooserOpen.change(function (/*evt*/) {
-            var filepath = $(this).val();
-
-            nodeFs.readFile(filepath, 'utf8', function (err, data) {
-              if (err) {
-                throw err;
-              }
-              SVGO.optimize(data, function (result) {
-                image = encodeURI(result.data);
-                registerSave();
-                $('#preview-svg').attr('src', 'data:image/svg+xml,' + image);
-              });
-            });
-            $(this).val('');
-          });
-
-          registerSave();
-
-          // Reset SVG
-          var reset = $('#reset-svg');
-          reset.click(function (/*evt*/) {
-            image = '';
-            registerSave();
-            $('#preview-svg').attr('src', blankImage);
-          });
-        });
-
-        alerts.confirm({
-          icon: 'tag',
-          title: _tcStr('Project Information'),
-          body: content.join('\n'),
-          onok: function (evt) {
-            var values = [];
-            for (var i = 0; i < n; i++) {
-              values.push($('#input' + i).val());
-            }
-            values.push(image);
-            if (callback) {
-              callback(evt, values);
-            }
-          },
-        });
-      };
-
-      this.selectBoardPrompt = function (callback) {
-        // Disable user events
-        this.disableKeyEvents();
-        // Hide Cancel button
-        $('.ajs-cancel').addClass('hidden');
-
-        var formSpecs = [
-          {
-            type: 'combobox',
-            label: _tcStr('Select your board'),
-            value: '',
-            options: common.boards.map(function (board) {
-              return {
-                value: board.name,
-                label: board.info.label,
-              };
-            }),
-          },
-        ];
-
-        this.renderForm(
-          formSpecs,
-          function (evt, values) {
-            var selectedBoard = values[0];
-            if (selectedBoard) {
-              evt.cancel = false;
-              if (callback) {
-                callback(selectedBoard);
-              }
-              // Enable user events
-              this.enableKeyEvents();
-              // Restore Cancel button
-              setTimeout(function () {
-                $('.ajs-cancel').removeClass('hidden');
-              }, 200);
-            } else {
-              evt.cancel = true;
-            }
-          }.bind(this)
-        );
       };
 
       this.copySync = function (orig, dest) {
@@ -832,24 +631,6 @@ angular
         return evt.ctrlKey;
       };
 
-      const nodeLangInfo = require('node-lang-info');
-
-      this.loadLanguage = function (common, callback) {
-        var lang = common.get('language');
-        if (lang) {
-          this.setLocale(lang, callback);
-        } else {
-          // If lang is empty, use the system language
-          nodeLangInfo(
-            function (err, sysLang) {
-              if (!err) {
-                common.set('language', this.setLocale(sysLang, callback));
-              }
-            }.bind(this)
-          );
-        }
-      };
-
       this.digestId = function (id) {
         if (id.indexOf('-') !== -1) {
           id = nodeSha1(id).toString();
@@ -876,7 +657,6 @@ angular
 
       this.openUrlExternalBrowser = function (url) {
         gui.Shell.openExternal(url);
-        //require('nw.gui').Shell.openExternal( url);
       };
 
       const DEFAULT_BOARD = 'icestick';
@@ -891,6 +671,7 @@ angular
             console.error(`[srv.boards._selectBoard] board ${name} not found!`);
             return;
           }
+          common.set('board', common.selectedBoard.name);
           common.selectedDevice = common.selectedBoard.info.device;
           common.pinoutInputHTML = generateHTMLOptions(
             common.selectedBoard.info['pinout'],

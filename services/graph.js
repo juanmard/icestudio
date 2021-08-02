@@ -35,7 +35,7 @@ angular
       const ZOOM_MIN = 0.3;
       const ZOOM_SENS = 0.3;
 
-      this.breadcrumbs = [{name: '', type: ''}];
+      this.breadcrumbs = [{name: '', type: '', id: ''}];
 
       function _updateTitle() {
         let title =
@@ -48,11 +48,6 @@ angular
         }
         document.title = title;
       }
-
-      this.pushTitle = function (args) {
-        self.breadcrumbs.push(args);
-        _updateTitle();
-      };
 
       this.popTitle = function () {
         self.breadcrumbs.pop();
@@ -456,10 +451,7 @@ angular
               blocks.editBasic(type, cellView, addCell);
             }
           } else if (common.allDependencies[type]) {
-            if (
-              common.isEditingSubmodule !== undefined &&
-              common.isEditingSubmodule === true
-            ) {
+            if (common.isEditingSubmodule) {
               alertify.warning(
                 _tcStr(
                   'To enter on "edit mode" of deeper block, you need to finish current "edit mode", lock the keylock to do it.'
@@ -470,17 +462,21 @@ angular
             // Navigate inside generic blocks
             z.index = 1;
             var project = common.allDependencies[type];
-            var breadcrumbsLength = self.breadcrumbs.length;
 
             utils.startWait();
             $rootScope.navigateProject(
-              breadcrumbsLength === 1,
+              self.breadcrumbs.length === 1,
               project,
               type,
               blockId,
               true
             );
-            self.pushTitle({name: project.package.name || '#', type: type});
+            self.breadcrumbs.push({
+              name: project.package.name || '#',
+              type: type,
+              id: blockId,
+            });
+            _updateTitle();
             utils.rootScopeSafeApply();
           }
         });
