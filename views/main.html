@@ -6,6 +6,16 @@
       ng-if="common.data.uiTheme === 'dark'"
       href="uiThemes/dark.css"
     />
+    <link
+      rel="stylesheet"
+      ng-if="common.data.uiTheme === 'juanma'"
+      href="uiThemes/juanma.css"
+    />
+    <link
+      rel="stylesheet"
+      ng-if="common.data.uiTheme === 'highcontrast'"
+      href="uiThemes/highcontrast.css"
+    />
     <div id="mainpaper" class="paper"></div>
     <div ng-include="'views/menu_submodule.html'"></div>
   </div>
