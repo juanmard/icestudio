@@ -78,6 +78,8 @@ angular
 
       $scope.themes = [
         ['dark', 'Dark'],
+        ['juanma', "Juanma's"],
+        ['highcontrast', 'High Contrast'],
         ['light', 'Light'],
       ];
 
