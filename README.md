@@ -13,13 +13,9 @@ Visual editor for Verilog designs, built on top of [Icestorm](http://www.cliffor
 Find installation guidelines, user guide and further information at
 [juanmard.github.io/icestudio](https://juanmard.github.io/icestudio).
 
-**IMPORTANT: Since June 2021, several enhancements available in this variant are being applied [upstream](https://github.com/FPGAwars/icestudio). Therefore, the development of this fork is on hold until the dependencies are stabilized. Find further details in the [WIKI](https://github.com/juanmard/icestudio/wiki).**
-
 <p align="center">
-<a href="http://juanmard.github.io/icestudio"><img src="./docs/_static/img/main.png" align="center"></a>
+<a href="http://juanmard.github.io/icestudio"><img src="https://raw.githubusercontent.com/juanmard/gallery/master/icestudio/icestudio_moon.gif" align="center"></a>
 </p>
-
----
 
 <p align="center">
   <a title="DevDependency Status" href="https://david-dm.org/juanmard/icestudio/moon?type=dev"><img src="https://img.shields.io/david/dev/juanmard/icestudio.svg?longCache=true&style=flat-square&label=devdeps&logo=npm"></a><!--
@@ -30,3 +26,5 @@ Find installation guidelines, user guide and further information at
   -->
   <a title="Code Climate technical debt" href="https://codeclimate.com/github/juanmard/icestudio/trends/technical_debt"><img src="https://img.shields.io/codeclimate/tech-debt/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a>
 </p>
+
+**IMPORTANT: Since June 2021, several enhancements available in this variant are being applied [upstream](https://github.com/FPGAwars/icestudio). Therefore, the development of this fork is on hold until the dependencies are stabilized. Find further details in the [WIKI](https://github.com/juanmard/icestudio/wiki).**
