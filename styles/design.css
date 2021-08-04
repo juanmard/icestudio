@@ -90,9 +90,9 @@ form > fieldset > .project-img-container,
 }
 
 .generic-block .generic-content .img-container {
-  padding: 4px 12px;
+  padding: 3px 12px;
   position: absolute;
-  top: 0;
+  top: 22px;
   bottom: 0;
   text-align: center;
   width: 100%;
