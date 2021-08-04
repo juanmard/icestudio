@@ -628,12 +628,10 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   initializeContent: function () {
     'use strict';
-    const labelSelector = this.$box.find('label');
-    labelSelector.html(this.model.get('label'));
+    this.$box.find('label').html(this.model.get('label'));
     const image = this.model.get('image');
     if (image) {
       this.$box.find('img').attr('src', `data:image/svg+xml,${image}`);
-      labelSelector.addClass('hidden');
     }
     // Render clocks
     this.$box.find('.clock').remove();
