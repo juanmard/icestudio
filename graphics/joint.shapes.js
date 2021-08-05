@@ -2332,16 +2332,19 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     _.bindAll(this, 'updateBox');
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
 
-    var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var editorLabel = 'editor' + id;
-    var readonly = this.model.get('data').readonly;
-    const c1 = readonly ? '' : ' hidden';
-    const c2 = readonly ? ' hidden' : '';
+    const editorLabel = `editor${sha1(this.model.get('id'))
+      .toString()
+      .substring(0, 6)}`;
+    const readonly = this.model.get('data').readonly;
     this.$box = $(
       joint.util.template(`<div class="info-block">
-        <div class="info-render markdown-body${c1}"></div>
-        <div class="info-content${c2}"></div>
-        <div class="info-editor${c2}" id="${editorLabel}"></div>
+        <div class="info-render markdown-body${
+          readonly ? '' : ' hidden'
+        }"></div>
+        <div class="info-content${readonly ? ' hidden' : ''}"></div>
+        <div class="info-editor${
+          readonly ? ' hidden' : ''
+        }" id="${editorLabel}"></div>
         <script>
           var ${editorLabel} = ace.edit("${editorLabel}");
           ${editorLabel}.setTheme("ace/theme/chrome");
@@ -2493,28 +2496,20 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
   applyText: function () {
     'use strict';
 
-    var data = this.model.get('data');
-    var markdown = data.text || data.info || '';
+    const data = this.model.get('data');
 
-    // Replace emojis
-    markdown = markdown.replace(/(:.*:)/g, function (match) {
-      return emoji.emojify(match, null, function (code, name) {
-        var source =
-          'https://github.global.ssl.fastly.net/images/icons/emoji/' +
-          name +
-          '.png';
-        return (
-          ' <object data="' +
-          source +
-          '" type="image/png" width="20" height="20">' +
-          code +
-          '</object>'
-        );
-      });
-    });
-
-    // Apply Marked to convert from Markdown to HTML
-    this.renderSelector.html(marked(markdown));
+    this.renderSelector.html(
+      marked(
+        (data.text || data.info || '').replace(/(:.*:)/g, (match) =>
+          emoji.emojify(
+            match,
+            null,
+            (code, name) =>
+              ` <object data="https://github.global.ssl.fastly.net/images/icons/emoji/${name}.png" type="image/png" width="20" height="20">${code}</object>`
+          )
+        )
+      )
+    );
 
     // Render task list
     this.renderSelector.find('li').each(function (index, element) {
