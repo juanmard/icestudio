@@ -189,24 +189,27 @@ angular
       const nodeSudo = require('sudo-prompt');
 
       function configureLinuxDrivers(commands, enable) {
-        var command = 'sh -c "' + commands.join('; ') + '"';
         utils.startWait();
-        nodeSudo.exec(command, {name: 'Icestudio'}, function (err) {
-          utils.endWait();
-          if (err) {
-            alertify.error(_tcStr('Command failed!'));
-            return;
+        nodeSudo.exec(
+          `sh -c "${commands.join('; ')}"`,
+          {name: 'Icestudio'},
+          function (err) {
+            utils.endWait();
+            if (err) {
+              alertify.error(_tcStr('Command failed!'));
+              return;
+            }
+            if (enable) {
+              alertify.success(_tcStr('Drivers enabled'));
+              alertify.message(
+                _tcStr('<b>Unplug</b> and <b>reconnect</b> the board'),
+                5
+              );
+            } else {
+              alertify.warning(_tcStr('Drivers disabled'));
+            }
           }
-          if (enable) {
-            alertify.success(_tcStr('Drivers enabled'));
-            alertify.message(
-              _tcStr('<b>Unplug</b> and <b>reconnect</b> the board'),
-              5
-            );
-          } else {
-            alertify.warning(_tcStr('Drivers disabled'));
-          }
-        });
+        );
       }
 
       /*
