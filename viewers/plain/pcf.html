@@ -36,16 +36,22 @@
         );
       }
       window.onload = function () {
-        var board = getURLParameter('board');
-        var data = '../../constraints/boards/' + board + '/pinout.pcf';
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', data, false);
-        xmlhttp.send();
-        var text = xmlhttp.responseText;
+        const nodeFs = require('fs');
+        const path = `constraints/boards/${getURLParameter('board')}/pinout`;
+        let ext = 'pcf';
+        if (!nodeFs.existsSync(`${path}.pcf`)) {
+          if (!nodeFs.existsSync(`${path}.lpf`)) {
+            console.error('Pinout file not found!');
+            return;
+          }
+          ext = 'lpf';
+        }
+        const text = nodeFs.readFileSync(`${path}.${ext}`);
+        const node = document.getElementById('pcf');
         if (text) {
-          document.getElementById('pcf').value = text;
+          node.value = text;
         } else {
-          document.getElementById('pcf').style.visibility = 'hidden';
+          node.style.visibility = 'hidden';
         }
       };
     </script>

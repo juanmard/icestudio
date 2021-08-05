@@ -1,0 +1,7 @@
+{
+  "label": "ColorLight-i5-v7.0_(FT2232H)",
+  "device": "ECP5",
+  "datasheet": "https://github.com/wuxx/Colorlight-FPGA-Projects",
+  "prog": ["FT2232H", "FT232H", "USB-Blaster"],
+  "arch": "ecp5"
+}

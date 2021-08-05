@@ -1,0 +1,7 @@
+{
+  "label": "iCESugar-pro_(FT2232H)",
+  "device": "ECP5",
+  "datasheet": "https://github.com/wuxx/icesugar-pro",
+  "prog": ["FT2232H", "FT232H", "USB-Blaster"],
+  "arch": "ecp5"
+}

@@ -1,0 +1,7 @@
+{
+  "label": "ColorLight-5A-75B-V7",
+  "device": "ECP5",
+  "datasheet": "https://github.com/q3k/chubby75/blob/master/5a-75b/hardware_V7.0.md",
+  "prog": ["FTDI"],
+  "arch": "ecp5"
+}

@@ -4,7 +4,7 @@ import re
 import json
 from pathlib import Path
 
-p = Path('.').resolve()
+p = Path(__file__).resolve().parent
 
 for item in list(p.glob('*')):
     if item.is_dir() and item.name[0] != '_':
