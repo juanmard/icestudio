@@ -189,25 +189,32 @@
 </script>
 
 <script type="text/ng-template" id="views/pref_head_theme.html">
-    <span class="pull-right">
-      <div class="btn-group btn-group-xs" role="group">
+  <span class="pull-right" ng-click="val.isopen = !val.isopen">
+    <div ng-repeat="theme in themes">
+      <span ng-if="common.data.uiTheme == theme[0]">
+      {{theme[1] | translate}}</span>
+    </div>
+  </span>
+</script>
+
+<script type="text/ng-template" id="views/pref_theme.html">
+
+      <div class="list-group">
         <button
           type="button"
-          class="btn btn-default"
+          class="list-group-item"
           ng-click="selectTheme(theme[0])"
           ng-repeat="theme in themes"
-          ng-class="{
-            'disabled no-btn': common.data.uiTheme == theme[0]
-          }"
-        ><i
-        ng-if="common.data.uiTheme == theme[0]"
-        class="fa fa-fw fa-check"
-        aria-hidden="true"
-      ></i> {{ theme[1] | translate }}</button>
+        >
+        <span class="fa fa-fw"
+           ng-class="'fa-'+(common.data.uiTheme == theme[0]?'check-':'')+'square-o'"
+           aria-hidden="true"></span>
+           {{ theme[1] | translate }} <span class="badge" style="min-width: 150px">{{theme[0] + '.css'}}</span>
+      </button>
       </div>
 
   <!-- TODO: use 'uib-btn-radio'; needs reworking common.data.uiTheme
-
+    <span class="pull-left">
       <div class="btn-group">
         <label
           class="btn btn-xs btn-default"
@@ -218,8 +225,8 @@
           ng-repeat="theme in themes"
         >{{ theme[1] | translate }}</label>
       </div>
-  -->
     </span>
+  -->
 </script>
 
 <script type="text/ng-template" id="views/pref_head_toolchain.html">
