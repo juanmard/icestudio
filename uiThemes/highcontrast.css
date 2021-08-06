@@ -1,3 +1,96 @@
 html {
   background: #000;
 }
+
+g .connection {
+  stroke: #fff;
+}
+
+g .port-label {
+  fill: #fff;
+}
+
+g .port-wire {
+  stroke: #fff;
+}
+
+g .labels rect {
+  fill: #000;
+  stroke: #fff;
+}
+
+g .labels text {
+  fill: #fff;
+}
+
+.io-block .io-fpga-content {
+  background: #000;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.constant-block .constant-content input {
+  border: 2px solid #fff;
+  background-color: #000;
+  border-radius: 5px;
+}
+
+.select2-selection__clear {
+  color: #fff;
+}
+
+.constant-block .constant-content input {
+  border: 2px solid #fff;
+  background-color: #000;
+}
+
+.config-block {
+  background: #000 !important;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: #fff;
+}
+
+.select2-container--default .select2-selection--single {
+  color: #fff;
+  background-color: #000;
+}
+
+.io-block .io-fpga-content .header label {
+  color: #fff;
+}
+
+.generic-block .generic-content {
+  background: #000;
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+.generic-block .generic-content label {
+  color: #fff;
+}
+
+.constant-block .constant-content {
+  background: #000;
+  border-radius: 5px;
+  border: 2px solid #fff;
+}
+
+.constant-block .constant-content .header label {
+  color: #fff;
+}
+
+.constant-block .constant-content input {
+  border: 2px solid #fff;
+  background-color: #000;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.markdown-body {
+  color: #fff;
+}
