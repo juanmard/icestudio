@@ -37,8 +37,7 @@ angular
         },
         theme: {
           icon: 'snowflake-o',
-          title: 'UI Themes',
-          headonly: true,
+          title: 'UI Theme',
         },
         toolchain: {
           icon: 'gear',
