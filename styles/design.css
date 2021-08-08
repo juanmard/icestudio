@@ -479,19 +479,19 @@ form > fieldset > .project-img-container img,
   border: 1px solid rgba(42, 118, 198, 1);
   background-color: rgba(42, 118, 198, 0.2);
   overflow: visible;
-  z-index: 1500;
+  z-index: 250;
 }
 
 .selection-box {
   position: absolute;
-  border: 1px dotted rgba(42, 118, 198, 1);
-  background-color: rgba(42, 118, 198, 0.2);
-  z-index: 1500;
+  border: 3px solid rgba(42, 118, 198, 1);
+  background-color: rgba(42, 118, 198, 0.5);
+  z-index: 250;
 }
 
 .selection-box-transparent {
   position: absolute;
-  z-index: 1500;
+  z-index: 250;
 }
 
 /* Wires makers */

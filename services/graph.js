@@ -354,26 +354,6 @@ angular
         }
         // Events
 
-        var shiftPressed = false;
-
-        $(document).on('keydown', function (evt) {
-          if (utils.hasShift(evt)) {
-            shiftPressed = true;
-          }
-        });
-
-        $(document).on('keyup', function (evt) {
-          if (!utils.hasShift(evt)) {
-            shiftPressed = false;
-          }
-        });
-
-        $(document).on('disableSelected', function () {
-          if (!shiftPressed) {
-            disableSelected();
-          }
-        });
-
         $('body').mousemove(function (event) {
           mousePosition = {
             x: event.pageX,
@@ -405,7 +385,7 @@ angular
             graph.trigger('batch:stop');
           } else {
             // Toggle selected cell
-            if (shiftPressed) {
+            if (evt.shiftKey) {
               var cell = selection.get($(evt.target).data('model'));
               selection.reset(selection.without(cell));
               selectionView.destroySelectionBox(cell);
@@ -414,16 +394,16 @@ angular
         });
 
         paper.on('cell:pointerclick', function (cellView, evt, x, y) {
-          //M+
-          if (
-            !checkInsideViewBox(cellView, x, y) ||
-            !shiftPressed ||
-            !paper.options.enabled ||
-            cellView.model.isLink()
-          ) {
+          if (!checkInsideViewBox(cellView, x, y)) {
             return;
           }
-          // If Shift is pressed process the click (no Shift+dblClick allowed)
+          // If Shift is pressed, we are updating the selection. Else new selection.
+          if (!evt.shiftKey) {
+            selectionView.cancelSelection();
+          }
+          if (!paper.options.enabled || cellView.model.isLink()) {
+            return;
+          }
           // Disable current focus
           document.activeElement.blur();
           if (utils.hasLeftButton(evt)) {
@@ -433,15 +413,15 @@ angular
         });
 
         paper.on('cell:pointerdblclick', function (cellView, evt, x, y) {
-          if (!checkInsideViewBox(cellView, x, y)) {
+          if (x && y && !checkInsideViewBox(cellView, x, y)) {
             return;
           }
           selectionView.cancelSelection();
-          if (shiftPressed) {
+          if (evt.shiftKey) {
+            // Allow dblClick only if Shift is not pressed
             return;
           }
 
-          // Allow dblClick if Shift is not pressed
           var type = cellView.model.get('blockType');
           var blockId = cellView.model.get('id');
 
