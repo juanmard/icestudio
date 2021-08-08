@@ -132,6 +132,15 @@ button:focus {
   outline: #ccc solid 2px;
 }
 
+button.list-group-item:focus {
+  outline: #ccc solid 0px;
+}
+
+button.list-group-item:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 ::selection {
   color: #fff;
   background: #3593d2;
