@@ -287,8 +287,8 @@ angular
 
       // Theme support
       $scope.selectTheme = (theme) => {
-        if (common.get('uiTheme') !== theme) {
-          common.set('uiTheme', theme);
+        if (common.get('theme') !== theme) {
+          common.set('theme', theme);
         }
       };
 

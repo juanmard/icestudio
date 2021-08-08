@@ -204,7 +204,7 @@ angular
         prog: null,
         boardRules: true,
         language: null,
-        uiTheme: 'light',
+        theme: 'light',
         collection: null,
         collections: null,
         externalCollections: null,
