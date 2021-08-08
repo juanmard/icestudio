@@ -1665,7 +1665,6 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function () {
       self.updateScrollStatus(true);
-      $(document).trigger('disableSelected');
       self.editor.setHighlightActiveLine(true);
       self.editor.setHighlightGutterLine(true);
       // Show cursor
@@ -1960,7 +1959,6 @@ joint.shapes.ice.CodeView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function () {
       self.updateScrollStatus(true);
-      $(document).trigger('disableSelected');
       self.editor.setHighlightActiveLine(true);
       self.editor.setHighlightGutterLine(true);
       // Show cursor
@@ -2408,7 +2406,6 @@ joint.shapes.ice.InfoView = joint.shapes.ice.ModelView.extend({
     });
     this.editor.on('focus', function () {
       self.updateScrollStatus(true);
-      $(document).trigger('disableSelected');
       self.editor.setHighlightActiveLine(true);
       // Show cursor
       self.editor.renderer.$cursorLayer.element.style.opacity = 1;
