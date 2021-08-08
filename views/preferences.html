@@ -191,7 +191,7 @@
 <script type="text/ng-template" id="views/pref_head_theme.html">
   <span class="pull-right" ng-click="val.isopen = !val.isopen">
     <div ng-repeat="theme in themes">
-      <span ng-if="common.data.uiTheme == theme[0]">
+      <span ng-if="common.data.theme == theme[0]">
       {{theme[1] | translate}}</span>
     </div>
   </span>
@@ -207,18 +207,18 @@
           ng-repeat="theme in themes"
         >
         <span class="fa fa-fw"
-           ng-class="'fa-'+(common.data.uiTheme == theme[0]?'check-':'')+'square-o'"
+           ng-class="'fa-'+(common.data.theme == theme[0]?'check-':'')+'square-o'"
            aria-hidden="true"></span>
            {{ theme[1] | translate }} <span class="badge" style="min-width: 150px">{{theme[0] + '.css'}}</span>
       </button>
       </div>
 
-  <!-- TODO: use 'uib-btn-radio'; needs reworking common.data.uiTheme
+  <!-- TODO: use 'uib-btn-radio'; needs reworking common.data.theme
     <span class="pull-left">
       <div class="btn-group">
         <label
           class="btn btn-xs btn-default"
-          ng-model="common.data.uiTheme"
+          ng-model="common.data.theme"
           uib-btn-radio="theme[0]"
           uib-btn-checkbox
           ng-click="selectTheme(theme[0])"

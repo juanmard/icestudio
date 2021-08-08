@@ -62,7 +62,7 @@ angular
           'prog',
           'boardRules',
           'language',
-          'uiTheme',
+          'theme',
           'collection',
           'collections',
           'externalCollections',
