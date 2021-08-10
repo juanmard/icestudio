@@ -803,43 +803,39 @@ angular
       };
 
       function updateWiresOnObstacles() {
-        var cells = graph.getCells();
-
-        //_.each(cells, function (cell) {
-        for (var i = 0, n = cells.length; i < n; i++) {
-          if (cells[i].isLink()) {
-            paper.findViewByModel(cells[i]).update();
+        for (var cell of graph.getCells()) {
+          if (cell.isLink()) {
+            paper.findViewByModel(cell).update();
           }
         }
       }
 
       this.setBoardRules = function (rules) {
-        var cells = graph.getCells();
         common.set('boardRules', rules);
-
-        for (var i = 0, n = cells.length; i < n; i++) {
-          if (!cells[i].isLink()) {
-            cells[i].attributes.rules = rules;
-            var cellView = paper.findViewByModel(cells[i]);
-            cellView.updateBox();
+        for (var cell of graph.getCells()) {
+          if (!cell.isLink()) {
+            cell.attributes.rules = rules;
+            paper.findViewByModel(cell).updateBox();
           }
         }
       };
 
       this.undo = function () {
-        if (!this.addingDraggableBlock) {
-          disableSelected();
-          commandManager.undo();
-          updateWiresOnObstacles();
+        if (this.addingDraggableBlock) {
+          return;
         }
+        disableSelected();
+        commandManager.undo();
+        updateWiresOnObstacles();
       };
 
       this.redo = function () {
-        if (!this.addingDraggableBlock) {
-          disableSelected();
-          commandManager.redo();
-          updateWiresOnObstacles();
+        if (this.addingDraggableBlock) {
+          return;
         }
+        disableSelected();
+        commandManager.redo();
+        updateWiresOnObstacles();
       };
 
       this.clearAll = function () {
@@ -1354,10 +1350,8 @@ angular
           if (callback) {
             callback();
           }
-          setTimeout(function () {
-            updateWiresOnObstacles();
-            utils.endWait();
-          }, 0);
+          updateWiresOnObstacles();
+          utils.endWait();
           return true;
         }
         return false;
@@ -1387,28 +1381,13 @@ angular
           }
           return false;
         }
-        function outputExists(oid, blks) {
-          var founded = false;
-          for (var i = 0; i < blks.length; i++) {
-            if (blks[i].id === oid) {
-              return true;
-            }
-          }
-          return founded;
-        }
-        /* Check if wire source exists (block+port) */
-        function wireExists(wre, blk, edge) {
-          var founded = false;
-          var blk2 = false;
 
-          for (var i = 0; i < blk.length; i++) {
-            if (wre[edge].block === blk[i].id) {
-              founded = i;
-              break;
+        function wireExists(wre, blk, edge) {
+          for (var bitem of blk) {
+            if (wre[edge].block !== bitem.id) {
+              continue;
             }
-          }
-          if (founded !== false) {
-            switch (blk[founded].type) {
+            switch (bitem.type) {
               case 'basic.memory':
               case 'basic.constant':
               case 'basic.outputLabel':
@@ -1416,16 +1395,17 @@ angular
               case 'basic.code':
               case 'basic.input':
               case 'basic.output':
-                founded = true;
-                break;
-
+                return true;
               default:
-                /* Generic type, look into the library */
-                blk2 = getBlocksFromLib(blk[i].type);
-                founded = outputExists(wre[edge].port, blk2);
+                // Generic type, look into the library
+                for (var item of getBlocksFromLib(bitem.type)) {
+                  if (item.id === wre[edge].port) {
+                    return true;
+                  }
+                }
             }
           }
-          return founded;
+          return false;
         }
 
         // Wires

@@ -139,8 +139,10 @@ angular
       utils.selectBoard(_board);
     }
 
-    tools.checkToolchain();
-    setTimeout(utils.endWait, 1500);
+    setTimeout(() => {
+      utils.endWait();
+      tools.checkToolchain();
+    }, 1250);
   });
 
 /*
