@@ -15,6 +15,79 @@ if (DARWIN) {
   var aceFontSize = '14';
 }
 
+function _drawTasks(tasks) {
+  'use strict';
+  for (var item of tasks) {
+    if (item.e !== null) {
+      item.e.style[item.property] = item.value;
+    }
+  }
+}
+
+function _placementCssTasks(box, selector, bbox, zoom, pan, queue, topOffset) {
+  var gcontent = box.querySelectorAll(selector);
+
+  for (var item of gcontent) {
+    queue.push(
+      {
+        e: item,
+        property: 'left',
+        value: Math.round((bbox.width / 2.0) * (zoom - 1)) + 'px',
+      },
+      {
+        e: item,
+        property: 'top',
+        value:
+          Math.round(
+            ((bbox.height + topOffset) / 2.0) * (zoom - 1) + topOffset
+          ) + 'px',
+      },
+      {
+        e: item,
+        property: 'width',
+        value: Math.round(bbox.width) + 'px',
+      },
+      {
+        e: item,
+        property: 'height',
+        value: Math.round(bbox.height - topOffset) + 'px',
+      },
+      {
+        e: item,
+        property: 'transform',
+        value: 'scale(' + zoom + ')',
+      }
+    );
+  }
+
+  queue.push(
+    {
+      e: box,
+      property: 'left',
+      value: Math.round(bbox.x * zoom + pan.x) + 'px',
+    },
+    {
+      e: box,
+      property: 'top',
+      value: Math.round(bbox.y * zoom + pan.y) + 'px',
+    },
+    {
+      e: box,
+      property: 'width',
+      value: Math.round(bbox.width * zoom) + 'px',
+    },
+    {
+      e: box,
+      property: 'height',
+      value: Math.round(bbox.height * zoom) + 'px',
+    }
+  );
+
+  _drawTasks(queue);
+
+  return queue;
+}
+
 // Model element
 
 joint.shapes.ice = {};
@@ -293,50 +366,45 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   initialize: function () {
     'use strict';
-
     _.bindAll(this, 'updateBox');
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-
     this.$box = $(joint.util.template(this.template)());
-
     this.model.on('change', this.updateBox, this);
     this.model.on('remove', this.removeBox, this);
-
     this.updateBox();
-
     this.listenTo(this.model, 'process:ports', this.update);
   },
 
   setupResizer: function () {
     'use strict';
-
     // Resizer
-    if (!this.model.get('disabled')) {
-      this.resizing = false;
-      this.resizer = this.$box.find('.resizer');
-      this.resizer.css('cursor', 'se-resize');
-      this.resizer.on('mousedown', {self: this}, this.startResizing);
-      $(document).on('mousemove', {self: this}, this.performResizing);
-      $(document).on('mouseup', {self: this}, this.stopResizing);
+    if (this.model.get('disabled')) {
+      return;
     }
+    this.resizing = false;
+    this.resizer = this.$box.find('.resizer');
+    this.resizer.css('cursor', 'se-resize');
+    this.resizer.on('mousedown', {self: this}, this.startResizing);
+    $(document).on('mousemove', {self: this}, this.performResizing);
+    $(document).on('mouseup', {self: this}, this.stopResizing);
   },
 
   enableResizer: function () {
     'use strict';
-
-    if (!this.model.get('disabled')) {
-      this.resizerDisabled = false;
-      this.resizer.css('cursor', 'se-resize');
+    if (this.model.get('disabled')) {
+      return;
     }
+    this.resizerDisabled = false;
+    this.resizer.css('cursor', 'se-resize');
   },
 
   disableResizer: function () {
     'use strict';
-
-    if (!this.model.get('disabled')) {
-      this.resizerDisabled = true;
-      this.resizer.css('cursor', 'move');
+    if (this.model.get('disabled')) {
+      return;
     }
+    this.resizerDisabled = true;
+    this.resizer.css('cursor', 'move');
   },
 
   apply: function () {
@@ -345,15 +413,11 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   startResizing: function (event) {
     'use strict';
-
     var self = event.data.self;
-
     if (self.resizerDisabled) {
       return;
     }
-
     self.model.graph.trigger('batch:start');
-
     self.resizing = true;
     self._clientX = event.clientX;
     self._clientY = event.clientY;
@@ -361,16 +425,14 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   performResizing: function (event) {
     'use strict';
-
     var self = event.data.self;
-
     if (!self.resizing || self.resizerDisabled) {
       return;
     }
 
-    var type = self.model.get('type');
-    var size = self.model.get('size');
-    var state = self.model.get('state');
+    const type = self.model.get('type');
+    const size = self.model.get('size');
+    const zoom = self.model.get('state').zoom;
     var gridstep = 8;
     var minSize = {width: 64, height: 32};
     if (type === 'ice.Code' || type === 'ice.Memory') {
@@ -380,11 +442,14 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
     var clientCoords = snapToGrid({x: event.clientX, y: event.clientY});
     var oldClientCoords = snapToGrid({x: self._clientX, y: self._clientY});
 
-    var dx = clientCoords.x - oldClientCoords.x;
-    var dy = clientCoords.y - oldClientCoords.y;
-
-    var width = Math.max(size.width + dx, minSize.width);
-    var height = Math.max(size.height + dy, minSize.height);
+    var width = Math.max(
+      size.width + clientCoords.x - oldClientCoords.x,
+      minSize.width
+    );
+    var height = Math.max(
+      size.height + clientCoords.y - oldClientCoords.y,
+      minSize.height
+    );
 
     if (width > minSize.width) {
       self._clientX = event.clientX;
@@ -398,28 +463,24 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
     function snapToGrid(coords) {
       return {
-        x: Math.round(coords.x / state.zoom / gridstep) * gridstep,
-        y: Math.round(coords.y / state.zoom / gridstep) * gridstep,
+        x: Math.round(coords.x / zoom / gridstep) * gridstep,
+        y: Math.round(coords.y / zoom / gridstep) * gridstep,
       };
     }
   },
 
   stopResizing: function (event) {
     'use strict';
-
     var self = event.data.self;
-
     if (!self.resizing || self.resizerDisabled) {
       return;
     }
-
     self.resizing = false;
     self.model.graph.trigger('batch:stop');
   },
 
   render: function () {
     'use strict';
-
     joint.dia.ElementView.prototype.render.apply(this, arguments);
     this.paper.$el.append(this.$box);
     this.updateBox();
@@ -428,59 +489,18 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   renderPorts: function () {
     'use strict';
-
-    var $leftPorts = this.$('.leftPorts').empty();
-    var $rightPorts = this.$('.rightPorts').empty();
-    var $topPorts = this.$('.topPorts').empty();
-    var $bottomPorts = this.$('.bottomPorts').empty();
-    var portTemplate = _.template(this.model.portMarkup);
-    var modelId = this.model.id;
-
-    _.each(
-      _.filter(this.model.ports, function (p) {
-        return p.type === 'left';
-      }),
-      function (port, index) {
-        $leftPorts.append(
-          V(portTemplate({id: modelId, index: index, port: port})).node
-        );
-      }
-    );
-    _.each(
-      _.filter(this.model.ports, function (p) {
-        return p.type === 'right';
-      }),
-      function (port, index) {
-        $rightPorts.append(
-          V(portTemplate({id: modelId, index: index, port: port})).node
-        );
-      }
-    );
-    _.each(
-      _.filter(this.model.ports, function (p) {
-        return p.type === 'top';
-      }),
-      function (port, index) {
-        $topPorts.append(
-          V(portTemplate({id: modelId, index: index, port: port})).node
-        );
-      }
-    );
-    _.each(
-      _.filter(this.model.ports, function (p) {
-        return p.type === 'bottom';
-      }),
-      function (port, index) {
-        $bottomPorts.append(
-          V(portTemplate({id: modelId, index: index, port: port})).node
-        );
-      }
-    );
+    const portTemplate = _.template(this.model.portMarkup);
+    const modelId = this.model.id;
+    for (var index in this.model.ports) {
+      const port = this.model.ports[index];
+      this.$(`.${port.type}Ports`)
+        .empty()
+        .append(V(portTemplate({id: modelId, index: index, port: port})).node);
+    }
   },
 
   update: function () {
     'use strict';
-
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
@@ -491,13 +511,11 @@ joint.shapes.ice.ModelView = joint.dia.ElementView.extend({
 
   removeBox: function (/*event*/) {
     'use strict';
-
     this.$box.remove();
   },
 
   updateScrollStatus: function (status) {
     'use strict';
-
     if (this.editor) {
       this.editor.renderer.scrollBarV.element.style.visibility = status
         ? ''
@@ -549,7 +567,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   mouseovercard: function (event /*, x, y*/) {
     'use strict';
-
     if (event && event.which === 0) {
       // Mouse button not pressed
       this.showTooltip();
@@ -558,7 +575,6 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   mouseoutcard: function (/*event, x, y*/) {
     'use strict';
-
     this.hideTooltip();
   },
 
@@ -568,46 +584,40 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   mousedowncard: function (/*event, x, y*/) {
     'use strict';
-
     this.hideTooltip();
   },
 
   showTooltip: function () {
     'use strict';
-
-    if (this.tooltip) {
-      if (!this.openTimeout) {
-        this.openTimeout = setTimeout(
-          function () {
-            this.tooltiptext.css('visibility', 'visible');
-          }.bind(this),
-          2000
-        );
-      }
+    if (!this.tooltip || this.openTimeout) {
+      return;
     }
+    this.openTimeout = setTimeout(
+      function () {
+        this.tooltiptext.css('visibility', 'visible');
+      }.bind(this),
+      2000
+    );
   },
 
   hideTooltip: function () {
     'use strict';
-
-    if (this.tooltip) {
-      if (this.openTimeout) {
-        clearTimeout(this.openTimeout);
-        this.openTimeout = null;
-      }
-      this.tooltiptext.css('visibility', 'hidden');
+    if (!this.tooltip) {
+      return;
     }
+    if (this.openTimeout) {
+      clearTimeout(this.openTimeout);
+      this.openTimeout = null;
+    }
+    this.tooltiptext.css('visibility', 'hidden');
   },
 
   initialize: function () {
     'use strict';
-
     joint.shapes.ice.ModelView.prototype.initialize.apply(this, arguments);
-
     this.tooltip = this.model.get('tooltip');
     this.tooltiptext = this.$box.find('.tooltiptext');
     this.tooltiptext.text(`[${this.model.get('label')}] ${this.tooltip}`);
-
     if (this.tooltip.length > 13) {
       this.tooltiptext.addClass('tooltip-medium');
       this.tooltiptext.removeClass('tooltip-large');
@@ -618,11 +628,9 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
       this.tooltiptext.removeClass('tooltip-medium');
       this.tooltiptext.removeClass('tooltip-large');
     }
-
     if (this.model.get('config')) {
       this.$box.find('.generic-content').addClass('config-block');
     }
-
     this.initializeContent();
   },
 
@@ -655,67 +663,40 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
 
   updateBox: function () {
     'use strict';
-
     var pendingTasks = [];
-    var i, port;
-    var bbox = this.model.getBBox();
-    var data = this.model.get('data');
+    const modelId = this.model.id;
     var state = this.model.get('state');
-    var rules = this.model.get('rules');
-    var leftPorts = this.model.get('leftPorts');
-    var rightPorts = this.model.get('rightPorts');
-    var modelId = this.model.id;
-
-    // Render ports width
     var width = WIRE_WIDTH * state.zoom;
-    var pwires = this.$el[0].getElementsByClassName('port-wire');
-    for (i = 0; i < pwires.length; i++) {
+    var nwidth = width * 3;
+    for (var item of this.$el[0].getElementsByClassName('port-wire')) {
       pendingTasks.push({
-        e: pwires[i],
+        e: item,
         property: 'stroke-width',
         value: width + 'px',
       });
     }
-    var nwidth = width * 3;
-    var tokId = 'port-wire-' + modelId + '-';
-    var dome;
-    for (i = 0; i < leftPorts.length; i++) {
-      port = leftPorts[i];
+    for (var port of this.model
+      .get('leftPorts')
+      .concat(this.model.get('rightPorts'))) {
       if (port.size > 1) {
-        dome = document.getElementById(tokId + port.id);
-
         pendingTasks.push({
-          e: dome,
+          e: document.getElementById(`port-wire-${modelId}-${port.id}`),
           property: 'stroke-width',
           value: nwidth + 'px',
         });
       }
     }
-
-    for (i = 0; i < rightPorts.length; i++) {
-      port = rightPorts[i];
-      if (port.size > 1) {
-        dome = document.getElementById(tokId + port.id);
-
-        pendingTasks.push({
-          e: dome,
-          property: 'stroke-width',
-          value: nwidth + 'px',
-        });
-      }
-    }
-
     // Render rules
-    var portDefault, paths, rects, j;
-
+    var data = this.model.get('data');
     if (data && data.ports && data.ports.in) {
-      tokId = 'port-default-' + modelId + '-';
-      for (i = 0; i < data.ports.in.length; i++) {
-        port = data.ports.in[i];
-        portDefault = document.getElementById(tokId + port.name);
+      var portDefault;
+      for (var port of data.ports.in) {
+        portDefault = document.getElementById(
+          `port-default-${modelId}-${port.name}`
+        );
         if (
           portDefault !== null &&
-          rules &&
+          this.model.get('rules') &&
           port.default &&
           port.default.apply
         ) {
@@ -725,19 +706,17 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
             value: 'inline',
           });
 
-          paths = portDefault.querySelectorAll('path');
-          for (j = 0; j < paths.length; j++) {
+          for (var item of portDefault.querySelectorAll('path')) {
             pendingTasks.push({
-              e: paths[j],
+              e: item,
               property: 'stroke-width',
               value: width + 'px',
             });
           }
 
-          rects = portDefault.querySelectorAll('rect');
-          for (j = 0; j < rects.length; j++) {
+          for (var item of portDefault.querySelectorAll('rect')) {
             pendingTasks.push({
-              e: rects[j],
+              e: item,
               property: 'stroke-width',
               value: state.zoom + 'px',
             });
@@ -751,66 +730,15 @@ joint.shapes.ice.GenericView = joint.shapes.ice.ModelView.extend({
         }
       }
     }
-
-    var gcontent = this.$box[0].querySelectorAll('.generic-content');
-
-    for (i = 0; i < gcontent.length; i++) {
-      pendingTasks.push({
-        e: gcontent[i],
-        property: 'left',
-        value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + 'px',
-      });
-      pendingTasks.push({
-        e: gcontent[i],
-        property: 'top',
-        value: Math.round((bbox.height / 2.0) * (state.zoom - 1)) + 'px',
-      });
-      pendingTasks.push({
-        e: gcontent[i],
-        property: 'width',
-        value: Math.round(bbox.width) + 'px',
-      });
-      pendingTasks.push({
-        e: gcontent[i],
-        property: 'height',
-        value: Math.round(bbox.height) + 'px',
-      });
-      pendingTasks.push({
-        e: gcontent[i],
-        property: 'transform',
-        value: 'scale(' + state.zoom + ')',
-      });
-    }
-
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'left',
-      value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px',
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'top',
-      value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px',
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'width',
-      value: Math.round(bbox.width * state.zoom) + 'px',
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'height',
-      value: Math.round(bbox.height * state.zoom) + 'px',
-    });
-
-    i = pendingTasks.length;
-    for (i = 0; i < pendingTasks.length; i++) {
-      if (pendingTasks[i].e !== null) {
-        pendingTasks[i].e.style[pendingTasks[i].property] =
-          pendingTasks[i].value;
-      }
-    }
-    return pendingTasks;
+    return _placementCssTasks(
+      this.$box[0],
+      '.generic-content',
+      this.model.getBBox(),
+      state.zoom,
+      state.pan,
+      pendingTasks,
+      0
+    );
   },
 });
 
@@ -1086,7 +1014,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
   applyClock: function () {
     'use strict';
-
     if (this.model.get('data').clock) {
       this.$box.find('svg').removeClass('hidden');
     } else {
@@ -1096,18 +1023,12 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
   clearValues: function () {
     'use strict';
-
     this.updating = true;
-    var name = '';
-    var value = '0';
     var data = JSON.parse(JSON.stringify(this.model.get('data')));
-    for (var i in data.pins) {
-      var index = data.pins[i].index;
-      var comboId = '#combo' + this.id + index;
-      var comboSelector = this.$box.find(comboId);
-      comboSelector.val(value).change();
-      data.pins[i].name = name;
-      data.pins[i].value = value;
+    for (var pin of data.pins) {
+      this.$box.find(`#combo${this.id}${pin.index}`).val('0').change();
+      pin.name = '';
+      pin.value = '0';
     }
     this.model.set('data', data);
     this.updating = false;
@@ -1115,7 +1036,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
   apply: function () {
     'use strict';
-
     this.applyChoices();
     this.applyValues();
     this.applyShape();
@@ -1125,7 +1045,6 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
 
   update: function () {
     'use strict';
-
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
@@ -1134,63 +1053,43 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     'use strict';
 
     var pendingTasks = [];
-    var i, j, port;
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
-    var rules = this.model.get('rules');
-    var leftPorts = this.model.get('leftPorts');
-    var rightPorts = this.model.get('rightPorts');
-    var modelId = this.model.id;
-    var portDefault, tokId, dome;
-    var paths, rects;
+    const modelId = this.model.id;
     var width = WIRE_WIDTH * state.zoom;
+    var nwidth = width * 3;
 
-    var pwires = this.$el[0].getElementsByClassName('port-wire');
-    for (i = 0; i < pwires.length; i++) {
+    for (var item of this.$el[0].getElementsByClassName('port-wire')) {
       pendingTasks.push({
-        e: pwires[i],
+        e: item,
         property: 'stroke-width',
         value: width + 'px',
       });
     }
-    // Set buses
-    var nwidth = width * 3;
-    tokId = 'port-wire-' + modelId + '-';
-    for (i = 0; i < leftPorts.length; i++) {
-      port = leftPorts[i];
-      if (port.size > 1) {
-        dome = document.getElementById(tokId + port.id);
 
+    for (var port of this.model
+      .get('leftPorts')
+      .concat(this.model.get('rightPorts'))) {
+      if (port.size > 1) {
         pendingTasks.push({
-          e: dome,
+          e: document.getElementById(`port-wire-${modelId}-${port.id}`),
           property: 'stroke-width',
           value: nwidth + 'px',
         });
       }
     }
 
-    for (i = 0; i < rightPorts.length; i++) {
-      port = rightPorts[i];
-      if (port.size > 1) {
-        dome = document.getElementById(tokId + port.id);
-
-        pendingTasks.push({
-          e: dome,
-          property: 'stroke-width',
-          value: nwidth + 'px',
-        });
-      }
-    }
     // Render rules
     if (data && data.ports && data.ports.in) {
-      tokId = 'port-default-' + modelId + '-';
-      for (i = 0; i < data.ports.in.length; i++) {
-        port = data.ports.in[i];
-        portDefault = document.getElementById(tokId + port.name);
+      var portDefault;
+      for (var port of data.ports.in) {
+        portDefault = document.getElementById(
+          `port-default-${modelId}-${port.name}`
+        );
         if (
           portDefault !== null &&
-          rules &&
+          this.model.get('rules') &&
           port.default &&
           port.default.apply
         ) {
@@ -1199,20 +1098,16 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
             property: 'display',
             value: 'inline',
           });
-
-          paths = portDefault.querySelectorAll('path');
-          for (j = 0; j < paths.length; j++) {
+          for (var item of portDefault.querySelectorAll('path')) {
             pendingTasks.push({
-              e: paths[j],
+              e: item,
               property: 'stroke-width',
               value: width + 'px',
             });
           }
-
-          rects = portDefault.querySelectorAll('rect');
-          for (j = 0; j < rects.length; j++) {
+          for (var item of portDefault.querySelectorAll('rect')) {
             pendingTasks.push({
-              e: rects[j],
+              e: item,
               property: 'stroke-width',
               value: state.zoom + 'px',
             });
@@ -1228,124 +1123,113 @@ joint.shapes.ice.IOView = joint.shapes.ice.ModelView.extend({
     }
     var virtualtopOffset = 24;
 
-    for (i = 0; i < this.nativeDom.virtualContentSelector.length; i++) {
-      pendingTasks.push({
-        e: this.nativeDom.virtualContentSelector[i],
-        property: 'left',
-        value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.virtualContentSelector[i],
-        property: 'top',
-        value:
-          Math.round(
-            ((bbox.height - virtualtopOffset) / 2.0) * (state.zoom - 1) +
-              (virtualtopOffset / 2.0) * state.zoom
-          ) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.virtualContentSelector[i],
-        property: 'width',
-        value: Math.round(bbox.width) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.virtualContentSelector[i],
-        property: 'height',
-        value: Math.round(bbox.height - virtualtopOffset) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.virtualContentSelector[i],
-        property: 'transform',
-        value: 'scale(' + state.zoom + ')',
-      });
+    for (var item of this.nativeDom.virtualContentSelector) {
+      pendingTasks.push(
+        {
+          e: item,
+          property: 'left',
+          value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + 'px',
+        },
+        {
+          e: item,
+          property: 'top',
+          value:
+            Math.round(
+              ((bbox.height - virtualtopOffset) / 2.0) * (state.zoom - 1) +
+                (virtualtopOffset / 2.0) * state.zoom
+            ) + 'px',
+        },
+        {
+          e: item,
+          property: 'width',
+          value: Math.round(bbox.width) + 'px',
+        },
+        {
+          e: item,
+          property: 'height',
+          value: Math.round(bbox.height - virtualtopOffset) + 'px',
+        },
+        {
+          e: item,
+          property: 'transform',
+          value: 'scale(' + state.zoom + ')',
+        }
+      );
     }
-    // Render io FPGA content
-    var fpgaTopOffset = data.name || data.range || data.clock ? 0 : 24;
 
-    for (i = 0; i < this.nativeDom.fpgaContentSelector.length; i++) {
-      pendingTasks.push({
-        e: this.nativeDom.fpgaContentSelector[i],
-        property: 'left',
-        value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.fpgaContentSelector[i],
-        property: 'top',
-        value:
-          Math.round(
-            ((bbox.height - fpgaTopOffset) / 2.0) * (state.zoom - 1) +
-              (fpgaTopOffset / 2.0) * state.zoom
-          ) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.fpgaContentSelector[i],
-        property: 'width',
-        value: Math.round(bbox.width) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.fpgaContentSelector[i],
-        property: 'height',
-        value: Math.round(bbox.height - fpgaTopOffset) + 'px',
-      });
-      pendingTasks.push({
-        e: this.nativeDom.fpgaContentSelector[i],
-        property: 'transform',
-        value: 'scale(' + state.zoom + ')',
-      });
-    }
     if (data.name || data.range || data.clock) {
       this.headerSelector.removeClass('hidden');
     } else {
       this.headerSelector.addClass('hidden');
     }
 
+    // Render io FPGA content
+    var fpgaTopOffset = data.name || data.range || data.clock ? 0 : 24;
+
+    for (var item of this.nativeDom.fpgaContentSelector) {
+      pendingTasks.push(
+        {
+          e: item,
+          property: 'left',
+          value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + 'px',
+        },
+        {
+          e: item,
+          property: 'top',
+          value:
+            Math.round(
+              ((bbox.height - fpgaTopOffset) / 2.0) * (state.zoom - 1) +
+                (fpgaTopOffset / 2.0) * state.zoom
+            ) + 'px',
+        },
+        {
+          e: item,
+          property: 'width',
+          value: Math.round(bbox.width) + 'px',
+        },
+        {
+          e: item,
+          property: 'height',
+          value: Math.round(bbox.height - fpgaTopOffset) + 'px',
+        },
+        {
+          e: item,
+          property: 'transform',
+          value: 'scale(' + state.zoom + ')',
+        }
+      );
+    }
+
     // Render block
-    pendingTasks.push({
-      e: this.nativeDom.box,
-      property: 'left',
-      value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px',
-    });
-    pendingTasks.push({
-      e: this.nativeDom.box,
-      property: 'top',
-      value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px',
-    });
-    pendingTasks.push({
-      e: this.nativeDom.box,
-      property: 'width',
-      value: Math.round(bbox.width * state.zoom) + 'px',
-    });
-    pendingTasks.push({
-      e: this.nativeDom.box,
-      property: 'height',
-      value: Math.round(bbox.height * state.zoom) + 'px',
-    });
-
-    i = pendingTasks.length;
-    for (i = 0; i < pendingTasks.length; i++) {
-      if (pendingTasks[i].e !== null) {
-        pendingTasks[i].e.style[pendingTasks[i].property] =
-          pendingTasks[i].value;
+    pendingTasks.push(
+      {
+        e: this.nativeDom.box,
+        property: 'left',
+        value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px',
+      },
+      {
+        e: this.nativeDom.box,
+        property: 'top',
+        value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px',
+      },
+      {
+        e: this.nativeDom.box,
+        property: 'width',
+        value: Math.round(bbox.width * state.zoom) + 'px',
+      },
+      {
+        e: this.nativeDom.box,
+        property: 'height',
+        value: Math.round(bbox.height * state.zoom) + 'px',
       }
-    }
+    );
+
+    _drawTasks(pendingTasks);
     return pendingTasks;
-  },
-
-  drawPendingTasks: function (tasks) {
-    'use strict';
-
-    var i = tasks.length;
-    for (i = 0; i < tasks.length; i++) {
-      if (this.tasks[i].e !== null) {
-        tasks[i].e.style[tasks[i].property] = tasks[i].value;
-      }
-    }
   },
 
   removeBox: function () {
     'use strict';
-
-    // Close select options on remove
     this.$box.find('select').select2('close');
     this.$box.remove();
   },
@@ -1430,7 +1314,6 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   apply: function () {
     'use strict';
-
     this.applyName();
     this.applyLocal();
     this.applyValue();
@@ -1438,14 +1321,12 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   applyName: function () {
     'use strict';
-
     var name = this.model.get('data').name;
     this.$box.find('label').text(name);
   },
 
   applyLocal: function () {
     'use strict';
-
     if (this.model.get('data').local) {
       this.$box.find('svg').removeClass('hidden');
     } else {
@@ -1455,7 +1336,6 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   applyValue: function () {
     'use strict';
-
     this.updating = true;
     if (this.model.get('disabled')) {
       this.inputSelector.css({'pointer-events': 'none'});
@@ -1467,99 +1347,37 @@ joint.shapes.ice.ConstantView = joint.shapes.ice.ModelView.extend({
 
   update: function () {
     'use strict';
-
     this.renderPorts();
     joint.dia.ElementView.prototype.update.apply(this, arguments);
   },
 
   updateBox: function () {
     'use strict';
-
-    var bbox = this.model.getBBox();
-    var data = this.model.get('data');
-    var state = this.model.get('state');
     var pendingTasks = [];
-    // Set wire width
-    var width = WIRE_WIDTH * state.zoom;
-    var pwires = this.$el[0].getElementsByClassName('port-wire');
-    var i;
-    for (i = 0; i < pwires.length; i++) {
+    const state = this.model.get('state');
+    const width = WIRE_WIDTH * state.zoom;
+    for (var item of this.$el[0].getElementsByClassName('port-wire')) {
       pendingTasks.push({
-        e: pwires[i],
+        e: item,
         property: 'stroke-width',
         value: width + 'px',
       });
     }
-    // Render content
-    var topOffset = data.name || data.local ? 0 : 24;
-    var contentSel = this.$box[0].querySelectorAll('.constant-content');
-    for (i = 0; i < contentSel.length; i++) {
-      pendingTasks.push({
-        e: contentSel[i],
-        property: 'left',
-        value: Math.round((bbox.width / 2.0) * (state.zoom - 1)) + 'px',
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: 'top',
-        value:
-          Math.round(
-            ((bbox.height + topOffset) / 2.0) * (state.zoom - 1) + topOffset
-          ) + 'px',
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: 'width',
-        value: Math.round(bbox.width) + 'px',
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: 'height',
-        value: Math.round(bbox.height - topOffset) + 'px',
-      });
-      pendingTasks.push({
-        e: contentSel[i],
-        property: 'transform',
-        value: 'scale(' + state.zoom + ')',
-      });
-    }
+    var data = this.model.get('data');
     if (data.name || data.local) {
       this.headerSelector.removeClass('hidden');
     } else {
       this.headerSelector.addClass('hidden');
     }
-
-    // Render block
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'left',
-      value: Math.round(bbox.x * state.zoom + state.pan.x) + 'px',
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'top',
-      value: Math.round(bbox.y * state.zoom + state.pan.y) + 'px',
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'width',
-      value: Math.round(bbox.width * state.zoom) + 'px',
-    });
-    pendingTasks.push({
-      e: this.$box[0],
-      property: 'height',
-      value: Math.round(bbox.height * state.zoom) + 'px',
-    });
-
-    i = pendingTasks.length;
-    //  pendingTasks= pendingTasks.reverse();
-    for (i = 0; i < pendingTasks.length; i++) {
-      if (pendingTasks[i].e !== null) {
-        pendingTasks[i].e.style[pendingTasks[i].property] =
-          pendingTasks[i].value;
-      }
-    }
-    return pendingTasks;
+    return _placementCssTasks(
+      this.$box[0],
+      '.constant-content',
+      this.model.getBBox(),
+      state.zoom,
+      state.pan,
+      pendingTasks,
+      data.name || data.local ? 0 : 24
+    );
   },
 });
 
@@ -1581,12 +1399,11 @@ joint.shapes.ice.Memory = joint.shapes.ice.Model.extend({
 joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
   initialize: function () {
     'use strict';
-
     _.bindAll(this, 'updateBox');
     joint.dia.ElementView.prototype.initialize.apply(this, arguments);
-
-    var id = sha1(this.model.get('id')).toString().substring(0, 6);
-    var editorLabel = 'editor' + id;
+    var editorLabel = `editor${sha1(this.model.get('id'))
+      .toString()
+      .substring(0, 6)}`;
     this.$box = $(
       joint.util.template(`<div class="memory-block">
         <div class="memory-content">
@@ -1793,44 +1610,33 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
 
   updateBox: function () {
     'use strict';
-
     var bbox = this.model.getBBox();
     var data = this.model.get('data');
     var state = this.model.get('state');
-
     // Set font size
     if (this.editor) {
       if (this.prevZoom !== state.zoom) {
         this.prevZoom = state.zoom;
-        // Scale editor
         this.editorSelector.css({
           top: 24 * state.zoom,
           margin: 7 * state.zoom,
           'border-radius': 5 * state.zoom,
           'border-width': state.zoom + 0.5,
         });
-        // Scale padding
         this.$box
           .find('.ace_text-layer')
           .css('padding', '0px ' + Math.round(4 * state.zoom) + 'px');
-        // Scale gutters
         var rule = getCSSRule('.ace_folding-enabled > .ace_gutter-cell');
         if (rule) {
           rule.style.paddingLeft = Math.round(19 * state.zoom) + 'px';
           rule.style.paddingRight = Math.round(13 * state.zoom) + 'px';
         }
-        // Scale font size
         this.editor.setFontSize(Math.round(aceFontSize * state.zoom));
-        // Scale cursor
         this.editor.renderer.$cursorLayer.$padding = Math.round(4 * state.zoom);
       }
       this.editor.resize();
     }
-
-    // Set wire width
-    var width = WIRE_WIDTH * state.zoom;
-    this.$('.port-wire').css('stroke-width', width);
-
+    this.$('.port-wire').css('stroke-width', WIRE_WIDTH * state.zoom);
     // Render content
     var topOffset = data.name || data.local ? 0 : 24;
     this.contentSelector.css({
@@ -1842,13 +1648,11 @@ joint.shapes.ice.MemoryView = joint.shapes.ice.ModelView.extend({
       height: Math.round(bbox.height - topOffset),
       transform: 'scale(' + state.zoom + ')',
     });
-
     if (data.name || data.local) {
       this.headerSelector.removeClass('hidden');
     } else {
       this.headerSelector.addClass('hidden');
     }
-
     // Render block
     this.$box.css({
       left: bbox.x * state.zoom + state.pan.x,
@@ -3005,16 +2809,12 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
       }
 
       function contains(point, points) {
-        var found = false;
-        var np = points.length;
-
-        for (var i = 0; i < np; i++) {
-          if (points[i].x === point.x && points[i].y === point.y) {
-            found = true;
-            return;
+        for (var item of points) {
+          if (item.x === point.x && item.y === point.y) {
+            return true;
           }
         }
-        return found;
+        return false;
       }
 
       function v(wire) {
@@ -3055,26 +2855,20 @@ joint.shapes.ice.WireView = joint.dia.LinkView.extend({
 
 function getCSSRule(ruleName) {
   'use strict';
-
-  if (document.styleSheets) {
-    for (var i = 0; i < document.styleSheets.length; i++) {
-      var styleSheet = document.styleSheets[i];
-      var ii = 0;
-      var cssRule = false;
-      do {
-        if (styleSheet.cssRules) {
-          cssRule = styleSheet.cssRules[ii];
-        } else {
-          cssRule = styleSheet.rules[ii];
-        }
-        if (cssRule) {
-          if (cssRule.selectorText === ruleName) {
-            return cssRule;
-          }
-        }
-        ii++;
-      } while (cssRule);
-    }
+  if (!document.styleSheets) {
+    return false;
   }
-  return false;
+  for (var styleSheet of document.styleSheets) {
+    var ii = 0;
+    var cssRule = false;
+    do {
+      cssRule = styleSheet.cssRules
+        ? styleSheet.cssRules[ii]
+        : styleSheet.rules[ii];
+      if (cssRule && cssRule.selectorText === ruleName) {
+        return cssRule;
+      }
+      ii++;
+    } while (cssRule);
+  }
 }
