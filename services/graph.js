@@ -462,7 +462,7 @@ angular
         });
 
         function checkInsideViewBox(view, x, y) {
-          if (!x || !y) {
+          if (!view || !x || !y) {
             return false;
           }
           var $box = $(view.$box[0]);
