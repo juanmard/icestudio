@@ -30,6 +30,7 @@
     >
     <ul uib-dropdown-menu>
       <li
+        ng-if="!collection.disabled"
         ng-repeat="collection in [common.defaultCollection].concat(common.internalCollections).concat(common.externalCollections)"
         class="dropdown-submenu"
         uib-dropdown
