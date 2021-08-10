@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <div>
   <div ng-controller="DesignCtrl">
-    <link
-      rel="stylesheet"
-      ng-if="common.data.theme === 'dark'"
-      href="themes/dark.css"
-    />
-    <link
-      rel="stylesheet"
-      ng-if="common.data.theme === 'juanma'"
-      href="themes/juanma.css"
-    />
-    <link
-      rel="stylesheet"
-      ng-if="common.data.theme === 'highcontrast'"
-      href="themes/highcontrast.css"
-    />
+    <link rel="stylesheet" href="{{'themes/' + common.data.theme + '.css'}}" />
     <div id="mainpaper" class="paper"></div>
     <div ng-include="'views/menu_submodule.html'"></div>
   </div>
