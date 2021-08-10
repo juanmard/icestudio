@@ -210,6 +210,7 @@ angular
         externalCollections: null,
         externalPlugins: null,
         pythonEnv: null,
+        recentFiles: null,
       };
 
       if (this.DARWIN) {

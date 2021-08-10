@@ -9,6 +9,7 @@
       translate }}<span class="shortcut">{{ 'newProject' | shortcut }}</span></a
     >
   </li>
+
   <li>
     <a href ng-click="openProjectDialog()"
       ><i class="fa fa-fw fa-folder-open-o" aria-hidden="true"></i> {{ 'Open' |
@@ -17,6 +18,20 @@
       ></a
     >
   </li>
+
+  <li class="dropdown-submenu" uib-dropdown>
+    <a href uib-dropdown-toggle
+      ><i class="fa fa-fw fa-history" aria-hidden="true"></i> {{ 'Recent Files'
+      | translate }}</a
+    >
+    <ul uib-dropdown-menu>
+      <li ng-repeat="file in common.data.recentFiles">
+        <!-- <i>{{ file.path }}</i> -->
+        <a>{{ file.name }}</a>
+      </li>
+    </ul>
+  </li>
+
   <li>
     <a href ng-click="addAsBlock()"
       ><i class="fa fa-fw fa-sticky-note-o" aria-hidden="true"></i> {{ 'Add as

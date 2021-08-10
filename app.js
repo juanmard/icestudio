@@ -68,6 +68,7 @@ angular
           'externalCollections',
           'externalPlugins',
           'pythonEnv',
+          'recentFiles',
         ]) {
           common.data[item] = data[item] || common.data[item];
         }
