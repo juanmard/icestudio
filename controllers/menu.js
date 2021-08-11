@@ -123,9 +123,6 @@ angular
       win.on('close', function () {
         _exit();
       });
-      win.on('resize', function () {
-        graph.fitContent();
-      });
 
       // Darwin fix for shortcuts
       if (process.platform === 'darwin') {
