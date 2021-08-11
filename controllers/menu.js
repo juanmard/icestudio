@@ -237,6 +237,10 @@ angular
 
       function _openProjectDialog() {
         utils.openDialog('#input-open-project', '.ice', function (filepath) {
+          // Get open file as recent file.
+          console.log('[info] Add to recent files: ' + filepath);
+          common.data.recentFiles.push({name: filepath, path: filepath});
+
           // This is the first action, open the project in the same window
           if (zeroProject) {
             updateWorkingdir(filepath);

@@ -27,7 +27,7 @@
     <ul uib-dropdown-menu>
       <li ng-repeat="file in common.data.recentFiles">
         <!-- <i>{{ file.path }}</i> -->
-        <a>{{ file.name }}</a>
+        <a href ng-click="openProject({{file.name}})">{{ file.name }}</a>
       </li>
     </ul>
   </li>
@@ -45,6 +45,7 @@
     >
     <ul uib-dropdown-menu>
       <li
+        ng-if="!collection.disabled"
         ng-repeat="collection in [common.defaultCollection].concat(common.internalCollections).concat(common.externalCollections)"
         class="dropdown-submenu"
         uib-dropdown

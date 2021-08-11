@@ -210,7 +210,7 @@ angular
         externalCollections: null,
         externalPlugins: null,
         pythonEnv: null,
-        recentFiles: null,
+        recentFiles: [{name: 'ejemplo1.ice', path: 'd://'}],
       };
 
       if (this.DARWIN) {
