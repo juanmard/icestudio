@@ -5,6 +5,7 @@ on:
   pull_request:
   schedule:
     - cron: '0 0 * * 3,6'
+  workflow_dispatch:
 
 env:
   CI: true
@@ -59,6 +60,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+
+      - name: 'Certs'
+        if: matrix.os == 'ubuntu'
+        run: |
+          sudo apt update
+          sudo apt install -y ca-certificates
+          sudo update-ca-certificates
 
       - name: '🟦 Setup MSYS2'
         if: matrix.os == 'windows'
