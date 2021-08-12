@@ -1350,8 +1350,10 @@ angular
           if (callback) {
             callback();
           }
-          updateWiresOnObstacles();
-          utils.endWait();
+          setTimeout(function () {
+            updateWiresOnObstacles();
+            utils.endWait();
+          }, 0);
           return true;
         }
         return false;
