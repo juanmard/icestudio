@@ -872,7 +872,8 @@ angular
                 str.indexOf('3.6') >= 0 ||
                 str.indexOf('3.7') >= 0 ||
                 str.indexOf('3.8') >= 0 ||
-                str.indexOf('3.9') >= 0;
+                str.indexOf('3.9') >= 0 ||
+                str.indexOf('3.10') >= 0;
         } catch (e) {
           return false;
         }
