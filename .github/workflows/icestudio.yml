@@ -177,8 +177,8 @@ jobs:
             mv "$item" "${item%.*}-$name-${GITHUB_SHA}.zip"
           done
 
-      - name: '📦 Run eine/tip'
-        uses: eine/tip@master
+      - name: '📦 Run pyTooling/Actions/releaser'
+        uses: pyTooling/Actions/releaser@r0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: 'nightly'
