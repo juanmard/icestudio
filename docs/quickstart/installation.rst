@@ -21,7 +21,3 @@ Requirements:
 .. warning:: Non-root Ubuntu/Debian users may need to add themselves to group ``dialout``: ``sudo usermod -a -G dialout $USER``.
   At the same time, some additional packages might be required, such as ``libgconf`` and ``canberra-gtk-module``:
   ``sudo apt install -y libgconf-2-4 libcanberra-gtk-module``.
-
-.. hint:: Optional script `linux_installer.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_installer.sh>`_
-  registers the ``*.ice`` files as *Icestudio project files*. There is also a `linux_uninstaller.sh <https://github.com/FPGAwars/icestudio/blob/develop/scripts/linux_uninstaller.sh>`_
-  to revert the previous configuration.
