@@ -698,13 +698,15 @@ angular
           code += module(data);
         }
 
+        code += '\n';
+
         // Dependencies modules
         if (typeof project.package !== 'undefined') {
-          code += '\n/*-------------------------------------------------*/\n';
-          code += '/*-- ' + project.package.name + '  */\n';
-          code += '/*-- - - - - - - - - - - - - - - - - - - - - - - --*/\n';
-          code += '/*-- ' + project.package.description + '\n';
-          code += '/*-------------------------------------------------*/\n';
+          code += '//---------------------------------------------------\n';
+          code += '//-- ' + project.package.name + '\n';
+          code += '//-- - - - - - - - - - - - - - - - - - - - - - - - --\n';
+          code += '//-- ' + project.package.description + '\n';
+          code += '//---------------------------------------------------\n';
         }
         for (var d in dependencies) {
           code += verilogCompiler(utils.digestId(d), dependencies[d]);

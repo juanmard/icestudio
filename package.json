@@ -1,6 +1,6 @@
 {
   "name": "icestudio",
-  "version": "0.9.0dev",
+  "version": "0.12.0dev",
   "sha": "00000000",
   "description": "Visual editor for Verilog designs",
   "repository": "https://github.com/juanmard/icestudio",

@@ -39,10 +39,6 @@ angular
           icon: 'snowflake-o',
           title: 'UI Theme',
         },
-        toolchain: {
-          icon: 'gear',
-          title: 'Toolchain',
-        },
       };
 
       $scope.done = () => {

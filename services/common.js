@@ -73,25 +73,12 @@ angular
         this.ICESTUDIO_DIR,
         'collections'
       );
-      this.APIO_HOME_DIR = nodePath.join(this.ICESTUDIO_DIR, 'apio');
       const _PROFILE_PATH = nodePath.join(this.ICESTUDIO_DIR, 'profile.json');
       this.PROFILE_PATH = _PROFILE_PATH;
 
       this.APP_DIR = nodePath.dirname(process.execPath);
 
-      //-- Folder name for the virtual environment
-      this.ENV_DIR = nodePath.join(this.ICESTUDIO_DIR, 'venv');
-      this.ENV_BIN_DIR = nodePath.join(
-        this.ENV_DIR,
-        this.WIN32 && !this.MSYSTEM ? 'Scripts' : 'bin'
-      );
-      this.ENV_APIO = nodePath.join(
-        this.ENV_BIN_DIR,
-        this.WIN32 ? 'apio.exe' : 'apio'
-      );
-      this.APIO_CMD = this.WIN32
-        ? `set APIO_HOME_DIR="${this.APIO_HOME_DIR}"& "${this.ENV_APIO}"`
-        : `export APIO_HOME_DIR="${this.APIO_HOME_DIR}"; "${this.ENV_APIO}"`;
+      this.ICETOOL = 'ICETool';
 
       const nodeTmp = require('tmp');
 
@@ -198,8 +185,6 @@ angular
       // Profile
 
       const _data = {
-        apioRepo: 'juanmard/icestudio',
-        apioRef: 'apio-dev',
         board: null,
         prog: null,
         boardRules: true,

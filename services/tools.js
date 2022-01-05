@@ -7,7 +7,6 @@ angular
       project,
       compiler,
       collections,
-      drivers,
       graph,
       utils,
       common,
@@ -16,8 +15,7 @@ angular
       nodeFse,
       nodePath,
       nodeChildProcess,
-      _package,
-      $rootScope
+      _package
     ) {
       'use strict';
 
@@ -30,16 +28,9 @@ angular
       var startAlert = null;
       var infoAlert = null;
       var resultAlert = null;
-      var toolchain = {
-        apio: '-',
-        installed: false,
-        disabled: false,
-      };
-
-      this.toolchain = toolchain;
 
       this.verifyCode = function (startMessage, endMessage) {
-        return apioRun(
+        return ICEToolRun(
           ['verify', '--board', common.selectedBoard.name],
           startMessage,
           endMessage
@@ -47,7 +38,7 @@ angular
       };
 
       this.buildCode = function (startMessage, endMessage) {
-        return apioRun(
+        return ICEToolRun(
           ['build', '--board', common.selectedBoard.name],
           startMessage,
           endMessage
@@ -55,14 +46,14 @@ angular
       };
 
       this.uploadCode = function (startMessage, endMessage) {
-        return apioRun(
+        return ICEToolRun(
           ['upload', '--board', common.selectedBoard.name],
           startMessage,
           endMessage
         );
       };
 
-      function apioRun(commands, startMessage, endMessage) {
+      function ICEToolRun(commands, startMessage, endMessage) {
         return new Promise(function (resolve) {
           var sourceCode = '';
 
@@ -80,12 +71,7 @@ angular
               .resetCodeErrors()
               .then(function () {
                 return new Promise(function (resolve, reject) {
-                  if (toolchain.apio != '-') {
-                    resolve();
-                  } else {
-                    _toolchainAlert(true);
-                    reject();
-                  }
+                  resolve();
                 });
               })
               .then(function () {
@@ -106,7 +92,6 @@ angular
                 if (command === 'build' || command === 'upload') {
                   commands = commands.concat('--verbose-pnr');
                 }
-                console.log('APIO', commands);
                 return executeLocal(commands);
               })
               .then(function (result) {
@@ -279,55 +264,38 @@ angular
 
       function executeLocal(commands) {
         return new Promise(function (resolve) {
-          if (commands[0] === 'upload') {
-            // Upload command requires drivers setup (Mac OS)
-            drivers.preUpload(function () {
-              _executeLocal();
-            });
-          } else {
-            // Other !upload commands
-            _executeLocal();
-          }
-
-          function _executeLocal() {
-            var apio = getApioExecutable();
-            var command = [apio]
-              .concat(commands)
-              .concat(['-p', `"${common.BUILD_DIR}"`])
-              .join(' ');
-            console.log('APIO COMMAND', command);
-            if (
-              typeof common.DEBUGMODE !== 'undefined' &&
-              common.DEBUGMODE === 1
-            ) {
-              const fs = require('fs');
-              fs.appendFileSync(
-                common.LOGFILE,
-                'tools._executeLocal>' + command + '\n'
-              );
-            }
-            nodeChildProcess.exec(
-              command,
-              {
-                maxBuffer: 5000 * 1024,
-              }, // To avoid buffer overflow
-              function (error, stdout, stderr) {
-                if (commands[0] === 'upload') {
-                  // Upload command requires to restore the drivers (Mac OS)
-                  drivers.postUpload();
-                }
-                common.commandOutput = command + '\n\n' + stdout + stderr;
-                $(document).trigger('commandOutputChanged', [
-                  common.commandOutput,
-                ]);
-                resolve({
-                  error: error,
-                  stdout: stdout,
-                  stderr: stderr,
-                });
-              }
+          var command = [common.ICETOOL]
+            .concat(commands)
+            .concat(['-p', `"${common.BUILD_DIR}"`])
+            .join(' ');
+          if (
+            typeof common.DEBUGMODE !== 'undefined' &&
+            common.DEBUGMODE === 1
+          ) {
+            const fs = require('fs');
+            fs.appendFileSync(
+              common.LOGFILE,
+              'tools._executeLocal>' + command + '\n'
             );
           }
+          nodeChildProcess.exec(
+            command,
+            {
+              shell: 'bash',
+              maxBuffer: 5000 * 1024,
+            }, // To avoid buffer overflow
+            function (error, stdout, stderr) {
+              common.commandOutput = command + '\n\n' + stdout + stderr;
+              $(document).trigger('commandOutputChanged', [
+                common.commandOutput,
+              ]);
+              resolve({
+                error: error,
+                stdout: stdout,
+                stderr: stderr,
+              });
+            }
+          );
         });
       }
 
@@ -344,7 +312,6 @@ angular
             if (stdout) {
               var boardName = common.selectedBoard.name;
               var boardLabel = common.selectedBoard.info.label;
-              // - Apio errors
               if (
                 stdout.indexOf(
                   'Error: board ' + boardName + ' not connected'
@@ -877,327 +844,6 @@ angular
         } catch (e) {
           return false;
         }
-      }
-
-      this.checkToolchain = _checkToolchain;
-
-      function getApioExecutable() {
-        const apio = process.env.ICESTUDIO_APIO;
-        if (nodeFs.existsSync(apio)) {
-          alertify.message('Using external apio: ' + apio, 5);
-          return `"${apio}"`;
-        }
-        return common.APIO_CMD;
-      }
-
-      function _checkToolchain(callback) {
-        var apio = getApioExecutable();
-        console.log('[srv.tools.checkToolchain] apio:', apio);
-        nodeChildProcess.exec(`${apio} --version`, function (error, stdout) {
-          console.log('[srv.tools.checkToolchain] version:', stdout);
-          if (error) {
-            console.log('[srv.tools.checkToolchain] version error:', error);
-            toolchain.apio = '-';
-            _toolchainAlert(true);
-            if (callback) {
-              callback();
-            }
-            return;
-          }
-          toolchain.apio = stdout.match(/apio,\sversion\s(.+)/i)[1];
-          console.log(
-            '[srv.tools.checkToolchain] toolchain.apio:',
-            toolchain.apio
-          );
-          if (toolchain.apio && toolchain.apio != '') {
-            _toolchainAlert(
-              false,
-              `${_tcStr('Apio version')} v${toolchain.apio}`
-            );
-            // TODO: We should run some minimal test for ensuring that apio was correctly installed.
-            //  nodeChildProcess.exec(
-            //    `${apio} clean -p`,
-            //    (error, stdout, stderr) => {
-            //      console.log('[srv.tools.checkToolchain] clean sample:', error, stdout, stderr);
-            //      if (error) {
-            //        toolchain.apio = '-';
-            //        _toolchainAlert(false, _tcStr('Toolchain failed executing sample project!'));
-            //      }
-            //      if (callback) {
-            //        callback();
-            //      }
-            //    }
-            //  );
-            if (callback) {
-              callback();
-            }
-            return;
-          }
-          _toolchainAlert(false, _tcStr('Could not retrieve apio version!'));
-          if (callback) {
-            callback();
-          }
-        });
-      }
-
-      function executeCommand(command, callback) {
-        var cmd = command.join(' ');
-        nodeChildProcess.exec(cmd, (error, stdout, stderr) => {
-          console.log(
-            `[srv.tools.executeCommand] cmd: ${cmd}\nstdout: ${stdout}\nstderr: ${stderr}\nerror: ${error}`
-          );
-          common.commandOutput = `${cmd}\n\n${stdout}${stderr}`;
-          $(document).trigger('commandOutputChanged', [common.commandOutput]);
-          if (error) {
-            alertify.error(error.message, 30);
-            callback(true);
-          } else {
-            callback(false);
-          }
-        });
-      }
-
-      function _removeToolchain() {
-        deleteFolderRecursive(common.ENV_DIR);
-        deleteFolderRecursive(common.APIO_HOME_DIR);
-      }
-
-      $rootScope.$on('installToolchain', () => {
-        _installToolchain();
-      });
-
-      this.installToolchain = _installToolchain;
-
-      const nodeOnline = require('is-online');
-
-      function _installToolchain() {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        alerts.confirm({
-          title: _tcStr('Toolchain installation'),
-          body: _tcStr(
-            'The toolchain will be downloaded. This operation requires Internet connection.'
-          ),
-          onok: () => {
-            _removeToolchain();
-            alerts.alert({
-              title: _tcStr('Installing toolchain'),
-              body: `<div>
-              <div class="progress">
-                <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
-                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                </div>
-              </div>
-              <div id="progress-message" class="progress-message"></div>
-            </div>`,
-            });
-            toolchain.apio = '-';
-
-            const _py = getPythonExecutable();
-            var _epip = null;
-
-            async.series(
-              [
-                // checkInternetConnection
-                (callback) => {
-                  updateProgress(_tcStr('Check Internet connection...'), 0);
-                  nodeOnline({timeout: 5000}, function (err, online) {
-                    if (online) {
-                      callback(false);
-                      return;
-                    }
-                    resultAlert = alertify.error(
-                      _tcStr('Internet connection required'),
-                      30
-                    );
-                    callback(true);
-                  });
-                },
-                // ensurePythonIsAvailable
-                (callback) => {
-                  updateProgress(_tcStr('Check Python...'), 10);
-                  if (_py) {
-                    callback(false);
-                    return;
-                  }
-                  resultAlert = alertify.error(
-                    _tcStr('At least Python 3.5 is required'),
-                    30
-                  );
-                  callback(true);
-                },
-                // createVirtualenv
-                (callback) => {
-                  updateProgress(_tcStr('Create virtualenv...'), 20);
-                  if (nodeFs.existsSync(common.ENV_DIR)) {
-                    callback(false);
-                    return;
-                  }
-                  if (!nodeFs.existsSync(common.ICESTUDIO_DIR)) {
-                    nodeFs.mkdirSync(common.ICESTUDIO_DIR);
-                  }
-                  executeCommand(
-                    [_py, '-m', 'venv', `"${common.ENV_DIR}"`],
-                    callback
-                  );
-                },
-                // setupVirtualenv
-                // see: https://bugs.python.org/issue30628 and https://stackoverflow.com/a/61553959
-                (callback) => {
-                  updateProgress(_tcStr('Setup virtualenv...'), 25);
-                  if (!nodeFs.existsSync(common.ENV_DIR)) {
-                    callback(true);
-                    return;
-                  }
-                  if (!nodeFs.existsSync(common.ENV_BIN_DIR)) {
-                    callback(true);
-                    return;
-                  }
-                  _epip = [
-                    getPythonExecutable(common.ENV_BIN_DIR),
-                    '-m',
-                    'pip',
-                  ];
-
-                  if (common.MSYSTEM) {
-                    callback(false);
-                    return;
-                  }
-                  executeCommand(
-                    _epip.concat([
-                      'install',
-                      '-U',
-                      'pip',
-                      'setuptools',
-                      'wheel',
-                    ]),
-                    callback
-                  );
-                },
-                // installOnlineApio
-                (callback) => {
-                  updateProgress('Install apio', 50);
-                  const pkgs = '[blackiceprog,tinyfpgab,tinyprog,icefunprog]'; //icesprog,fujprog
-                  executeCommand(
-                    _epip.concat([
-                      'install',
-                      '-U',
-                      `apio${pkgs}@https://github.com/${common.get(
-                        'apioRepo'
-                      )}/archive/${common.get('apioRef')}.zip`,
-                    ]),
-                    callback
-                  );
-                },
-                // apioinstallPackages
-                (callback) => {
-                  const pkgs =
-                    'oss-cad-suite yosys ice40 ecp5 fujprog icesprog dfu iverilog drivers scons';
-                  updateProgress(`apio install ${pkgs}`, 75);
-                  apioInstall(pkgs, callback);
-                },
-              ],
-              // installationCompleted
-              (err, results) => {
-                console.log(
-                  `[srv.tools.installationCompleted] err: ${err}\nresults: ${results}`
-                );
-                _checkToolchain(() => {
-                  if (toolchain.apio != '-') {
-                    updateProgress(_tcStr('Installation completed'), 100);
-                    alertify.success(_tcStr('Toolchain installed'));
-                  } else {
-                    alertify.failure(_tcStr('Toolchain installation failed'));
-                  }
-                });
-              }
-            );
-          },
-        });
-      }
-
-      function _toolchainAlert(install, message) {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        resultAlert = alertify.warning(
-          !message
-            ? `${_tcStr('Toolchain not found')}.<br>${_tcStr(
-                'Click here to install it'
-              )}`
-            : message,
-          10,
-          function (isClicked) {
-            if (install && isClicked) {
-              _installToolchain();
-            }
-          }
-        );
-      }
-
-      this.removeToolchain = function () {
-        if (resultAlert) {
-          resultAlert.dismiss(false);
-        }
-        alerts.confirm({
-          title: _tcStr('The toolchain will be removed'),
-          body: _tcStr('Do you want to continue?'),
-          onok: () => {
-            _removeToolchain();
-            toolchain.apio = '-';
-            alertify.success(_tcStr('Toolchain removed'));
-          },
-        });
-      };
-
-      this.enableDrivers = () => {
-        _checkToolchain(() => {
-          if (toolchain.apio != '-') {
-            drivers.enable();
-          }
-        });
-      };
-
-      this.disableDrivers = () => {
-        _checkToolchain(() => {
-          if (toolchain.apio != '-') {
-            drivers.disable();
-          }
-        });
-      };
-
-      function apioInstall(pkg, callback) {
-        executeCommand([common.APIO_CMD, 'install', pkg], callback);
-      }
-
-      function setupDriversAlert() {
-        if (!infoAlert) {
-          infoAlert = alertify.message(
-            _tcStr('Click here to <b>setup the drivers</b>'),
-            30
-          );
-          infoAlert.callback = function (isClicked) {
-            infoAlert = null;
-            if (isClicked) {
-              if (resultAlert) {
-                resultAlert.dismiss(false);
-              }
-              $rootScope.$broadcast('enableDrivers');
-            }
-          };
-        }
-      }
-
-      function updateProgress(message, value) {
-        var bar = $('#progress-bar');
-        if (value === 100) {
-          bar.removeClass('progress-bar-striped active');
-        }
-        bar.text(value + '%');
-        bar.attr('aria-valuenow', value);
-        bar.css('width', value + '%');
-        $('#progress-message').text(message);
       }
 
       // Collections management

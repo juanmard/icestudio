@@ -19,7 +19,6 @@ Icestudio v1 (nightly)
 
     quickstart/installation
     quickstart/selectboard
-    quickstart/toolchain
     quickstart/drivers
     quickstart/test
     quickstart/project

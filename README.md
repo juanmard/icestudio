@@ -8,8 +8,7 @@
   <a title="'icestudio' workflow status" href="https://github.com/juanmard/icestudio/actions?query=workflow%3Aicestudio"><img alt="'icestudio' workflow status" src="https://img.shields.io/github/workflow/status/juanmard/icestudio/icestudio?longCache=true&style=flat-square&label=icestudio&logo=Github%20Actions&logoColor=fff"></a>
 </p>
 
-Visual editor for Verilog designs, built on top of [Icestorm](http://www.clifford.at/icestorm/) and
-[Apio](https://github.com/FPGAwars/apio).
+Visual editor for Verilog designs, built on top of [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build).
 Find installation guidelines, user guide and further information at
 [juanmard.github.io/icestudio](https://juanmard.github.io/icestudio).
 
@@ -23,4 +22,44 @@ Find installation guidelines, user guide and further information at
   <a title="Code Climate technical debt" href="https://codeclimate.com/github/juanmard/icestudio/trends/technical_debt"><img src="https://img.shields.io/codeclimate/tech-debt/juanmard/icestudio?longCache=true&style=flat-square&logo=codeclimate"></a>
 </p>
 
-**IMPORTANT: Since June 2021, several enhancements available in this variant are being applied [upstream](https://github.com/FPGAwars/icestudio). Therefore, the development of this fork is on hold until the dependencies are stabilized. Find further details in the [WIKI](https://github.com/juanmard/icestudio/wiki).**
+**IMPORTANT: Since June 2021, several enhancements available in this variant are being applied [upstream](https://github.com/FPGAwars/icestudio). Find further details in the [WIKI](https://github.com/juanmard/icestudio/wiki).**
+
+---
+
+Unlike the [upstream](https://github.com/FPGAwars/icestudio), _Icestudio Nightly_ is agnostic to the toolchain
+installation solution and it does not require admin/sudo permissions.
+Users are free to choose between [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build), system packages, Conda environments, [apio](https://github.com/FPGAwars/apio), [containers](https://hdl.github.io/containers/), etc. as their
+preferred solution for getting the required tools and making them available in the PATH.
+See [hdl/packages](https://github.com/hdl/packages).
+By the same token, the usage of virtual environments is optional, although recommended when using Python based packaging
+systems such as Conda or apio.
+
+Furthermore, _Icestudio Nightly_ uses `ICETool` by default, instead of `apio`.
+[ICETool](tools/ICETool) is a Python script that allows translating `verify`, `build` and `upload` commands from
+Icestudio into the entrypoints provided by [FuseSoC](https://github.com/olofk/FuseSoC)/[Edalize](https://github.com/olofk/edalize/),
+apio, or any other EDA workflow provider.
+See [Electronic Design Automation Abstraction (EDA²)](https://edaa-org.github.io/).
+
+Currently, ICETool is in an early development stage and it is not published through PyPI.
+Therefore, the location of the script needs to be made available before starting Icestudio.
+
+On GNU/Linux or MSYS2, add subdir `tools` to the PATH:
+
+```sh
+PATH=$(pwd)/tools:$PATH yarn start
+```
+
+On the Windows CMD, use PYTHONPATH:
+
+```sh
+PYTHONPATH=$(pwd)/tools:$PATH yarn start
+```
+
+Moreover, environment variable `ICETOOL_CMD` allows overriding the backend.
+
+```sh
+# Use apio
+ICETOOL_CMD=apio PATH=$(pwd)/tools:$PATH yarn start
+# Use edalize
+ICETOOL_CMD=edalize PATH=$(pwd)/tools:$PATH yarn start
+```
