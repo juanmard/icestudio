@@ -78,7 +78,10 @@ angular
 
       this.APP_DIR = nodePath.dirname(process.execPath);
 
-      this.ICETOOL = 'ICETool';
+      this.ICETOOL = ['python', '-m', 'ICETool.__init__'];
+      if (process.env.ICETOOL_CMD != undefined) {
+        this.ICETOOL = [process.env.ICETOOL_CMD];
+      }
 
       const nodeTmp = require('tmp');
 
@@ -108,13 +111,13 @@ angular
 
       this.isEditingSubmodule = false;
 
-      // Read list of subdirs of 'constraints' which do not start with '_';
+      // Read list of subdirs of 'resources' which do not start with '_';
       // for each, read 'info.json' and 'rules'.json'.
       // Generate list of boards and list of devices.
       try {
         var boards = [];
         var devices = [];
-        var dpath = nodePath.join('constraints', 'devices');
+        var dpath = nodePath.join('resources', 'devices');
         nodeFs.readdirSync(dpath).forEach((ditem) => {
           const ddata = _readJSONFile(dpath, ditem);
           devices.push({
@@ -122,7 +125,7 @@ angular
             resources: ddata,
           });
         });
-        var rpath = nodePath.join('constraints', 'boards');
+        var rpath = nodePath.join('resources', 'boards');
         nodeFs.readdirSync(rpath).forEach((bdir) => {
           if (bdir[0] !== '_' && !nodePath.extname(bdir)) {
             const bpath = nodePath.join(rpath, bdir);

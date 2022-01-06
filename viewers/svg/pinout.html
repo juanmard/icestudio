@@ -26,7 +26,7 @@
         var elem = document.getElementById('pinout');
         elem.setAttribute(
           'src',
-          `../../constraints/boards/${getURLParameter('board')}/pinout.svg`
+          `../../resources/boards/${getURLParameter('board')}/pinout.svg`
         );
         setTimeout(function () {
           svgPanZoom(elem, {

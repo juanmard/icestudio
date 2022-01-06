@@ -37,7 +37,7 @@
       }
       window.onload = function () {
         const nodeFs = require('fs');
-        const path = `constraints/boards/${getURLParameter('board')}/pinout`;
+        const path = `resources/boards/${getURLParameter('board')}/pinout`;
         let ext = 'pcf';
         if (!nodeFs.existsSync(`${path}.pcf`)) {
           if (!nodeFs.existsSync(`${path}.lpf`)) {

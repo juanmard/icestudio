@@ -90,7 +90,7 @@ angular
               .then(function () {
                 var command = commands[0];
                 if (command === 'build' || command === 'upload') {
-                  commands = commands.concat('--verbose-pnr');
+                  commands = commands.concat('--verbose');
                 }
                 return executeLocal(commands);
               })
@@ -264,8 +264,7 @@ angular
 
       function executeLocal(commands) {
         return new Promise(function (resolve) {
-          var command = [common.ICETOOL]
-            .concat(commands)
+          var command = common.ICETOOL.concat(commands)
             .concat(['-p', `"${common.BUILD_DIR}"`])
             .join(' ');
           if (
@@ -306,7 +305,7 @@ angular
         var stderr = result.stderr;
 
         return new Promise(function (resolve, reject) {
-          if (_error || stderr) {
+          if (_error) {
             // -- Process errors
             reject();
             if (stdout) {

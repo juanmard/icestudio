@@ -751,7 +751,7 @@ angular
         if (common.selectedBoard) {
           return nodeFs.existsSync(
             nodePath.join(
-              'constraints',
+              'resources',
               'boards',
               common.selectedBoard.name,
               'pinout.svg'

@@ -1,3 +1,6 @@
 [submodule "collection"]
 	path = collection
 	url = https://github.com/FPGAwars/collection-default
+[submodule "constraints"]
+	path = ICETool/constraints
+	url = https://github.com/hdl/constraints

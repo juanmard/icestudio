@@ -66,7 +66,7 @@ module.exports = function (grunt) {
             'collection/**',
             'controllers/**',
             'graphics/**',
-            'constraints/**/*.*',
+            'resources/**/*.*',
             'images/**/*.*',
             'locale/**/*.*',
             'plugins/**/*.*',
@@ -166,7 +166,7 @@ module.exports = function (grunt) {
     watch: {
       scripts: {
         files: [
-          'constraints/**/*.*',
+          'resources/**/*.*',
           'controllers/*.js',
           'fonts/**',
           'graphics/*.js',
