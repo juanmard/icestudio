@@ -121,7 +121,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        include: [{ver: '12.0', name: Monterey}, {ver: '13.0', name: Ventura}]
+        include: [{ver: '14.0', name: Sonoma}, {ver: '15.0', name: Sequoia}]
     runs-on: macos-${{ matrix.ver }}
     name: '🍎 macOS · ${{ matrix.name }}'
     steps:
@@ -172,7 +172,7 @@ jobs:
           for item in lin32/* lin64/* win32/* win64/*; do
             mv "$item" "${item%.*}-${GITHUB_SHA}.zip"
           done
-          for name in Monterey Ventura; do
+          for name in Sonoma Sequoia; do
             item="$(ls osx64-$name/*)"
             mv "$item" "${item%.*}-$name-${GITHUB_SHA}.zip"
           done
@@ -188,5 +188,5 @@ jobs:
             lin64/*
             win32/*
             win64/*
-            osx64-Monterey/*
-            osx64-Ventura/*
+            osx64-Sonoma/*
+            osx64-Sequoia/*
