@@ -172,7 +172,7 @@ jobs:
           for item in lin32/* lin64/* win32/* win64/*; do
             mv "$item" "${item%.*}-${GITHUB_SHA}.zip"
           done
-          for name in Catalina BigSur; do
+          for name in Monterey Ventura; do
             item="$(ls osx64-$name/*)"
             mv "$item" "${item%.*}-$name-${GITHUB_SHA}.zip"
           done
@@ -188,5 +188,5 @@ jobs:
             lin64/*
             win32/*
             win64/*
-            osx64-Catalina/*
-            osx64-BigSur/*
+            osx64-Monterey/*
+            osx64-Ventura/*
