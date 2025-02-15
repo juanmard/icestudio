@@ -121,8 +121,8 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        include: [{ver: '14.7.2', name: Sonoma}, {ver: '15.2', name: Sequoia}]
-    runs-on: macos-${{ matrix.ver }}
+        include: [{ver: '14', name: Sonoma}, {ver: '15', name: Sequoia}]
+    runs-on: macos${{ matrix.ver }}
     name: '🍎 macOS · ${{ matrix.name }}'
     steps:
       - name: '🧰 Checkout'
