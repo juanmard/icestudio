@@ -121,7 +121,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        include: [{ver: '10.15', name: Catalina}, {ver: '11.0', name: BigSur}]
+        include: [{ver: '12.0', name: Monterey}, {ver: '13.0', name: Ventura}]
     runs-on: macos-${{ matrix.ver }}
     name: '🍎 macOS · ${{ matrix.name }}'
     steps:
