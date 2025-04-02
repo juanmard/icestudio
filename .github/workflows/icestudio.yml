@@ -98,6 +98,9 @@ jobs:
           name: docs
           path: docs/_build/html
 
+      - name: '📦 Update Yarn'
+        run: npm install -g yarn
+
       - name: '▶️ dist'
         run: yarn dist -v
         env:
