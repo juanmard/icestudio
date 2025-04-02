@@ -43,7 +43,7 @@ jobs:
       matrix:
         include:
           [
-            {label: '🐧 Ubuntu', os: ubuntu, arg: lin, larg: linux-},
+            {label: '🐧 Ubuntu', os: ubuntu, arg: lin, larg: linux},
             {label: '🧊 Windows', os: windows, arg: win, larg: win},
           ]
     runs-on: ${{ matrix.os }}-latest
@@ -59,7 +59,7 @@ jobs:
       - name: '⚙️ Setup Node.js'
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '20.x'
 
       - name: 'Certs'
         if: matrix.os == 'ubuntu'
@@ -106,8 +106,8 @@ jobs:
       - name: '📤 Upload artifact: 64 bit'
         uses: actions/upload-artifact@master
         with:
-          name: ${{ matrix.arg }}-x64
-          path: dist/*${{ matrix.larg }}-x64.zip
+          name: ${{ matrix.arg }}64
+          path: dist/*${{ matrix.larg }}64.zip
 
       - name: '📤 Upload artifact: 32 bit'
         uses: actions/upload-artifact@master
