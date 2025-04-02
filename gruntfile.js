@@ -9,12 +9,12 @@ module.exports = function (grunt) {
   var nwjsVersion = '0.35.5';
 
   function targetLin(bits) {
-    platforms.push('linux' + bits);
+    platforms.push('linux-x' + bits);
     distCommands.push('compress:linux' + bits);
   }
   function targetWin(bits) {
-    platforms.push('win' + bits);
-    distCommands.push('compress:win' + bits);
+    platforms.push('win-x' + bits);
+    distCommands.push('compress:win-x' + bits);
   }
   var targets = process.env.DIST_TARGET;
   if (targets === undefined) {
