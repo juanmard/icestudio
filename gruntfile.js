@@ -116,7 +116,9 @@ module.exports = function (grunt) {
     },
   };
 
+  console.log("Archivos en dist/tmp:", grunt.file.expand("./dist/tmp/**"));
   gruntCfg.nwjs = {
+    src: ['./dist/tmp/**'],
     options: {
       version: nwjsVersion,
       flavor: 'sdk', // 'normal' (stable) | 'sdk' (development)
@@ -127,7 +129,6 @@ module.exports = function (grunt) {
       macPlist: {CFBundleIconFile: 'app'},
       platforms: platforms,
     },
-    src: ['dist/tmp/**'],
   };
 
   function _compress(os, bits) {
