@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 
-process.env.NWJS_URL = "https://nwjs.io/versions.json";
-
 module.exports = function (grunt) {
   'use strict';
 
