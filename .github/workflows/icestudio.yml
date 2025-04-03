@@ -98,9 +98,6 @@ jobs:
           name: docs
           path: docs/_build/html
 
-      - name: '📦 Update Yarn'
-        run: npm install -g yarn
-        
       - name: '🔍 Test URL Access'
         run: curl -v http://nwjs.io/versions.json
 
