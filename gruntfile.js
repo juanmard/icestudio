@@ -8,7 +8,19 @@ module.exports = function (grunt) {
   var platforms = [];
   var distCommands = [];
   var options = {scope: ['devDependencies']};
-  var nwjsVersion = '0.98.0';
+  var fs = require('fs');
+  var versionsFile = 'versions.json';  
+  var nwjsVersion = '0.35.5'; // Valor por defecto
+  
+  if (fs.existsSync(versionsFile)) {
+    try {
+      var versionsData = JSON.parse(fs.readFileSync(versionsFile, 'utf8'));
+      nwjsVersion = versionsData.stable || nwjsVersion;
+      console.log('Usando NW.js versión:', nwjsVersion);
+    } catch (error) {
+      console.error('Error leyendo versions.json:', error);
+    }
+  }
 
   function targetLin(bits) {
     platforms.push('linux' + bits);
