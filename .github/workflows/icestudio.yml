@@ -98,8 +98,8 @@ jobs:
           name: docs
           path: docs/_build/html
 
-      - name: '🔍 Test URL Access'
-        run: curl -v https://nwjs.io/versions.json
+      - name: '📥 Descargar versions.json manualmente'
+        run: wget -O versions.json https://nwjs.io/versions.json
 
       - name: '▶️ dist'
         run: yarn dist -v
