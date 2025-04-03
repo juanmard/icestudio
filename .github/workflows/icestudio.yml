@@ -101,14 +101,14 @@ jobs:
       - name: '📥 Descargar versions.json manualmente'
         run: wget -O versions.json https://nwjs.io/versions.json
 
-      - name: Listar archivos en dist
-        run: ls -lR dist/tmp; ls -lR .
+      - name: Listar archivos
+        run: ls -lR .
 
       - name: '▶️ dist'
         run: yarn dist
       
-      - name: Listar archivos en src
-        run: ls -lR src
+      - name: Listar archivos en dist/tmp
+        run: ls -lR dist/tmp
 
         env:
           DIST_TARGET: ${{ matrix.arg }}
