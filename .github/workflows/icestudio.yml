@@ -101,6 +101,9 @@ jobs:
       - name: '📥 Descargar versions.json manualmente'
         run: wget -O versions.json https://nwjs.io/versions.json
 
+      - name: Listar archivos en dist
+        run: ls -lR dist/tmp; ls -lR .
+
       - name: '▶️ dist'
         run: yarn dist
       
