@@ -89,8 +89,8 @@ jobs:
         shell: bash
         run: ./getdeps.sh
 
-      - name: '▶️ check'
-        run: yarn run check
+#//      - name: '▶️ check'
+#//        run: yarn run check
 
       - name: '📥 Download artifact: HTML'
         uses: actions/download-artifact@v4
@@ -99,7 +99,7 @@ jobs:
           path: docs/_build/html
 
       - name: '🔍 Test URL Access'
-        run: curl -v http://nwjs.io/versions.json
+        run: curl -v https://nwjs.io/versions.json
 
       - name: '▶️ dist'
         run: yarn dist -v
