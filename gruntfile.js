@@ -6,15 +6,15 @@ module.exports = function (grunt) {
   var platforms = [];
   var distCommands = [];
   var options = {scope: ['devDependencies']};
-  var nwjsVersion = '0.35.5';
+  var nwjsVersion = '0.98.0';
 
   function targetLin(bits) {
-    platforms.push('linux-x' + bits);
+    platforms.push('linux' + bits);
     distCommands.push('compress:linux' + bits);
   }
   function targetWin(bits) {
-    platforms.push('win-x' + bits);
-    distCommands.push('compress:win-x' + bits);
+    platforms.push('win' + bits);
+    distCommands.push('compress:win' + bits);
   }
   var targets = process.env.DIST_TARGET;
   if (targets === undefined) {
