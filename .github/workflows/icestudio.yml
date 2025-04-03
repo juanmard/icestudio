@@ -102,7 +102,10 @@ jobs:
         run: wget -O versions.json https://nwjs.io/versions.json
 
       - name: '▶️ dist'
-        run: yarn dist -v
+        run: yarn dist
+      
+      - name: Listar archivos en src
+        run: ls -lR src
 
         env:
           DIST_TARGET: ${{ matrix.arg }}
