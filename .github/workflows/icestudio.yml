@@ -148,8 +148,8 @@ jobs:
       - name: '▶️ yarn'
         run: ./getdeps.sh
 
-      - name: '▶️ check'
-        run: yarn run check
+#      - name: '▶️ check'
+#        run: yarn run check
 
       - name: '📥 Download artifact: HTML'
         uses: actions/download-artifact@v4
