@@ -102,6 +102,7 @@
     "sudo-prompt": "~9.2.1",
     "svg-pan-zoom": "~3.4.1",
     "svgo": "~0.7.2",
-    "tmp": "~0.1.0"
+    "tmp": "~0.1.0",
+    "grunt-nw-builder": "^3.1.1"
   }
 }
