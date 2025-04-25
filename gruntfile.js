@@ -115,22 +115,20 @@ module.exports = function (grunt) {
       ],
     },
   };
-
-  console.log("Archivos en dist/tmp:", grunt.file.expand("./dist/tmp/**"));
+  
   gruntCfg.nwjs = {
-    src: ['./dist/tmp/**'],
-    options: {
-      version: nwjsVersion,
-      flavor: 'sdk', // 'normal' (stable) | 'sdk' (development)
-      zip: false,
-      buildDir: 'dist/',
-      winIco: 'docs/_static/img/logo/icestudio-logo.ico',
-      macIcns: 'docs/_static/img/logo/nw.icns',
-      macPlist: {CFBundleIconFile: 'app'},
-      platforms: platforms,
-    },
+  options: {
+    version: '0.99.0',
+    buildDir: 'dist/',
+    platforms: ['linux64', 'linux32'],
+    flavor: 'sdk',
+    winIco: 'docs/_static/img/logo/icestudio-logo.ico',
+    macIcns: 'docs/_static/img/logo/nw.icns',
+    macPlist: { CFBundleIconFile: 'app' }
+  },
+  src: ['dist/tmp/**/*']  // Usa un patrón que se resuelva en tiempo de ejecución
   };
-
+  
   function _compress(os, bits) {
     return {
       options: {
@@ -261,13 +259,9 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('serve', ['nggettext_compile', 'watch:scripts']);
-  grunt.registerTask(
-    'dist',
-    ['clean:dist', 'nggettext_compile', 'copy:dist', 'nwjs'].concat(
-      distCommands
-    )
-  );
+ grunt.registerTask( 'checkTmp', function () { const files = grunt.file.expand('dist/tmp/**/*'); grunt.log.writeln(`Archivos realmente copiados a dist/tmp: ${files.length}`);} );
+ grunt.registerTask( 'serve', ['nggettext_compile', 'watch:scripts'] );
+ grunt.registerTask( 'dist', ['clean:dist', 'nggettext_compile', 'copy:dist', 'checkTmp', 'nwjs'].concat(distCommands) );
 };
 
 // Disable Deprecation Warnings
