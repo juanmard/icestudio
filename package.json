@@ -43,7 +43,8 @@
     "fix": "eslint --fix **/*.js gruntfile.js",
     "start": "grunt serve",
     "dist": "grunt dist",
-    "gettext": "grunt nggettext_extract"
+    "gettext": "grunt nggettext_extract",
+    "nwbuild": "nw-builder"
   },
   "devDependencies": {
     "eslint": "^7.3.1",
