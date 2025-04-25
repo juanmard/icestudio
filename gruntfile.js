@@ -121,7 +121,7 @@ gruntCfg.nwjs = {
     version: nwjsVersion,
     buildDir: 'dist/',
     platforms: platforms,
-    flavor: 'stable',
+    flavor: 'sdk',
     zip: false,
     winIco: 'docs/_static/img/logo/icestudio-logo.ico',
     macIcns: 'docs/_static/img/logo/nw.icns',
