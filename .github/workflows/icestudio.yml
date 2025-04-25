@@ -102,7 +102,7 @@ jobs:
         run: wget -O versions.json https://nwjs.io/versions.json
 
       - name: Build NW.js app
-        run: npx nwbuild --platform linux64 --buildDir dist --version 0.99.0 .
+        run: npm view nwbuild versions
         
       - name: '▶️ dist'
         run: yarn dist
