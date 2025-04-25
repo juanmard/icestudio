@@ -116,18 +116,21 @@ module.exports = function (grunt) {
     },
   };
   
-  gruntCfg.nwjs = {
+gruntCfg.nwjs = {
   options: {
-    version: '0.99.0',
+    version: nwjsVersion,
     buildDir: 'dist/',
-    platforms: ['linux64', 'linux32'],
+    platforms: platforms,
     flavor: 'sdk',
+    zip: false,
     winIco: 'docs/_static/img/logo/icestudio-logo.ico',
     macIcns: 'docs/_static/img/logo/nw.icns',
     macPlist: { CFBundleIconFile: 'app' }
   },
-  src: ['dist/tmp/**/*']  // Usa un patrón que se resuelva en tiempo de ejecución
-  };
+  build: {
+    src: ['dist/tmp/**/*']
+  }
+};
   
   function _compress(os, bits) {
     return {
