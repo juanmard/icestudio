@@ -101,8 +101,10 @@ jobs:
       - name: '📥 Descargar versions.json manualmente'
         run: wget -O versions.json https://nwjs.io/versions.json
 
-      - name: Build NW.js app
-        run: npm view nwbuild versions
+      - name: Construye la app con NW.js
+        run: yarn nwbuild --platform linux64 --buildDir dist --version 0.99.0 .
+
+
         
       - name: '▶️ dist'
         run: yarn dist
