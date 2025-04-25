@@ -89,9 +89,9 @@ jobs:
         shell: bash
         run: ./getdeps.sh
 
-#//      - name: '▶️ check'
-#//        run: yarn run check
-
+      - name: '▶️ check'
+        run: yarn run check
+        
       - name: '📥 Download artifact: HTML'
         uses: actions/download-artifact@v4
         with:
@@ -101,13 +101,14 @@ jobs:
       - name: '📥 Descargar versions.json manualmente'
         run: wget -O versions.json https://nwjs.io/versions.json
 
-      - name: Construye la app con NW.js
-        run: yarn nwbuild --platform linux64 --buildDir dist --version 0.99.0 .
-
-
-        
       - name: '▶️ dist'
         run: yarn dist
+
+      - name: 'Install nw-builder'
+        run: yarn add --dev nw-builder
+
+      - name: Construye la app con NW.js
+        run: yarn nwbuild --platform linux64 --buildDir dist --version 0.99.0 .
 
         env:
           DIST_TARGET: ${{ matrix.arg }}
