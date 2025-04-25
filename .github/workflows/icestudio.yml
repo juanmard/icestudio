@@ -22,7 +22,7 @@ jobs:
       - name: '🐍 Setup Python'
         uses: actions/setup-python@v1
         with:
-          python-version: 3.9.21
+          python-version: 3.9.22
 
       - name: '📓 BuildTheDocs (BTD)'
         uses: buildthedocs/btd@v0
