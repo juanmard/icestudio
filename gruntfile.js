@@ -265,7 +265,8 @@ gruntCfg.nwjs = {
  grunt.registerTask( 'checkTmp', function () { const files = grunt.file.expand('dist/tmp/**/*'); grunt.log.writeln(`Archivos realmente copiados a dist/tmp: ${files.length}`);} );
  grunt.registerTask( 'debug:nwjs', function () { const config = grunt.config.get('nwjs'); grunt.log.writeln('NWJS src:', JSON.stringify(config.src, null, 2));} );
  grunt.registerTask( 'serve', ['nggettext_compile', 'watch:scripts'] );
- grunt.registerTask( 'dist', ['clean:dist', 'nggettext_compile', 'copy:dist', 'checkTmp', 'debug:nwjs', 'nwjs'].concat(distCommands) );
+// grunt.registerTask( 'dist', ['clean:dist', 'nggettext_compile', 'copy:dist', 'checkTmp', 'debug:nwjs', 'nwjs'].concat(distCommands) );
+ grunt.registerTask( 'dist', ['clean:dist', 'nggettext_compile', 'copy:dist', 'checkTmp', 'debug:nwjs'].concat(distCommands) );
 };
 
 // Disable Deprecation Warnings
